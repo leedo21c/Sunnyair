@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="C90A CL">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1412" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>C90A Checklist</title>
+<style>
+/* Layout: printed checklist card on the phone — sticky header (tab · procedure · progress), dotted-leader rows, one bottom sheet for why/memo */
+:root{
+  --bg:#f4f5f2; --card:#ffffff; --ink:#18201c; --mute:#5f6a64; --line:#dde2dc; --leader:#b9c2bb;
+  --resp:#155c3b; --head:#10221a;
+  --tabN:#1f7a4c; --tabA:#b07800; --tabE:#b3261e; --tab:var(--tabN);
+  --memo:#8a5a00; --memo-bg:#fff4dc; --gap-bg:#fff4dc; --gap:#7a5200;
+  --warn-bg:#fcebe9; --warn:#a3231b; --note-bg:#eaf2ed; --note:#24533b;
+  --done:#9aa59e; --cur:#e9f3ec; --shade:rgba(10,16,13,.45);
+  --sans:-apple-system,"SF Pro Text","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
+  --cond:"SF Pro Display",-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1412; --card:#171e1b; --ink:#e3e9e5; --mute:#9aa7a0; --line:#2a3530; --leader:#3d4a44;
+  --resp:#7fd8a6; --head:#eef4f0; --tabN:#4fbf85; --tabA:#e7b14a; --tabE:#ff8077;
+  --memo:#f1c46a; --memo-bg:#2d2412; --gap-bg:#2d2412; --gap:#f1c46a;
+  --warn-bg:#2c1513; --warn:#ff8f86; --note-bg:#16261e; --note:#9fd8b7;
+  --done:#5b6862; --cur:#1b2a23; --shade:rgba(0,0,0,.6); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1412; --card:#171e1b; --ink:#e3e9e5; --mute:#9aa7a0; --line:#2a3530; --leader:#3d4a44;
+  --resp:#7fd8a6; --head:#eef4f0; --tabN:#4fbf85; --tabA:#e7b14a; --tabE:#ff8077;
+  --memo:#f1c46a; --memo-bg:#2d2412; --gap-bg:#2d2412; --gap:#f1c46a;
+  --warn-bg:#2c1513; --warn:#ff8f86; --note-bg:#16261e; --note:#9fd8b7;
+  --done:#5b6862; --cur:#1b2a23; --shade:rgba(0,0,0,.6); color-scheme:dark}
+body[data-tab="A"]{--tab:var(--tabA)} body[data-tab="E"]{--tab:var(--tabE)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.4;
+  padding-bottom:env(safe-area-inset-bottom,0px);word-break:keep-all;overflow-wrap:anywhere}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--tab);outline-offset:2px}
+.gut{padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:var(--bg);padding-top:env(safe-area-inset-top,0px);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:8px;padding-block:8px 6px}
+.brand{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--mute);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.top .sp{flex:1 1 0}
+.ibtn{min-width:38px;height:34px;padding:0 10px;border-radius:9px;border:1px solid var(--line);background:var(--card);font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:4px}
+.ibtn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tabs button{height:34px;border-radius:9px;font-size:13px;font-weight:800;letter-spacing:.06em;border:1px solid var(--line);background:var(--card);color:var(--mute)}
+.tabs button[data-t="N"][aria-selected="true"]{background:var(--tabN);border-color:var(--tabN);color:#fff}
+.tabs button[data-t="A"][aria-selected="true"]{background:var(--tabA);border-color:var(--tabA);color:#1b1300}
+.tabs button[data-t="E"][aria-selected="true"]{background:var(--tabE);border-color:var(--tabE);color:#fff}
+.proc{display:flex;align-items:stretch;gap:6px;padding-block:8px 8px}
+.proc .nav{width:40px;border-radius:10px;border:1px solid var(--line);background:var(--card);font-size:20px;color:var(--ink)}
+.proc .nav:disabled{opacity:.3}
+.pick{flex:1;min-width:0;text-align:left;border-radius:10px;border:1px solid var(--line);background:var(--card);padding:6px 10px;border-left:5px solid var(--tab)}
+.pick .k{font-size:11px;color:var(--mute);font-weight:600;letter-spacing:.04em}
+.pick .n{font-family:var(--cond);font-size:17px;font-weight:800;line-height:1.2;color:var(--head);display:flex;gap:6px;align-items:baseline}
+.pick .n span:first-child{min-width:0}
+.pick .n .car{font-size:12px;color:var(--mute);flex:0 0 auto}
+.bar{height:3px;background:var(--line)}
+.bar i{display:block;height:100%;background:var(--tab);width:0;transition:width .2s}
+
+/* list */
+main{padding-block:10px 40px}
+.info{border-radius:10px;padding:9px 12px;margin:0 0 8px;font-size:14px;line-height:1.45}
+.info.note{background:var(--note-bg);color:var(--note)}
+.info.gap{background:var(--gap-bg);color:var(--gap)}
+.info.warn{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn);font-weight:600}
+.srcl{font-size:12px;color:var(--mute);margin:0 2px 8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mem{font-size:10.5px;font-weight:800;letter-spacing:.08em;color:#fff;background:var(--tabE);padding:2px 7px;border-radius:5px}
+.list{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.row{display:flex;align-items:stretch;border-top:1px solid var(--line);position:relative}
+.row:first-child{border-top:0}
+.row.cur{background:var(--cur)}
+.row.cur::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--tab)}
+.chk{flex:0 0 48px;display:flex;align-items:flex-start;justify-content:center;padding-top:12px}
+.chk span{width:24px;height:24px;border-radius:50%;border:2px solid var(--leader);display:block;position:relative}
+.row.done .chk span{background:var(--tab);border-color:var(--tab)}
+.row.done .chk span::after{content:"";position:absolute;left:7px;top:3px;width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.bd{flex:1;min-width:0;text-align:left;padding:11px 12px 11px 0;display:block;width:100%}
+.ln{display:grid;grid-template-columns:2.2em 1fr;align-items:baseline}
+.tx{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:6px;min-width:0}
+.no{font-family:var(--mono);font-size:12.5px;color:var(--mute);font-variant-numeric:tabular-nums}
+.no sup{color:var(--tab);font-weight:800;font-size:11px;margin-right:1px;vertical-align:1px}
+.ch{flex:0 1 auto;font-size:16px;color:var(--ink)}
+.ld{flex:1 1 18px;min-width:18px;border-bottom:2px dotted var(--leader);transform:translateY(-4px)}
+.rs{flex:0 1 auto;margin-left:auto;text-align:right;font-family:var(--cond);font-weight:800;font-size:16px;color:var(--resp);letter-spacing:.01em}
+.row.done .ch,.row.done .rs{color:var(--done)}
+.row.done .rs{text-decoration:line-through;text-decoration-thickness:1.5px}
+body.hide .rs{color:transparent!important;background:var(--line);border-radius:5px;min-width:64px;text-decoration:none!important;user-select:none}
+body.hide .rs.peek{color:var(--resp)!important;background:transparent}
+.sub .ln{grid-template-columns:3em 1fr}.sub .no{padding-left:.9em}.sub .meta{margin-left:3em}
+.meta{display:flex;gap:8px;margin:5px 0 0 2.2em;align-items:center;min-width:0}
+.mp{min-width:0;flex:1;font-size:13px;color:var(--memo);background:var(--memo-bg);border-radius:6px;padding:2px 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.nopre .mp{flex:0 0 auto;max-width:none}
+.wi{display:inline-block;margin-left:5px;font-size:11px;font-weight:800;color:var(--mute);border:1px solid var(--leader);border-radius:50%;width:16px;height:16px;line-height:14px;text-align:center;vertical-align:1px;font-family:var(--sans)}
+.wy{flex:0 0 auto;font-size:11.5px;font-weight:700;color:var(--mute);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+.grp{background:var(--bg);border-top:1px solid var(--line);padding:9px 14px 7px;font-size:12.5px;font-weight:800;letter-spacing:.04em;color:var(--mute);display:flex;gap:8px;align-items:center}
+.grp:first-child{border-top:0}
+.grp b{color:var(--ink)}
+.grp .wy{margin-left:auto}
+.grp.hd{font-size:14px;color:var(--head)}
+.tbl{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tbl .cap{font-size:13px;font-weight:700;padding:9px 12px;color:var(--mute);border-bottom:1px solid var(--line)}
+.tbl table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{padding:7px 12px;text-align:left;font-size:14px;border-top:1px solid var(--line)}
+.tbl th{font-size:12px;color:var(--mute);border-top:0}
+.tbl td:last-child{font-weight:800;color:var(--resp);text-align:right}
+.tbl th:last-child{text-align:right}
+.foot{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.next{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--tab);color:#fff;border-radius:12px;padding:13px 14px}
+body[data-tab="A"] .next{color:#1b1300}
+.next small{display:block;font-size:11.5px;opacity:.85;font-weight:600;letter-spacing:.06em}
+.next b{font-family:var(--cond);font-size:17px}
+.next .ar{margin-left:auto;font-size:22px}
+.reset{align-self:flex-start;font-size:14px;color:var(--mute);padding:8px 2px;text-decoration:underline;text-underline-offset:3px}
+.done-all{text-align:center;font-size:14px;color:var(--tab);font-weight:700;padding:6px 0 0}
+
+/* sheets */
+.shade{position:fixed;inset:0;background:var(--shade);z-index:40;opacity:0;transition:opacity .18s}
+.shade.on{opacity:1}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:var(--card);border-radius:16px 16px 0 0;max-height:88dvh;overflow:auto;
+  padding:8px max(16px,env(safe-area-inset-left,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-right,0px));
+  transform:translateY(100%);transition:transform .22s ease;box-shadow:0 -8px 30px rgba(0,0,0,.2)}
+.sheet.on{transform:none}
+@media (prefers-reduced-motion:reduce){.sheet,.shade,.bar i{transition:none}}
+@media (min-width:700px){.sheet{left:50%;right:auto;width:640px;transform:translate(-50%,100%)}.sheet.on{transform:translate(-50%,0)}}
+.grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:2px auto 10px}
+.sh-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.sh-top .x{margin-left:auto}
+.sh-k{font-size:12px;color:var(--mute);font-weight:600}
+.sh-ch{font-size:19px;font-weight:700;color:var(--head);margin:2px 0 4px;line-height:1.3}
+.sh-rs{font-family:var(--cond);font-size:22px;font-weight:800;color:var(--resp);margin-bottom:10px;line-height:1.25}
+.sh-why{background:var(--note-bg);color:var(--note);border-radius:10px;padding:10px 12px;font-size:15px;line-height:1.5;margin-bottom:12px}
+.sh-why b{display:block;font-size:12px;letter-spacing:.06em;margin-bottom:2px}
+label.ml{display:block;font-size:13px;font-weight:700;color:var(--mute);margin-bottom:5px}
+textarea{width:100%;min-height:96px;max-height:40dvh;resize:vertical;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:16px;padding:10px 12px;line-height:1.45}
+.saved{font-size:12px;color:var(--mute);margin:5px 2px 12px;min-height:1em}
+.sh-nav{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:8px}
+.sh-nav button{height:46px;border-radius:11px;border:1px solid var(--line);background:var(--bg);font-weight:700;font-size:14px}
+.sh-nav .go{background:var(--tab);border-color:var(--tab);color:#fff}
+body[data-tab="A"] .sh-nav .go{color:#1b1300}
+.sh-nav button:disabled{opacity:.35}
+.plist h3{font-size:12px;letter-spacing:.08em;color:var(--mute);margin:12px 0 6px}
+.pi{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:11px 10px;border-radius:10px;border:1px solid transparent}
+.pi.on{border-color:var(--tab);background:var(--cur)}
+.pi .ix{font-family:var(--mono);font-size:12px;color:var(--mute);width:22px}
+.pi .tt{flex:1;min-width:0;font-weight:700;font-size:15px}
+.pi .tt small{display:block;font-weight:500;font-size:12px;color:var(--mute)}
+.pi .pr{font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums}
+.pi .pr.full{color:var(--tab);font-weight:800}
+.set h3{font-size:12px;letter-spacing:.08em;color:var(--mute);margin:16px 0 6px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seg button,.wide{height:42px;border-radius:10px;border:1px solid var(--line);background:var(--bg);font-weight:700;font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.wide{width:100%;margin-bottom:8px}
+.wide.danger{color:var(--warn)}
+.tg{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;font-size:15px}
+.tg input{width:22px;height:22px;accent-color:var(--tab)}
+.fine{font-size:12.5px;color:var(--mute);line-height:1.5}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:10px;font-size:14px;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+</style>
+</head>
+<body data-tab="N">
+<header>
+  <div class="gut">
+    <div class="top">
+      <span class="brand">Sunny Air · King Air C90A</span><span class="sp"></span>
+      <button class="ibtn" id="hideBtn" aria-pressed="false" type="button">응답 가리기</button>
+      <button class="ibtn" id="setBtn" type="button" aria-label="설정">설정</button>
+    </div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="proc">
+      <button class="nav" id="prevP" type="button" aria-label="이전 절차">‹</button>
+      <button class="pick" id="pick" type="button" aria-haspopup="dialog">
+        <div class="k" id="pickK"></div>
+        <div class="n"><span id="pickN"></span><span class="car">▼</span></div>
+      </button>
+      <button class="nav" id="nextP" type="button" aria-label="다음 절차">›</button>
+    </div>
+  </div>
+  <div class="bar"><i id="barI"></i></div>
+</header>
+<main class="gut" id="main"></main>
+
+<div class="shade" id="shade" hidden></div>
+<section class="sheet" id="itemSheet" role="dialog" aria-modal="true" aria-label="항목 상세" hidden>
+  <div class="grab"></div>
+  <div class="sh-top"><span class="sh-k" id="shK"></span><button class="ibtn x" type="button" data-close>닫기</button></div>
+  <div class="sh-ch" id="shCh"></div>
+  <div class="sh-rs" id="shRs"></div>
+  <div class="sh-why" id="shWhy" hidden><b>왜?</b><span></span></div>
+  <label class="ml" for="memo">내 메모</label>
+  <textarea id="memo" placeholder="예: 들어서 올리는 토글"></textarea>
+  <div class="saved" id="saved"></div>
+  <div class="sh-nav">
+    <button type="button" id="shPrev">‹ 이전</button>
+    <button type="button" id="shNext">다음 ›</button>
+    <button type="button" class="go" id="shCheck">체크하고 다음</button>
+  </div>
+</section>
+<section class="sheet plist" id="procSheet" role="dialog" aria-modal="true" aria-label="절차 선택" hidden>
+  <div class="grab"></div>
+  <div class="sh-top"><b id="plTitle">절차</b><button class="ibtn x" type="button" data-close>닫기</button></div>
+  <div id="plBody"></div>
+</section>
+<section class="sheet set" id="setSheet" role="dialog" aria-modal="true" aria-label="설정" hidden>
+  <div class="grab"></div>
+  <div class="sh-top"><b>설정</b><button class="ibtn x" type="button" data-close>닫기</button></div>
+  <h3>화면</h3>
+  <div class="seg" id="themeSeg">
+    <button type="button" data-v="auto">자동</button><button type="button" data-v="light">밝게</button><button type="button" data-v="dark">어둡게</button>
+  </div>
+  <label class="tg">목록에 메모 한 줄 미리보기 <input type="checkbox" id="preTg"></label>
+  <h3>메모 백업</h3>
+  <p class="fine">메모와 체크는 이 기기의 이 앱 안에만 저장됩니다. 아이폰에서는 Safari와 홈 화면 앱의 저장 공간이 서로 달라요. 기기를 바꾸거나 앱을 지우기 전에 파일로 저장해 두세요.</p>
+  <button class="wide" type="button" id="expBtn">메모를 파일로 저장</button>
+  <button class="wide" type="button" id="impBtn">메모 파일 불러오기</button>
+  <input type="file" id="impFile" accept="application/json,.json" hidden>
+  <h3>체크</h3>
+  <button class="wide danger" type="button" id="resetAll">모든 절차의 체크 지우기</button>
+  <h3>정보</h3>
+  <p class="fine" id="about"></p>
+  <p class="fine"><a href="../" style="color:var(--tab)">King Air C90A 핵심 요약 열기</a></p>
+</section>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  "use strict";
+  var KEY="c90a-checklist-v1";
+  var S={memos:{},checks:{},last:null,prefs:{theme:"auto",preview:true,hide:false}};
+  try{var raw=localStorage.getItem(KEY); if(raw){var o=JSON.parse(raw); S.memos=o.memos||{}; S.checks=o.checks||{}; S.last=o.last||null; S.prefs=Object.assign(S.prefs,o.prefs||{});}}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){toast("이 기기에 저장할 수 없습니다");}}
+
+  var D=window.CL, P=D.procs, byId={};
+  P.forEach(function(p,i){p.ix=i; byId[p.id]=p; p.items.forEach(function(it,j){
+    it.k=j+":"+it[0]+":"+it[1]; it.head=it[2]===null; });});
+  var cur=(S.last&&byId[S.last.proc])?byId[S.last.proc]:P[0];
+  var $=function(id){return document.getElementById(id);};
+  var main=$("main");
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function tabProcs(t){return P.filter(function(p){return p.tab===t;});}
+  function checkable(p){return p.items.filter(function(it){return !it.head;});}
+  function checks(p){return S.checks[p.id]||(S.checks[p.id]={});}
+  function memo(p,it){return (S.memos[p.id]||{})[it.k]||"";}
+  function count(p){var c=checks(p),n=0,t=checkable(p); t.forEach(function(it){if(c[it.k])n++;}); return [n,t.length];}
+  function numHTML(n){var m=/^([*+]?)(.*)$/.exec(n); return (m[1]?"<sup>"+m[1]+"</sup>":"")+esc(m[2]);}
+  function isSub(n){return /^[*+]?[a-z]$/.test(n);}
+
+  /* theme & prefs */
+  function applyPrefs(){
+    var r=document.documentElement; if(S.prefs.theme==="auto") r.removeAttribute("data-theme"); else r.setAttribute("data-theme",S.prefs.theme);
+    [].forEach.call($("themeSeg").children,function(b){b.setAttribute("aria-pressed",String(b.dataset.v===S.prefs.theme));});
+    document.body.classList.toggle("hide",!!S.prefs.hide); $("hideBtn").setAttribute("aria-pressed",String(!!S.prefs.hide));
+    $("preTg").checked=!!S.prefs.preview; document.body.classList.toggle("nopre",!S.prefs.preview);
+  }
+
+  /* tabs */
+  D.tabs.forEach(function(t){var b=document.createElement("button"); b.type="button"; b.setAttribute("role","tab"); b.dataset.t=t.id; b.textContent=t.name;
+    b.addEventListener("click",function(){ if(cur.tab===t.id) return; var lastIn=(S.lastTab||{})[t.id]; go(byId[lastIn]||tabProcs(t.id)[0],0);}); $("tabs").appendChild(b);});
+
+  function render(){
+    document.body.dataset.tab=cur.tab;
+    [].forEach.call($("tabs").children,function(b){b.setAttribute("aria-selected",String(b.dataset.t===cur.tab));});
+    var list=tabProcs(cur.tab), pos=list.indexOf(cur);
+    $("pickK").textContent=(pos+1<10?"0":"")+(pos+1)+" / "+list.length+(cur.sub?" · "+cur.sub:"");
+    $("pickN").textContent=cur.t;
+    $("prevP").disabled=pos===0; $("nextP").disabled=pos===list.length-1;
+    var c=checks(cur), h="";
+    if(cur.warn) h+='<div class="info warn">'+esc(cur.warn)+'</div>';
+    if(cur.gap) h+='<div class="info gap">'+esc(cur.gap)+'</div>';
+    if(cur.note) h+='<div class="info note">'+esc(cur.note)+'</div>';
+    h+='<div class="srcl">'+(cur.memory?'<span class="mem">MEMORY ITEM</span>':'')+'<span>출처: '+esc(cur.src)+'</span></div>';
+    h+='<div class="list">';
+    var firstOpen=null;
+    cur.items.forEach(function(it,j){
+      if(it.head){
+        h+='<div class="grp'+(it[0]===""?" hd":"")+'" data-j="'+j+'">'+(it[0]?'<span class="no">'+numHTML(it[0])+'</span>':'')+'<b>'+esc(it[1])+'</b>'+((it[3]||memo(cur,it))?'<button type="button" class="wy" data-open="'+j+'">'+(memo(cur,it)?'메모':'왜?')+'</button>':'')+'</div>';
+        return;
+      }
+      var d=!!c[it.k]; if(!d&&firstOpen===null) firstOpen=j;
+      var m=memo(cur,it);
+      h+='<div class="row'+(d?' done':'')+(isSub(it[0])?' sub':'')+'" data-j="'+j+'">'+
+        '<button type="button" class="chk" data-chk="'+j+'" aria-label="'+esc(it[1])+' 체크" aria-pressed="'+d+'"><span></span></button>'+
+        '<button type="button" class="bd" data-open="'+j+'"><div class="ln"><span class="no">'+numHTML(it[0])+'</span><span class="tx"><span class="ch">'+esc(it[1])+(it[3]?'<span class="wi" aria-label="설명 있음">i</span>':'')+'</span>'+(it[2]==='—'?'':'<span class="ld"></span><span class="rs" data-peek>'+esc(it[2])+'</span>')+'</span></div>'+
+        (m?'<div class="meta"><span class="mp">✎ '+(S.prefs.preview?esc(m.split("\n")[0]):'메모 있음')+'</span></div>':'')+
+        '</button></div>';
+    });
+    h+='</div>';
+    if(cur.table){h+='<div class="tbl"><div class="cap">'+esc(cur.table.cap)+'</div><table><tr>'+cur.table.head.map(function(x){return '<th>'+esc(x)+'</th>';}).join("")+'</tr>'+
+      cur.table.rows.map(function(r){return '<tr>'+r.map(function(x){return '<td>'+esc(x)+'</td>';}).join("")+'</tr>';}).join("")+'</table></div>';}
+    var cn=count(cur), nxt=list[pos+1];
+    h+='<div class="foot">';
+    if(cn[0]===cn[1]&&cn[1]>0) h+='<div class="done-all">'+esc(cur.t)+' 완료</div>';
+    if(nxt) h+='<button type="button" class="next" id="goNext"><span><small>다음 절차</small><b>'+esc(nxt.t)+'</b></span><span class="ar">›</span></button>';
+    h+='<button type="button" class="reset" id="resetCur">이 절차 체크 지우기</button></div>';
+    main.innerHTML=h;
+    if(firstOpen!==null){var r=main.querySelector('.row[data-j="'+firstOpen+'"]'); if(r) r.classList.add("cur");}
+    $("barI").style.width=(cn[1]?cn[0]/cn[1]*100:0)+"%";
+    if($("goNext")) $("goNext").addEventListener("click",function(){go(nxt,0);});
+    $("resetCur").addEventListener("click",function(){S.checks[cur.id]={}; save(); render(); toast("체크를 지웠습니다");});
+  }
+
+  function go(p,y){
+    cur=p; S.lastTab=S.lastTab||{}; S.lastTab[p.tab]=p.id; S.last={proc:p.id,y:y||0}; save(); render();
+    window.scrollTo(0,y||0);
+  }
+
+  /* list interactions */
+  main.addEventListener("click",function(e){
+    var c=e.target.closest("[data-chk]");
+    if(c){ toggle(+c.dataset.chk); return; }
+    if(document.body.classList.contains("hide")){var pk=e.target.closest("[data-peek]"); if(pk&&!pk.classList.contains("peek")){pk.classList.add("peek"); return;}}
+    var o=e.target.closest("[data-open]"); if(o) openItem(+o.dataset.open);
+  });
+  function toggle(j){var it=cur.items[j], c=checks(cur); if(c[it.k]) delete c[it.k]; else c[it.k]=1; save(); var y=window.scrollY; render(); window.scrollTo(0,y);
+    if(navigator.vibrate) try{navigator.vibrate(8);}catch(e){} }
+
+  /* sheets */
+  var openSheet=null;
+  function show(sh){ if(openSheet) hide(true); openSheet=sh; $("shade").hidden=false; sh.hidden=false;
+    requestAnimationFrame(function(){$("shade").classList.add("on"); sh.classList.add("on");}); }
+  function hide(fast){ var sh=openSheet; if(!sh) return; openSheet=null; $("shade").classList.remove("on"); sh.classList.remove("on");
+    var done=function(){ if(!openSheet){$("shade").hidden=true;} if(openSheet!==sh) sh.hidden=true; };
+    if(fast) done(); else setTimeout(done,230);
+    if(sh===$("itemSheet")){ var y=window.scrollY; render(); window.scrollTo(0,y);} }
+  $("shade").addEventListener("click",function(){hide();});
+  [].forEach.call(document.querySelectorAll("[data-close]"),function(b){b.addEventListener("click",function(){hide();});});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape") hide();});
+
+  var sj=0, saveT;
+  function openItem(j){ sj=j; fillItem(); show($("itemSheet")); }
+  function fillItem(){
+    var it=cur.items[sj];
+    $("shK").textContent=cur.t+(it[0]?" · "+it[0].replace(/^[*+]/,""):"")+(/^[*+]/.test(it[0])?"  ("+(it[0][0]==="*"?"첫 비행 이후 생략 가능":"첫 비행 이후 수행")+")":"");
+    $("shCh").textContent=it[1]; $("shRs").textContent=it.head?"":it[2]; $("shRs").hidden=it.head;
+    $("shWhy").hidden=!it[3]; $("shWhy").querySelector("span").textContent=it[3]||"";
+    $("memo").value=memo(cur,it); $("saved").textContent=memo(cur,it)?"저장됨 · 이 기기":"";
+    var prev=neighbor(-1), next=neighbor(1);
+    $("shPrev").disabled=prev===null; $("shNext").disabled=next===null;
+    var done=!!checks(cur)[it.k];
+    $("shCheck").hidden=it.head; $("shCheck").textContent=done?"체크 해제":(next===null?"체크":"체크하고 다음");
+  }
+  function neighbor(d){for(var j=sj+d;j>=0&&j<cur.items.length;j+=d){if(!cur.items[j].head) return j;} return null;}
+  function storeMemo(){var it=cur.items[sj], v=$("memo").value.replace(/\s+$/,""); S.memos[cur.id]=S.memos[cur.id]||{};
+    if(v) S.memos[cur.id][it.k]=v; else delete S.memos[cur.id][it.k]; save(); $("saved").textContent=v?"저장됨 · 이 기기":"메모 없음";}
+  $("memo").addEventListener("input",function(){$("saved").textContent="입력 중…"; clearTimeout(saveT); saveT=setTimeout(storeMemo,350);});
+  $("memo").addEventListener("blur",storeMemo);
+  $("shPrev").addEventListener("click",function(){storeMemo(); var p=neighbor(-1); if(p!==null){sj=p; fillItem();}});
+  $("shNext").addEventListener("click",function(){storeMemo(); var n=neighbor(1); if(n!==null){sj=n; fillItem();}});
+  $("shCheck").addEventListener("click",function(){storeMemo(); var it=cur.items[sj], c=checks(cur);
+    if(c[it.k]){delete c[it.k]; save(); fillItem(); return;}
+    c[it.k]=1; save(); var n=neighbor(1); if(n===null){hide(); return;} sj=n; fillItem();});
+
+  /* procedure picker */
+  function openPicker(){
+    var t=D.tabs.filter(function(x){return x.id===cur.tab;})[0];
+    $("plTitle").textContent=t.name+" · "+t.ko;
+    var h=""; tabProcs(cur.tab).forEach(function(p,i){var cn=count(p);
+      h+='<button type="button" class="pi'+(p===cur?' on':'')+'" data-p="'+p.id+'"><span class="ix">'+(i+1<10?"0":"")+(i+1)+'</span><span class="tt">'+esc(p.t)+(p.sub?'<small>'+esc(p.sub)+'</small>':'')+'</span>'+
+      (p.memory?'<span class="mem">M</span>':'')+'<span class="pr'+(cn[0]===cn[1]&&cn[1]?' full':'')+'">'+cn[0]+'/'+cn[1]+'</span></button>';});
+    $("plBody").innerHTML=h; show($("procSheet"));
+    var on=$("plBody").querySelector(".on"); if(on) on.scrollIntoView({block:"center"});
+  }
+  $("plBody").addEventListener("click",function(e){var b=e.target.closest("[data-p]"); if(!b) return; hide(true); go(byId[b.dataset.p],0);});
+  $("pick").addEventListener("click",openPicker);
+  $("prevP").addEventListener("click",function(){var l=tabProcs(cur.tab),i=l.indexOf(cur); if(i>0) go(l[i-1],0);});
+  $("nextP").addEventListener("click",function(){var l=tabProcs(cur.tab),i=l.indexOf(cur); if(i<l.length-1) go(l[i+1],0);});
+  $("hideBtn").addEventListener("click",function(){S.prefs.hide=!S.prefs.hide; save(); applyPrefs(); var y=window.scrollY; render(); window.scrollTo(0,y);});
+
+  /* settings */
+  $("setBtn").addEventListener("click",function(){show($("setSheet"));});
+  $("themeSeg").addEventListener("click",function(e){var b=e.target.closest("[data-v]"); if(!b) return; S.prefs.theme=b.dataset.v; save(); applyPrefs();});
+  $("preTg").addEventListener("change",function(){S.prefs.preview=this.checked; save(); applyPrefs(); render();});
+  $("resetAll").addEventListener("click",function(){
+    if(this.dataset.arm!=="1"){this.dataset.arm="1"; this.textContent="한 번 더 누르면 모두 지워집니다"; var b=this; setTimeout(function(){b.dataset.arm=""; b.textContent="모든 절차의 체크 지우기";},3000); return;}
+    S.checks={}; save(); render(); hide(); toast("모든 체크를 지웠습니다");});
+  $("expBtn").addEventListener("click",function(){
+    var data=JSON.stringify({app:"c90a-checklist",version:D.version,saved:new Date().toISOString(),memos:S.memos},null,1);
+    var blob=new Blob([data],{type:"application/json"}), name="C90A_메모_"+new Date().toISOString().slice(0,10)+".json";
+    try{var f=new File([blob],name,{type:"application/json"});
+      if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:name}).catch(function(){}); return;}}catch(e){}
+    var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},1000);
+  });
+  $("impBtn").addEventListener("click",function(){$("impFile").click();});
+  $("impFile").addEventListener("change",function(){var f=this.files[0]; if(!f) return; var r=new FileReader();
+    r.onload=function(){try{var o=JSON.parse(r.result); if(!o.memos) throw 0; var n=0;
+      Object.keys(o.memos).forEach(function(pid){S.memos[pid]=S.memos[pid]||{}; Object.keys(o.memos[pid]).forEach(function(k){S.memos[pid][k]=o.memos[pid][k]; n++;});});
+      save(); render(); hide(); toast("메모 "+n+"개를 불러왔습니다");}catch(e){toast("메모 백업 파일이 아닙니다");}};
+    r.readAsText(f); this.value="";});
+  var nN=tabProcs("N").length,nA=tabProcs("A").length,nE=tabProcs("E").length;
+  $("about").textContent="데이터 "+D.version+" · NORMAL "+nN+" · ABNORMAL "+nA+" · EMERGENCY "+nE+"개 절차. NORMAL은 회사 교안(POH N-1~N-18), ABNORMAL·EMERGENCY는 Burger C90A 체크리스트 v1.4와 C90A/B Workbook 기준이며 각 절차에 출처를 표시했습니다. 최종 기준은 기체별 POH/AFM과 회사 SOP입니다.";
+
+  var tt; function toast(m){var t=$("toast"); t.textContent=m; t.classList.add("on"); clearTimeout(tt); tt=setTimeout(function(){t.classList.remove("on");},1800);}
+
+  /* remember where I stopped */
+  var st; window.addEventListener("scroll",function(){clearTimeout(st); st=setTimeout(function(){S.last={proc:cur.id,y:Math.round(window.scrollY)}; save();},250);},{passive:true});
+  function park(){S.last={proc:cur.id,y:Math.round(window.scrollY)}; save();}
+  document.addEventListener("visibilitychange",function(){if(document.hidden) park();});
+  window.addEventListener("pagehide",park);
+
+  applyPrefs(); render();
+  var y0=(S.last&&S.last.proc===cur.id)?S.last.y:0;
+  if(y0){ requestAnimationFrame(function(){window.scrollTo(0,y0);}); }
+
+  if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}
+})();
+</script>
+</body>
+</html>
