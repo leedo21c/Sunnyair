@@ -1,0 +1,122 @@
+/* King Air E90 NORMAL OPERATIONS CHECKLIST (회사 카드 사진에서 옮김)
+   항목: [번호, CHALLENGE, RESPONSE, 이유(선택)]  RESPONSE가 null이면 조건 줄 */
+window.CL = {
+  version: "2026-10-29",
+  key: "e90-checklist-v1",
+  about: "회사 E-90 NORMAL OPERATIONS CHECKLIST 카드(사진)를 그대로 옮겼습니다. 카드에 없는 비정상·비상 절차는 넣지 않았습니다. ⓘ 설명은 학습용 참고이며, 최종 기준은 HL5239 AFM과 회사 SOP입니다.",
+  tabs: [ { id: "N", name: "NORMAL", ko: "정상" } ],
+  procs: [
+  { id: "before-start", tab: "N", t: "BEFORE STARTING ENGINES", src: "회사 E-90 카드",
+    items: [
+    ["1","Cabin Door","LOCKED","스텝을 올리고 잠금 표시를 눈으로 확인. 문은 승무원이 닫고 잠근다."],
+    ["2","Emergency Exit","SECURE"],
+    ["3","Control Locks","REMOVED"],
+    ["4","Belts/Harnesses","FASTENED"],
+    ["5","Parking Brakes","SET"],
+    ["6","Switches","OFF","전원을 넣기 전 스위치를 정리해 시동 시 불필요한 전기 부하와 오작동을 막는다."],
+    ["7","Camera/Sensor Power","OFF","임무 장비는 시동 중 전압 변동에서 보호하기 위해 꺼 두고, 시동 후 After Start에서 켠다."],
+    ["8","Landing Gear","DOWN","전원 넣기 전에 기어 핸들 위치 확인."],
+    ["9","Power Levers","IDLE"],
+    ["10","Prop Levers","FWD"],
+    ["11","Condition Levers","CUTOFF","연료는 시동 중 N1이 충분히 오른 뒤에만 넣는다."],
+    ["12","Cabin Temp Mode","OFF","시동 중 공조 부하를 없애 배터리 시동 전력을 최대로."],
+    ["13","Vent Blower","AUTO"],
+    ["14","Elec Heat","OFF"],
+    ["15","Circuit Breakers","IN"],
+    ["16","Pilots Static Source","NORMAL","ALTERNATE면 속도·고도 지시에 보정이 필요."],
+    ["17","Fuel Firewall Valves","OPEN","닫혀 있으면 엔진으로 연료가 가지 않는다."],
+    ["18","Hot battery Bus","CHECK","배터리 스위치와 무관하게 살아 있는 버스(소화기, Boost pump·Crossfeed 비상전원 등)."],
+    ["19","Crossfeed","CLOSED"],
+    ["20","Fuel Quantity","CHECK"],
+    ["21","DC/VOLT/Loadmeters","CHECK"],
+    ["22","Annunciators","TEST","경고등이 안 들어오면 그 계통은 비행 중 고장을 알려주지 못한다."],
+    ["23","LDG Test Switch","TEST"],
+    ["24","Beacon","ON"],
+    ["25","Engines","START"],
+    ["26","Time","CHECK"]
+  ]},
+  { id: "after-start", tab: "N", t: "AFTER START / TAXI", src: "회사 E-90 카드",
+    items: [
+    ["1","Inverter","ON","AC 계기·항전 전원. 고장 시 다른 인버터 선택."],
+    ["2","DC Volts/Loadmeters","CHECK","두 발전기가 정상 전압을 내고 부하를 비슷하게 나누는지."],
+    ["3","Avionics Master","ON","시동과 전압 변동이 끝난 뒤에 항전 전원."],
+    ["4","Fuel Control Heat","ON"],
+    ["5","Sensor/Camera PWR","ON"],
+    ["6","Engine Instruments","CHECK"],
+    ["7","Annunciator Lights","CHECK"],
+    ["8","Aux Fuel Transfer","ON"],
+    ["9","Aux Empty Lights","PRESS TO TEST"],
+    ["10","Ipad","RECHARGED"]
+  ]},
+  { id: "runup", tab: "N", t: "BEFORE TAKEOFF / RUNUP", src: "회사 E-90 카드",
+    items: [
+    ["1","FLT Controls/Fuel Caps","CHECK","조종면은 자유롭게, 올바른 방향으로 움직이는지 눈으로."],
+    ["2","Electric Trim","CHECK","트림 폭주를 이륙 전에 발견."],
+    ["3","Trim Tabs","SET"],
+    ["4","Flaps","CHECK/0° SET"],
+    ["5","Gyro/Pneumatic Press","CHECK/HI IDLE","공압·진공은 엔진 블리드에서 나오므로 N1을 올린 HIGH IDLE에서 확인한다."],
+    ["6","Ice Protection","CHECK"],
+    ["7","Fuel Quantity","CHECK"],
+    ["8","Manual Feathering","CHECK","레버를 FEATHER로 당겨 블레이드가 실제로 움직이는지. 엔진 고장 때 항력을 없애는 핵심 기능."],
+    ["9","Engine Instruments","CHECK"],
+    ["10","FLT Instruments","CHECK"]
+  ]},
+  { id: "lineup", tab: "N", t: "LINEUP (FINAL ITEMS)", src: "회사 E-90 카드",
+    items: [
+    ["1","Transponder","ALT"],
+    ["2","Exterior Lights","ON"],
+    ["3","T/O Clearance","RECEIVED","Line up and wait와 Cleared for takeoff를 구분해서 복창."],
+    ["4","Time","CHECK"]
+  ]},
+  { id: "after-to", tab: "N", t: "AFTER T/O", src: "회사 E-90 카드",
+    items: [
+    ["1","Landing Gear","UP"],
+    ["2","Landing Lights","OFF"],
+    ["3","Flaps","UP"],
+    ["4","Climb Power","SET"],
+    ["5","Prop","SET"],
+    ["6","Engine Instruments","CHECK"],
+    ["7","Prop Sync","ON"],
+    ["","(IFR → VFR)",null,"IFR 출항 후 VFR 임무로 전환할 때 ATC가 지정한 코드로 바꾼다."],
+    ["8","Transponder","CHANGE"],
+    ["","(FL140 / Transition Altitude)",null,"국내 전이고도 14,000 ft. 통과하며 표준기압 29.92로 맞춘다."],
+    ["9","Altimeter","29.92 SET"]
+  ]},
+  { id: "before-landing", tab: "N", t: "BEFORE LANDING", src: "회사 E-90 카드",
+    items: [
+    ["1","Landing Gear","DOWN","3 green 확인."],
+    ["2","Flaps","FULL"],
+    ["3","Props","FORWARD","복행 시 바로 최대 출력을 쓰고, 착지 후 Reverse가 제대로 작동하게."],
+    ["4","Prop Sync","OFF"],
+    ["5","Lights","ON"],
+    ["6","Trim","SET"],
+    ["7","Annunciators","CHECK"]
+  ]},
+  { id: "after-landing", tab: "N", t: "AFTER LANDING", src: "회사 E-90 카드",
+    items: [
+    ["1","Time","CHECK"],
+    ["2","Ice Protection","OFF"],
+    ["3","Props","FULL FORWARD"],
+    ["4","Flaps & Trim","SET"],
+    ["5","Transponder","OFF"],
+    ["6","L/D & Strobe","OFF"]
+  ]},
+  { id: "shutdown", tab: "N", t: "SHUTDOWN AND SECURING", src: "회사 E-90 카드",
+    items: [
+    ["1","Parking Brake","SET"],
+    ["2","Avionics","OFF"],
+    ["3","Camera/Sensor Power","OFF"],
+    ["4","Inverter","OFF"],
+    ["5","Fuel Control Heat","OFF"],
+    ["6","Condition Levers","CUT OFF","엔진을 끄기 전 ITT를 충분히 식힌 뒤(회사 SOP·AFM 기준)."],
+    ["7","Props","FEATHERED"],
+    ["8","DC Volts/Loadmeters","CHECK"],
+    ["9","Overhead Panel Switches","OFF"],
+    ["10","Lights","OFF"],
+    ["11","Gang Bar","DOWN","배터리·발전기 스위치를 한 번에 끈다."],
+    ["12","Time","CHECK"],
+    ["13","Headset","OFF"],
+    ["14","Parking Brake","RELEASE"]
+  ]}
+  ]
+};

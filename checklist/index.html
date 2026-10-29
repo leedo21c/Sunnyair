@@ -40,6 +40,7 @@
   --warn-bg:#2c1513; --warn:#ff8f86; --note-bg:#16261e; --note:#9fd8b7;
   --done:#5b6862; --cur:#1b2a23; --shade:rgba(0,0,0,.6); color-scheme:dark}
 body[data-tab="A"]{--tab:var(--tabA)} body[data-tab="E"]{--tab:var(--tabE)}
+[hidden]{display:none!important}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.4;
@@ -233,7 +234,7 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
   <button class="wide danger" type="button" id="resetAll">모든 절차의 체크 지우기</button>
   <h3>정보</h3>
   <p class="fine" id="about"></p>
-  <p class="fine"><a href="../" style="color:var(--tab)">King Air C90A 핵심 요약 열기</a></p>
+  <p class="fine"><a href="../" style="color:var(--tab)">King Air C90A 핵심 요약 열기</a> · <a href="../e90/" style="color:var(--tab)">E90 체크리스트</a></p>
 </section>
 <div class="toast" id="toast" role="status"></div>
 
@@ -241,7 +242,7 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
 <script>
 (function(){
   "use strict";
-  var KEY="c90a-checklist-v1";
+  var KEY=(window.CL&&window.CL.key)||"c90a-checklist-v1";
   var S={memos:{},checks:{},last:null,prefs:{theme:"auto",preview:true,hide:false}};
   try{var raw=localStorage.getItem(KEY); if(raw){var o=JSON.parse(raw); S.memos=o.memos||{}; S.checks=o.checks||{}; S.last=o.last||null; S.prefs=Object.assign(S.prefs,o.prefs||{});}}catch(e){}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){toast("이 기기에 저장할 수 없습니다");}}
@@ -270,6 +271,7 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
   }
 
   /* tabs */
+  if(D.tabs.length<2) $("tabs").hidden=true;
   D.tabs.forEach(function(t){var b=document.createElement("button"); b.type="button"; b.setAttribute("role","tab"); b.dataset.t=t.id; b.textContent=t.name;
     b.addEventListener("click",function(){ if(cur.tab===t.id) return; var lastIn=(S.lastTab||{})[t.id]; go(byId[lastIn]||tabProcs(t.id)[0],0);}); $("tabs").appendChild(b);});
 
@@ -403,7 +405,7 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
       save(); render(); hide(); toast("메모 "+n+"개를 불러왔습니다");}catch(e){toast("메모 백업 파일이 아닙니다");}};
     r.readAsText(f); this.value="";});
   var nN=tabProcs("N").length,nA=tabProcs("A").length,nE=tabProcs("E").length;
-  $("about").textContent="데이터 "+D.version+" · NORMAL "+nN+" · ABNORMAL "+nA+" · EMERGENCY "+nE+"개 절차. NORMAL은 회사 교안(POH N-1~N-18), ABNORMAL·EMERGENCY는 Burger C90A 체크리스트 v1.4와 C90A/B Workbook 기준이며 각 절차에 출처를 표시했습니다. 최종 기준은 기체별 POH/AFM과 회사 SOP입니다.";
+  $("about").textContent=D.about?("데이터 "+D.version+" · "+D.about):"데이터 "+D.version+" · NORMAL "+nN+" · ABNORMAL "+nA+" · EMERGENCY "+nE+"개 절차. NORMAL은 회사 교안(POH N-1~N-18), ABNORMAL·EMERGENCY는 Burger C90A 체크리스트 v1.4와 C90A/B Workbook 기준이며 각 절차에 출처를 표시했습니다. 최종 기준은 기체별 POH/AFM과 회사 SOP입니다.";
 
   var tt; function toast(m){var t=$("toast"); t.textContent=m; t.classList.add("on"); clearTimeout(tt); tt=setTimeout(function(){t.classList.remove("on");},1800);}
 
