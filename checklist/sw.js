@@ -1,5 +1,5 @@
 // 내용을 바꾸면 버전을 올립니다
-const CACHE='c90a-cl-v2';
+const CACHE='c90a-cl-v3';
 const FILES=['./','index.html','data.js','manifest.webmanifest','icon-180.png','icon-192.png','icon-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)));self.skipWaiting();});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('c90a-cl-')&&k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim();});

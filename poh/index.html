@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="C90A LIMIT">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#7d2320">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>C90A 리미테이션</title>
+<style>
+/* 레이아웃: 상단 고정 헤더 + 하단 탭바. 리미트는 '라벨 … 값' 사양표 행, 핵심은 읽기 칼럼, 암기는 카드 한 장 */
+:root{
+  --bg:#f5f3f1; --card:#ffffff; --ink:#1d1b1a; --mute:#6a625e; --line:#e2dcd8;
+  --brand:#7d2320; --brand-ink:#ffffff; --val:#7d2320; --soft:#f7ebe9;
+  --blue:#24518f; --blue-bg:#e8eff9; --amber:#8a5600; --amber-bg:#fff1d6;
+  --green:#1d6a3d; --green-bg:#e3f2e8; --red:#b0261c; --red-bg:#fde9e6;
+  --c208:#1f5f7a; --c208-bg:#e3f0f5;
+  --sans:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Noto Sans CJK KR","Malgun Gothic",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,"DejaVu Sans Mono",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141110; --card:#1e1a19; --ink:#ece6e3; --mute:#a69c97; --line:#352e2c;
+  --brand:#9a2f2a; --val:#ff9d90; --soft:#2c1c1a; --blue:#8fb6f0; --blue-bg:#18243a;
+  --amber:#f2b85a; --amber-bg:#2f230f; --green:#86d4a3; --green-bg:#13291c; --red:#ff8f85; --red-bg:#3a1714;
+  --c208:#7cc6e3; --c208-bg:#13262f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141110; --card:#1e1a19; --ink:#ece6e3; --mute:#a69c97; --line:#352e2c;
+  --brand:#9a2f2a; --val:#ff9d90; --soft:#2c1c1a; --blue:#8fb6f0; --blue-bg:#18243a;
+  --amber:#f2b85a; --amber-bg:#2f230f; --green:#86d4a3; --green-bg:#13291c; --red:#ff8f85; --red-bg:#3a1714;
+  --c208:#7cc6e3; --c208-bg:#13262f; color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;word-break:keep-all;overflow-wrap:anywhere}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--blue)}
+header.top{position:sticky;top:0;z-index:20;background:var(--brand);color:var(--brand-ink);padding:calc(env(safe-area-inset-top,0px) + 10px) max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
+.top .row1{display:flex;align-items:center;gap:10px;max-width:760px;margin:0 auto}
+.top h1{font-size:18px;margin:0;flex:1;line-height:1.25}
+.top h1 small{display:block;font-size:12px;font-weight:500;opacity:.8}
+.hide-btn{border:1px solid rgba(255,255,255,.5);background:transparent;color:#fff;border-radius:999px;padding:5px 11px;font-size:13px;font-weight:700;white-space:nowrap}
+.hide-btn[aria-pressed="true"]{background:#fff;color:var(--brand)}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;max-width:760px;margin:8px auto 0;padding-bottom:9px}
+.chips::-webkit-scrollbar{display:none}
+.chips a{flex:0 0 auto;font-size:13px;font-weight:700;padding:5px 11px;border-radius:999px;color:#fff;text-decoration:none;background:rgba(255,255,255,.14)}
+.chips a:active{background:rgba(255,255,255,.3)}
+main{max-width:760px;margin:0 auto;padding:4px max(16px,env(safe-area-inset-right,0px)) calc(96px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.panel[hidden]{display:none}
+.sec{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 100px)}
+h2{font-size:15px;letter-spacing:.04em;color:var(--brand);margin:22px 0 8px;display:flex;align-items:center;gap:8px}
+:root[data-theme="dark"] h2{color:var(--val)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) h2{color:var(--val)}}
+h2 .cnt{font-size:12px;color:var(--mute);font-weight:600;letter-spacing:0}
+h3{font-size:17px;margin:20px 0 6px;color:var(--ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.r{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:10px 14px;border-bottom:1px solid var(--line);align-items:baseline}
+.r:last-child{border-bottom:none}
+.r .k{font-size:15px;font-weight:600}
+.r .v{font-size:17px;font-weight:800;color:var(--val);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.r .v.wrap{white-space:normal;max-width:12em}
+.r .n{grid-column:1 / -1;font-size:13px;color:var(--mute);line-height:1.45}
+.src{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.04em;border-radius:4px;padding:0 5px;margin-left:6px;vertical-align:2px;border:1px solid currentColor}
+.src.R{color:var(--blue)} .src.A{color:var(--mute)} .src.S{color:var(--amber)}
+body.quiz .r .v{color:transparent;background:var(--soft);border-radius:6px;min-width:4.5em;user-select:none}
+body.quiz .r .v.show{color:var(--val);background:none}
+.tbl{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:12px;color:var(--mute);font-weight:700;white-space:nowrap;background:var(--soft)}
+td.b{font-weight:800;color:var(--val);white-space:nowrap}
+body.quiz td.b{color:transparent;background:var(--soft)}
+body.quiz td.b.show{color:var(--val);background:none}
+tr:last-child td{border-bottom:none}
+.note{font-size:13px;color:var(--mute);margin:6px 2px 0}
+.box{border-radius:10px;padding:11px 13px;margin:10px 0;font-size:15px;background:var(--blue-bg);border-left:4px solid var(--blue)}
+.box b.t{display:block;color:var(--blue);margin-bottom:2px}
+.box.warn{background:var(--red-bg);border-color:var(--red)} .box.warn b.t{color:var(--red)}
+.box.chk{background:var(--amber-bg);border-color:var(--amber)} .box.chk b.t{color:var(--amber)}
+.box.ok{background:var(--green-bg);border-color:var(--green)} .box.ok b.t{color:var(--green)}
+.box ul,.box ol{margin:4px 0 0;padding-left:20px}
+.box li{margin:2px 0}
+.read p{margin:6px 0 10px}
+.read ul,.read ol{margin:4px 0 12px;padding-left:20px}
+.read li{margin:3px 0}
+.proc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:10px 0}
+.proc h4{margin:0 0 6px;font-size:15px}
+.proc h4 .tag{font-size:11px;font-weight:800;color:#fff;background:var(--red);border-radius:4px;padding:1px 6px;margin-right:6px;vertical-align:1px}
+.proc ol{margin:0;padding-left:22px}
+.proc li{margin:2px 0}
+.proc li b{color:var(--val)}
+.proc .why{font-size:13.5px;color:var(--mute);margin-top:6px}
+.fact{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}
+.fact div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 11px}
+.fact b{display:block;font-size:20px;color:var(--val);font-variant-numeric:tabular-nums;line-height:1.2}
+.fact span{font-size:12.5px;color:var(--mute)}
+@media (min-width:600px){.fact{grid-template-columns:repeat(4,minmax(0,1fr))}}
+#c208 h2{color:var(--c208)}
+#c208 .r .v,#c208 td.b,#c208 .fact b{color:var(--c208)}
+#c208 .banner{background:var(--c208-bg);border-left:4px solid var(--c208);border-radius:10px;padding:11px 13px;margin:14px 0 4px;font-size:15px}
+/* 암기 카드 */
+.qbar{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 10px}
+.qbar button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700}
+.qbar button[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
+.flash{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 18px;min-height:230px;display:flex;flex-direction:column;justify-content:center;text-align:center;gap:10px}
+.flash .cat{font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--mute)}
+.flash .q{font-size:22px;font-weight:800;line-height:1.3}
+.flash .a{font-size:30px;font-weight:900;color:var(--val);font-variant-numeric:tabular-nums;min-height:1.3em}
+.flash .a.hid{color:transparent;background:var(--soft);border-radius:10px}
+.flash .n{font-size:13.5px;color:var(--mute)}
+.qact{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.qact button{height:50px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-weight:800;font-size:16px}
+.qact .no{color:var(--red)} .qact .yes{color:var(--green)}
+.qact .rev{grid-column:1 / -1;background:var(--brand);color:#fff;border-color:var(--brand)}
+.qstat{font-size:13px;color:var(--mute);text-align:center;margin-top:10px}
+/* 하단 탭바 */
+nav.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(4,1fr);padding:4px max(6px,env(safe-area-inset-left,0px)) calc(4px + env(safe-area-inset-bottom,0px))}
+nav.tabbar button{border:none;background:none;height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11.5px;font-weight:700;color:var(--mute)}
+nav.tabbar button svg{width:22px;height:22px}
+nav.tabbar button[aria-selected="true"]{color:var(--brand)}
+:root[data-theme="dark"] nav.tabbar button[aria-selected="true"]{color:var(--val)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) nav.tabbar button[aria-selected="true"]{color:var(--val)}}
+nav.tabbar button[data-p="c208"][aria-selected="true"]{color:var(--c208)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.foot{font-size:12.5px;color:var(--mute);margin-top:26px;line-height:1.6}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="row1">
+    <h1 id="ttl">C90A 리미테이션<small id="sub">HL5247 · HL5248 (LJ-1257 · LJ-1289)</small></h1>
+    <button class="hide-btn" id="hideBtn" aria-pressed="false" title="값을 가리고 눌러서 확인">숫자 가리기</button>
+  </div>
+  <div class="chips" id="chips"></div>
+</header>
+
+<main>
+<!-- ============ 1. 리미트 ============ -->
+<section class="panel" id="lim" data-title="C90A 리미테이션" data-sub="HL5247 · HL5248 (LJ-1257 · LJ-1289)">
+  <div class="box chk" style="margin-top:14px"><b class="t">이 탭의 기준</b>
+  Beech C90A 기본 AFM(교재본) + <b>Raisbeck POH/AFM 보충판 05-206CGW Rev B</b>. 두 기체 모두 LJ-1138 이후·LJ-1542 이전이고, 보충판이 기본 AFM보다 우선합니다. 출처 표시: <span class="src R">RAIS</span> 보충판, <span class="src A">AFM</span> 기본 AFM, <span class="src S">교재</span> Workbook·FSI 가이드.</div>
+  <div id="limBody"></div>
+  <p class="foot">교재 AFM은 C90B(LJ-1353 이후)용 사본이라 일부 값(V<sub>MCA</sub> 80, 프롭 McCauley 4엽 등)이 우리 기체와 다릅니다. 그런 항목은 C90A 교재와 Raisbeck 보충판 값으로 바꿔 적었습니다. 최종 기준은 기체에 비치된 POH/AFM과 회사 SOP입니다.</p>
+</section>
+
+<!-- ============ 2. 추가 핵심 ============ -->
+<section class="panel read" id="core" data-title="POH·AFM 추가 핵심" data-sub="시스템 요약에 없던 것만" hidden>
+
+<div class="sec" id="c-rais">
+<h2>우리 기체는 Raisbeck 개조기</h2>
+<p>회사 POH 파일은 기본 POH가 아니라 <b>Raisbeck 보충판</b>입니다. 이 보충판이 붙은 기체는 아래가 기본 C90A와 다릅니다.</p>
+<div class="fact">
+<div><b>4엽</b><span>Hartzell/Raisbeck Quiet Turbofan 프롭</span></div>
+<div><b>93″</b><span>프롭 직경 (최소 92″)</span></div>
+<div><b>1,750</b><span>순항 권장 RPM (전 순항표 기준)</span></div>
+<div><b>1,100</b><span>지상 안정 운전 최저 RPM</span></div>
+</div>
+<ul>
+<li><b>Dual Aft Body Strakes</b>: 꼬리 아래 핀 1개를 스트레이크 2개로 바꿔 항력을 줄이고 안정성과 V<sub>MCA</sub>를 개선.</li>
+<li><b>지상 프롭 RPM 1,100 미만 안정 운전 금지</b>. 예외는 Feather 상태에서 400 RPM 이하. 금지 범위에서 오래 돌리면 블레이드 피로로 이어집니다. Start 후 체크리스트의 "Prop RPM 1,100 MINIMUM"이 이 한계입니다.</li>
+<li><b>프롭 RPM 그린아크 1,600–2,200</b>(LJ-527~1360). 시스템 요약 앱에 적힌 "3엽 McCauley, 1,800~2,200"은 개조 전 값입니다.</li>
+<li><b>1,600 RPM 순항</b>은 거버너 리깅 변경이 필요한 옵션입니다. 1,750 순항은 옵션 없이 가능합니다.</li>
+<li>증가 총중량(10,350 / 10,500 lb)은 별도 SB(SB-08-BC-01)와 10-ply 타이어가 필요합니다. 두 기체의 등록 최대이륙중량은 <b>4,581 kg = 10,100 lb</b>라서 이 앱은 10,100 lb 기준으로 적었습니다.</li>
+</ul>
+<div class="box warn"><b class="t">Autofeather 아니면 Magicam</b>
+<ul>
+<li><b>Magicam 미장착</b>: Autofeather가 장착·작동·ARM된 상태여야 이륙과 착륙이 가능합니다.</li>
+<li><b>Magicam 장착</b>: 파워레버를 앞으로 둘수록 low-pitch stop을 올려 풍차 항력을 줄입니다. 그래서 Autofeather가 필수가 아니고, V<sub>MCA</sub>를 레드라인(92 KCAS)으로 유지합니다. 페데스탈에 "DO NOT RETARD THROTTLE OF FAILED ENGINE UNTIL PROPELLER IS FEATHERED" 플래카드가 붙습니다.</li>
+<li>어느 쪽이든 <b>고장 엔진 파워레버를 Idle로 빼고 프롭이 풍차 상태면 V<sub>MCA</sub> = 99 KIAS</b>로 올라갑니다.</li>
+</ul></div>
+<div class="box chk"><b class="t">확인할 것</b>HL5247·5248에 Magicam이 달려 있는지, Autofeather를 쓰는지 회사에 물어보세요. 엔진 고장 절차의 손 순서가 달라집니다.</div>
+</div>
+
+<div class="sec" id="c-sim">
+<h2>엔진 고장 연습 (Raisbeck)</h2>
+<ul>
+<li>파워레버를 빼서(throttle cut) 엔진 고장을 흉내 내면 Autofeather가 해제됩니다. 이때 V<sub>MCA</sub>는 Magicam 유무와 상관없이 <b>99 kt</b>.</li>
+<li>그래서 동적 throttle cut은 <b>104 kt 이상</b>에서만 합니다.</li>
+<li>Magicam 장착기에서 이륙 중 엔진이 꺼지면, 고장 엔진 파워레버는 <b>노브 폭 1개 이상 빼지 말고</b> 프롭 레버로 수동 Feather 합니다. 더 빼면 풍차 항력이 커져 V<sub>MCA</sub>가 99 kt가 됩니다.</li>
+<li>Zero thrust 연습(AFM): 파워 약 100 ft-lb, 지상 5,000 ft 이상, 맑은 날에만.</li>
+</ul>
+</div>
+
+<div class="sec" id="c-emer">
+<h2>비상 절차 (Section III)</h2>
+<p>회사 체크리스트의 굵은 글씨(암기 항목)가 우선입니다. 여기서는 AFM의 순서와 숫자를 정리했습니다.</p>
+<div class="fact">
+<div><b>100</b><span>V<sub>XSE</sub></span></div>
+<div><b>108</b><span>V<sub>YSE</sub> · OEI 순항상승</span></div>
+<div><b>182</b><span>Emergency descent</span></div>
+<div><b>125</b><span>Max range glide · 1.8 NM/1,000 ft</span></div>
+</div>
+<div class="proc"><h4><span class="tag">SHUTDOWN</span>Emergency engine shutdown</h4>
+<p class="why" style="margin-top:0">언제: 비명령 토크 증가(레버에 반응 없음) · 공중 엔진 화재 · 공중 엔진 고장</p>
+<ol><li>Condition Lever — <b>FUEL CUT-OFF</b></li><li>Propeller Lever — <b>FEATHER</b></li><li>Fuel Firewall Shutoff Valve — <b>CLOSE</b></li><li>Fire Extinguisher — ACTUATE (장착 시)</li>
+<li>Clean-up: Bleed air · Auto ignition · Boost pump · Transfer pump · Crossfeed · Generator · Autofeather</li><li>Electrical load — 조정</li></ol>
+<p class="why">소화기는 엔진당 1병, 1회용입니다.</p></div>
+<div class="proc"><h4><span class="tag">GROUND</span>Engine fire on ground</h4>
+<ol><li>Condition Lever — <b>FUEL CUT-OFF</b></li><li>Fuel Firewall Valve — CLOSE</li><li>Starter Switch — <b>STARTER ONLY</b> (점화 없이 모터링해 남은 연료와 불길을 배출)</li><li>Boost · Transfer pump — OFF, Crossfeed — CLOSE</li><li>Fire Extinguisher — 필요 시</li></ol></div>
+<div class="proc"><h4><span class="tag">T/O</span>Engine failure during ground roll</h4>
+<ol><li>Power Levers — <b>GROUND FINE</b></li><li>Brakes — <b>MAXIMUM</b></li></ol>
+<p class="why">활주로가 모자라면: Condition 둘 다 Cut-off → Firewall valve Close → Master OFF → Boost pump OFF.</p></div>
+<div class="proc"><h4><span class="tag">T/O</span>Engine failure after lift-off</h4>
+<ol><li>Power — <b>MAX CONTINUOUS</b></li><li>Airspeed — 이륙 속도 이상 유지</li><li>Landing Gear — <b>UP</b></li><li>Propeller (고장 엔진) — <b>FEATHER</b> (Autofeather면 Feather 확인)</li><li>장애물 통과 후 — <b>108 kt</b></li><li>Clean-up: Condition Cut-off · Bleed air · Auto ignition OFF · Firewall valve Close · 펌프·Crossfeed·Generator·Autofeather OFF</li></ol>
+<p class="why">Autofeather를 쓰면 프롭이 완전히 멈출 때까지 고장 엔진 파워레버를 빼지 마세요. 빼면 Autofeather 회로가 끊겨 자동 Feather가 멈춥니다. 최대 성능은 살아 있는 엔진 쪽으로 3–5° bank.</p></div>
+<div class="proc"><h4>V<sub>MCA</sub> 이하에서 엔진 고장</h4>
+<ol><li>살아 있는 엔진 출력을 줄여 방향 유지</li><li>기수를 내려 V<sub>MCA</sub> 위로 가속</li><li>출력 재조정 → Emergency shutdown으로 고장 엔진 정리</li></ol></div>
+<div class="proc"><h4>2nd engine flameout</h4>
+<ol><li>Power Lever — IDLE</li><li>Propeller — <b>DO NOT FEATHER</b></li><li>Condition Lever — FUEL CUT-OFF</li><li>Air start 절차 (Section IIIA)</li></ol>
+<p class="why">엔진이 돌지 않으면 프롭은 Feather에서 풀리지 않습니다. 두 번째 엔진은 재시동을 위해 풍차 상태로 둡니다. 재시동이 안 된다고 판단되면 그때 Feather → 125 kt 활공.</p></div>
+<div class="proc"><h4>Oil pressure low (OIL PRESS)</h4>
+<ol><li>40 psi 미만 확인</li><li>엔진 정지, 또는 최소 출력으로 가장 가까운 공항에 착륙</li></ol>
+<p class="why">40–80 psi(노란 범위)는 남은 비행 동안만 허용, 출력을 최소로.</p></div>
+<div class="proc"><h4>Boost pump failure (FUEL CROSSFEED · FUEL PRESS)</h4>
+<ol><li>Crossfeed 잠깐 닫기 → FUEL PRESS 켜지는 쪽이 고장 → 다시 열기</li><li>고장 Boost pump — OFF</li><li>Crossfeed 닫고 비행하면 출력 요동 감시. 요동 시 출력 감소 · 저고도로 강하 · 연료 냉각 대기</li></ol>
+<p class="why">FUEL PRESS 켜진 채 운전은 엔진 구동 펌프 오버홀 사이 총 10시간까지.</p></div>
+<div class="proc"><h4>Smoke &amp; fumes</h4>
+<ul style="margin:0;padding-left:20px">
+<li><b>공통</b>: 산소 ON → 마스크 착용(객실 20,000 ft 위는 100%) → Cabin temp mode OFF → Vent blower AUTO</li>
+<li><b>전기</b>: Avionics master · 비필수 전기 OFF → 꺼지면 필수 장비만 하나씩 복구. 지속 시 Cabin pressure DUMP, 가장 가까운 공항</li>
+<li><b>여압계통</b>: <b>왼쪽 Bleed 먼저 닫기</b> → 줄면 유지, 안 줄면 왼쪽 열고 오른쪽 닫기</li>
+<li>색깔: 전기 연기는 회색·황갈색에 눈·코가 따가움, 여압계통 연기는 흰색에 덜 자극적</li>
+<li>객실 고도 15,000 ft 이하면 승객 산소 마스크는 내리지 않음</li></ul></div>
+<div class="proc"><h4>Cabin door (CABIN DOOR)</h4>
+<p class="why" style="margin-top:0">비행 중 문을 확인하러 가지 않습니다. 전원 착석·벨트 → 차압을 최저로(가능하면 0) → 가장 가까운 공항.</p></div>
+<div class="proc"><h4>Emergency descent</h4>
+<ol><li>Power — IDLE</li><li>Prop — HIGH RPM</li><li>Flaps — APPROACH</li><li>Gear — DOWN</li><li>Airspeed — <b>182 kt 최대</b></li></ol>
+<p class="why">구조 손상 가능성이 있으면 속도와 기동 하중을 더 줄입니다.</p></div>
+<div class="proc"><h4>Glide (양 엔진 정지)</h4>
+<p class="why" style="margin-top:0">재시동이 안 되는 것을 확인한 뒤 양 프롭 Feather → <b>125 kt</b> → 1,000 ft당 <b>1.8 NM</b> (정풍 10 kt마다 0.2 NM 감소).</p></div>
+<div class="proc"><h4>Spin (비의도)</h4>
+<p class="why" style="margin-top:0">조종간 FULL FORWARD → 스핀 반대 방향 FULL RUDDER → Power IDLE → 회전 멈추면 중립 → 부드럽게 회복. 이 체급은 스핀 시험을 하지 않았습니다.</p></div>
+<div class="box"><b class="t">산소 · 유효 의식 시간 (TUC)</b>
+30,000 ft 1–2분 · 25,000 ft 3–5분 · 22,000 ft 5–10분 · 12–18,000 ft 30분 이상. 지속 비행 권장 최고 객실고도 25,000 ft. 비상 탈출구는 <b>오른쪽 세 번째 객실 창</b>, 여압 중에는 열지 않습니다.</div>
+</div>
+
+<div class="sec" id="c-abn">
+<h2>비정상 절차 (Section IIIA)</h2>
+<h3>Air start</h3>
+<table class="card" style="display:table"><tr><th></th><th>Starter assist</th><th>No starter (windmilling)</th></tr>
+<tr><td>조건</td><td>Feather 또는 풍차</td><td><b>140 kt 이상</b>, <b>20,000 ft 미만</b></td></tr>
+<tr><td>연료 투입</td><td>N1 <b>12%</b> 이상 → Condition LOW IDLE</td><td>Prop HIGH RPM → N1 12% 이상 → LOW IDLE</td></tr>
+<tr><td>감시</td><td>ITT 1,090 °C 최대</td><td>ITT 1,090 °C 최대</td></tr>
+<tr><td>스타터 OFF</td><td>N1 <b>51%</b> 이상</td><td>—</td></tr></table>
+<ul>
+<li>N1이 0이면 재시동하지 않습니다. 원인부터 판단합니다.</li>
+<li>20,000 ft 위에서는 시동이 뜨겁습니다. 필요하면 Condition을 잠깐 Cut-off로 빼서 ITT를 잡습니다.</li>
+<li>살아 있는 엔진 ITT를 레드라인보다 50 °C 낮게 둡니다. Cross-generator 시동은 살아 있는 엔진 ITT를 약 50 °C 올립니다.</li>
+</ul>
+<h3>착륙 관련</h3>
+<ul>
+<li><b>Flaps up landing</b>: 최종접근 <b>115 kt</b>. 플랩 연동 기어 경고가 작동하지 않으니 경고 혼을 끄지 않습니다.</li>
+<li><b>OEI landing</b>: 착륙이 확실해지면 기어 DOWN · 프롭 HIGH RPM, 복행 가능성이 없으면 <b>101 kt</b>. 단발 리버스는 매끈한 마른 포장 활주로에서만 조심해서.</li>
+<li><b>OEI go-around</b>: 최대 허용 출력 · 플랩 UP · 기어 UP. <b>플랩을 완전히 내린 뒤에는 단발 복행을 하지 않습니다.</b></li>
+</ul>
+<h3>연료</h3>
+<ul>
+<li><b>CHIP DETECT</b>: 엔진 계기 감시, 이상하면 정지. 지상 런업 중 켜지면 이륙하지 않습니다.</li>
+<li><b>Nacelle tank 스위치 고장</b>: 나셀 연료가 약 150 lb까지 줄었는데 총량이 그보다 많으면 Transfer pump를 OVERRIDE.</li>
+<li><b>Transfer pump 고장(NO FUEL XFR)</b>: 날개 연료는 중력으로 나셀로 넘어가지만 약 <b>188 lb(28 gal)</b>가 남습니다. 그만큼 사용 가능 연료에서 뺍니다.</li>
+<li><b>Crossfeed</b>는 Boost pump 고장이나 엔진 고장 때만 씁니다.</li>
+</ul>
+<h3>전기</h3>
+<ul>
+<li><b>DC GEN</b>: Reset 후 ON. 안 되면 OFF, 남은 발전기 <b>100% 이하</b>.</li>
+<li><b>GEN TIE OPEN</b>: 부하계 100% 미만이면 Bus sense RESET, 100% 넘으면 해당 발전기 OFF. 둘 다 열리면 Gen ties MAN CLOSE. 그래도 안 닫히면 센터 버스는 배터리만으로 돌아갑니다.</li>
+<li><b>BAT TIE OPEN</b>에 센터 버스 전압 0이면: 배터리 충전 안 됨 · 센터 버스 장비 불능 · <b>기어 수동 하강</b>.</li>
+<li><b>Circuit breaker</b>: 비필수는 비행 중 재설정 안 함. 필수는 식힌 뒤 한 번, 또 튀면 그대로.</li>
+<li><b>BATTERY CHARGE</b>(LJ-1534 이전): 시동 후 약 6초 뒤 켜지고 5분 안에 꺼져야 정상. 꺼지는 추세가 확인되지 않으면 이륙하지 않습니다.</li>
+</ul>
+<h3>기어 수동 하강</h3>
+<ol>
+<li>Landing gear relay CB(조종사 우측 서브패널) — PULL</li>
+<li>Gear handle — DN 확인</li>
+<li>Alternate extension handle — 꺼내서 3 green까지 펌프. 펌프 중 손잡이를 고정 클립 높이까지 내리지 않기(압력 손실)</li>
+<li>3 green이면 손잡이 수납, <b>기어 핸들과 relay CB는 다시 건드리지 않기</b></li>
+<li>3 green이 안 되면 최대 저항까지 계속 펌프, 손잡이는 맨 위에 두고 수납 금지. 착륙 직전과 착륙 후에도 다시 펌프</li>
+</ol>
+<h3>그 밖</h3>
+<ul>
+<li><b>HYD FLUID LO</b>: 목적지에서 정상 하강 시도, 안 되면 수동 하강.</li>
+<li><b>Electric trim 폭주</b>: 승강타로 자세 유지 → 반대로 트림 시도 → 페데스탈 트림 스위치 OFF → 수동 트림.</li>
+<li><b>Rudder boost 오작동</b>: 출력 차이 없는데 작동하면 고장 → OFF → 러더 트림.</li>
+<li><b>Prop deice 전류</b>: 0 A면 스위치 확인, 꺼져 있었으면 30초 뒤 ON, 켜졌는데 0이면 고장. 18 A 미만·24–28 A는 계속 사용(불균형 시 RPM 잠깐 올림). <b>28 A 초과</b>면 착빙 회피, 비상 때만 사용 (Raisbeck 보충판은 29 A).</li>
+<li><b>Alternate static</b>: 정압구 막힘이 의심되면(상승률계가 굼뜸) 조종사 우측 패널에서 ALTERNATE. 전환 순간 상승률계가 튀면 막힘 확인.</li>
+<li><b>Severe icing</b>: 0 °C 미만에서 보이는 비, 부딪혀 퍼지는 물방울이 신호. 즉시 ATC에 우선 처리 요청, AP 해제(조종간 잡고), 급기동 금지, 플랩 내리지 않기, 이미 내렸으면 착빙이 없어질 때까지 올리지 않기.</li>
+</ul>
+</div>
+
+<div class="sec" id="c-norm">
+<h2>정상 절차 숫자 (Section IV)</h2>
+<div class="card tbl"><table>
+<tr><th>항목 (10,100 lb)</th><th>KIAS</th></tr>
+<tr><td>Rotation / 50 ft</td><td class="b">97 / 104</td></tr>
+<tr><td>V<sub>X</sub> / V<sub>Y</sub> (양발)</td><td class="b">101 / 112</td></tr>
+<tr><td>Cruise climb SL–10,000</td><td class="b">150</td></tr>
+<tr><td>Cruise climb 10–20,000 / 20–25,000 / 25–30,000</td><td class="b">130 / 120 / 110</td></tr>
+<tr><td>Turbulent air penetration</td><td class="b">161</td></tr>
+<tr><td>Landing final (Flaps down, 9,600 lb)</td><td class="b">101</td></tr>
+<tr><td>Balked landing climb</td><td class="b">101</td></tr>
+<tr><td>V<sub>SSE</sub> (의도적 단발)</td><td class="b">97</td></tr>
+<tr><td>Windshield anti-ice 유효 최대속도</td><td class="b">226</td></tr>
+<tr><td>최대 시범 측풍</td><td class="b">25 kt</td></tr>
+</table></div>
+<p class="note">난기류 통과: 161 kt, 자동조종 고도 유지 OFF, 날개 수평·자세 유지, 속도와 고도를 쫓지 않습니다.</p>
+<h3>시동</h3>
+<ul>
+<li>Condition LOW IDLE은 <b>N1 12% 이상</b>에서. ITT 1,090 °C 최대 감시.</li>
+<li>LOW IDLE 후 <b>10초 안에 ITT가 오르지 않으면</b> Condition Cut-off, Start OFF → <b>30초</b> 연료 배출·스타터 냉각 → Engine clearing → 처음부터 다시.</li>
+<li>Ignition &amp; start OFF는 <b>N1 51% 이상</b>.</li>
+<li>배터리 시동은 첫 시동 후 부하계가 약 50% 이하가 될 때까지 충전한 뒤 두 번째 시동. 배터리 전압 20 V 미만이면 충전·교체.</li>
+<li>외부전원 28.0–28.4 V, 순간 1,000 A·연속 300 A 이상.</li>
+<li>시동 후 양 프롭 <b>1,100 RPM 이상</b>, 발전기 부하는 <b>10% 이내로 맞춤</b>.</li>
+<li>엔진 정지 시 N1이 15% 아래로 떨어지면 스타터 릴레이가 붙어 있지 않다는 뜻(정상). Boost pump는 N1 10% 아래에서 OFF. 일반 정지에 Firewall valve는 닫지 않습니다.</li>
+</ul>
+<h3>런업</h3>
+<ul>
+<li><b>Overspeed governor</b>: Rudder boost ON(시험), 프롭 HIGH RPM, Prop gov test 스위치 누르고 파워 증가 → <b>1,980–2,060 RPM</b>에서 안정, 계속 올려 러더 페달이 움직이면 Rudder boost 정상.</li>
+<li><b>Primary governor</b>: 1,900 RPM에서 exercise. 레버를 빼면 RVS NOT READY 점등.</li>
+<li><b>Gyro suction · Pneumatic</b>: 1,900 RPM에서 확인. Pneumatic 12–20 psi.</li>
+<li><b>Autofeather</b>: 파워 약 500 ft-lb → 스위치 TEST(양쪽 등) → 한쪽씩 빼며 <b>약 400 ft-lb</b>에서 반대쪽 등 꺼짐, <b>약 260 ft-lb</b>에서 등이 깜빡이며 Feather 시작 → 둘 다 빼면 둘 다 꺼지고 Feather 안 됨.</li>
+<li>수동 Feather는 LO IDLE에서 확인.</li>
+</ul>
+<h3>상승 · 강하 · 착륙</h3>
+<ul>
+<li>파워레버는 비행 중 들어 올리지 않습니다(Flight idle 아래 = 급한 기수 하강).</li>
+<li>강하 중 여압 스케줄 유지에 N1 약 <b>75%</b> 필요. 착륙 시 CABIN ALT는 착륙장 기압고도 +500 ft.</li>
+<li>리버스 전 프롭 HIGH RPM. <b>95 kt 넘으면 리버스 안 됨</b>, 블레이드 침식을 줄이려고 약 <b>40 kt</b>에서 리버스 해제.</li>
+<li>Raisbeck: 95 kt 미만에서만 REVERSE 선택. 95–100 kt에서 선택하면 큰 추력 비대칭이 생길 수 있고, 100 kt 위에서는 리버스되지 않습니다.</li>
+</ul>
+<h3>착빙 비행</h3>
+<ul>
+<li><b>Engine anti-ice</b>: +5 °C 이하에서 보이는 수분 만나기 전, 또는 밤에 수분 여부를 확신 못 할 때 ON. 이륙 전 각 엔진의 MAIN 또는 STANDBY 액추에이터 중 하나는 작동해야 합니다.</li>
+<li><b>Auto ignition</b>: 착빙·강수·난기류에서 ARM. 이그나이터가 계속 돌지 않도록 파워를 <b>425 ft-lb</b> 아래로 빼지 않습니다.</li>
+<li><b>Boots</b>: 약 6초 팽창(날개 → 수평미익). 이륙 중엔 작동 금지, −40 °C 미만에서 작동 금지.</li>
+<li><b>Prop deice</b>: 프롭이 서 있을 때 금지. 이륙 전 2분간 18–24 A 확인. 타이머가 90초마다 바꿔 약 3분에 1사이클(오른쪽 → 왼쪽).</li>
+<li>착빙 중 최저 <b>140 kt</b>. 착빙 중 실속경고는 믿을 수 없습니다.</li>
+</ul>
+<h3>산소 · 연료 첨가제</h3>
+<ul>
+<li>산소 1,850 psi(15 °C) = 완충. 조종사·부조종사는 100% 또는 20,000 ft 위에서 각각 2명으로 계산.</li>
+<li>방빙 첨가제 0.10–0.15%(부피), 급유 속도 30–45 gal/분. 주유 전 이미 섞였는지 공급자에게 확인.</li>
+</ul>
+</div>
+
+<div class="sec" id="c-diff">
+<h2>시스템 요약 앱과 다른 점</h2>
+<div class="box chk"><b class="t">고쳐서 기억할 것</b><ul>
+<li>프롭: 3엽 McCauley → <b>4엽 Hartzell/Raisbeck</b>, 그린아크 <b>1,600–2,200</b></li>
+<li>V<sub>YSE</sub>: 107 → AFM 블루라인 <b>108</b></li>
+<li>V<sub>MCA</sub> 90 KIAS 유지(풍차 시 99). 교재 AFM의 80 kt는 C90B 값</li>
+<li>HL5107은 King Air가 아니라 <b>Cessna 208 Caravan</b> → C208 탭</li>
+</ul></div>
+</div>
+</section>
+
+<!-- ============ 3. 암기 ============ -->
+<section class="panel" id="quiz" data-title="리미트 암기" data-sub="카드를 눌러 확인 → 알았음 / 모름" hidden>
+  <div class="qbar" id="qcat"></div>
+  <div class="flash" id="flash" role="button" tabindex="0" aria-label="카드를 눌러 정답 보기">
+    <div class="cat" id="fCat"></div>
+    <div class="q" id="fQ"></div>
+    <div class="a hid" id="fA"></div>
+    <div class="n" id="fN"></div>
+  </div>
+  <div class="qact">
+    <button class="rev" id="bRev">정답 보기</button>
+    <button class="no" id="bNo">모름 · 다시</button>
+    <button class="yes" id="bYes">알았음</button>
+  </div>
+  <p class="qstat" id="qstat"></p>
+  <p class="foot">"모름"으로 표시한 카드는 이 기기에 저장돼 "모름만" 버튼으로 다시 볼 수 있습니다. 리미트 탭 오른쪽 위 <b>숫자 가리기</b>를 켜면 표 전체를 가리고 하나씩 눌러 확인할 수 있습니다.</p>
+</section>
+
+<!-- ============ 4. C208 ============ -->
+<section class="panel read" id="c208" data-title="HL5107 · Cessna 208 예습" data-sub="S/N 20800238 · 1994 · MTOW 3,628 kg" hidden>
+<div class="banner"><b>예습용 개요입니다.</b> 아직 회사 POH가 없어 FAA·EASA 형식증명 데이터시트(TCDS)와 공개 자료로 만들었습니다. 회사 C208 POH를 받으면 그 값으로 바꿔야 합니다.</div>
+
+<div class="sec" id="k-id">
+<h2>기체 확인</h2>
+<div class="card">
+<div class="r"><span class="k">모델</span><span class="v">Cessna 208 (Caravan I)</span><span class="n">208B Grand Caravan(동체 4 ft 연장)이 아닌 기본형. 인터넷 자료 대부분은 208B라 숫자가 다릅니다.</span></div>
+<div class="r"><span class="k">시리얼</span><span class="v">20800238</span><span class="n">TCDS: S/N 20800001–20800276은 600 SHP 구간</span></div>
+<div class="r"><span class="k">엔진</span><span class="v">PT6A-114 · 600 SHP</span><span class="n">또는 PT6A-114A를 -114 한계로 운용. King Air의 PT6A-21과 같은 집안(역류형 free turbine)이지만 더 큽니다.</span></div>
+<div class="r"><span class="k">프롭</span><span class="v">3엽 · 100″</span><span class="n">Hartzell HC-B3MN3 (TCDS). McCauley 3엽 장착 가능성도 있어 기체 확인</span></div>
+<div class="r"><span class="k">최대이륙중량</span><span class="v">8,000 lb</span><span class="n">= 3,628 kg (등록 MTOW와 일치)</span></div>
+</div>
+</div>
+
+<div class="sec" id="k-lim">
+<h2>리미테이션 (TCDS 기준)</h2>
+<h3>속도 (KIAS)</h3>
+<div class="card">
+<div class="r"><span class="k">V<sub>MO</sub></span><span class="v">175</span></div>
+<div class="r"><span class="k">V<sub>A</sub> (8,000 lb)</span><span class="v">150</span><span class="n">FAA TCDS. EASA TCDS는 148로 적혀 있어 POH 확인</span></div>
+<div class="r"><span class="k">V<sub>FE</sub> 0–10°</span><span class="v">175</span></div>
+<div class="r"><span class="k">V<sub>FE</sub> 10–20°</span><span class="v">150</span></div>
+<div class="r"><span class="k">V<sub>FE</sub> 20–30°</span><span class="v">125</span><span class="n">플랩 최대 30°, 전기식</span></div>
+</div>
+<h3>엔진 (PT6A-114, 600 SHP)</h3>
+<div class="card tbl"><table>
+<tr><th>상태</th><th>Torque</th><th>ITT</th><th>Ng</th><th>Np</th></tr>
+<tr><td>Takeoff · Max cont</td><td class="b">1,658</td><td class="b">805</td><td class="b">101.6%</td><td class="b">1,900</td></tr>
+<tr><td>Max climb</td><td class="b">1,658*</td><td class="b">765</td><td>101.6%</td><td>1,900</td></tr>
+<tr><td>Max cruise</td><td class="b">1,658*</td><td class="b">740</td><td>101.6%</td><td>1,900</td></tr>
+<tr><td>Idle</td><td>—</td><td class="b">685</td><td class="b">52% min</td><td>—</td></tr>
+<tr><td>Starting (2초)</td><td>—</td><td class="b">1,090</td><td>—</td><td>—</td></tr>
+<tr><td>Max reverse (1분)</td><td>1,658</td><td>805</td><td>101.6%</td><td class="b">1,825</td></tr>
+<tr><td>Transient (2초)</td><td class="b">2,200</td><td class="b">850</td><td class="b">102.6%</td><td class="b">2,090</td></tr>
+</table></div>
+<p class="note">* 낮은 Np에서는 1,970 ft-lb까지 허용되지만 마력 한계(600 SHP)를 넘지 않게 Np를 맞춰야 합니다. 675 SHP(-114A) 기체는 토크가 1,865라서, 인터넷 208B 자료의 1,865를 그대로 외우면 안 됩니다. 유압·유온 한계는 TCDS에 없어 POH 확인.</p>
+<h3>중량 · 연료 · 고도</h3>
+<div class="card">
+<div class="r"><span class="k">Ramp / Takeoff / Landing</span><span class="v">8,035 / 8,000 / 7,800 lb</span></div>
+<div class="r"><span class="k">연료</span><span class="v">335 gal (332 사용)</span><span class="n">날개 탱크 2개 × 167.5 gal, Jet A·A-1·B·JP-4/5/8</span></div>
+<div class="r"><span class="k">오일</span><span class="v">3.5 gal (2.37 사용)</span></div>
+<div class="r"><span class="k">CG (이륙·비행)</span><span class="v wrap">+174.0 ~ +184.3 in (8,000 lb)</span><span class="n">4,200 lb에서 전방 +162.4 in, 그 사이는 직선. Datum은 노즈기어 잭 포인트 100 in 앞</span></div>
+<div class="r"><span class="k">최대 고도</span><span class="v wrap">25,000 ft (착빙 20,000)</span><span class="n">EASA TCDS. 1999년 FAA TCDS는 30,000 ft로 적혀 있어 회사 POH로 확인</span></div>
+</div>
+</div>
+
+<div class="sec" id="k-sys">
+<h2>King Air와 무엇이 다른가</h2>
+<div class="card tbl"><table>
+<tr><th></th><th>C90A</th><th>C208</th></tr>
+<tr><td>엔진</td><td>PT6A-21 ×2, 550 SHP</td><td>PT6A-114 ×1, 600 SHP</td></tr>
+<tr><td>최대 토크</td><td>1,315</td><td class="b">1,658</td></tr>
+<tr><td>최대 ITT</td><td>695 °C</td><td class="b">805 °C</td></tr>
+<tr><td>최대 프롭</td><td>2,200</td><td class="b">1,900</td></tr>
+<tr><td>Idle 최저 N1/Ng</td><td>51–58%</td><td class="b">52%</td></tr>
+<tr><td>여압</td><td>있음 (5.1 psi)</td><td>없음</td></tr>
+<tr><td>기어</td><td>접이식 (유압)</td><td>고정식 3륜</td></tr>
+<tr><td>V<sub>MO</sub></td><td>226</td><td class="b">175</td></tr>
+</table></div>
+<ul>
+<li><b>엔진 고장 = 강제착륙</b>. V<sub>MCA</sub>·단발 상승이라는 개념 대신 활공 속도와 착륙 지점 선정이 핵심입니다.</li>
+<li><b>Emergency Power Lever(EPL)</b>: FCU(공압식 연료조절장치)가 고장 나 엔진이 Idle 근처로 떨어졌을 때, 연료를 기계적으로 직접 조절하는 예비 레버입니다. 민감해서 천천히 움직이고 Ng·ITT를 같이 봅니다. King Air에는 없는 개념이라 꼭 예습하세요.</li>
+<li><b>연료</b>: 높은 날개 탱크 → 중력 → 동체 아래 리저버(헤더) 탱크 → 엔진. 좌우 연료 선택 밸브가 있고, 둘 다 잠기면 경고가 뜹니다. 전동 Boost pump는 시동과 백업용.</li>
+<li><b>전기</b>: 시동발전기 1개(208B 자료 기준 200 A) + 벨트 구동 Standby alternator(장착 시). King Air의 Bus tie 개념이 단순해집니다.</li>
+<li><b>시동</b>(208B 자료): Boost pump ON → 스타터 → Ng 12% 이상에서 Condition LOW IDLE → 약 52% Ng에서 스타터 OFF. 숫자 흐름은 King Air와 비슷합니다.</li>
+<li><b>착빙</b>: 부츠 또는 TKS(날개에서 액체가 배어 나오는 방식) 장착 여부를 기체별로 확인. 착빙 중 최저 속도 개념이 있습니다(208B 자료: 부츠 105 kt).</li>
+<li><b>조종 감각</b>: 단발 대토크라 이륙·복행에서 러더를 많이 씁니다. 파워레버가 민감해 과토크가 흔한 실수입니다. 긴 기수 때문에 저속 접근에서 앞이 잘 안 보입니다.</li>
+</ul>
+<div class="box chk"><b class="t">208B 공개 자료의 참고 속도 (우리 208과 다를 수 있음)</b>
+Rotation 약 70 · V<sub>Y</sub> 104 · V<sub>X</sub> 72 · Glide 95(8,750 lb) · 접근 75–85(full flap) · 계기접근 120. 우리 208은 최대중량이 8,000 lb로 가벼워 활공 속도가 더 낮을 수 있습니다.</div>
+<div class="box"><b class="t">회사 POH 받으면 먼저 볼 것</b><ol>
+<li>Section 2: 유압·유온, 스타터 시간, 발전기 한계, 연료 불균형, 착빙 한계</li>
+<li>Section 3: 엔진 고장(이륙 중·비행 중), 엔진 화재, EPL 사용 절차, 활공 속도</li>
+<li>Section 7: 연료 선택 밸브와 리저버, FUEL SELECT 경고 조건</li>
+<li>기체 장비: Cargo pod, 부츠/TKS, Standby alternator 유무</li></ol></div>
+</div>
+<p class="foot">출처: FAA TCDS A37CE (Rev 12) · EASA TCDS IM.A.226 · AOPA Turbine Pilot "Cessna Caravan: Sky truck" (2009, 208B) · 공개 학습카드. 208B 출처의 값은 그렇게 표시했습니다.</p>
+</section>
+</main>
+
+<nav class="tabbar" role="tablist" aria-label="탭">
+  <button role="tab" data-p="lim" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6"/><path d="M4 18h16"/></svg>리미트</button>
+  <button role="tab" data-p="core" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"/><path d="M9 10h7M9 14h7M9 18h4"/></svg>추가 핵심</button>
+  <button role="tab" data-p="quiz" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg>암기</button>
+  <button role="tab" data-p="c208" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11h20"/><path d="M12 4v16"/><path d="M9 20h6"/><path d="M12 4l-1 1M12 4l1 1"/></svg>C208</button>
+</nav>
+
+<script>
+// [라벨, 값, 메모, 출처(R/A/S)]
+const LIM=[
+ {id:'spd',t:'속도 (KIAS)',rows:[
+  ['V<sub>MO</sub>','226','또는 M 0.46 중 낮은 값. Raisbeck의 208 kt 제한은 LJ-1063~1137 전용이라 해당 없음','A'],
+  ['V<sub>A</sub> 기동속도','169','이 속도 위에서 최대·급격한 조작 금지','A'],
+  ['V<sub>FE</sub> Approach flap','184','흰 삼각형','A'],
+  ['V<sub>FE</sub> Full flap','148','흰 호 상단','A'],
+  ['V<sub>LO</sub> 내림','182','','A'],
+  ['V<sub>LO</sub> 올림','163','','A'],
+  ['V<sub>LE</sub>','182','','A'],
+  ['V<sub>MCA</sub>','90','92 KCAS. 레드 라디얼. Raisbeck 표기는 LJ-1288·1295·1300 이후(HL5248), HL5247(LJ-1257)도 C90A 값 90','R'],
+  ['V<sub>MCA</sub> 풍차 프롭','99','한 엔진 고장 + 파워레버 Idle + 프롭 풍차 (Autofeather 없음)','R'],
+  ['V<sub>XSE</sub>','100','','A'],
+  ['V<sub>YSE</sub> 블루라인','108','OEI 순항상승도 108','A'],
+  ['Emergency descent','182','','A'],
+  ['Max range glide','125','1,000 ft당 1.8 NM','A'],
+  ['Turbulent air penetration','161','','A'],
+  ['착빙 중 최저 속도','140','지속 착빙 비행','A'],
+  ['REVERSE 선택','95 미만','100 kt 위에선 리버스 안 됨, 95–100은 비대칭 위험','R'],
+  ['흰 호 (Full flap)','78–148','하단 = V<sub>SO</sub> 78','A'],
+  ['좁은 흰 호 하단 (V<sub>S1</sub>)','88','최대중량·플랩 업·Idle','A']]},
+ {id:'eng',t:'엔진 (PT6A-21)',rows:[
+  ['정격 출력','550 SHP','flat rated','A'],
+  ['Torque 최대 지속','1,315 ft-lb','Takeoff·Max cont·Cruise 공통','R'],
+  ['Torque 순간','1,500 ft-lb','2초','R'],
+  ['ITT 최대 (이륙·연속·순항)','695 °C','그린아크 400–695','R'],
+  ['ITT 순간','825 °C','2초. 낮은 N1에서 발전기 부하가 크면 초과 쉬움','R'],
+  ['ITT 시동','1,090 °C','2초. 점선 레드라인','R'],
+  ['ITT LOW IDLE','660 °C','높으면 부하 줄이거나 N1 올림','R'],
+  ['N1 최대','101.5%','= 38,100 rpm','R'],
+  ['N1 순간','102.6%','= 38,500 rpm','R'],
+  ['LOW IDLE N1 최저','51% / 56%','Raisbeck 보충판 표기(56은 Magicam 주석). 기본 AFM은 58%','R'],
+  ['HIGH IDLE N1','약 70%','','R'],
+  ['Max reverse','N1 88% · 1분','ITT 695 · 프롭 2,100','R'],
+  ['Oil press 정상','80–100 psi','N1 72% 이상, 유온 60–70 °C에서','R'],
+  ['Oil press 최소','40 psi','40–80은 남은 비행만·출력 감소. 40 미만은 정지 또는 즉시 착륙','R'],
+  ['Oil press 순간 최대','200 psi','극저온 시동 시','A'],
+  ['Oil temp','0 ~ 99 °C','시동 최소 −40, 이륙 10–99, 권장 74–80','R'],
+  ['연료히터용 권장 유온','55 °C 이상','이륙 출력에서','R'],
+  ['Starter','40 ON · 60 OFF','×2 후 40 ON · 30분 OFF','A'],
+  ['Generator (비행)','100% · N1 85% 이상','','A'],
+  ['Generator (지상)','50% / 80% / 85%','각각 N1 59% / 61% / 70% 이상','A'],
+  ['외부전원','28.0–28.4 V','순간 1,000 A · 연속 300 A','A'],
+  ['파워레버','비행 중 들지 않기','Flight idle 아래 = 급격한 기수 하강','A']]},
+ {id:'prop',t:'프롭 (Raisbeck 4엽)',rows:[
+  ['프롭','Hartzell 4엽','D9290K 블레이드 · HC-D4N-3C 허브 · Quiet Turbofan','R'],
+  ['직경','93″ (최소 92″)','','R'],
+  ['최대 RPM','2,200','','R'],
+  ['Reverse RPM','2,100','','R'],
+  ['순간 RPM','2,420','5초','A'],
+  ['OSG 작동','2,288','2,200 넘게 유지 = 1차 거버너 고장, 2,288 넘게 유지 = 둘 다 고장','A'],
+  ['그린아크','1,600–2,200','LJ-527~1360','R'],
+  ['지상 최저 RPM','1,100','Feather 상태에선 400 이하 허용. 그 사이 안정 운전 금지','R'],
+  ['블레이드각 (30″)','Rev −9° · Feather 84–85°','±0.5°','R'],
+  ['Autofeather','이륙·착륙 필수','Magicam 장착 시 면제','R'],
+  ['Prop deice','18–24 A','프롭 정지 시 사용 금지','R']]},
+ {id:'fuel',t:'연료',rows:[
+  ['총 사용 가능','384 gal','2,573 lb (6.7 lb/gal)','A'],
+  ['한쪽 날개 계통','192 gal','나셀 60 + 날개 132','A'],
+  ['최대 불균형','200 lb','','A'],
+  ['이륙 금지 (노란 호)','265 lb 미만','각 날개 계통','A'],
+  ['Crossfeed','Boost pump 고장·엔진 고장만','','A'],
+  ['Boost pump','이륙 전 둘 다 작동','','A'],
+  ['FUEL PRESS 켜진 채 운전','10시간','엔진 구동 펌프 오버홀 사이 누적','A'],
+  ['AVGAS 사용','150시간','오버홀 사이. Boost pump 고장 시 8,000 ft 이하, 8,000 ft 위 상승은 Crossfeed 필요','A'],
+  ['방빙 첨가제','0.10–0.15%','유온 차트로 필요 여부 판단','A'],
+  ['Transfer pump 고장 시 못 쓰는 연료','188 lb (28 gal)','','A']]},
+ {id:'wt',t:'중량 · CG',rows:[
+  ['최대 Ramp','10,160 lb','4,608 kg','A'],
+  ['최대 이륙','10,100 lb','4,581 kg = 등록 MTOW','A'],
+  ['최대 착륙','9,600 lb','4,354 kg','A'],
+  ['최대 무연료','제한 없음','10,100 lb 기준','A'],
+  ['뒤 화물칸 / 노즈','350 / 350 lb','','A'],
+  ['CG 후방','160.0 in','모든 중량','R'],
+  ['CG 전방 @10,100','152.0 in','','R'],
+  ['CG 전방 @7,400 이하','144.7 in','그 사이는 직선. 교재 AFM(C90B)은 9,600 lb 150.6 · 7,850 lb 144.7','R'],
+  ['Datum','노즈 잭 포인트 83.5 in 앞','MAC 앞전 135.9 in, 길이 75.9 in','A'],
+  ['Raisbeck 증가 중량','10,350 / 10,500 lb','SB-08-BC-01 + 10-ply 타이어 필요. 등록 MTOW와 다르므로 미적용 가정','R']]},
+ {id:'misc',t:'하중 · 고도 · 기타',rows:[
+  ['하중 (Flaps up)','+3.29 / −1.33 G','10,100 lb','A'],
+  ['하중 (Flaps down)','+2.00 / 0 G','','A'],
+  ['최대 운용 고도','30,000 ft','','A'],
+  ['최대 외기온도','ISA +37 °C','','A'],
+  ['최대 객실 차압','5.1 psi','게이지 그린 0–5.0','A'],
+  ['최소 승무원','1명','','A'],
+  ['최대 탑승','13명 (승무원 포함)','좌석 배치에 따라 회사 기준 확인','A'],
+  ['기어 사이클','3분에 1회 × 10회','이후 15분 냉각','A'],
+  ['곡예·스핀','금지','Normal category','A'],
+  ['Boots 작동 최저 기온','−40 °C','','A'],
+  ['Engine anti-ice','+5 °C 이하','보이는 수분이 없다고 확신할 수 없을 때','A'],
+  ['착빙 중 플랩','접근·착륙 외 금지','','A'],
+  ['Severe icing 징후 시','AP 사용 금지','밤 착빙 예보 비행엔 날개 착빙등 필수(MMEL보다 우선)','A'],
+  ['앞유리 균열','25시간 · 25,000 ft','차압 2.0–4.6 psi 유지, 플래카드 부착','A'],
+  ['옆 창 균열','25시간 · 비여압','Cabin pressure DUMP로 비행','A'],
+  ['Pneumatic','12–20 psi','','A'],
+  ['Gyro suction','4.3–5.9 inHg','15,000 ft–SL. 35,000–15,000 ft는 2.8–4.3','A'],
+  ['뒤보기 좌석','이착륙 시 등받이 세우고 헤드레스트 최대','','A']]}
+];
+const SRC={R:'RAIS',A:'AFM',S:'교재'};
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+// 리미트 렌더
+$('#limBody').innerHTML=LIM.map(s=>`<div class="sec" id="l-${s.id}"><h2>${s.t}<span class="cnt">${s.rows.length}</span></h2><div class="card">`+
+ s.rows.map(r=>`<div class="r"><span class="k">${r[0]}<span class="src ${r[3]}">${SRC[r[3]]}</span></span><span class="v${r[1].length>14?' wrap':''}">${r[1]}</span>${r[2]?`<span class="n">${r[2]}</span>`:''}</div>`).join('')+
+ `</div></div>`).join('');
+
+// 숫자 가리기
+const hideBtn=$('#hideBtn');
+function setHide(on){document.body.classList.toggle('quiz',on);hideBtn.setAttribute('aria-pressed',on);hideBtn.textContent=on?'가림 해제':'숫자 가리기';
+ document.querySelectorAll('.v.show,td.b.show').forEach(e=>e.classList.remove('show'));store.set('poh-hide',on)}
+hideBtn.onclick=()=>setHide(!document.body.classList.contains('quiz'));
+document.addEventListener('click',e=>{if(!document.body.classList.contains('quiz'))return;const v=e.target.closest('.r')?.querySelector('.v')||e.target.closest('td.b');if(v)v.classList.toggle('show')});
+
+// 탭
+const CHIPS={
+ lim:LIM.map(s=>[`l-${s.id}`,s.t.split(' ')[0]]),
+ core:[['c-rais','Raisbeck'],['c-sim','고장 연습'],['c-emer','비상'],['c-abn','비정상'],['c-norm','정상 숫자'],['c-diff','달라진 점']],
+ quiz:[],
+ c208:[['k-id','기체'],['k-lim','리미트'],['k-sys','King Air와 차이']]};
+function show(p){
+ document.querySelectorAll('.panel').forEach(x=>x.hidden=x.id!==p);
+ document.querySelectorAll('nav.tabbar button').forEach(b=>b.setAttribute('aria-selected',b.dataset.p===p));
+ const el=$('#'+p);$('#ttl').firstChild.nodeValue=el.dataset.title;$('#sub').textContent=el.dataset.sub;
+ hideBtn.style.visibility=(p==='lim'||p==='c208')?'visible':'hidden';
+ $('#chips').innerHTML=CHIPS[p].map(c=>`<a href="#${c[0]}">${c[1]}</a>`).join('');
+ $('#chips').style.display=CHIPS[p].length?'flex':'none';
+ store.set('poh-tab',p);window.scrollTo(0,0);
+}
+document.querySelectorAll('nav.tabbar button').forEach(b=>b.onclick=()=>show(b.dataset.p));
+$('#chips').addEventListener('click',e=>{const a=e.target.closest('a');if(!a)return;e.preventDefault();const t=document.getElementById(a.getAttribute('href').slice(1));
+ const y=t.getBoundingClientRect().top+scrollY-$('header.top').offsetHeight-6;window.scrollTo({top:y,behavior:'smooth'})});
+
+// 암기 카드
+const CARDS=[];LIM.forEach(s=>s.rows.forEach((r,i)=>CARDS.push({id:s.id+i,cat:s.id,ct:s.t,q:r[0],a:r[1],n:r[2]})));
+let miss=new Set(store.get('poh-miss',[])),cat='all',deck=[],cur=null,seen=0,ok=0;
+const CATS=[['all','전체'],...LIM.map(s=>[s.id,s.t.split(' ')[0]]),['miss','모름만']];
+function drawCats(){$('#qcat').innerHTML=CATS.map(c=>`<button data-c="${c[0]}" aria-pressed="${c[0]===cat}">${c[1]}${c[0]==='miss'?` ${miss.size}`:''}</button>`).join('')}
+function build(){deck=CARDS.filter(c=>cat==='all'||c.cat===cat||(cat==='miss'&&miss.has(c.id)));for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}seen=0;ok=0;next()}
+function next(){cur=deck.shift();const fa=$('#fA');fa.classList.add('hid');$('#bRev').style.display='';
+ if(!cur){$('#fCat').textContent='';$('#fQ').textContent=cat==='miss'&&!miss.size?'모름 카드가 없습니다':'한 바퀴 끝';fa.textContent='';fa.classList.remove('hid');$('#fN').textContent=seen?`${seen}장 중 ${ok}장 알았음 · 아무 분류나 눌러 다시 시작`:'';$('#qstat').textContent='';return}
+ $('#fCat').textContent=cur.ct;$('#fQ').innerHTML=cur.q;fa.innerHTML=cur.a;$('#fN').innerHTML='';$('#qstat').textContent=`남은 카드 ${deck.length+1}장`}
+function reveal(){if(!cur)return;$('#fA').classList.remove('hid');$('#fN').innerHTML=cur.n||'';$('#bRev').style.display='none'}
+$('#flash').onclick=reveal;$('#flash').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();reveal()}};
+$('#bRev').onclick=reveal;
+$('#bYes').onclick=()=>{if(!cur)return;seen++;ok++;miss.delete(cur.id);store.set('poh-miss',[...miss]);drawCats();next()};
+$('#bNo').onclick=()=>{if(!cur)return;seen++;miss.add(cur.id);store.set('poh-miss',[...miss]);drawCats();deck.splice(Math.min(deck.length,4),0,cur);next()};
+$('#qcat').onclick=e=>{const b=e.target.closest('button');if(!b)return;cat=b.dataset.c;drawCats();build()};
+drawCats();build();
+
+setHide(store.get('poh-hide',false));
+show(['lim','core','quiz','c208'].includes(location.hash.slice(1))?location.hash.slice(1):store.get('poh-tab','lim'));
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+<p class="foot" style="max-width:760px;margin:0 auto;padding:0 16px 120px"><a href="../">C90A 핵심 요약</a> · <a href="../checklist/">C90A 체크리스트</a> · <a href="../e90/">E90 체크리스트</a></p>
+</body></html>

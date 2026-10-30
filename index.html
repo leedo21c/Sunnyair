@@ -103,7 +103,7 @@ footer{margin-top:30px;font-size:12.5px;color:var(--mute)}
 <div class="wrap">
 <header class="hero"><div class="eyebrow">써니항공 OE · 2026.10</div>
 <h1>King Air C90A 핵심 요약</h1>
-<p>시스템 · 체크리스트의 "왜" · 비상절차 · 암기 숫자. 최종 기준은 기체별 POH/AFM과 회사 SOP입니다. C90A(PT6A-21) 기준이며 HL5239(E90)는 엔진·한계·기어 방식이 다를 수 있습니다.</p></header>
+<p>시스템 · 체크리스트의 "왜" · 비상절차 · 암기 숫자. 최종 기준은 기체별 POH/AFM과 회사 SOP입니다. C90A(PT6A-21) 기준이며 HL5239(E90)는 엔진·한계·기어 방식이 다를 수 있습니다.</p><p style="margin-top:8px"><a href="poh/" style="font-weight:700">→ 리미테이션 · POH/AFM 추가 핵심 · C208 예습 앱</a></p></header>
 <nav class="chips" aria-label="섹션"><a href="#overview" data-id="overview">개요</a><a href="#electric" data-id="electric">전기</a><a href="#engine" data-id="engine">엔진·프롭</a><a href="#fuel" data-id="fuel">연료</a><a href="#bleed" data-id="bleed">공압·기타</a><a href="#checklist" data-id="checklist">체크리스트</a><a href="#emergency" data-id="emergency">비상</a><a href="#numbers" data-id="numbers">숫자</a></nav>
 <section class="sec" id="overview">
 <h2>0 · 한 장으로 보는 King Air C90A</h2>
@@ -113,7 +113,7 @@ footer{margin-top:30px;font-size:12.5px;color:var(--mute)}
 <ul>
 <li>여압 쌍발 터보프롭, 최대 이륙중량 10,100 lb (구형 LJ-1063~1137: 9,650 lb)</li>
 <li>엔진: P&amp;W <b>PT6A-21</b> ×2, 550 SHP flat-rated</li>
-<li>프로펠러: 3엽 McCauley, constant-speed · full-feathering · reversing</li>
+<li>프로펠러: <b>4엽 Hartzell/Raisbeck Quiet Turbofan</b>(HL5247·5248 POH 보충판), constant-speed · full-feathering · reversing</li>
 <li>전기: 28 V DC, 250 A starter-generator ×2 + 배터리 1개</li>
 <li>기어: 전동 유압 파워팩(C90A LJ-1063 이후). 비상 시 핸드펌프</li>
 <li>Bleed air 하나로 여압·난방·디아이스 부츠·러더부스트·도어씰·진공(자이로)까지 해결</li>
@@ -131,7 +131,7 @@ footer{margin-top:30px;font-size:12.5px;color:var(--mute)}
 <div class="tw"><table>
 <tr><th>레버</th><th>무엇을 조절하나</th></tr>
 <tr><td class="n">Power</td><td>N1 governor 설정 → 연료량 → 토크. IDLE 아래(들어올려서) Beta/Reverse = 블레이드 각도 직접 조절</td></tr>
-<tr><td class="n">Propeller</td><td>Prop governor RPM 1,800~2,200. 맨 뒤 detent 넘기면 FEATHER</td></tr>
+<tr><td class="n">Propeller</td><td>Prop governor RPM ~2,200 (Raisbeck 그린아크 1,600–2,200, 순항 1,750). 맨 뒤 detent 넘기면 FEATHER</td></tr>
 <tr><td class="n">Condition</td><td>FUEL CUT-OFF(연료 밸브) / LOW IDLE(51% N1) ~ HIGH IDLE(70% N1)</td></tr>
 </table></div>
 <div class="box why"><span class="t">이렇게 기억</span>
@@ -311,7 +311,7 @@ DC 28 V → 인버터 → AC 115 V/26 V 400 Hz (AC 엔진계기·일부 항전).
 <h3>Governor 3단 방어</h3>
 <div class="tw"><table>
 <tr><th>장치</th><th>작동점</th><th>역할</th></tr>
-<tr><td class="n">Primary governor</td><td>1,800–2,200</td><td>Flyweight로 RPM 감지 → 피치 조절해 일정 RPM 유지</td></tr>
+<tr><td class="n">Primary governor</td><td>~2,200 (그린아크 1,600–2,200)</td><td>Flyweight로 RPM 감지 → 피치 조절해 일정 RPM 유지</td></tr>
 <tr><td class="n">Overspeed governor</td><td>2,288 (TEST 시 약 2,000)</td><td>Primary 고장 시 오일을 빼서 피치↑. RPM이 2,288에 딱 멈추면 Primary 고장 신호</td></tr>
 <tr><td class="n">Fuel topping governor</td><td>선택 RPM의 106% (Reverse 시 95%)</td><td>연료를 줄여 RPM 제한. Primary의 flyweight가 살아 있어야 작동</td></tr>
 </table></div>
@@ -530,7 +530,7 @@ DC 28 V → 인버터 → AC 115 V/26 V 400 Hz (AC 엔진계기·일부 항전).
 <section class="sec" id="emergency">
 <h2>3 · 비상·비정상 절차의 논리</h2>
 <div class="box"><span class="t">비상 속도 (C90A, IAS)</span>
-V<sub>MCA</sub> <b>90</b> · V<sub>XSE</sub> <b>100</b> · V<sub>YSE</sub> <b>107</b>(FSI 가이드 108) · Glide <b>125</b>(1.8 NM/1,000 ft) · Balked landing <b>101</b>(회사) · 엔진 고장 시 살아 있는 엔진 쪽으로 <b>3–5° bank</b>, Ball 반 개.</div>
+V<sub>MCA</sub> <b>90</b> · V<sub>XSE</sub> <b>100</b> · V<sub>YSE</sub> <b>108</b>(AFM 블루라인) · Glide <b>125</b>(1.8 NM/1,000 ft) · Balked landing <b>101</b>(회사) · 엔진 고장 시 살아 있는 엔진 쪽으로 <b>3–5° bank</b>, Ball 반 개.</div>
 <div class="two">
 <div>
 <div class="mem"><div class="h">EMERGENCY ENGINE SHUTDOWN</div>
@@ -619,7 +619,7 @@ V<sub>MCA</sub> <b>90</b> · V<sub>XSE</sub> <b>100</b> · V<sub>YSE</sub> <b>10
 <h3>속도 (KIAS, C90A)</h3>
 <div class="num">
 <div><b>90</b><span>V<sub>MCA</sub></span></div>
-<div><b>100 / 107</b><span>V<sub>XSE</sub> / V<sub>YSE</sub></span></div>
+<div><b>100 / 108</b><span>V<sub>XSE</sub> / V<sub>YSE</sub></span></div>
 <div><b>226</b><span>V<sub>MO</sub> (PTM 기준)</span></div>
 <div><b>169</b><span>V<sub>A</sub></span></div>
 <div><b>182 / 163</b><span>Gear 내림·내린 상태 / 올림</span></div>
@@ -662,16 +662,16 @@ V<sub>MCA</sub> <b>90</b> · V<sub>XSE</sub> <b>100</b> · V<sub>YSE</sub> <b>10
 <div class="tw"><table>
 <tr><th>항목</th><th>자료별 값</th><th>비고</th></tr>
 <tr><td>V<sub>MO</sub></td><td>PTM 226 / Burger 체크리스트 208</td><td>기체·연식별 상이 가능</td></tr>
-<tr><td>V<sub>YSE</sub></td><td>Workbook·Burger 107 / FSI 가이드 108</td><td>중량 버전 차이</td></tr>
+<tr><td>V<sub>YSE</sub></td><td>AFM 108 (Workbook·Burger 107)</td><td>AFM 블루라인 108로 정리</td></tr>
 <tr><td>Balked landing</td><td>회사 101 / Burger 95</td><td>회사 체크리스트 우선</td></tr>
 <tr><td>Emergency descent</td><td>Workbook 182 / Burger 156</td><td>VLE 기준 다름</td></tr>
 <tr><td>VLE·VFE</td><td>PTM 182·184·148 / Burger 156·178·137</td><td>Burger는 구형 C90 수치로 보임</td></tr>
 <tr><td>최대 이륙중량</td><td>10,100 / 9,650 lb</td><td>S/N에 따라 다름</td></tr>
-<tr><td>기어 비상 하강</td><td>유압 핸드펌프 / 기계식 핸들</td><td>HL5239(E90)·HL5107·5247·5248 각각 확인</td></tr>
+<tr><td>기어 비상 하강</td><td>유압 핸드펌프 / 기계식 핸들</td><td>HL5239(E90)·HL5247·5248 각각 확인 (HL5107은 Cessna 208)</td></tr>
 <tr><td>엔진</td><td>C90A PT6A-21</td><td>E90은 PT6A-28 — ITT·토크 한계 다름</td></tr>
 </table></div>
 <div class="box why"><span class="t">OE에서 교관에게 물어보면 좋은 것</span>
-① 회사 기체별(HL5239/5107/5247/5248) 기어·여압·산소 구성 차이 ② Autofeather 시험의 정확한 순서와 토크값 ③ 회사 Standard callout(엔진 고장 시 Identify–Verify–Feather 발화자) ④ 배터리 시동 후 두 번째 시동 전 충전 기준 ⑤ 강하 시 여압 설정 표 사용법.</div>
+① 회사 기체별(HL5239/5247/5248) 기어·여압·산소 구성 차이 ② Autofeather 시험의 정확한 순서와 토크값 ③ 회사 Standard callout(엔진 고장 시 Identify–Verify–Feather 발화자) ④ 배터리 시동 후 두 번째 시동 전 충전 기준 ⑤ 강하 시 여압 설정 표 사용법.</div>
 <p class="small src">출처: King Air C90A/B PTM(Ch.1–17), C90A/B Workbook, FSI Pre-Course Study Guide, C90A POH, Burger BE90 Checklist v1.4, 써니항공 King Air 교안. 2026.10.27 정리.</p>
 </section>
 
