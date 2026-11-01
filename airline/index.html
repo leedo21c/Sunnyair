@@ -174,6 +174,12 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
 .note{font-size:12.5px; color:var(--muted); margin:8px 0 0}
 .toast{position:fixed; left:50%; bottom:calc(80px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--ink); color:var(--bg); padding:8px 14px; border-radius:99px; font-size:13px; z-index:50; pointer-events:none}
 @media (prefers-reduced-motion: no-preference){ .view{animation:in .16s ease-out} @keyframes in{from{opacity:.4; transform:translateY(4px)} to{opacity:1; transform:none}} }
+.offok{margin:12px 0 0; font-size:13px; font-weight:600; color:var(--done)}
+.offbusy{margin:12px 0 0; font-size:13px; color:var(--muted)}
+.offbad{margin:12px 0 6px; font-size:13px; color:var(--key)}
+.offbtn{margin-top:12px; width:100%; padding:12px; border-radius:12px; font-weight:600; font-size:14px; border:1px solid var(--rule-strong); background:var(--surface)}
+.offbtn.main{background:var(--tab-bg); color:var(--tab-fg); border-color:var(--tab-bg)}
+.card .offok{margin-top:0}
 </style>
 <div class="shell"><main id="app" aria-live="polite"></main></div>
 <nav class="tabs" id="tabs" aria-label="메뉴"></nav>
@@ -206,6 +212,45 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
   function doneCount(list){ return list.filter(function(s){ return st.done[s.id]; }).length; }
   function pct(a,b){ return b ? Math.round(a/b*100) : 0; }
 
+  var PWA = !!document.querySelector('link[rel=manifest]') && 'serviceWorker' in navigator && 'caches' in window;
+  function askSW(type, ms){
+    return navigator.serviceWorker.ready.then(function(reg){
+      var sw = reg.active; if(!sw) throw new Error('no sw');
+      return new Promise(function(res, rej){
+        var ch = new MessageChannel(); var t = setTimeout(function(){ rej(new Error('timeout')); }, ms || 20000);
+        ch.port1.onmessage = function(e){ clearTimeout(t); res(e.data); };
+        sw.postMessage({type:type}, [ch.port2]);
+      });
+    });
+  }
+  function offUI(id){
+    var el = document.getElementById(id); if(!el) return;
+    var home = id === 'offHome';
+    function paint(state, info){
+      if(state === 'ok'){
+        el.innerHTML = home ? '<p class="offok">✓ 이 기기에 저장됨 · 인터넷 없이도 열려요</p>'
+          : '<p class="offok">✓ 이 기기에 저장됨 (' + info.count + '개 파일 · ' + info.version + ')</p><p class="note">링크가 닫혀도 이 기기에서는 계속 열려요. 내용이 바뀌면 인터넷 연결 시 자동으로 갱신되고, 다시 저장하려면 아래 버튼을 누르세요.</p><button class="offbtn" type="button">다시 저장하기</button>';
+      } else if(state === 'busy'){
+        el.innerHTML = '<p class="offbusy">저장하는 중… 잠시만 기다려 주세요</p>';
+      } else {
+        el.innerHTML = (state === 'fail' ? '<p class="offbad">저장하지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요.</p>' : '') +
+          '<button class="offbtn main" type="button">오프라인 저장하기</button>' + (home ? '' : '<p class="note">홈 화면에 추가한 앱 안에서 누르세요. 저장해 두면 링크가 닫혀도 이 기기에서는 계속 열려요.</p>');
+      }
+      var b = el.querySelector('.offbtn'); if(b) b.onclick = save;
+    }
+    function save(){
+      paint('busy');
+      try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch(e){}
+      navigator.serviceWorker.register('sw.js').then(function(reg){ return reg.update().catch(function(){}).then(function(){
+          var w = reg.installing || reg.waiting; if(!w) return;
+          return new Promise(function(res){ var t = setTimeout(res, 8000); w.addEventListener('statechange', function(){ if(w.state === 'activated'){ clearTimeout(t); res(); } }); });
+        }); })
+        .then(function(){ return askSW('save'); })
+        .then(function(r){ if(r && r.ok){ paint('ok', r); toast('오프라인 저장 완료'); } else paint('fail'); })
+        .catch(function(){ paint('fail'); });
+    }
+    askSW('status', 3000).then(function(r){ paint(r && r.ok ? 'ok' : 'none', r); }).catch(function(){ paint('none'); });
+  }
   var app = document.getElementById('app');
   var tabs = document.getElementById('tabs');
 
@@ -228,7 +273,7 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
       '<h2>오늘은 어디부터 볼까요?</h2>' +
       '<div class="prog"><span>학습 완료 ' + dn + ' / ' + S.length + '</span><span class="meter"><i style="width:' + pct(dn,S.length) + '%"></i></span><span>' + pct(dn,S.length) + '%</span></div>' +
       (last ? '<a class="resume" href="#' + last.id + '" style="text-decoration:none"><span><small>이어서 보기</small><b>' + last.num + ' ' + esc(last.title) + '</b></span>' + I.next + '</a>' : '') +
-      '</section><p class="h-lbl">주제별 목차</p><ul class="chlist">';
+      (PWA ? '<div id="offHome"></div>' : '') + '</section><p class="h-lbl">주제별 목차</p><ul class="chlist">';
     CH.forEach(function(c){
       var list = byCh[c.n] || [], d = doneCount(list);
       h += '<li><a class="chcard" href="#ch-' + String(c.n).padStart(2,'0') + '" style="text-decoration:none;color:inherit"><span class="tab">' + c.code + '<small>' + String(c.n).padStart(2,'0') + '</small></span><span class="cb"><b>' + esc(c.name) + '</b><span class="d">' + esc(c.blurb) + '</span>' +
@@ -318,7 +363,7 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
       '<div><dt><span class="merged">통합</span></dt><dd>원본 여러 곳의 중복 내용을 합친 항목</dd></div>' +
       '<div><dt><span class="fix">✎ 수정</span></dt><dd>사실관계를 바로잡거나 원본 표기를 남긴 곳</dd></div></dl>' +
       '<p class="note">표가 화면보다 넓으면 표 안에서 좌우로 밀어서 보세요. 항목 화면에서 좌우로 넘기면 이전·다음 항목으로 이동해요.</p></div>' +
-      '<div class="card"><h3>학습 기록</h3><p class="note" style="margin:0 0 10px">완료 표시와 북마크는 지금 쓰는 기기의 브라우저에만 저장돼요. 다른 기기와는 공유되지 않아요.</p>' +
+      (PWA ? '<div class="card"><h3>오프라인 저장</h3><div id="offMore"></div></div>' : '') + '<div class="card"><h3>학습 기록</h3><p class="note" style="margin:0 0 10px">완료 표시와 북마크는 지금 쓰는 기기의 브라우저에만 저장돼요. 다른 기기와는 공유되지 않아요.</p>' +
       '<button class="danger" id="reset" type="button">완료 표시 모두 지우기</button></div>' +
       '<p class="note" style="margin:16px 0 0">원본 : 공채과외정리_ver13.pdf (1–91p)</p></div>';
     return {html:h, after:function(){
@@ -352,6 +397,7 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
     if(typeof v === 'string') v = {html:v};
     app.innerHTML = v.html;
     if(v.after) v.after();
+    if(PWA){ offUI('offHome'); offUI('offMore'); }
     tabs.querySelectorAll('button').forEach(function(b){ if(b.dataset.tab === tab) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
     window.scrollTo(0, 0);
   }
@@ -364,5 +410,5 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
 })();
 </script>
 
-<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script>
 </body></html>
