@@ -1,7 +1,6 @@
 {
  "name": "항공사 공채 대비 정리 노트",
  "short_name": "공채 노트",
- "start_url": "./",
  "scope": "./",
  "display": "standalone",
  "background_color": "#f2f4f7",

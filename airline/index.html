@@ -9,6 +9,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
+<meta name="gc-code" content="yfive">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>항공사 공채 대비 정리 노트</title>
 </head><body>
@@ -251,6 +252,19 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
     }
     askSW('status', 3000).then(function(r){ paint(r && r.ok ? 'ok' : 'none', r); }).catch(function(){ paint('none'); });
   }
+  // 방문 집계 (GitHub 앱 전용) : 링크의 ?u=이름 을 기억해 두고, 앱을 열 때마다 GoatCounter에 1회 기록
+  (function(){
+    if(!PWA) return;
+    var meta = document.querySelector('meta[name="gc-code"]'), code = meta && meta.content;
+    var who = null;
+    try { var m = location.search.match(/[?&]u=([^&#]+)/); if(m){ who = decodeURIComponent(m[1]).slice(0,30); localStorage.setItem('airline-u', who); } else { who = localStorage.getItem('airline-u'); } } catch(e){}
+    if(!code || !navigator.onLine) return;
+    try { if(sessionStorage.getItem('airline-counted')) return; sessionStorage.setItem('airline-counted','1'); } catch(e){}
+    var standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+    var path = '/airline/' + (who || '이름없음');
+    var img = new Image();
+    img.src = 'https://' + code + '.goatcounter.com/count?p=' + encodeURIComponent(path) + '&t=' + encodeURIComponent((who || '이름없음') + (standalone ? ' · 앱' : ' · 브라우저')) + '&r=' + encodeURIComponent(document.referrer || '') + '&rnd=' + Math.random().toString(36).slice(2);
+  })();
   var app = document.getElementById('app');
   var tabs = document.getElementById('tabs');
 
