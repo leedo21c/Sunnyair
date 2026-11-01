@@ -246,7 +246,7 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
           return new Promise(function(res){ var t = setTimeout(res, 8000); w.addEventListener('statechange', function(){ if(w.state === 'activated'){ clearTimeout(t); res(); } }); });
         }); })
         .then(function(){ return askSW('save'); })
-        .then(function(r){ if(r && r.ok){ paint('ok', r); toast('오프라인 저장 완료'); } else paint('fail'); })
+        .then(function(r){ if(r && r.ok){ paint('ok', r); toast('오프라인 저장 완료 · 최신 내용으로 다시 열어요'); setTimeout(function(){ location.reload(); }, 900); } else paint('fail'); })
         .catch(function(){ paint('fail'); });
     }
     askSW('status', 3000).then(function(r){ paint(r && r.ok ? 'ok' : 'none', r); }).catch(function(){ paint('none'); });
@@ -410,5 +410,5 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
 })();
 </script>
 
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script>
+<script>if('serviceWorker' in navigator){var _had=!!navigator.serviceWorker.controller,_rl=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(_had&&!_rl){_rl=true;location.reload();}});navigator.serviceWorker.register('sw.js').then(function(r){r.update().catch(function(){});}).catch(function(){});}</script>
 </body></html>
