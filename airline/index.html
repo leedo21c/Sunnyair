@@ -269,7 +269,7 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
   function vHome(){
     var dn = doneCount(S), last = st.last && byId[st.last];
     var h = top('항공사 공채 대비 정리 노트', null) + '<div class="pad view">' +
-      '<section class="hero"><p class="eyebrow">ver13 · 1–91p 재구성 · 15개 주제 · ' + S.length + '개 항목</p>' +
+      '<section class="hero"><p class="eyebrow">공채대비준비 ver.15 · 15개 주제 · ' + S.length + '개 항목</p>' +
       '<h2>오늘은 어디부터 볼까요?</h2>' +
       '<div class="prog"><span>학습 완료 ' + dn + ' / ' + S.length + '</span><span class="meter"><i style="width:' + pct(dn,S.length) + '%"></i></span><span>' + pct(dn,S.length) + '%</span></div>' +
       (last ? '<a class="resume" href="#' + last.id + '" style="text-decoration:none"><span><small>이어서 보기</small><b>' + last.num + ' ' + esc(last.title) + '</b></span>' + I.next + '</a>' : '') +
