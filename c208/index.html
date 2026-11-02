@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="C208 CL">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171e1a" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<title>C208 Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: sticky toolbar + section chips, one checklist column; rows are tap targets, edit mode reveals memo/strike controls */
+:root{
+  --bg:#eef1ee; --panel:#ffffff; --ink:#18201a; --mute:#5e6a61; --line:#d5dcd6;
+  --green:#2f8a22; --green-ink:#ffffff; --green-soft:#e3f1df;
+  --red:#c0281f; --red-soft:#fbe9e7; --amber:#8a5a00; --amber-soft:#fff3d6;
+  --check:#2f8a22; --strike:#9aa49c; --focus:#2563c9; --tip:#2b5d9e; --tip-soft:#e6eef8;
+  --sans:"IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1411; --panel:#171e1a; --ink:#e3ebe5; --mute:#94a198; --line:#2a352e;
+  --green:#3b9a2c; --green-ink:#ffffff; --green-soft:#17301a;
+  --red:#d9473d; --red-soft:#381714; --amber:#f0b44c; --amber-soft:#2f2410;
+  --check:#6ccf5b; --strike:#5c6860; --focus:#7aa7f0; --tip:#4f86cf; --tip-soft:#16233a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1411; --panel:#171e1a; --ink:#e3ebe5; --mute:#94a198; --line:#2a352e;
+  --green:#3b9a2c; --green-ink:#ffffff; --green-soft:#17301a;
+  --red:#d9473d; --red-soft:#381714; --amber:#f0b44c; --amber-soft:#2f2410;
+  --check:#6ccf5b; --strike:#5c6860; --focus:#7aa7f0; --tip:#4f86cf; --tip-soft:#16233a; color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.45}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--panel)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:720px;margin:0 auto}
+
+header.top{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.bar{display:flex;align-items:center;gap:10px;padding-block:10px 8px}
+.bar h1{font-size:17px;margin:0;font-weight:700;letter-spacing:.01em;flex:1;min-width:0}
+.bar h1 small{display:block;font:500 11px var(--mono);color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.tbtn{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:7px 11px;font-size:13px;font-weight:600;white-space:nowrap}
+.tbtn[aria-pressed="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.modes{display:flex;gap:6px;padding-bottom:8px}
+.modes button{flex:1;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 8px;font-size:13px;font-weight:600}
+.modes button[aria-selected="true"].n{background:var(--green);border-color:var(--green);color:var(--green-ink)}
+.modes button[aria-selected="true"].e{background:var(--red);border-color:var(--red);color:#fff}
+nav.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:9px;-webkit-overflow-scrolling:touch}
+nav.chips::-webkit-scrollbar{display:none}
+nav.chips a{flex:0 0 auto;font-size:12.5px;font-weight:600;padding:5px 10px;border-radius:999px;border:1px solid var(--line);color:var(--ink);text-decoration:none;background:var(--panel);display:flex;gap:6px;align-items:center}
+nav.chips a .p{font:500 11px var(--mono);color:var(--mute)}
+nav.chips a.done{border-color:var(--check)} nav.chips a.done .p{color:var(--check)}
+
+.status{font:500 11.5px var(--mono);color:var(--mute);padding-block:10px 0;display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between}
+.status .sync.ok{color:var(--check)}
+.editnote{margin:10px 0 0;padding:9px 12px;border-radius:8px;background:var(--amber-soft);color:var(--amber);font-size:13px}
+
+main{padding-block:6px 120px}
+section.sec{margin-top:18px;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 150px)}
+.sh{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--green);color:var(--green-ink)}
+.sec.em .sh{background:var(--red)}
+.sh h2{margin:0;font-size:14.5px;font-weight:700;letter-spacing:.02em;flex:1;min-width:0;text-wrap:balance}
+.sh .cnt{font:600 12px var(--mono);opacity:.9;white-space:nowrap}
+.sh button{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:inherit;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600}
+.sub{font-size:12.5px;color:var(--mute);padding:8px 12px 0;font-style:italic}
+
+ol.items{list-style:none;margin:0;padding:4px 0}
+li.it{border-top:1px solid var(--line)}
+li.it:first-child{border-top:none}
+li.it.sub-it{border-top:none}
+.row{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;background:none;border:none;padding:9px 12px;min-height:44px}
+.sub-it .row{padding-left:34px;min-height:36px;padding-top:6px;padding-bottom:6px}
+.box{flex:0 0 auto;width:20px;height:20px;border:2px solid var(--line);border-radius:5px;margin-top:1px;display:grid;place-items:center;transition:background .12s,border-color .12s}
+.sub-it .box{width:16px;height:16px;border-radius:4px}
+.box svg{width:12px;height:12px;opacity:0}
+.it.on .box{background:var(--check);border-color:var(--check)}
+.it.on .box svg{opacity:1}
+.num{font:500 12px var(--mono);color:var(--mute);min-width:1.6em;margin-top:2px;flex:0 0 auto}
+.lab{flex:1;min-width:0}
+.lab .l{font-weight:500}
+.sub-it .lab .l{font-size:13.5px;color:var(--mute)}
+.val{flex:0 1 auto;max-width:48%;text-align:right;font:600 12.5px/1.45 var(--mono);letter-spacing:.01em;margin-top:1px}
+.it.on .lab .l,.it.on .val{color:var(--mute)}
+.it.mem{background:var(--red-soft)}
+.it.mem .num::after{content:"M";font:700 9px var(--mono);color:var(--red);margin-left:3px;vertical-align:1px}
+.it.struck .lab .l,.it.struck .val{text-decoration:line-through;text-decoration-thickness:1.5px;color:var(--strike)}
+.it.struck .box{opacity:.3}
+.it.struck .tag-x{display:inline-block}
+.tag-x{display:none;font:600 10.5px var(--mono);color:var(--strike);border:1px solid var(--strike);border-radius:4px;padding:0 4px;margin-left:6px;vertical-align:1px;text-decoration:none}
+.hide-struck .it.struck{display:none}
+li.note{padding:2px 12px 8px 42px;font-size:12.5px;font-style:italic;color:var(--mute)}
+
+.memo{margin:0 12px 9px 42px;padding:6px 10px;border-left:3px solid var(--amber);background:var(--amber-soft);color:var(--ink);font-size:13.5px;white-space:pre-wrap;border-radius:0 6px 6px 0}
+.sub-it .memo{margin-left:60px}
+.memo b{font:600 10.5px var(--mono);color:var(--amber);display:block;letter-spacing:.06em}
+
+.ctl{display:none;gap:6px;padding:0 12px 9px 42px;flex-wrap:wrap}
+.sub-it .ctl{padding-left:60px}
+.editing .ctl{display:flex}
+.ctl button{border:1px solid var(--line);background:var(--bg);border-radius:7px;padding:5px 10px;font-size:12.5px;font-weight:600}
+.ctl button.x[aria-pressed="true"]{background:var(--strike);color:var(--panel);border-color:var(--strike)}
+.editor{display:flex;flex-direction:column;gap:6px;padding:0 12px 10px 42px}
+.sub-it .editor{padding-left:60px}
+.editor textarea{width:100%;min-height:70px;resize:vertical;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;font-size:14px;background:var(--bg);color:var(--ink)}
+.editor .btns{display:flex;gap:6px;justify-content:flex-end}
+.editor button{border:1px solid var(--line);background:var(--panel);border-radius:7px;padding:6px 12px;font-size:13px;font-weight:600}
+.editor button.save{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+
+.secmemo{border-top:1px dashed var(--line);padding:8px 12px 10px}
+.secmemo .memo{margin:0}
+.secmemo .ctl{padding:6px 0 0}
+.secmemo .editor{padding:6px 0 0}
+.done-line{font:600 11px var(--mono);letter-spacing:.06em;text-align:center;color:var(--mute);padding:6px 12px 10px}
+.sec.complete .done-line{color:var(--check)}
+
+footer{font-size:12px;color:var(--mute);margin-top:24px;line-height:1.6}
+.fab{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;z-index:6}
+.fab button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--panel);font-size:18px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.confirm{display:flex;gap:6px;align-items:center;font-size:12.5px}
+/* tips */
+.tip{margin:0 12px 9px 42px;padding:5px 10px;border-left:3px solid var(--tip);background:var(--tip-soft);font-size:13px;border-radius:0 6px 6px 0}
+.sub-it .tip{margin-left:60px}
+.tip b{font:600 10.5px var(--mono);color:var(--tip);letter-spacing:.06em;margin-right:6px}
+.modes button[aria-selected="true"].l{background:var(--tip);border-color:var(--tip);color:#fff}
+/* lecture notes */
+.lec-head{padding-top:12px}
+.lec-eyebrow{font:600 11.5px var(--mono);color:var(--tip);letter-spacing:.06em;margin:0 0 4px}
+.lec-lead{margin:0;font-size:14px;color:var(--mute)}
+section.lec{margin-top:18px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:0 14px 12px;overflow:hidden;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 150px)}
+section.lec h2{margin:0 -14px 10px;padding:10px 14px;background:var(--tip);color:#fff;font-size:15px;text-wrap:balance}
+section.lec h3{font-size:14px;margin:16px 0 6px;color:var(--tip);text-wrap:balance}
+section.lec ul,section.lec ol{margin:4px 0 8px;padding-left:20px}
+section.lec li{margin:4px 0}
+section.lec li ul{margin-top:2px}
+section.lec p{margin:6px 0}
+.small{font-size:12.5px;color:var(--mute)}
+.q{display:inline-block;font:600 10.5px var(--mono);color:var(--amber);background:var(--amber-soft);border-radius:4px;padding:0 5px;vertical-align:1px;white-space:nowrap}
+.co{display:inline-block;font:600 10.5px var(--mono);color:var(--tip);border:1px solid var(--tip);border-radius:4px;padding:0 4px;vertical-align:1px;white-space:nowrap}
+.kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0 10px}
+.kv div{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg);min-width:0}
+.kv b{display:block;font:600 17px var(--mono);color:var(--ink);font-variant-numeric:tabular-nums}
+.kv span{font-size:12.5px;color:var(--mute)}
+.lt{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0 10px}
+.lt th{text-align:left;font-size:12px;color:var(--mute);font-weight:600;border-bottom:1px solid var(--line);padding:5px 6px}
+.lt td{border-bottom:1px solid var(--line);padding:6px;vertical-align:top}
+.lt.num td:nth-child(2){font-family:var(--mono);font-weight:600;white-space:nowrap}
+.formula{font:600 15px var(--mono);text-align:center;padding:12px;border-radius:8px;background:var(--tip-soft);color:var(--ink);margin:6px 0 10px}
+.warn{border:2px solid var(--red);border-radius:8px;padding:10px 12px;margin:10px 0;background:var(--red-soft);font-size:14px}
+.lec .secmemo{margin:10px -14px -12px}
+.backup{margin-top:20px;border-top:1px solid var(--line);padding-top:12px;font-size:13px;color:var(--mute)}
+.backup h3{font-size:14px;color:var(--ink);margin:0 0 6px}
+.backup p{margin:6px 0}
+.backup .bk{display:flex;gap:8px;flex-wrap:wrap}
+.backup a{color:var(--tip)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap gut">
+    <div class="bar">
+      <h1><small>Cessna 208 Caravan</small>C208 체크리스트</h1>
+      <button class="tbtn" id="hideBtn" aria-pressed="false" type="button">삭선 숨김</button>
+      <button class="tbtn" id="editBtn" aria-pressed="false" type="button">편집</button>
+    </div>
+    <div class="modes" role="tablist">
+      <button class="n" id="tabN" role="tab" aria-selected="true" type="button">Normal</button>
+      <button class="e" id="tabE" role="tab" aria-selected="false" type="button">Emergency</button>
+      <button class="l" id="tabL" role="tab" aria-selected="false" type="button">강의 노트</button>
+    </div>
+    <nav class="chips" id="chips" aria-label="섹션"></nav>
+  </div>
+</header>
+
+<main class="wrap gut" id="main">
+  <div class="status"><span id="sync" class="sync">메모 저장소 연결 중…</span><span id="tot"></span></div>
+  <p class="editnote" id="editNote" hidden>편집 모드: 항목마다 <b>메모</b>와 <b>삭선(회사 미사용)</b>을 설정할 수 있어요. 삭선한 항목은 진행률에서 빠집니다. 편집을 끄면 다시 탭해서 체크합니다.</p>
+  <div id="list"></div>
+  <div id="notes" hidden><div class="lec-head">
+  <p class="lec-eyebrow">208 지상학습 · 2026.11.02 · 녹음 5개 (약 3시간)</p>
+  <p class="lec-lead">208 담당 기장 강의를 주제별로 정리했습니다. 녹음 자동 필사라 숫자·용어가 뭉개진 곳이 있어, 확실하지 않은 내용엔 <span class="q">확인 필요</span> 표시를 달았습니다. 회사 방식·교관 개인 습관은 <span class="co">회사/교관</span> 으로 구분했어요.</p>
+</div>
+
+<section class="lec" id="n-air">
+<h2>1 · 기체 개요</h2>
+<ul>
+<li><b>C208 (Caravan, 숏바디)</b>. Grand Caravan(208B)이 아니라 동체가 짧은 모델. 국내 1호기로 알고 있다고 함. 대한항공에서 들여옴. 카고팟 없는 버전.</li>
+<li>제작: Cessna → 현재 <b>Textron Aviation</b> (Beechcraft와 같은 그룹 = King Air와 한 식구). 그래도 조종 스타일은 꽤 다름.</li>
+<li>단발 · 고익 · 고정식 3륜 기어.</li>
+</ul>
+<div class="kv">
+<div><b>8,000 lb</b><span>최대 이륙중량</span></div>
+<div><b>7,800 lb</b><span>최대 착륙중량 (200 lb 차이 → 넘겨서 착륙하면 구조 문제)</span></div>
+<div><b>335 / 332 gal</b><span>연료 총량 / 사용가능 (US gal)</span></div>
+<div><b>14 qt</b><span>오일 총량 · 배출 후 재주입 9.5 qt <span class="q">확인 필요</span></span></div>
+</div>
+<ul>
+<li>무게·밸런스는 출발 전 <span class="co">회사</span> 전용 시트로 계산.</li>
+<li>오일은 회사에서 평균 약 12 qt 수준으로 관리한다고 언급 <span class="q">확인 필요</span>.</li>
+<li><span class="co">회사</span> 지상학습(초기·정기·기종)은 <b>마지막 2시간이 항상 평가</b>. 비행훈련에도 평가 시간 포함.</li>
+</ul>
+</section>
+
+<section class="lec" id="n-eng">
+<h2>2 · 엔진 PT6A-114 · 프로펠러</h2>
+<div class="kv">
+<div><b>600 SHP</b><span>Shaft Horsepower(축마력). 이 숫자 기억</span></div>
+<div><b>McCauley 3엽</b><span>직경 약 106 inch</span></div>
+</div>
+<h3>PT6의 두 가지 특징</h3>
+<ul>
+<li><b>Reverse flow</b>: 공기가 엔진 뒤쪽 아래 흡입구로 들어가 앞쪽으로 흐르고, 배기는 앞쪽에서 나감. King Air처럼 카울 아래로 들어가서 돌아 들어가는 구조.</li>
+<li><b>Free turbine</b>: 압축기를 돌리는 터빈(Gas generator)과 프롭을 돌리는 Power turbine이 <b>축으로 연결돼 있지 않음</b>. 헤어드라이어가 바람개비를 돌리는 원리.</li>
+</ul>
+<h3>공기 흐름 (영상 요약)</h3>
+<ol>
+<li>흡입구 → 철망 스크린 → 저압 축류 압축기(소형 3단·대형 4단) → 원심 압축기 1단. 압축비 약 10:1.</li>
+<li>연소실: 연료 노즐 14개. 한번 점화되면 연속 연소라 점화 플러그가 계속 필요 없음. Igniter는 시동 때 "딱딱" 소리.</li>
+<li>Compressor turbine(약 39,000 rpm)이 압축기를 돌림. 압축기+연소실+CT = <b>Gas generator</b>.</li>
+<li>남은 에너지로 Power turbine(약 33,000 rpm) → 감속기어박스(약 15:1) → 프롭 700~2,200 rpm.</li>
+<li><b>Power turbine은 압축기 터빈과 반대 방향</b>으로 회전 → 이륙·복행처럼 출력 급변 시 토크 반작용을 줄여줌.</li>
+<li>후방 Accessory gearbox: FCU(연료조절), 고압 연료펌프, 오일펌프, Starter-generator.</li>
+<li>Inertial separator로 이물질을 걸러내서 비포장 활주로에 강함(Caravan·Porter가 부시 비행기로 유명한 이유).</li>
+<li>시동 시 스타터는 Gas generator만 돌리면 돼서 추운 날도 시동이 쉬움.</li>
+</ol>
+<h3>계기 읽는 법</h3>
+<table class="lt"><tr><th>계기</th><th>뜻</th></tr>
+<tr><td>Torque</td><td>프롭에 전달되는 엔진 출력(비트는 힘). 208·C90 모두 MP가 아니라 토크로 출력을 봄. <b>허용 토크 초과 = 감속기·동력전달 계통 손상</b></td></tr>
+<tr><td>Prop RPM</td><td>프로펠러 회전수 (가스터빈 축 아님)</td></tr>
+<tr><td>ITT</td><td>Compressor turbine과 Power turbine 사이 온도</td></tr>
+<tr><td>Ng (%)</td><td>Gas generator 속도. C90의 N1과 같은 개념, Cessna는 Ng로 표기</td></tr>
+</table>
+</section>
+
+<section class="lec" id="n-shp">
+<h2>3 · 토크 × RPM = 600 SHP 한계</h2>
+<div class="formula">SHP = Torque (ft-lb) × Prop RPM ÷ 5,252</div>
+<p>토크와 RPM을 둘 다 최대로 넣으면 600 SHP를 넘어 엔진에 무리가 감. 계기판 옆 <b>MAX TORQUE 플래카드</b>가 바로 이 공식으로 나온 값:</p>
+<table class="lt num"><tr><th>Prop RPM</th><th>Max Torque</th><th>계산</th></tr>
+<tr><td>1,900</td><td>1,658</td><td>≈ 600 SHP</td></tr>
+<tr><td>1,800</td><td>1,751</td><td>≈ 600 SHP</td></tr>
+<tr><td>1,700</td><td>1,854</td><td>≈ 600 SHP</td></tr>
+<tr><td>1,600</td><td>1,970</td><td>≈ 600 SHP</td></tr>
+</table>
+<ul>
+<li>RPM을 낮추면 토크를 더 넣을 수 있다는 뜻 → <b>순항용</b> 표. 이륙 땐 토크계의 TAKEOFF 레드라인을 넘기지 말 것.</li>
+<li><span class="co">교관</span> 이륙 토크 <b>1,500~1,550</b>에 세팅. 1,600~1,650만 안 넘으면 됨. 레드라인까지 넣어본 적 없음(넣어도 IAS 150 kt 이상 잘 안 나옴).</li>
+<li>임대 갔다 돌아온 기체가 오일 과주입 등으로 엔진이 상한 채 돌아온 적 있음 → 처음 켜면 오일 압력이 레드라인을 넘었다가 내려옴.</li>
+</ul>
+</section>
+
+<section class="lec" id="n-spd">
+<h2>4 · 속도</h2>
+<table class="lt num"><tr><th>항목</th><th>값</th><th>메모</th></tr>
+<tr><td>Vso / Vs</td><td>50 / 63</td><td>실속속도</td></tr>
+<tr><td>Vr</td><td>70~75</td><td><span class="co">회사</span> V1 안 씀. 무거우면 90까지 가속 후 로테이트</td></tr>
+<tr><td>Climb out</td><td>85~95</td><td>Vr은 당기는 속도, 85~95는 지면 벗어난 뒤 속도</td></tr>
+<tr><td>Flaps 10 / 20 / 30</td><td>175 / 150 / 125</td><td>3단</td></tr>
+<tr><td>Vmo</td><td>175</td><td>넘으면 안 됨</td></tr>
+<tr><td>Va (8,000 lb)</td><td>150</td><td>보통 이 값으로 운용</td></tr>
+<tr><td>Max demo crosswind</td><td>20 kt</td><td>한계가 아니라 시연값. 넘으면 센터라인 유지(방향 조종)가 힘들어짐</td></tr>
+<tr><td>Cruise climb</td><td>115~125</td><td><span class="co">교관</span> 최소 110. 100 이하는 불안</td></tr>
+<tr><td>Approach full flap</td><td>75~85</td><td><span class="co">교관</span> 습관상 약 85로 감 (본인도 좋은 습관 아니라고 함)</td></tr>
+</table>
+<ul>
+<li>속도계 그린·화이트 아크가 Va보다 높다고 망가지는 게 아님(Va는 급조작 한계).</li>
+<li>창문은 작게 PF 좌측에 하나. 열려 있으면 DOOR 경고(노랑). 열고 비행 가능 속도도 175 수준이라는 언급 <span class="q">확인 필요</span>.</li>
+</ul>
+</section>
+
+<section class="lec" id="n-crm">
+<h2>5 · 체크리스트 수행 방식 (CRM)</h2>
+<ul>
+<li><b>PM이 체크리스트를 읽고</b>(챌린지) <b>PF가 찾아서 조작·확인</b>하며 응답. 끝나면 "○○ CHECKLIST COMPLETE"를 PM이 말하고 PF도 같이 복창.</li>
+<li>체크리스트는 외우지 말 것. 단 <b>메모리 아이템</b>은 예외: <b>Final Takeoff, Before Landing(PF 플로우)</b>, 비상 절차의 실선 박스 항목.</li>
+<li><span class="co">회사</span> PF/PM 교대: 같은 날 1소티 PF면 2소티 PM, 또는 다음 날 PM. 지그재그.</li>
+<li>Before Takeoff는 런업 패드가 아니라 <b>스팟에서 수행 후 택시</b>.</li>
+<li>CRM 실패 사례: 강하 중 다른 조종사가 속도를 안 보고 밀어 넣어 과속 경고혼. 뒤에 탄 사람도 안 봄 → "날개 떨어지면 나 죽는 것".</li>
+</ul>
+</section>
+
+<section class="lec" id="n-pre">
+<h2>6 · 외부점검 · 시동 전</h2>
+<h3>외부점검 순서</h3>
+<ul>
+<li>카울 열고 <b>배터리 연결</b> → 배터리 ON → <b>플랩 30° 다운</b> 확인 → 배터리 OFF → 한 바퀴 돌고 마지막에 다시 확인 → 조종석.</li>
+<li>날개가 높아 연료 드레인·오일 체크는 사다리가 필요해 <span class="co">회사</span> <b>정비팀이 해줌</b>. 나머지 외부점검은 조종사가 직접.</li>
+<li>여압이 없음. 기내 고정식 산소는 <span class="co">회사</span> 안 쓰고 <b>휴대용 산소</b>를 따로 사용 → 체크리스트의 산소 항목은 삭선 후보.</li>
+</ul>
+<h3>Before Starting Engine</h3>
+<ul>
+<li>Parking brake: PF 쪽 <b>컨트롤 휠 아래</b>. 브레이크를 밟은 채 SET/RELEASE.</li>
+<li>스위치 박스: PF 왼편.</li>
+<li><b>Ignition 스위치엔 OFF가 없음</b>(NORMAL / ON). NORMAL = 바로 오른쪽 Starter 스위치가 START일 때만 점화. ON = 계속 점화.</li>
+<li>Circuit breaker: 전부 IN, <b>카메라 전원 CB(약 3개)만 예외</b>.
+  <ul><li>인공강우 비행: 카메라 CB 항상 PULL (호퍼 깔때기 위에 카메라가 있어 도어를 닫으면 안 됨 → 전원 자체를 끊어 둠).</li>
+  <li>촬영 비행: 시동 전에 PULL(시동 때 전력을 많이 먹음) → 시동 후 다시 IN.</li></ul></li>
+<li>Fuel selector: 조종석 위쪽(오버헤드) 2개, 둘 다 ON.</li>
+<li>Cabin heat mixing air: PM 자리 앞, "FLT PUSH" 하며 누름. 에어컨: 가운데 OFF. 3,000 ft 이하에선 여름에 틀어도 소용없음(TMI).</li>
+<li><b>Emergency power lever</b>: 빨간 레버, 구리선으로 묶여 있음. Ng가 약 48% 아래로 계속 떨어지는 FCU 고장 시 강제로 연료 공급용. 써본 적 없음.</li>
+<li>레버: Power(검정) IDLE · Prop(파랑) FULL FWD · Fuel condition(빨강) CUTOFF. Fuel shutoff는 오른쪽 아래 빨간 노브 → "ON PUSH".</li>
+<li>외부점검 때 내린 <b>플랩 30°를 UP으로</b> 되돌리기(슬라이드엔 Wing Flaps UP).</li>
+<li>Fire detector test: PF 대시보드 바로 아래 왼편. Annunciator lamp test: 전부 들어와야 정상. DAY/NIGHT 스위치는 야간에 NIGHT.</li>
+</ul>
+<h3>Ignition ON 하는 경우 (교관 강조, 운항하면 반드시 알아둘 것)</h3>
+<ol>
+<li>공중 재시동(스타터 사용 여부 무관)</li>
+<li>물·진창(슬러시)이 많은 활주로 이착륙 → 이때 T-handle(Inertial separator BYPASS)도 같이</li>
+<li>강한 강수 / 결빙 조건(visible moisture, 약 4°C 이하) → BYPASS와 함께. POH는 약 5분 사용 후 끄라고 함</li>
+<li><b>FUEL RESERVOIR LOW</b> 경고: 남은 연료 몇 분 → 엔진 꺼지지 않게 강제 점화</li>
+</ol>
+<p class="small">교관이 5가지라고 했는데 하나는 기억 못 함. POH에서 확인해 볼 것.</p>
+</section>
+
+<section class="lec" id="n-start">
+<h2>7 · 엔진 시동</h2>
+<h3>배터리 시동</h3>
+<ul>
+<li>POH 최소 24 V지만 <b>실제로 24 V면 시동 안 걸림. 25 V는 돼야</b> 함.</li>
+<li>Fuel boost ON → AUX FUEL PUMP ON 점등, FUEL PRESS LOW 소등. NO FUEL FLOW는 켜져 있는 게 정상(Condition이 CUTOFF라 아직 연료 안 감).</li>
+<li><b>손 위치</b>: 왼손 Starter 스위치, 오른손 Fuel condition lever. 눈은 Ng · ITT.</li>
+<li>START → IGNITION 초록불 · Oil pressure · Ng 상승 → <b>Ng 12% 이상 안정되면 바로 LOW IDLE</b>. 이 콜은 PM 기다릴 필요 없이 PF가 말하며 수행.</li>
+<li>LOW IDLE 후 Fuel flow · ITT · Ng 순으로 확인. <b>ITT가 레드라인(1,090°C)에 닿기 전에 바로 CUTOFF</b>. 교관이 한 번 겪어봤는데 "진짜 금방 훅 간다". 그린 아크에서 올라갔다 안정되면 정상.</li>
+<li>Prop이 가장 늦게 반응. <b>800~900 RPM</b> 안정되면 PM 확인 후 Starter OFF.</li>
+<li>슬라이드의 "Prop STABLE"은 순서가 잘못됨 → Fuel condition LOW IDLE <b>뒤</b>에 와야 함.</li>
+<li>Starter 스위치 <b>MOTOR</b> 위치: 점화 없이 엔진만 돌려 잔류 연료를 불어내는 Engine clearing용.</li>
+</ul>
+<div class="kv">
+<div><b>~150</b><span>LOW IDLE 토크</span></div>
+<div><b>800~900</b><span>Prop RPM</span></div>
+<div><b>50~52%</b><span>Ng. 48%면 이상(연료 공급 부족)</span></div>
+<div><b>그린</b><span>ITT · Oil P/T</span></div>
+</div>
+<h3>시동 안 걸릴 때 (스타터 한계)</h3>
+<table class="lt"><tr><th>시동 방식</th><th>절차</th></tr>
+<tr><td>배터리</td><td>30초 ON → 60초 대기 → 30초 ON → 60초 대기 → 30초 ON → <b>30분 대기</b></td></tr>
+<tr><td>GPU</td><td>20초 ON → 2분 대기 → 20초 ON → 2분 대기 → … → <b>1시간 대기</b> <span class="q">POH 확인</span></td></tr>
+</table>
+<p><b>여기까지 갔으면 정비 들어가야 함. 그날 비행 금지.</b> "잘리는 한이 있어도 안 한다. 내 목숨은 누구도 대신 못 지킨다."</p>
+<h3>시동 후</h3>
+<ul>
+<li>Generator: GENERATOR OFF 경고등이 <b>꺼져 있는지</b> 확인.</li>
+<li>Fuel boost NORM · Avionics 1·2 · Transponder · GPS ON. <span class="co">회사</span> ADF 안 씀.</li>
+<li>정비사가 있으면 <b>등 6개(좌우 Landing, Taxi, Strobe, Nav, Beacon) 전부 켜서 확인</b> 받고, Nav·Beacon만 남기고 OFF.</li>
+<li>Suction: 더운 날 IDLE로 오래 있으면 그린 아래 + VAC LOW 경고가 뜰 수 있음 → 토크를 살짝 올리면 그린으로 올라가며 꺼짐.</li>
+</ul>
+<h3>GPU 시동</h3>
+<ul>
+<li>Battery ON → Ext power OFF → 전압 20 V 이상 → Battery OFF → Ext power BUS → 약 28 V → Battery ON → Ext power STARTER → 이후 배터리 시동과 동일.</li>
+<li>시동 전 정비사에게 신호. 시동 후 Ext power OFF → 정비사에게 GPU 분리 신호 → Generator 확인.</li>
+<li>Ext power 스위치 조작은 기장마다 스타일이 다름(살짝 톡 내려 STARTER에 거는 방식 / 레버째 옮기는 방식). 편한 대로.</li>
+</ul>
+</section>
+
+<section class="lec" id="n-gnd">
+<h2>8 · 택시 · Before Takeoff</h2>
+<ul>
+<li>숄더 하네스는 기장마다 다름(교관은 안 함). 시트벨트는 필수.</li>
+<li>Flight instruments = <b>Six-pack</b>(아날로그). Radio altimeter는 200 ft 세팅.</li>
+<li>ATIS·고도계: 시간이 있으면 PF 외부점검 동안 PM이 배터리 ON, 아비오닉스 켜고 ATIS 청취. 없으면 시동 후~Before Takeoff 사이.</li>
+<li><b>Heading indicator가 PF·PM 자리마다 다름</b> → PF가 헤딩을 불러주면 PM이 맞춤.</li>
+<li><b>Trim TAKEOFF</b>: 마크 그대로 두면 Vr 전에 기수가 뜨려고 함 → 마크에서 살짝 옮겨 세팅 <span class="q">방향 실물 확인</span>. 전기 트림은 PF 쪽만 있음 → 위아래 작동 테스트.</li>
+<li><b>T-handle(Inertial separator)</b>: 토크 400 → BYPASS(손잡이 반시계 돌려 당김) → 토크가 <b>살짝</b> 떨어지면 정상. 200까지 떨어지면 비정상. Suction 다시 그린 확인 → NORMAL(밀고 시계 방향).</li>
+<li>Fuel condition: C90 기장들은 지상에서 LOW IDLE을 고집하지만(프롭 FOD) 208은 엔진·프롭 위치가 높아 상관없음.</li>
+</ul>
+<h3>Overspeed governor test (PF·PM 협업)</h3>
+<ol>
+<li>출력을 넣으면 요크가 뒤로 당겨짐 → <b>PF가 요크를 밀어줌</b>. 풋브레이크 밟기.</li>
+<li>PM: 왼손 OSG TEST 버튼 누른 채, 오른손 Power lever를 <b>천천히</b> 900 TQ까지. 확 밀면 엔진 작살남.</li>
+<li><b>RPM 1,750 ± 60</b> (1,690~1,810)이면 정상. 넘거나 모자라면 비정상.</li>
+<li>엔진 계기 한 번 더 훑고 PF가 IDLE.</li>
+</ol>
+<h3>Standby power check</h3>
+<ul><li>Volt/Amm 선택 ALT(거의 0) → Generator 스위치 TRIP(토글) → STBY ELECT PWR ON 경고 + 전압 살짝 상승 확인 → RESET → 경고 소등 → 선택 스위치 복귀(교관은 VOLT에 둠).</li></ul>
+<h3>Autopilot · 기타</h3>
+<ul>
+<li>A/P Preflight test(흰 버튼)는 <b>지상에서만</b> 됨. 잊고 이륙하면 공중에서 안 먹힘.</li>
+<li><b>Flaps 10°</b>: <span class="co">회사</span> 주로 RWY 14 출발 때(짧음). RWY 32에선 안 해도 됨.</li>
+<li>인공강우: 시딩 물질 250~300 kg + 3명 + 연료 풀 → 무거움. 보통 208이 먼저 이륙. 작업 구역 상한이 7,500 ft 근처라 7,000만 돼도 대구 ACC가 민감.</li>
+<li>Takeoff briefing은 간단히. 연구원 등 승객 탑승 시 <b>교신 중엔 조용히</b> 해달라고 지상·기내에서 두 번 말할 것.</li>
+</ul>
+</section>
+
+<section class="lec" id="n-to">
+<h2>9 · 이륙 · 상승 · 순항</h2>
+<h3>Final Takeoff (메모리, 라인업·이륙허가 때)</h3>
+<ul>
+<li>슬라이드에 <b>Landing light가 빠져 있음</b>. 교관 플로우: 왼쪽부터 Landing·Taxi·Strobe ON → Fuel condition HIGH IDLE → 바로 위 Air conditioner OFF → Transponder ALT → 시간.</li>
+<li>시계(Time selector)는 고장 → 이륙 시간을 그냥 적음. PF가 바쁘면 PM이 적기.</li>
+</ul>
+<h3>이륙 롤</h3>
+<ul>
+<li>토크 1,500~1,550 세팅. PM은 <b>자기 계기 말고 PF 계기를 보며</b> 엔진 감시 · "Airspeed alive" · 엔진 계기 콜 · Rotate.</li>
+<li>RWY 14(<span class="co">회사</span> 표현 "원포"): 롤링 테이크오프 안 함. 브레이크 밟고 출력 세팅, 엔진 계기 5초 확인 후 릴리즈.</li>
+<li>인공강우처럼 무거우면 90 kt까지 가속 후 로테이트(80도 가능).</li>
+<li>Positive climb(PM 콜) → PF 플랩 UP.</li>
+<li><b>Prop: POH는 1,850이지만 교관은 1,800</b>으로 내림. 내릴 때 <b>토크가 레드라인 쪽으로 튐</b> → 잘 볼 것. 초반엔 PM(교관)이 레버를 만져줌. "Check torque" 콜 나오면 살짝 줄이기.</li>
+<li>노플랩 이륙이어도 플랩 콜은 생략하지 말고 확인용으로 수행해도 됨. 교관은 미리 "제로 플랩으로 갑니다" 브리핑.</li>
+</ul>
+<h3>상승 · 순항</h3>
+<ul>
+<li>1,000 ft AGL 이상: Taxi·Landing light OFF.</li>
+<li>Prop 1,800 그대로. 고도가 오를수록 토크가 조금씩 빠짐 → 보충.</li>
+<li>순항 토크: 보통 <b>1,300</b> · 느리게 1,200 · 빠르게 1,500.</li>
+<li>방빙: Pitot heat, De-ice boot 있음. 부츠는 켜면 압력계 바늘이 사이클(켜졌다 꺼졌다) 하는지 확인. 기준 visible moisture + 4°C 이하(팀장은 10°C 이하라고 했을 것). 드래그는 약간, 속도 손실은 크지 않음. 윈드실드는 켜도 계속 낌.</li>
+</ul>
+</section>
+
+<section class="lec" id="n-dsc">
+<h2>10 · 강하 · 착륙</h2>
+<ul>
+<li>강하 토크 900은 기준일 뿐. 원하는 강하율(FPM)에 맞춰 더 빼거나 넣어도 됨. 넣으면 속도 감시.</li>
+<li><b>ATC "maintain maximum speed"</b>: 208은 느림. 정직하게 "one-five-zero" 정도로 답하고, 그날 성능이 안 나오면 140이라고. 교관 마진은 최대 160. Vmo(175)까지 찍을 필요 없음.</li>
+<li>김포 계기접근은 3,000 ft에서 1,200 ft까지 짧은 거리 안에 내려가야 해서 교관은 "김포 서커스"라고 부름.</li>
+</ul>
+<h3>Before Landing (메모리, PF 플로우)</h3>
+<ul>
+<li>PF: Landing·Taxi light ON → Fuel selector BOTH → Condition HIGH IDLE → Prop FULL FWD(1,800에서 올림) → 토크 → PM이 하나씩 재확인 → COMPLETE.</li>
+<li>시점: 예전엔 김포 시계 진입점(V8?)에서 했는데, 지금 교관은 <b>약 1,500 ft</b>에서 해도 충분하다고 봄.</li>
+</ul>
+<div class="warn"><b>교관 경험: Prop FULL FWD 상태에서 복행</b><br>
+접근 중 앞 비행기 때문에 복행 지시 → Prop FULL FWD에 토크 1,500~1,550을 넣었는데 <b>상승이 안 됨</b>(과회전). Prop을 <b>1,800으로 내리고</b> 출력을 다시 넣으니 상승. → 복행 시 Prop 먼저 확인.</div>
+<h3>플랩 · 접지</h3>
+<ul>
+<li>10° ≤175 · 20° ≤150 · 30° ≤125 kt. PF가 "Flaps 10" 하면 PM은 속도 확인 후 조작(King Air와 동일).</li>
+<li>측풍 20 kt 이상이면 플랩 20도 고려. 정풍이 강하면 30도로 짧게.</li>
+<li><b>모든 바퀴(노즈 포함) 접지 후</b> Beta/Reverse. "5초 이내만" 같은 제한보다 한 번에 쭉 쓰는 게 낫다는 게 교관 입장(여러 번 넣었다 뺐다 하면 토크가 튐).</li>
+<li>40 kt 이하에서 교관은 요크를 당겨 공력 제동(팀장은 싫어함).</li>
+</ul>
+<h3>After Landing — 반드시 활주로를 벗어난 뒤</h3>
+<ul>
+<li>슬라이드에 <b>Landing light OFF가 빠져 있음</b>.</li>
+<li>Fuel selector는 BOTH 그대로 두고 셧다운까지.</li>
+<li><b>왜 활주로에서 하면 안 되나</b>: 굴러가면서 Condition을 HIGH → LOW IDLE로 옮기다 <b>실수로 CUTOFF까지 당겨 엔진이 꺼질 수 있음</b>. 교관은 레버를 오른쪽(안쪽)으로 밀면서 옮김. LOW→HIGH도 같은 방식.</li>
+<li>실수로 꺼졌다면 <b>바로 재시동 금지</b>. ITT·Ng가 다 내려간 뒤 시동(Hot start 위험).</li>
+<li>HIGH IDLE Ng는 약 65% 수준(LOW는 50~52%) → 그만큼 힘이 더 있음 <span class="q">확인 필요</span>.</li>
+</ul>
+</section>
+
+<section class="lec" id="n-shut">
+<h2>11 · 셧다운</h2>
+<ul>
+<li>Prop FEATHER: King Air는 Feather 후 바로 끄지만 <b>208은 RPM이 내려가 안정될 때까지 기다린 뒤</b> CUTOFF.</li>
+<li><b>Fuel selector는 한쪽만 OFF</b>(PF 쪽 왼쪽). 둘 다 ON이면 주유 때 좌우가 연결돼 불균형. 둘 다 OFF면 경고음이 울림. 슬라이드의 "LEFT OFF and RIGHT OFF"와 다르니 주의.</li>
+<li>헤드셋 전원 OFF. Control lock 장착 · Parking brake SET. 나머지는 정비팀.</li>
+<li><b>Trim SET FOR TAKEOFF 중요</b>: 이걸 안 해서 다음 비행에서 사고 나 사망한 사례가 있음. 교관은 마크보다 살짝 올려 둠(0으로 해도 됨).</li>
+</ul>
+</section>
+
+<section class="lec" id="n-em">
+<h2>12 · 비상 절차 포인트</h2>
+<ul>
+<li>POH에서 <b>실선 박스 = 생각하지 말고 즉시 수행</b>.</li>
+<li><b>이륙 롤 중 엔진 고장</b>: Power BETA → Brake → Flaps RETRACT. 못 멈추면 Condition CUTOFF · Fuel shutoff 당김 · Selector OFF(경고음) · Battery OFF.
+  배터리 끄기 전 관제와 교신: 배터리로 약 15~40분 전력이 있으니 상황 알리고 끈다고 통보.</li>
+<li><b>이륙 직후</b>: 85 KIAS · Prop FEATHER · 플랩 20° 권장. RWY 14 이륙 후 되돌아오는 게 거리상 가능한지는 교관도 고민 중 → 시뮬레이터로 연습해 볼 만함.</li>
+<li><b>비행 중 엔진 고장</b>: 95 KIAS · IDLE · FEATHER · CUTOFF → 활공 착륙. <b>엔진 고장 절차엔 재시동이 없음</b>. 재시동은 Flameout 절차.</li>
+<li><b>Flameout</b>: Ng 50% 이상 → IDLE + Ignition ON. ITT·Ng(대략 52~65%)가 정상 범위로 버티면 회복. Ng 50% 미만 → CUTOFF 후 Airstart(<b>Starter assist 권장</b>).</li>
+<li>Airstart의 "Prop MIN RPM"은 FEATHER까지 당기라는 뜻이 아닌 것으로 교관은 해석 <span class="q">확인 필요</span>.</li>
+<li>No starter assist: Ignition ON, 100 KIAS 이상, Ng 12%↑에서 LOW IDLE, Ng 52% 이상이면 성공.</li>
+<li>재시동 후 자력으로 공항까지 갈 수 있으면 복귀, 못 믿겠으면 가까운 곳으로.</li>
+<li>순서는 항상 <b>Aviate → Navigate → Communicate</b>. 비상 시 PF는 조종·속도 유지, PM이 체크리스트를 불러주고 수행.</li>
+</ul>
+</section>
+
+<section class="lec" id="n-xp">
+<h2>13 · 교관 경험담 · 태도</h2>
+<ul>
+<li><b>Alternator 고장 3회</b>(전압이 계속 떨어지고 충전 안 됨). 무안 → 울산 가다가 회항, 한 번은 여수로 다이버트.
+  30분은 버틸 수 있다고 판단 + 잘 아는 공항 + 계속 교신. 항공안전장애로 보고 → 며칠 뒤 "왜 울산·김해 아니고 여수냐" 문의 → 판단 근거 설명하고 끝. 면장 정지 없음.</li>
+<li>준사고·사고 땐 국토부 등이 <b>체크리스트를 수행했는지</b> 물어봄. <b>사실대로</b> 보고해야 함. 거짓이면 가중처벌.</li>
+<li>긴장하지 말고 차근차근. "사람 안 다치고 잘 내리면 그게 최고."</li>
+<li>다음 시간: Emergency landing(무동력 착륙)부터. 교관도 실제로 겪어보지 않은 상황이 많아서 이런 일이 생기면 PM이 많이 도와줘야 함.</li>
+<li>208 · King Air 중 어느 쪽부터 탈지는 아직 미정(팀장은 208부터라고 했다고 함). 결국 직접 만져보며 특성을 익히는 게 최선이라는 게 교관 의견.</li>
+<li>숙제: PT6A-<b>114</b>의 "114"가 무슨 뜻인지 찾아서 교관에게 공유.</li>
+</ul>
+</section>
+</div>
+  <footer>교육 슬라이드를 옮겨 적은 학습용 체크리스트입니다. 실제 운항은 승인된 POH/AFM과 회사 SOP를 따르세요.</footer>
+  <section class="backup">
+    <h3>메모 백업</h3>
+    <p>메모·삭선·체크는 이 기기의 이 앱 안에만 저장돼요. 아이폰은 Safari와 홈 화면 앱의 저장 공간이 서로 달라요. 기기를 바꾸거나 앱을 지우기 전에 파일로 저장해 두세요.</p>
+    <div class="bk"><button type="button" class="tbtn" id="expBtn">메모를 파일로 저장</button><button type="button" class="tbtn" id="impBtn">메모 파일 불러오기</button></div>
+    <input type="file" id="impFile" accept="application/json,.json" hidden>
+    <p id="bkMsg" role="status"></p>
+    <p class="links"><a href="../checklist/">C90A 체크리스트</a> · <a href="../e90/">E90 체크리스트</a> · <a href="../poh/">C90A 리미테이션</a> · <a href="../">C90A 핵심 요약</a></p>
+  </section>
+
+</main>
+
+<div class="fab">
+  <button id="topBtn" type="button" aria-label="맨 위로">↑</button>
+</div>
+
+<script>
+const DATA = [["AIRSPEED FOR NORMAL OPERATION", "All speeds based on maximum weight of 8,000 LBS", [["Vso", "50 KIAS"], ["Vs", "63 KIAS"], ["Vr", "70 ~ 75 KIAS"], ["Vfe", ""], ["-Flaps 10°", "175 KIAS"], ["-Flaps 20°", "150 KIAS"], ["-Flaps 30°", "125 KIAS"], ["Vmo", "175 KIAS"], ["Va", ""], ["-8,000 lbs", "150 KIAS"], ["-6,300 lbs", "134 KIAS"], ["-4,600 lbs", "115 KIAS"], ["Best Rate of Climb, Sea Level", "106 KIAS"], ["Best Angle of Climb, Sea Level", "86 KIAS"], ["Maximum Demonstrated Crosswind", "20 KNOTS"], ["Takeoff", ""], ["-Normal Climb Out", "85 ~ 95 KIAS"], ["-Short Field, Flaps 20° at 50 ft", "82 KIAS"], ["Enroute Climb, Flaps Up", ""], ["-Cruise Climb", "115 ~ 125 KIAS"], ["Landing Approach", ""], ["-Normal, Flaps Up", "95 ~ 110 KIAS"], ["-Normal, Flaps 30°", "78 ~ 85 KIAS"], ["-Short Field, Flaps 30°", "78 KIAS"]]], ["AIRSPEED INDICATOR MARKINGS", "Placard: MAX WT. MANEUVER SPEED 150 KIAS — see POH for other weights", [["White Arc  (Full Flap Operating Range)", "50 – 125 KIAS"], ["#Lower: max weight Vso, landing config. Upper: max speed with flaps fully extended.", ""], ["Green Arc  (Normal Operating Range)", "63 – 175 KIAS"], ["#Lower: max weight Vs at most forward C.G., flaps up. Upper: max operating speed.", ""], ["Red Line  (Max speed, all operations)", "175 KIAS"]]], ["PREFLIGHT INSPECTION — CABIN", null, [["Pilot's Operating Handbook & Other Required Documents", "AVAILABLE IN AIRPLANE"], ["Control Locks", "REMOVE"], ["Parking Brake", "SET"], ["All Switches", "OFF"], ["All Circuit Breakers", "IN"], ["Static Pressure Alternate Source Valve", "OFF (full in)"], ["Inertial Separator T-Handle", "NORMAL"], ["Standby Flap Motor Switch (Overhead)", "GUARDED NORMAL"], ["Oxygen Supply Pressure", "CHECK"], ["Oxygen Masks (if installed)", "CHECK AVAILABLE"], ["Fuel Selector Valves", "CHECK ON"], ["Air Conditioner", "OFF"], ["Bleed Air Heat Switch", "OFF"], ["Emergency Power Lever", "NORMAL"], ["Trim Controls", "SET FOR TAKEOFF"], ["Fuel Shutoff", "ON"], ["Cabin Heat Firewall Shutoff Control", "CHECK IN"], ["Battery Switch", "ON"], ["Avionics Power Switch No. 2", "ON"], ["#Check audibly that avionics cooling fan is operating.", ""], ["Avionics Power Switch No. 2", "OFF"], ["Fuel Quantity Indicators", "CHECK QUANTITY"], ["Wing Flaps", "FULL DOWN"], ["Pitot/Static and Stall Heat Switches", "ON"], ["Battery Switch", "OFF"]]], ["PREFLIGHT INSPECTION — LEFT SIDE", null, [["Fuel Reservoir Drain", "DRAIN"], ["Main Landing Gear", "CHECK"], ["Inboard Fuel Tank Sump & External Sump Quick-Drain Valves", "DRAIN"]]], ["PREFLIGHT INSPECTION — LEFT WING (Leading Edge)", null, [["Wing Strut Deice Boots (if installed)", "CHECK"], ["Wing Tie-Down", "DISCONNECT"], ["Wing Deice Boots (if installed)", "CHECK"], ["Stall Warning Vane", "CHECK"], ["Pitot/Static Tube", "CHECK"], ["Landing and Taxi Lights", "CHECK"], ["Fuel Quantity", "VISUALLY CHECK"], ["Fuel Filler Cap", "SECURE"], ["Outboard Fuel Tank Sump Quick-Drain Valve", "DRAIN"], ["Navigation and Strobe Lights", "CHECK"]]], ["PREFLIGHT INSPECTION — LEFT WING (Trailing Edge)", null, [["Fuel Tank Vent", "CHECK"], ["Aileron and Servo Tab", "CHECK"], ["Static Wicks", "CHECK"], ["Spoiler", "CHECK"], ["Flap", "CHECK"]]], ["PREFLIGHT INSPECTION — EMPENNAGE", null, [["Baggage", "CHECK SECURE"], ["Cargo Door", "CLOSE and LATCHED"], ["Tail Tie-Down", "DISCONNECT"], ["Deice Boots (if installed)", "CHECK"], ["Rudder Gust Lock", "DISCONNECT"], ["Control Surfaces and Elevator Trim Tabs", "CHECK"], ["Static Wicks", "CHECK"], ["Passenger Entry Door", "CLOSE and LATCHED"]]], ["PREFLIGHT INSPECTION — RIGHT WING (Trailing Edge)", null, [["Flap", "CHECK"], ["Spoiler", "CHECK"], ["Aileron and Trim Tab", "CHECK"], ["Static Wicks", "CHECK"], ["Fuel Tank Vent", "CHECK"]]], ["PREFLIGHT INSPECTION — RIGHT WING (Leading Edge)", null, [["Navigation and Strobe Lights", "CHECK"], ["Fuel Quantity", "VISUALLY CHECK"], ["Fuel Filler Cap", "SECURE"], ["Outboard Fuel Tank Sump Quick-Drain Valve", "DRAIN"], ["Pitot/Static Tube", "CHECK"], ["Landing and Taxi Lights", "CHECK"], ["Wing Deice Boots", "CHECK"], ["Wing Tie-Down", "DISCONNECT"], ["Wing Strut Deice Boots", "CHECK"], ["Inboard Fuel Tank Sump & External Sump Quick-Drain Valves", "DRAIN"], ["Main Landing Gear", "CHECK"]]], ["PREFLIGHT INSPECTION — NOSE", null, [["Exhaust Cover", "REMOVE"], ["Cowling", "OPEN"], ["Engine (right side)", "CHECK"], ["Battery", "CHECK"], ["Exhaust System", "CHECK"], ["Cowling", "CLOSE and LATCHED (right side)"], ["Air Inlets Cover", "REMOVE"], ["Air Inlets", "CHECK"], ["Propeller Anchor", "REMOVE"], ["Propeller", "CHECK"], ["Propeller Spinner", "CHECK"], ["Nose Wheel Strut and Tire", "CHECK"], ["Cowling", "OPEN"], ["Engine (left side)", "CHECK"], ["Inertial Separator Bypass Outlet", "CHECK CLOSED"], ["Oil Dipstick/Filler Cap", "CHECK"], ["Fuel Filter", "CHECK FUEL FILTER BYPASS FLAG"], ["Brake Fluid Reservoir", "CHECK LEVEL"], ["Cowling", "CLOSE and LATCHED (left side)"], ["Fuel Filter Quick-Drain Valve", "DRAIN"], ["Fuel Drain Can", "DRAIN"], ["Fuel Pump Drain Reservoir", "DRAIN"]]], ["BEFORE STARTING ENGINE", null, [["Parking Brake", "SET"], ["All Switches", "OFF"], ["Ignition Switch", "NORMAL"], ["All Circuit Breakers", "CHECK IN"], ["Fuel Selector Valves", "BOTH ON"], ["Air Conditioner", "OFF"], ["Bleed Air Heat", "OFF"], ["Cabin Heat Mixing Air Control", "FLT PUSH"], ["Emergency Power Lever", "NORMAL"], ["Power Lever", "IDLE"], ["Propeller Control Lever", "FULL FORWARD"], ["Fuel Condition Lever", "CUT OFF"], ["Fuel Shutoff", "ON (PUSH IN)"], ["Battery Switch", "ON"], ["Wing Flaps", "UP"], ["Fire Detector Test Switch", "PRESS TO TEST"], ["Annunciator Panel Lamp Test Switch", "PRESS TO TEST"], ["Annunciator Panel Day/Night Switch", "SET"]]], ["STARTING ENGINE (BATTERY START)", null, [["Battery Switch", "ON"], ["Volt / Ammeter", "CHECK (24 V minimum)"], ["Emergency Power Lever", "NORMAL"], ["Propeller Area", "CLEAR"], ["Fuel Boost Switch", "ON"], ["-AUX FUEL PUMP", "ON"], ["-FUEL PRESSURE LOW", "OFF"], ["-NO FUEL FLOW", ""], ["Starter Switch", "START"], ["-IGNITION", "ON"], ["-OIL PRESSURE", "CHECK"], ["-Ng", "STABLE (12% minimum)"], ["-Prop", "STABLE (800 ~ 900 RPM)"], ["Fuel Condition Lever", "LOW IDLE"], ["-Fuel Flow", "CHECK (80 ~ 110 PPH)"], ["-ITT", "MONITOR (1090°C MAX, 2 sec)"], ["-Ng", "52% MINIMUM"], ["Starter Switch", "OFF"], ["-Starter Energized", "OFF"], ["Engine Instruments", "CHECK"], ["Generator", "CHECK OFF"], ["Fuel Boost Switch", "NORMAL"], ["Avionics No.1, No.2, DME, ADF, TX, GPS", "ON"], ["Nav Light & Flashing Beacon", "ON"], ["Suction Gage", "CHECK"]]], ["STARTING ENGINE (AUXILIARY POWER START)", null, [["Battery Switch", "ON"], ["External Power Switch", "OFF"], ["Volt / Ammeter", "CHECK (20 V minimum)"], ["Battery Switch", "OFF"], ["External Power Switch", "BUS"], ["Volt / Ammeter", "CHECK (24 ~ 28.5 V)"], ["Battery Switch", "ON"], ["External Power Switch", "STARTER"], ["Emergency Power Lever", "NORMAL"], ["Propeller Area", "CLEAR"], ["Fuel Boost Switch", "ON"], ["-AUX FUEL PUMP", "ON"], ["-FUEL PRESSURE LOW", "OFF"], ["-NO FUEL FLOW", ""], ["Starter Switch", "START"], ["-IGNITION", "ON"], ["-OIL PRESSURE", "CHECK"], ["-Ng", "STABLE (12% minimum)"], ["Fuel Condition Lever", "LOW IDLE"], ["-Fuel Flow", "CHECK (80 ~ 110 PPH)"], ["-ITT", "MONITOR (1090°C MAX, 2 sec)"], ["-Ng", "52% MINIMUM"], ["-Prop", "STABLE (800 ~ 900 RPM)"], ["Starter Switch", "OFF"], ["-Starter Energized", "OFF"], ["Engine Instruments", "CHECK"], ["External Power Switch", "OFF"], ["Auxiliary Power Unit", "DISENGAGE"], ["Generator", "CHECK OFF"], ["Fuel Boost Switch", "NORMAL"], ["Avionics No.1, No.2, DME, ADF, TX, GPS", "ON"], ["Nav Lights & Flashing Beacon", "ON"], ["Suction Gage", "CHECK"]]], ["TAXI", null, [["Ground Control", "CLEARANCE OBTAIN"], ["Taxi Light", "ON"], ["Parking Brake", "RELEASE"], ["Brake Check", "BOTH / INDIVIDUALLY"]]], ["BEFORE TAKEOFF", null, [["Parking Brake", "SET"], ["Taxi Lights", "OFF"], ["Seat, Seat Belt, Shoulder Harnesses", "CHECK SECURE"], ["Flight Controls", "FREE and CORRECT"], ["Flight Instruments", "CHECK AND SET"], ["Fuel Boost Switch", "RECHECK NORMAL"], ["Fuel Selector Valves", "RECHECK BOTH ON"], ["Fuel Quantity", "RECHECK"], ["Fuel Shutoff", "ON (PUSH IN)"], ["Trim Controls", "SET for TAKEOFF"], ["Propeller Area", "CLEAR"], ["T-HANDLE", "CHECK"], ["-Power", "400 FT-LBS"], ["-Suction Gage", "CHECK"], ["-Volt / Ammeter", "CHECK, return to BATT"], ["-Inertial Separator T-Handle", "BYPASS (TQ drop) → NORMAL"], ["-Engine Instruments", "CHECK (min OIL temp)"], ["-Power Lever", "IDLE"], ["Overspeed Governor", "CHECK"], ["-Propeller Control Lever", "FULL FORWARD"], ["-Overspeed Governor Test Switch", "PRESS and HOLD"], ["-Power Lever", "900 TQ (1750 ± 60 RPM)"], ["-Power Lever", "IDLE"], ["-Overspeed Governor Test Switch", "RELEASE"], ["Standby Power", "CHECK"], ["-Standby Power Switch", "ON"], ["-Taxi Light", "ON"], ["-Volt / Ammeter", "ALT"], ["-Generator Switch", "TRIP"], ["-Volt / Ammeter", "CHECK"], ["-STBY ELECT PWR ON Annunciator", "CHECK ON"], ["-Generator Switch", "RESET"], ["-STBY ELECT PWR ON Annunciator", "CHECK OFF"], ["-Volt / Ammeter Selector Switch", "RETURN to BATT"], ["Autopilot", "PREFLIGHT TEST"], ["-Gyro", "ALLOW"], ["-AVIONICS POWER 1 Switch", "ON"], ["-PREFLIGHT TEST Button", "PRESS momentarily & NOTE"], ["-Manual Electric Trim", "TEST"], ["-Flight Director", "ENGAGE"], ["-Autopilot", "ENGAGE"], ["-Flight Controls", "MOVE"], ["-A/P DISC/TRIM INTER Switch", "PRESS"], ["-TRIM", "SET FOR TAKEOFF"], ["Wing Flaps", "10° NORMAL"], ["Cabin Heat Mixing Air Control", "FLT PUSH"], ["Window", "CLOSE"], ["Standby Power Switch", "RECHECK ON"], ["Cockpit Setup", "COMPLETE"], ["Takeoff Briefing", "COMPLETE"]]], ["FINAL TAKEOFF", null, [["Air Conditioner", "OFF"], ["Fuel Selector Valves", "BOTH ON"], ["Time Selector", "START"], ["Transponder", "ALT"], ["Fuel Condition Lever", "HIGH IDLE"], ["Runway and HDG", "ALIGN"], ["ALT Selector", "RECHECK"]]], ["TAKEOFF (NORMAL)", null, [["Wing Flaps", "0° ~ 20° (10° recommended)"], ["Power", "SET FOR TAKEOFF"], ["Annunciators", "CHECK"], ["Rotate", "70 ~ 75 KIAS"], ["Climb Speed", "85 ~ 95 KIAS"], ["Wing Flaps", "RETRACT (after 90 KIAS)"], ["Prop", "REDUCE (1850 RPM)"], ["Climb Thrust", "1500 TQ SET"]]], ["CRUISE CLIMB (1,000 AGL)", null, [["Taxi Light", "OFF"], ["Ice Protection", "AS REQUIRED"], ["Pitot/Static Heat", "AS REQUIRED"], ["Enroute Climb Airspeed", "CHECK"], ["Propeller", "CHECK"], ["Torque", "SET"]]], ["CRUISE", null, [["Ice Protection", "AS REQUIRED"], ["Pitot/Static Heat", "AS REQUIRED"], ["Propeller", "CHECK"], ["Torque", "1300 TQ SET"]]], ["DESCENT", null, [["Ice Protection", "AS REQUIRED"], ["Pitot/Static Heat", "AS REQUIRED"], ["Torque", "900 TQ / SET"]]], ["BEFORE LANDING", null, [["Landing Briefing", "COMPLETE"], ["Seat, Seat Belt, Shoulder Harnesses", "CHECK SECURE"], ["Fuel Tank Selectors", "BOTH ON"], ["Fuel Condition Lever", "HIGH IDLE"], ["Propeller Control Lever", "FULL FORWARD"], ["Taxi & Landing Lights", "ON"]]], ["LANDING", null, [["Airspeed (Flaps UP)", "95 ~ 110 KIAS"], ["Wing Flaps", "AS DESIRED (down preferred)"], ["Airspeed (Flaps FULL DOWN)", "75 ~ 85 KIAS"], ["Touchdown", "MAIN WHEELS FIRST"], ["Power Lever", "BETA RANGE after touchdown"], ["Brakes", "AS REQUIRED"]]], ["AFTER LANDING", null, [["Wing Flaps", "UP"], ["Transponder", "STBY"], ["Ice Protection Equipment", "OFF"], ["Fuel Tank Selector", "AS REQUIRED"], ["Strobe Lights", "OFF"], ["Fuel Condition Lever", "LOW IDLE (clear of runway)"], ["Ground Control", "CLEARANCE OBTAIN"]]], ["ENGINE SHUTDOWN", null, [["Parking Brake", "SET"], ["Taxi Lights", "OFF"], ["Bleed Air Heat, Vent Fans & Air Conditioner", "OFF"], ["GPS, TX, ADF, DME", "OFF"], ["Standby Power Switch", "OFF"], ["Fuel Boost Switch", "OFF"], ["Power Lever", "IDLE"], ["Propeller Control Lever", "FEATHER"], ["Fuel Condition Lever", "CUTOFF"], ["Nav Lights, Flashing Beacon, Strobe Lights", "OFF"], ["Avionics Switch (No.1 / No.2)", "OFF"], ["Battery Switch", "OFF"], ["Fuel Tank Selectors", "LEFT OFF & RIGHT OFF"], ["Controls", "LOCK"], ["Head-Set Switch", "OFF"], ["Trim Control", "SET FOR TAKEOFF"]]], ["!ENGINE FAILURE DURING TAKEOFF ROLL", null, [["*Power Lever", "BETA RANGE"], ["*Brakes", "APPLY"], ["*Wing Flaps", "RETRACT"], ["#If airplane cannot be stopped on remaining runway:", ""], ["Fuel Condition Lever", "CUTOFF"], ["Fuel Shutoff", "OFF (pull out)"], ["Fuel Tank Selectors", "OFF (warning horn sounds)"], ["Battery Switch", "OFF"]]], ["!ENGINE FAILURE IMMEDIATELY AFTER TAKEOFF", null, [["*Airspeed", "85 KIAS"], ["Propeller", "FEATHER"], ["Wing Flaps", "AS REQUIRED (20° rec.)"], ["Fuel Condition Lever", "CUTOFF"], ["Fuel Shutoff", "OFF (pull out)"], ["Fuel Tank Selectors", "OFF (warning horn sounds)"], ["Battery Switch", "OFF"]]], ["!ENGINE FAILURE DURING FLIGHT", null, [["*Airspeed", "95 KIAS"], ["*Power Lever", "IDLE"], ["*Propeller Control Lever", "FEATHER"], ["*Fuel Condition Lever", "CUTOFF"], ["Wing Flaps", "UP"], ["Fuel Boost Switch", "OFF"], ["Fuel Shutoff", "OFF (pull out)"], ["Ignition Switch", "NORMAL"], ["Standby Power Switch", "OFF"], ["Electrical Load", "REDUCE as follows:"], ["-a. Avionics Bus 2 Switch", "OFF"], ["-b. Flashing Beacon", "OFF"], ["-c. Strobe Lights", "OFF"], ["-d. Ice Protection", "CONSIDER"], ["#If pitot heat required: pull RIGHT PITOT HEAT CB, then pitot heat switch ON.", ""], ["-e. Vent Fans", "OFF"], ["-f. GEN CONT & GEN FIELD CB", "PULL"], ["-g. Autopilot CB", "PULL"], ["Landing", "EMER. LANDING W/O ENGINE PWR"]]], ["!ENGINE FLAMEOUT DURING FLIGHT", null, [["*If Ng is ABOVE 50%", ""], ["-*a. Power Lever", "IDLE"], ["-*b. Ignition Switch", "ON"], ["-c. Power Lever", "AS REQUIRED after relight"], ["#Satisfactory relight = normal ITT and Ng.", ""], ["-d. Ignition Switch", "OFF if cause corrected"], ["*If Ng is BELOW 50%", ""], ["-*a. Fuel Condition Lever", "CUTOFF"], ["-b. Airstart", "STARTER ASSIST or NO STARTER ASSIST"]]], ["!AIRSTART — STARTER ASSIST (PREFERRED)", null, [["Electrical Load", "REDUCE"], ["Standby Power Switch", "OFF"], ["Avionics Power Switches", "OFF"], ["Ignition Switch", "NORMAL"], ["Air Conditioner", "OFF"], ["Bleed Air Heat Switch", "OFF"], ["Emergency Power Lever", "NORMAL"], ["Power Lever", "IDLE"], ["Propeller Control Lever", "MIN RPM"], ["Fuel Condition Lever", "CUTOFF"], ["Fuel Shutoff", "ON (push in)"], ["Fuel Tank Selectors", "LEFT ON, RIGHT ON"], ["Battery Switch", "ON"], ["Fuel Boost Switch", "ON"], ["Altitude", "20,000 FT MAXIMUM"], ["Starter Switch", "START and OBSERVE"], ["-a. IGNITION ON Annunciator", "CHECK ON"], ["-b. Engine Oil Pressure", "CHECK"], ["-c. Ng", "12% MINIMUM"], ["Fuel Condition Lever", "LOW IDLE and OBSERVE"], ["-a. ITT", "MONITOR (1090°C max)"], ["-b. Ng", "52% MINIMUM"], ["Starter Switch", "OFF"], ["Fuel Boost Switch", "NORMAL"], ["Fuel Condition Lever", "HIGH IDLE"], ["Propeller Control Lever", "AS REQUIRED"], ["Power Lever", "AS REQUIRED"], ["Electrical Equipment", "AS REQUIRED"]]], ["!AIRSTART — NO STARTER ASSIST", null, [["Generator Switch", "TRIP and RELEASE"], ["Standby Power Switch", "OFF"], ["Avionics Power Switches", "OFF"], ["Air Conditioner", "OFF"], ["Bleed Air Heat Switch", "OFF"], ["Emergency Power Lever", "NORMAL"], ["Power Lever", "IDLE"], ["Propeller Control Lever", "MIN RPM"], ["Fuel Condition Lever", "CUTOFF"], ["Fuel Shutoff", "ON (push in)"], ["Fuel Tank Selectors", "LEFT ON, RIGHT ON"], ["Battery Switch", "ON"], ["Fuel Boost Switch", "ON"], ["Ignition Switch", "ON"], ["Airspeed", "100 KIAS MINIMUM"], ["Altitude", "20,000 FT MAXIMUM"], ["Ng Indicator", "CHECK STABLE"], ["Fuel Condition Lever", "LOW IDLE and OBSERVE"], ["-a. ITT", "MONITOR (1090°C max)"], ["-b. Ng", "52% MINIMUM"], ["Ignition Switch", "NORMAL"], ["#Leave ignition ON if heavy precipitation or nearly empty fuel tanks.", ""], ["Fuel Boost Switch", "NORMAL"], ["Fuel Condition Lever", "HIGH IDLE"], ["Propeller Control Lever", "AS REQUIRED"], ["Power Lever", "AS REQUIRED"], ["Generator Switch", "RESET and RELEASE"], ["Electrical and Avionics Equipment", "AS REQUIRED"]]]];
+const TIPS = [["preflight-inspection-cabin", "Oxygen Supply Pressure", "회사는 기내 고정식 산소를 안 쓰고 휴대용 산소를 따로 씀 → 삭선 후보."], ["preflight-inspection-cabin", "Oxygen Masks (if installed)", "위와 같음. 휴대용 산소 사용."], ["preflight-inspection-cabin", "Wing Flaps", "배터리 ON 상태에서 30°까지 내린 것 확인 후 배터리 OFF → 외부점검. 시동 전 UP으로 되돌림."], ["before-starting-engine", "Parking Brake", "PF 쪽 컨트롤 휠 아래. 브레이크를 밟은 채 SET."], ["before-starting-engine", "Ignition Switch", "OFF 위치가 없음. NORMAL = Starter가 START일 때만 점화, ON = 계속 점화."], ["before-starting-engine", "All Circuit Breakers", "카메라 전원 CB(약 3개)만 예외. 인공강우: 항상 PULL. 촬영: 시동 전 PULL → 시동 후 IN."], ["before-starting-engine", "Cabin Heat Mixing Air Control", "PM 자리 앞. 'FLT PUSH' 하며 누름."], ["before-starting-engine", "Emergency Power Lever", "구리선으로 묶인 빨간 레버. Ng가 약 48% 아래로 계속 떨어지는 FCU 고장 때만 사용."], ["before-starting-engine", "Fuel Shutoff", "오른쪽 아래 빨간 노브. 'ON PUSH'."], ["before-starting-engine", "Wing Flaps", "외부점검 때 내린 30°를 UP으로 복귀."], ["before-starting-engine", "Annunciator Panel Day/Night Switch", "야간 비행이면 NIGHT."], ["starting-engine-battery-start", "Volt / Ammeter", "POH 최소 24 V지만 실제로는 25 V 이상이어야 시동이 걸림."], ["starting-engine-battery-start", "Starter Switch", "왼손 Starter, 오른손 Condition, 눈은 Ng·ITT. 실패 시 30초 ON·60초 OFF ×2, 세 번째 후 30분 대기. 세 번 실패면 그날 비행 금지."], ["starting-engine-battery-start", "Prop", "순서 오류: 실제로는 Fuel Condition LOW IDLE 뒤에 확인. Prop이 가장 늦게 반응."], ["starting-engine-battery-start", "Fuel Condition Lever", "Ng 12% 안정되면 PF가 바로 콜하며 수행. ITT가 레드라인에 닿기 전에 즉시 CUTOFF."], ["starting-engine-battery-start", "Avionics No.1, No.2, DME, ADF, TX, GPS", "회사 ADF 안 씀."], ["starting-engine-battery-start", "Nav Light & Flashing Beacon", "정비사가 있으면 등 6개 전부 켜서 확인받고 Nav·Beacon만 남김."], ["starting-engine-battery-start", "Suction Gage", "더운 날 IDLE에서 그린 아래(VAC LOW)면 토크를 살짝 올리면 정상."], ["starting-engine-auxiliary-power-start", "Starter Switch", "GPU 시동은 20초 ON·2분 OFF 반복, 이후 1시간 대기(POH 확인). 시동 전 정비사에게 신호."], ["starting-engine-auxiliary-power-start", "Auxiliary Power Unit", "정비사에게 GPU 분리 신호."], ["before-takeoff", "Parking Brake", "회사는 Before Takeoff를 스팟에서 수행한 뒤 택시."], ["before-takeoff", "Flight Instruments", "헤딩계가 PF·PM 자리마다 다름 → PF가 불러주면 PM이 맞춤. Radio alt 200 ft."], ["before-takeoff", "Trim Controls", "TAKEOFF 마크 그대로면 Vr 전에 기수가 뜨려 함 → 살짝 옮겨 세팅(방향은 실물 확인). 전기 트림은 PF 쪽만."], ["before-takeoff", "T-HANDLE", "BYPASS 때 토크가 400에서 살짝 떨어지면 정상. 200까지 떨어지면 비정상."], ["before-takeoff", "Overspeed Governor", "PF가 요크를 밀어주고 PM이 천천히 900 TQ. RPM 1,690~1,810이면 정상. 레버 확 밀지 말 것."], ["before-takeoff", "Autopilot", "Preflight test는 지상에서만 됨. 공중에선 안 먹힘."], ["before-takeoff", "Wing Flaps", "10°는 주로 RWY 14 출발 때. RWY 32에선 선택."], ["before-takeoff", "Takeoff Briefing", "승객(연구원 등)에게 교신 중 조용히 해달라고 지상·기내에서 두 번."], ["final-takeoff", "Air Conditioner", "슬라이드에 Landing light 누락. 교관 플로우: Landing·Taxi·Strobe ON → HIGH IDLE → A/C OFF → XPDR ALT → 시간."], ["final-takeoff", "Time Selector", "시계 고장 → 이륙 시간을 적기. PF가 바쁘면 PM이 기록."], ["takeoff-normal", "Power", "교관은 토크 1,500~1,550. PM은 PF 계기를 보며 감시."], ["takeoff-normal", "Rotate", "회사 V1 안 씀. 인공강우처럼 무거우면 90 kt까지 가속 후 로테이트."], ["takeoff-normal", "Prop", "교관은 1,800으로 내림. 내릴 때 토크가 레드라인 쪽으로 튀니 주의."], ["cruise-climb-1-000-agl", "Enroute Climb Airspeed", "교관 최소 110 KIAS. Prop 1,800 유지, 고도 오를수록 토크 보충."], ["cruise", "Torque", "느리게 1,200 · 빠르게 1,500."], ["descent", "Torque", "900은 기준. 강하율에 맞춰 조절. ATC 'max speed'면 정직하게 약 150 (마진 최대 160)."], ["before-landing", "Landing Briefing", "메모리 플로우(PF). 교관은 약 1,500 ft에서 수행."], ["before-landing", "Propeller Control Lever", "교관 경험: FULL FWD로 복행 시 상승 안 됨 → Prop 1,800으로 내리고 출력 넣으니 상승."], ["landing", "Power Lever", "노즈 포함 모든 바퀴 접지 후. 한 번에 쭉 사용(넣었다 뺐다 반복 X)."], ["after-landing", "Wing Flaps", "활주로를 벗어난 뒤 수행. 슬라이드에 Landing light OFF 누락."], ["after-landing", "Fuel Tank Selector", "교관은 셧다운까지 BOTH 유지."], ["after-landing", "Fuel Condition Lever", "굴러가며 옮기다 실수로 CUTOFF될 수 있음 → 레버를 오른쪽으로 밀며 옮기기. 꺼지면 ITT·Ng 다 내려간 뒤 재시동."], ["engine-shutdown", "Propeller Control Lever", "King Air와 달리 RPM이 내려가 안정될 때까지 기다린 뒤 CUTOFF."], ["engine-shutdown", "Fuel Tank Selectors", "교관: 한쪽(왼쪽)만 OFF. 둘 다 ON이면 주유 때 불균형, 둘 다 OFF면 경고음."], ["engine-shutdown", "Trim Control", "중요. 안 해서 사망사고가 난 사례 있음."], ["engine-failure-during-takeoff-roll", "Battery Switch", "끄기 전에 관제에 상황 통보. 배터리로 약 15~40분 전력 있음."], ["engine-flameout-during-flight", "If Ng is BELOW 50%", "Airstart는 Starter assist 권장."], ["airstart-starter-assist-preferred", "Propeller Control Lever", "MIN RPM = FEATHER까지 당기라는 뜻은 아닌 것으로 교관 해석(확인 필요)."]];
+const CHECK_SVG = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6.3l2.5 2.4L10 3.2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+// ---- model ----
+const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const SECS = DATA.map(([title, subtitle, items]) => {
+  const em = title.startsWith('!'); const t = title.replace(/^!/,'');
+  const id = slug(t);
+  let n = 0, k = 0;
+  const its = items.map(([label, value]) => {
+    if (label.startsWith('#')) return {note:true, text:label.slice(1)};
+    let l = label, sub = false, mem = false;
+    if (l.startsWith('-')) { sub = true; l = l.slice(1); }
+    if (l.startsWith('*')) { mem = true; l = l.slice(1); }
+    k++;
+    return {key: id+'.'+k, label:l, value, sub, mem, num: sub ? '' : String(++n)};
+  });
+  return {id, title:t, subtitle, em, items:its};
+});
+
+const TIPMAP = {};
+for (const [sid, label, text] of TIPS) {
+  const s = SECS.find(x => x.id === sid); if (!s) { console.warn('tip sec', sid); continue; }
+  const it = s.items.find(i => !i.note && i.label === label && !TIPMAP[i.key]);
+  if (!it) { console.warn('tip item', sid, label); continue; }
+  TIPMAP[it.key] = text;
+}
+// ---- per-device check state ----
+const LS = 'c208-checks-v1';
+let checks = {};
+try { checks = JSON.parse(localStorage.getItem(LS) || '{}') || {}; } catch(e) { checks = {}; }
+const saveChecks = () => { try { localStorage.setItem(LS, JSON.stringify(checks)); } catch(e) {} };
+
+// ---- account state: notes + struck ----
+let store = {notes:{}, struck:{}};
+const LS2 = 'c208-store-fallback-v1';
+const syncEl = document.getElementById('sync');
+function setSync(t, ok){ syncEl.textContent = t; syncEl.classList.toggle('ok', !!ok); }
+function scheduleSave(){
+  try { localStorage.setItem(LS2, JSON.stringify(store)); } catch(e) { setSync('저장 실패 — 브라우저 저장 공간을 확인하세요'); }
+}
+// ---- UI state ----
+let mode = 'n', editing = false, hideStruck = false, openEditor = null;
+try { const u = JSON.parse(localStorage.getItem('c208-ui') || '{}'); mode = u.mode || 'n'; hideStruck = !!u.hide; } catch(e) {}
+const saveUi = () => { try { localStorage.setItem('c208-ui', JSON.stringify({mode, hide:hideStruck})); } catch(e) {} };
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const listEl = document.getElementById('list'), chipsEl = document.getElementById('chips');
+
+function progress(sec){
+  let t = 0, d = 0;
+  for (const it of sec.items) { if (it.note || store.struck[it.key]) continue; t++; if (checks[it.key]) d++; }
+  return {t, d};
+}
+
+function editorHTML(key){
+  return `<div class="editor"><textarea id="ta-${esc(key)}" aria-label="메모">${esc(store.notes[key] || '')}</textarea>
+    <div class="btns">${store.notes[key] ? `<button type="button" data-act="memo-del" data-key="${esc(key)}">삭제</button>` : ''}
+    <button type="button" data-act="memo-cancel">취소</button><button type="button" class="save" data-act="memo-save" data-key="${esc(key)}">저장</button></div></div>`;
+}
+
+const notesEl = document.getElementById('notes');
+const LEC = [...notesEl.querySelectorAll('section.lec')].map(sec => {
+  const m = document.createElement('div'); sec.appendChild(m);
+  return {id: sec.id, title: sec.querySelector('h2').textContent.replace(/^\d+\s·\s/,''), memoEl: m};
+});
+function secMemoHTML(sk, show){
+  const smemo = store.notes[sk];
+  if (!(smemo || editing || openEditor===sk || show)) return '';
+  return `<div class="secmemo">
+    ${smemo && openEditor!==sk ? `<div class="memo"><b>SECTION MEMO</b>${esc(smemo)}</div>` : ''}
+    ${openEditor===sk ? editorHTML(sk) : `<div class="ctl"><button type="button" data-act="memo" data-key="${esc(sk)}">${smemo?'섹션 메모 수정':'섹션 메모 추가'}</button></div>`}
+  </div>`;
+}
+function render(){
+  document.getElementById('tabN').setAttribute('aria-selected', mode==='n');
+  document.getElementById('tabE').setAttribute('aria-selected', mode==='e');
+  document.getElementById('tabL').setAttribute('aria-selected', mode==='l');
+  const lec = mode === 'l';
+  listEl.hidden = lec; notesEl.hidden = !lec;
+  document.getElementById('hideBtn').hidden = lec;
+  document.getElementById('tot').hidden = lec;
+  if (lec) {
+    document.getElementById('editBtn').setAttribute('aria-pressed', editing);
+    document.getElementById('editNote').hidden = !editing;
+    notesEl.className = editing ? 'editing' : '';
+    chipsEl.innerHTML = LEC.map(s => `<a href="#${s.id}" data-sec="${s.id}">${esc(s.title)}</a>`).join('');
+    LEC.forEach(s => { s.memoEl.innerHTML = secMemoHTML('lec.' + s.id + '._'); });
+    if (openEditor) { const ta = document.getElementById('ta-' + openEditor); if (ta) ta.focus(); }
+    return;
+  }
+  document.getElementById('editBtn').setAttribute('aria-pressed', editing);
+  document.getElementById('hideBtn').setAttribute('aria-pressed', hideStruck);
+  document.getElementById('editNote').hidden = !editing;
+  listEl.className = (editing ? 'editing ' : '') + (hideStruck ? 'hide-struck' : '');
+  const secs = SECS.filter(s => (mode==='e') === s.em);
+  let tt = 0, dd = 0;
+  chipsEl.innerHTML = secs.map(s => { const p = progress(s); tt += p.t; dd += p.d;
+    return `<a href="#${s.id}" class="${p.t && p.d===p.t ? 'done' : ''}" data-sec="${s.id}">${esc(s.title.replace(/^PREFLIGHT INSPECTION — /,'PREFLIGHT · '))}<span class="p">${p.d}/${p.t}</span></a>`; }).join('');
+  document.getElementById('tot').textContent = `${dd}/${tt} 완료`;
+  listEl.innerHTML = secs.map(s => {
+    const p = progress(s);
+    const rows = s.items.map(it => {
+      if (it.note) return `<li class="note">${esc(it.text)}</li>`;
+      const st = !!store.struck[it.key], memo = store.notes[it.key];
+      const cls = ['it', it.sub?'sub-it':'', it.mem?'mem':'', checks[it.key]?'on':'', st?'struck':''].join(' ');
+      return `<li class="${cls}" data-key="${esc(it.key)}">
+        <button type="button" class="row" data-act="toggle" data-key="${esc(it.key)}" aria-pressed="${!!checks[it.key]}">
+          <span class="box">${CHECK_SVG}</span>${it.sub?'':`<span class="num">${it.num}</span>`}
+          <span class="lab"><span class="l">${esc(it.label)}</span><span class="tag-x">미사용</span></span>
+          ${it.value?`<span class="val">${esc(it.value)}</span>`:''}
+        </button>
+        ${TIPMAP[it.key] ? `<div class="tip"><b>교관</b>${esc(TIPMAP[it.key])}</div>` : ''}
+        ${memo && openEditor!==it.key ? `<div class="memo"><b>MEMO</b>${esc(memo)}</div>` : ''}
+        ${openEditor===it.key ? editorHTML(it.key) : `<div class="ctl">
+          <button type="button" data-act="memo" data-key="${esc(it.key)}">${memo?'메모 수정':'메모 추가'}</button>
+          <button type="button" class="x" data-act="strike" data-key="${esc(it.key)}" aria-pressed="${st}">${st?'삭선 해제':'삭선 (회사 미사용)'}</button></div>`}
+      </li>`;
+    }).join('');
+    const secMemo = secMemoHTML(s.id + '._');
+    return `<section class="sec ${s.em?'em':''} ${p.t && p.d===p.t?'complete':''}" id="${s.id}">
+      <div class="sh"><h2>${esc(s.title)}</h2><span class="cnt">${p.d}/${p.t}</span>
+        <button type="button" data-act="reset" data-sec="${s.id}">리셋</button></div>
+      ${s.subtitle?`<div class="sub">${esc(s.subtitle)}</div>`:''}
+      <ol class="items">${rows}</ol>${secMemo}
+      <div class="done-line">${esc(s.title)} — ${p.t && p.d===p.t ? 'CHECKLIST COMPLETE' : `${p.t-p.d} ITEMS REMAINING`}</div>
+    </section>`;
+  }).join('') + `<div style="margin-top:18px;display:flex;justify-content:center"><button type="button" class="tbtn" data-act="reset-all">${mode==='e'?'Emergency':'Normal'} 체크 전체 리셋</button></div>`;
+  if (openEditor) { const ta = document.getElementById('ta-' + openEditor); if (ta) { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); } }
+}
+
+let resetArm = null;
+function onAct(e){
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const act = b.dataset.act, key = b.dataset.key;
+  if (act === 'toggle') {
+    if (editing) return;
+    if (store.struck[key]) return;
+    checks[key] = !checks[key]; if (!checks[key]) delete checks[key]; saveChecks();
+    const y = window.scrollY; render(); window.scrollTo(0, y);
+  } else if (act === 'memo') { openEditor = key; const y = window.scrollY; render(); window.scrollTo(0, y); }
+  else if (act === 'memo-cancel') { openEditor = null; render(); }
+  else if (act === 'memo-save' || act === 'memo-del') {
+    const v = act === 'memo-del' ? '' : (document.getElementById('ta-' + key)?.value || '').trim();
+    if (v) store.notes[key] = v; else delete store.notes[key];
+    openEditor = null; scheduleSave(); const y = window.scrollY; render(); window.scrollTo(0, y);
+  } else if (act === 'strike') {
+    if (store.struck[key]) delete store.struck[key]; else { store.struck[key] = true; delete checks[key]; saveChecks(); }
+    scheduleSave(); const y = window.scrollY; render(); window.scrollTo(0, y);
+  } else if (act === 'reset') {
+    const s = SECS.find(x => x.id === b.dataset.sec);
+    s.items.forEach(it => { if (it.key) delete checks[it.key]; }); saveChecks();
+    const y = window.scrollY; render(); window.scrollTo(0, y);
+  } else if (act === 'reset-all') {
+    if (resetArm !== mode) { resetArm = mode; b.textContent = '한 번 더 누르면 리셋됩니다'; setTimeout(() => { resetArm = null; }, 3000); return; }
+    resetArm = null;
+    SECS.filter(s => (mode==='e') === s.em).forEach(s => s.items.forEach(it => { if (it.key) delete checks[it.key]; }));
+    saveChecks(); render(); window.scrollTo(0, 0);
+  }
+}
+listEl.addEventListener('click', onAct);
+notesEl.addEventListener('click', onAct);
+chipsEl.addEventListener('click', e => {
+  const a = e.target.closest('a[data-sec]'); if (!a) return; e.preventDefault();
+  document.getElementById(a.dataset.sec)?.scrollIntoView({behavior:'smooth', block:'start'});
+});
+document.getElementById('tabN').onclick = () => { mode = 'n'; openEditor = null; saveUi(); render(); window.scrollTo(0,0); };
+document.getElementById('tabE').onclick = () => { mode = 'e'; openEditor = null; saveUi(); render(); window.scrollTo(0,0); };
+document.getElementById('tabL').onclick = () => { mode = 'l'; openEditor = null; saveUi(); render(); window.scrollTo(0,0); };
+document.getElementById('editBtn').onclick = () => { editing = !editing; openEditor = null; const y = window.scrollY; render(); window.scrollTo(0, y); };
+document.getElementById('hideBtn').onclick = () => { hideStruck = !hideStruck; saveUi(); const y = window.scrollY; render(); window.scrollTo(0, y); };
+document.getElementById('topBtn').onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+
+// local fallback first, so the page is complete at rest
+try { const f = JSON.parse(localStorage.getItem(LS2) || 'null'); if (f && f.notes) store = {notes:f.notes||{}, struck:f.struck||{}}; } catch(e) {}
+render();
+
+setSync('메모·삭선은 이 기기에 저장 · 백업은 맨 아래', true);
+if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+document.getElementById('expBtn').onclick = () => {
+  const data = JSON.stringify({app:'c208-checklist', saved:new Date().toISOString(), notes:store.notes, struck:store.struck}, null, 1);
+  const name = 'C208_메모_' + new Date().toISOString().slice(0,10) + '.json';
+  const blob = new Blob([data], {type:'application/json'});
+  try { const f = new File([blob], name, {type:'application/json'});
+    if (navigator.canShare && navigator.canShare({files:[f]})) { navigator.share({files:[f], title:name}).catch(() => {}); return; } } catch(e) {}
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+};
+document.getElementById('impBtn').onclick = () => document.getElementById('impFile').click();
+document.getElementById('impFile').onchange = function(){
+  const f = this.files[0]; if (!f) return; const r = new FileReader();
+  r.onload = () => { const msg = document.getElementById('bkMsg');
+    try { const o = JSON.parse(r.result); if (!o.notes && !o.struck) throw 0;
+      Object.assign(store.notes, o.notes || {}); Object.assign(store.struck, o.struck || {});
+      scheduleSave(); render(); msg.textContent = '메모 ' + Object.keys(o.notes||{}).length + '개 · 삭선 ' + Object.keys(o.struck||{}).length + '개를 불러왔어요.';
+    } catch(e) { msg.textContent = 'C208 메모 백업 파일이 아니에요.'; } };
+  r.readAsText(f); this.value = '';
+};
+
+</script>
+
+</body></html>
