@@ -63,7 +63,7 @@ h3{font-size:17px;margin:20px 0 6px;color:var(--ink)}
 .r .v.wrap{white-space:normal;max-width:12em}
 .r .n{grid-column:1 / -1;font-size:13px;color:var(--mute);line-height:1.45}
 .src{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.04em;border-radius:4px;padding:0 5px;margin-left:6px;vertical-align:2px;border:1px solid currentColor}
-.src.R{color:var(--blue)} .src.A{color:var(--mute)} .src.S{color:var(--amber)}
+.src.R{color:var(--blue)} .src.A{color:var(--mute)} .src.S{color:var(--amber)} .src.W{color:var(--red)}
 body.quiz .r .v{color:transparent;background:var(--soft);border-radius:6px;min-width:4.5em;user-select:none}
 body.quiz .r .v.show{color:var(--val);background:none}
 .tbl{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -531,6 +531,13 @@ const LIM=[
   ['CG 전방 @7,400 이하','144.7 in','그 사이는 직선. 교재 AFM(C90B)은 9,600 lb 150.6 · 7,850 lb 144.7','R'],
   ['Datum','노즈 잭 포인트 83.5 in 앞','MAC 앞전 135.9 in, 길이 75.9 in','A'],
   ['Raisbeck 증가 중량','10,350 / 10,500 lb','SB-08-BC-01 + 10-ply 타이어 필요. 등록 MTOW와 다르므로 미적용 가정','R']]},
+ {id:'perf',t:'이착륙 거리 (참고치)',rows:[
+  ['C90 착륙 (50 ft) @MLW 9,168 lb','2,100–2,300 ft','≈ 640–700 m · SL·ISA·무풍·건조 포장','W'],
+  ['E90 착륙 (50 ft) @MLW 9,700 lb','2,110 ft','≈ 643 m · GlobalAir는 3,584 ft(≈1,092 m) 표기, factored 값일 수 있음','W'],
+  ['E90 BFL @MTOW 10,100 lb','4,329 ft','≈ 1,319 m','W'],
+  ['E90 Accelerate-Go @MTOW','~4,000–4,600 ft','≈ 1,220–1,400 m · BFL 기반 추정, 공개 AGD 수치 없음','W'],
+  ['C90-1 BFL (참고)','5,200 ft','≈ 1,585 m · 원형 C90 AGD는 공개 수치 없음','W'],
+  ['실제 운항','AFM 차트','PA·OAT·바람·경사로 산출. 우리 C90A(MLW 9,600)와 중량 기준 다름','W']]},
  {id:'misc',t:'하중 · 고도 · 기타',rows:[
   ['하중 (Flaps up)','+3.29 / −1.33 G','10,100 lb','A'],
   ['하중 (Flaps down)','+2.00 / 0 G','','A'],
@@ -551,7 +558,7 @@ const LIM=[
   ['Gyro suction','4.3–5.9 inHg','15,000 ft–SL. 35,000–15,000 ft는 2.8–4.3','A'],
   ['뒤보기 좌석','이착륙 시 등받이 세우고 헤드레스트 최대','','A']]}
 ];
-const SRC={R:'RAIS',A:'AFM',S:'교재'};
+const SRC={R:'RAIS',A:'AFM',S:'교재',W:'참고'};
 const $=s=>document.querySelector(s);
 const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 
