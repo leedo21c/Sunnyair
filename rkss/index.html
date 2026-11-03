@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="김포·교신">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#173058">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>김포 운항 · 교신 · 비행계획</title>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* Layout: one reading column, sticky section chips; radio calls are PILOT/ATC line pairs that can be hidden for practice */
+:root{
+  --bg:#f2f4f7; --surface:#ffffff; --ink:#18202c; --mute:#5b6576; --line:#d7dde6;
+  --head:#173058; --accent:#2b5ea6; --band:#173058; --band-ink:#ffffff;
+  --sky:#e9eff8; --amber:#9d5c00; --amber-bg:#fff2da; --red:#b02a20; --red-bg:#fcebe9;
+  --green:#1c6f3e; --green-bg:#e5f3ea; --code-bg:#e9edf3;
+  --pilot:#1c6f3e; --pilot-bg:#e9f5ee; --atc:#2b5ea6; --atc-bg:#eaf1fb;
+  --map-land:#eef2ea; --map-ink:#33404f;
+  --sans:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Noto Sans CJK KR","Malgun Gothic",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,"DejaVu Sans Mono",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d131b; --surface:#151d28; --ink:#e4e9f0; --mute:#9aa5b6; --line:#283444;
+  --head:#a9c8f5; --accent:#77a9ee; --band:#1c3863; --band-ink:#ffffff;
+  --sky:#18273a; --amber:#f1b453; --amber-bg:#30240f; --red:#ff8f85; --red-bg:#391613;
+  --green:#82d3a0; --green-bg:#122d1d; --code-bg:#1f2a38;
+  --pilot:#82d3a0; --pilot-bg:#11281b; --atc:#8db8f2; --atc-bg:#15253b;
+  --map-land:#18222e; --map-ink:#c9d3df; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d131b; --surface:#151d28; --ink:#e4e9f0; --mute:#9aa5b6; --line:#283444;
+  --head:#a9c8f5; --accent:#77a9ee; --band:#1c3863; --band-ink:#ffffff;
+  --sky:#18273a; --amber:#f1b453; --amber-bg:#30240f; --red:#ff8f85; --red-bg:#391613;
+  --green:#82d3a0; --green-bg:#122d1d; --code-bg:#1f2a38;
+  --pilot:#82d3a0; --pilot-bg:#11281b; --atc:#8db8f2; --atc-bg:#15253b;
+  --map-land:#18222e; --map-ink:#c9d3df; color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 96px}
+header.hero{padding-block:22px 14px}
+.hero .eyebrow{font-size:12px;letter-spacing:.08em;color:var(--mute);text-transform:uppercase}
+.hero h1{font-size:26px;line-height:1.25;margin:4px 0 6px;color:var(--head);text-wrap:balance}
+.hero p{margin:0;color:var(--mute);font-size:14px}
+nav.chips{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);
+  margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px))) 0;padding:8px max(16px,env(safe-area-inset-left,0px));
+  display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+nav.chips::-webkit-scrollbar{display:none}
+nav.chips a{flex:0 0 auto;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--bg)}
+nav.chips a.on{background:var(--band);color:var(--band-ink);border-color:var(--band)}
+nav.chips a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sec{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 54px);padding-top:14px}
+h2{font-size:19px;line-height:1.3;color:var(--band-ink);background:var(--band);margin:0 0 12px;padding:10px 14px;border-radius:8px;text-wrap:balance}
+h3{font-size:17px;color:var(--head);margin:22px 0 8px;padding-bottom:4px;border-bottom:2px solid var(--accent);text-wrap:balance}
+h4{font-size:15px;color:var(--accent);margin:16px 0 6px}
+p{margin:6px 0 10px}
+ul,ol{margin:4px 0 12px;padding-left:20px} li{margin:3px 0}
+.two{display:block}
+@media (min-width:720px){.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}.two>div{min-width:0}}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:6px 0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.45}
+th{background:var(--sky);color:var(--head);text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{font-weight:700;color:var(--head);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.m,.m{font-family:var(--mono);font-size:13px}
+.eng{font-family:var(--mono);font-size:.84em;background:var(--code-bg);padding:1px 5px;border-radius:4px;white-space:nowrap}
+.box{padding:12px 14px;margin:10px 0 14px;border-radius:8px;background:var(--sky);border-left:4px solid var(--accent)}
+.box .t{display:block;font-weight:700;margin-bottom:3px;color:var(--head)}
+.box.why{background:var(--green-bg);border-color:var(--green)} .box.why .t{color:var(--green)}
+.box.warn{background:var(--red-bg);border-color:var(--red)} .box.warn .t{color:var(--red)}
+.box.chk{background:var(--amber-bg);border-color:var(--amber)} .box.chk .t{color:var(--amber)}
+.box ul{margin-bottom:4px}
+.num{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:6px 0 14px}
+@media (min-width:560px){.num{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.num div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+.num b{display:block;font-size:19px;color:var(--head);font-variant-numeric:tabular-nums;line-height:1.25}
+.num span{font-size:12.5px;color:var(--mute)}
+.small{font-size:13px;color:var(--mute)}
+.src{font-size:12.5px;color:var(--mute)}
+.diagram{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px;margin:6px 0 12px}
+.diagram svg{display:block;width:100%;height:auto;max-width:560px;margin:0 auto}
+
+/* radio */
+.call{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin:10px 0 16px;overflow:hidden}
+.call .ag{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding:9px 12px;background:var(--sky);border-bottom:1px solid var(--line);font-weight:700;color:var(--head)}
+.call .ag .f{font-family:var(--mono);font-size:15px;color:var(--accent)}
+.call .ag .d{font-weight:400;font-size:13px;color:var(--mute)}
+.ln{display:grid;grid-template-columns:52px 1fr;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);align-items:start}
+.ln:last-child{border-bottom:none}
+.ln .who{font-size:11px;font-weight:800;letter-spacing:.04em;padding:2px 0;border-radius:4px;text-align:center;margin-top:2px}
+.ln .ph{display:block;font-size:11.5px;color:var(--mute);font-weight:600}
+.ln .tx{font-family:var(--mono);font-size:14px;line-height:1.5}
+.ln .tx .v{color:var(--amber);font-weight:700}
+.ln.p{background:var(--pilot-bg)} .ln.p .who{background:var(--pilot);color:var(--surface)}
+.ln.a .who{background:var(--atc);color:var(--surface)}
+.ln .ko{display:block;font-family:var(--sans);font-size:12.5px;color:var(--mute);margin-top:2px}
+body.practice .ln.p .tx{color:transparent;text-shadow:none;background:repeating-linear-gradient(90deg,var(--line) 0 10px,transparent 10px 14px);border-radius:4px;cursor:pointer;user-select:none}
+body.practice .ln.p .tx *{color:transparent!important}
+body.practice .ln.p.show .tx{color:inherit;background:none}
+body.practice .ln.p.show .tx *{color:inherit!important}
+body.practice .ln.p.show .tx .v{color:var(--amber)!important}
+.pbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:4px 0 10px}
+.pbtn{font:inherit;font-size:14px;font-weight:700;padding:8px 14px;border-radius:999px;border:1px solid var(--band);background:var(--surface);color:var(--head);cursor:pointer}
+body.practice .pbtn{background:var(--band);color:var(--band-ink)}
+.pbar span{font-size:12.5px;color:var(--mute)}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0 12px;font-size:13px}
+.flow span{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:3px 8px;white-space:nowrap}
+.flow span b{font-family:var(--mono);color:var(--accent);font-weight:600}
+.flow i{color:var(--mute);font-style:normal}
+
+/* FPL form */
+.fpl{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0 16px}
+.fpl .hd{font-weight:700;color:var(--head);margin-bottom:6px}
+.fpl dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px;margin:0}
+@media (min-width:560px){.fpl dl{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.fpl dl div{min-width:0}
+.fpl dt{font-size:11.5px;color:var(--mute)}
+.fpl dd{margin:0;font-family:var(--mono);font-size:14px;font-weight:600;color:var(--ink)}
+.fpl dd.w{grid-column:1/-1}
+.fpl .full{grid-column:1/-1}
+.fpl .rt{font-family:var(--mono);font-size:14px;background:var(--code-bg);border-radius:6px;padding:6px 8px;margin:4px 0 0;white-space:pre-wrap}
+
+/* flash cards */
+.cards{display:grid;grid-template-columns:1fr;gap:8px;margin:8px 0 14px}
+@media (min-width:560px){.cards{grid-template-columns:1fr 1fr}}
+.card{font:inherit;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;color:var(--ink)}
+.card .q{font-weight:700;color:var(--head)}
+.card .a{display:none;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)}
+.card.open .a{display:block}
+.card .hint{font-size:12px;color:var(--mute)}
+.card.open .hint{display:none}
+.cbar{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+.cbar button{font:inherit;font-size:14px;font-weight:600;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+
+#top{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));
+  width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--head);font-size:20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.18);cursor:pointer;z-index:6}
+footer{margin-top:30px;font-size:12.5px;color:var(--mute)}
+a{color:var(--accent)}
+</style>
+</head><body>
+<div class="wrap">
+<header class="hero"><div class="eyebrow">써니항공 OE · 2026.11.03 수업</div>
+<h1>김포 운항 · 교신 · 비행계획</h1>
+<p>RKSS 공항 개요, IFR 출항부터 VFR 임무 전환·입항까지의 표준 교신, UBIKAIS 비행계획 작성. 실제 운항은 최신 AIP·NOTAM·ATC 지시와 회사 SOP가 기준입니다.</p>
+<p style="margin-top:8px"><a href="../" style="font-weight:700">← C90A 핵심 요약</a></p>
+</header>
+<nav class="chips" aria-label="섹션"><a href="#rkss" data-id="rkss">김포공항</a><a href="#dep" data-id="dep">IFR 출항 교신</a><a href="#vfr" data-id="vfr">IFR 캔슬·VFR</a><a href="#arr" data-id="arr">IFR 입항 교신</a><a href="#fpl" data-id="fpl">비행계획</a><a href="#cards" data-id="cards">암기 카드</a></nav>
+
+<!-- ============ 1. RKSS ============ -->
+<section class="sec" id="rkss">
+<h2>1 · 김포공항 (RKSS) 한눈에</h2>
+<div class="num">
+<div><b>18 m · 59 ft</b><span>공항 표고</span></div>
+<div><b>9° W</b><span>자기편차</span></div>
+<div><b>14,000 ft</b><span>전이고도 (TA)</span></div>
+<div><b>Class B</b><span>Gimpo CTR · ARP 반경 5 NM · SFC–3,000 ft AGL</span></div>
+<div><b>23:00–06:00</b><span>커퓨 KST (1400–2100 UTC) 이·착륙 제한</span></div>
+<div><b>2,000 / 3,000</b><span>VFR 출항 / 입항 고도 (ft)</span></div>
+</div>
+
+<h3>활주로</h3>
+<div class="tw"><table>
+<tr><th>활주로</th><th>크기 (m)</th><th>ILS</th></tr>
+<tr><td class="n">14R / 32L</td><td>3,200 × 60</td><td>14R CAT II/III · 32L CAT I</td></tr>
+<tr><td class="n">14L / 32R</td><td>3,600 × 45</td><td>14L CAT I · 32R CAT I</td></tr>
+</table></div>
+<div class="two">
+<div class="box"><span class="t">RWY 14 운영 시</span>이륙 <b>14L</b> · 착륙 <b>14R</b></div>
+<div class="box"><span class="t">RWY 32 운영 시</span>3시간 단위로 이·착륙 활주로 교대 (32L ↔ 32R). 기상·교통에 따라 변경 가능 → <b>ATIS 확인</b></div>
+</div>
+
+<h3>계류장과 지상 이동</h3>
+<ul>
+<li><b>서편 계류장 (West Apron)</b> · 주기장 <span class="eng">506R</span>~<span class="eng">524L</span> · W1/W2로 활주로 진출입 · 양 끝에 고정익 런업 구역</li>
+<li>Apron 안 유도로: <b>S</b>(주기장 앞) → <b>W1/W2</b> → <b>T</b>에서 Hold short 후 Tower로 이양</li>
+<li>회사 주기 위치 (수업 메모): <span class="eng">509</span> <span class="eng">513</span> <span class="eng">514</span> · HL5247/5248은 513/514</li>
+<li><b>RWY 32 출항</b> · W1/W2로 진입해 32L에서 Line up and wait</li>
+<li><b>RWY 14 출항</b> · W2에서 바로 이륙하면 남는 거리가 짧음 → <b>Back taxi</b>(Backtrack) 후 <b>D1</b>에서 돌아서 Line up</li>
+</ul>
+<div class="box chk"><span class="t">교차점 이륙 (Intersection departure)</span>
+AIP AD 2.20 6.1에 교차점별 잔여 활주로 길이가 있음. 교차점 이륙은 <b>원칙적으로 불가, 부득이한 경우에만 허용</b>. 받게 되면 잔여거리로 이륙·중단거리가 충분한지 먼저 판단.</div>
+
+<h3>김포 운영 규칙 (수업)</h3>
+<ul>
+<li><b>엔진 2개 이상</b> 항공기(헬기 제외)는 김포 <b>출·도착을 IFR</b>로 → King Air는 IFR로 나간 뒤 공중에서 IFR 캔슬하고 VFR 임무로 전환</li>
+<li><b>훈련비행 금지</b> · Touch and go, Low approach 불가</li>
+<li>오토파일럿은 <b>800 ft</b>쯤에서 Engage (수업 예시)</li>
+<li>Departure 교신은 <b>1,000 ft 이상</b>에서 잘 들림</li>
+</ul>
+
+<h3>공역 · 금지/제한구역</h3>
+<div class="tw"><table>
+<tr><th>구역</th><th>내용</th></tr>
+<tr><td class="n">Gimpo CTR</td><td>Class B · ARP 중심 반경 5 NM · SFC–3,000 ft AGL · Gimpo Tower (영어/한국어)</td></tr>
+<tr><td class="n">RK P73</td><td>서울 도심 비행금지구역</td></tr>
+<tr><td class="n">RK P518</td><td>휴전선 인근 비행금지구역</td></tr>
+<tr><td class="n">RK R17 · ACMI</td><td>특수사용공역</td></tr>
+</table></div>
+
+<h3>주요 주파수</h3>
+<div class="tw"><table>
+<tr><th>기관</th><th>호출부호</th><th>MHz</th><th>용도</th></tr>
+<tr><td class="n">ATIS</td><td>Gimpo Int'l Airport</td><td class="m">126.4</td><td>출항 전 필수</td></tr>
+<tr><td class="n">DEL</td><td>Gimpo Delivery</td><td class="m">121.975</td><td>IFR 클리어런스 (PDC 가능)</td></tr>
+<tr><td class="n">APN</td><td>Gimpo Apron</td><td class="m">130.875</td><td>시동 · 지상이동 (주)</td></tr>
+<tr><td class="n">GND</td><td>Gimpo Ground</td><td class="m">121.9 / 121.95</td><td>유도로</td></tr>
+<tr><td class="n">TWR</td><td>Gimpo Tower</td><td class="m">118.1</td><td>이·착륙</td></tr>
+<tr><td class="n">DEP</td><td>Seoul Departure</td><td class="m">125.15</td><td>출항 후</td></tr>
+<tr><td class="n">APP</td><td>Seoul Approach</td><td class="m">119.1</td><td>입항 · IFR 캔슬 후</td></tr>
+<tr><td class="n">APP (VFR)</td><td>Seoul Approach</td><td class="m">123.25 / 123.8</td><td>VFR 항공기</td></tr>
+<tr><td class="n">ACC</td><td>Daegu Control</td><td class="m">134.175</td><td>항로 (강원 방면 예시)</td></tr>
+<tr><td class="n">APP</td><td>Gangneung Approach</td><td class="m">124.6</td><td>강릉 지역 임무</td></tr>
+</table></div>
+<p class="src">출처: 11/3 수업 슬라이드 3–6, 13–14 · 수업 필기 1쪽.</p>
+</section>
+
+<!-- ============ 2. IFR DEPARTURE ============ -->
+<section class="sec" id="dep">
+<h2>2 · IFR 출항 교신</h2>
+<div class="flow"><span>ATIS <b>126.4</b></span><i>→</i><span>Delivery <b>121.975</b></span><i>→</i><span>Apron <b>130.875</b></span><i>→</i><span>Tower <b>118.1</b></span><i>→</i><span>Departure <b>125.15</b></span><i>→</i><span>Daegu <b>134.175</b></span><i>→</i><span>지역 APP</span></div>
+<div class="pbar"><button class="pbtn" type="button">연습 모드</button><span>켜면 조종사(P) 문장이 가려집니다. 말해 보고 탭해서 확인.</span></div>
+<p class="small"><span class="eng" style="color:var(--amber)">[ ]</span> 안은 그날 값으로 바꿔 말하는 부분. 예시 호출부호는 HL5239.</p>
+
+<div class="call"><div class="ag">Gimpo Delivery <span class="f">121.975</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">요청</span>Gimpo Delivery, HL5239, SPOT <span class="v">[번호]</span>, request IFR clearance to <span class="v">[목적지]</span>, proposing <span class="v">[고도]</span></span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">발부</span>HL5239, Delivery, cleared to <span class="v">[목적지]</span> RWY<span class="v">[방향]</span> via <span class="v">[SID]</span>, G597 then as filed, climb 9000, squawk <span class="v">[코드]</span>.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">복창</span>Cleared to <span class="v">[목적지]</span> RWY<span class="v">[방향]</span> via <span class="v">[SID]</span>, G597 then as filed, climb 9000, squawk <span class="v">[코드]</span>, HL5239</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">확인</span>HL5239, readback is correct, contact Gimpo Apron 130.875</span></div>
+</div>
+<div class="box why"><span class="t">클리어런스 받아 적기 = CRAFT</span>
+<b>C</b>learance limit · <b>R</b>oute(SID) · <b>A</b>ltitude · <b>F</b>requency · <b>T</b>ransponder. 수업 예: 강원 임무는 BIKSI/TORUS 방면, <b>갈 때 9,000 · 올 때 10,000</b> (동쪽 홀수, 서쪽 짝수).</div>
+
+<div class="call"><div class="ag">Gimpo Apron <span class="f">130.875</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">시동</span>Gimpo Apron, HL5239, SPOT <span class="v">[번호]</span>, request engine start-up.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx">HL5239, Gimpo Apron, start-up approved, altimeter <span class="v">[00.00]</span></span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Start-up approved, altimeter <span class="v">[00.00]</span>, HL5239</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">지상이동</span>Gimpo Apron, HL5239, request taxi.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx">HL5239, Gimpo Apron, taxi via <span class="v">[S]</span>, <span class="v">[W2]</span>, hold short of T. <span class="ko">(T 접근 시)</span> HL5239, contact Gimpo Tower 118.1.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Taxi via <span class="v">[S]</span>, <span class="v">[W2]</span>, hold short of <span class="v">[T]</span>. <span class="ko">(T 접근 시)</span> Contact Tower 118.1, HL5239.</span></div>
+</div>
+
+<div class="call"><div class="ag">Gimpo Tower <span class="f">118.1</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">대기</span>Gimpo Tower, HL5239, holding short T, <span class="v">[W2]</span>.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx">HL5239, hold short of <span class="v">[RWY]</span>, due to L/D traffic.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Hold short of <span class="v">[RWY]</span>, HL5239</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">진입</span><span class="ko">RWY 32</span>HL5239, line up and wait RWY 32L.<span class="ko">RWY 14</span>HL5239, back taxi RWY 14R, line up and wait RWY 14R at D1.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ko">RWY 32</span>Line up and wait RWY 32L, HL5239.<span class="ko">RWY 14</span>Back taxi RWY 14R, line up and wait at D1, HL5239.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">이륙</span>HL5239, wind <span class="v">[방향/속도]</span>, <span class="v">[RWY]</span> cleared for take-off.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Cleared for take-off <span class="v">[RWY]</span>, HL5239.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">이양</span>HL5239, contact Seoul Departure 125.15.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Contact Seoul Departure 125.15, HL5239.</span></div>
+</div>
+
+<div class="call"><div class="ag">Seoul Departure <span class="f">125.15</span> → Daegu Control <span class="f">134.175</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">최초</span>Seoul Departure, HL5239, passing <span class="v">[고도]</span>, climb <span class="v">[고도]</span>, <span class="v">[SID]</span>.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx">HL5239, Seoul Departure, identified, climb <span class="v">[고도]</span>.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Climb <span class="v">[고도]</span>, HL5239.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">경로</span>HL5239, proceed direct <span class="v">[픽스]</span> / HL5239, turn <span class="v">[left/right]</span> heading <span class="v">[방위]</span>.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Direct <span class="v">[픽스]</span> / heading <span class="v">[방위]</span>, HL5239.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">이양</span>HL5239, contact Daegu Control 134.175.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Contact Daegu Control 134.175, HL5239.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">항로</span>Daegu Control, HL5239, maintain 9,000.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx">HL5239, Daegu Control, roger.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">의도</span>HL5239, say your intention after <span class="v">[FIX]</span>.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Daegu Control, HL5239, after <span class="v">[FIX]</span>, <span class="v">[지역]</span> LCL flight.</span></div>
+</div>
+
+<div class="call"><div class="ag">Daegu Control → Gangneung Approach <span class="f">124.6</span><span class="d">지역관제기관 예시</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">이양</span>HL5239, contact Gangneung Approach 124.6.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Contact Gangneung Approach 124.6, HL5239.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">최초</span>Gangneung Approach, HL5239.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx">HL5239, Gangneung Approach, go ahead.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">HL5239, position 10 nm west of <span class="v">[FIX or 공항]</span>, 9,000.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">캔슬</span>HL5239, Gangneung Approach, radar contact, say your intention.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Gangneung Approach, HL5239, <span class="v">[임무명]</span>.</span></div>
+</div>
+
+<div class="box"><span class="t">용어 정리</span>
+<ul>
+<li><b>Identified</b>(ICAO) = <b>Radar contact</b>(FAA). 군 관제(원주 등)는 FAA식 "radar contact"를 씀</li>
+<li><b>Squawk ident</b> · IDENT 버튼만 누르면 됨, <b>복창 안 함</b></li>
+<li><b>Back track / Back taxi</b> · 활주로 위에서 반대로 지상활주</li>
+<li><b>Passing</b> · 최초 교신 때 현재 통과 고도 + 허가 고도를 함께</li>
+</ul></div>
+<div class="box chk"><span class="t">수업 메모 (확인 필요)</span>
+<ul>
+<li>32R 출항 시 6,000 ft까지 계속 상승하며 <span class="eng">TK103</span> 포인트까지 (지난 수업 필기는 TK130 — 철자 확인)</li>
+<li><span class="eng">KARBU</span>에서 Daegu Control로 이양</li>
+<li>원주 Approach 130.x MHz — 정확한 주파수는 차트 확인</li>
+<li>임무 전 <b>유선 연락</b>: 인공강우 임무, 고도(몇 ft), 코스를 미리 알려 둠</li>
+</ul></div>
+<p class="src">출처: 수업 슬라이드 9, 11–14 · 필기 1–2쪽.</p>
+</section>
+
+<!-- ============ 3. IFR CANCEL / VFR ============ -->
+<section class="sec" id="vfr">
+<h2>3 · IFR 캔슬 → VFR 임무 전환</h2>
+<p>다발기는 김포를 IFR로 떠나야 하므로, VFR 임무(촬영·근거리)는 <b>이륙 직후 Tower에 IFR 캔슬</b> → K(서운분기점) → Seoul Approach로 B공역 이탈.</p>
+<div class="flow"><span>Tower <b>118.1</b> 캔슬</span><i>→</i><span>K 2,000 ft</span><i>→</i><span>Seoul APP <b>119.1</b></span><i>→</i><span>G / J 경유 이탈</span><i>→</i><span>Radar service terminated</span></div>
+<div class="pbar"><button class="pbtn" type="button">연습 모드</button><span>조종사 문장 가리기</span></div>
+
+<div class="call"><div class="ag">Gimpo Tower <span class="f">118.1</span><span class="d">IFR 캔슬 요령</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">요청</span>Gimpo Tower, HL5239, request cancel IFR, <span class="ko">(32)</span>left turn to 'K' / <span class="ko">(14)</span>right turn to 'K'</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">승인</span>HL5239, cancel IFR time <span class="v">[시각]</span>. L/H or R/H turn approved, climb 2,000, maintain VFR, SQ VFR, report over 'K'</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">복창</span>L/H or R/H turn approved, climb 2,000, maintain VFR, SQ VFR, report over 'K'</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Gimpo Tower, HL5239, over 'K' 2,000.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx">HL5239, contact Seoul Approach 119.1</span></div>
+</div>
+
+<div class="call"><div class="ag">Seoul Approach <span class="f">119.1</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">최초</span>Seoul Approach, HL5239, over 'K' 2,000</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx">HL5239, Seoul Approach, identified, say your intention.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Seoul Approach, HL5239, destination <span class="v">[지역]</span>, southbound via G / eastbound via J</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">이탈</span>HL5239, cleared out of 'B' airspace via G/J then S/E bound, maintain VFR.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Cleared out of 'B' airspace via G/J then S/E bound, maintain VFR, HL5239.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">종료</span>HL5239, radar service terminated, frequency change approved.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Radar service terminated, frequency change approved, HL5239.</span></div>
+</div>
+<div class="box warn"><span class="t">목적지를 꼭 말할 것</span>
+"Over Kilo" 다음에 <b>촬영지역·목적지(예: 천안)</b>를 말하지 않으면 관제가 헷갈려 한다. "G로 간다"에서 끝내지 말고 최종 목적지와 방향까지 한 번에.</div>
+<div class="box chk"><span class="t">캔슬 후 Squawk</span>
+캔슬하면 IFR 코드 → <b>VFR 코드</b>로 전환. 지난 수업 회사 예: HL5107 <span class="eng">1207</span> / HL5239 <span class="eng">1237</span> (기체별 사례, 전국 공통 규칙 아님).</div>
+
+<h3>VFR 보고지점</h3>
+<div class="diagram" role="img" aria-label="김포 VFR 보고지점 위치도. AIP 좌표로 그린 축척 도식.">
+<svg viewBox="0 0 620 730" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif">
+<rect x="0" y="0" width="620" height="730" fill="var(--map-land)"/>
+<circle cx="404" cy="199" r="180" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 5"/>
+<text x="404" y="34" text-anchor="middle" font-size="13" fill="var(--accent)">Gimpo CTR · 5 NM · Class B</text>
+<g stroke="var(--map-ink)" stroke-width="5" stroke-linecap="round">
+<line x1="378" y1="174" x2="426" y2="216"/><line x1="384" y1="167" x2="432" y2="209"/>
+</g>
+<text x="440" y="232" font-size="13" font-weight="700" fill="var(--map-ink)">RKSS</text>
+<!-- routes -->
+<g stroke="var(--red)" stroke-width="2.5" fill="none" stroke-dasharray="1 0">
+<polyline points="404,199 337,274 373,554 537,605"/>
+</g>
+<g stroke="var(--red)" stroke-width="2" fill="none" stroke-dasharray="7 5">
+<line x1="373" y1="554" x2="373" y2="715"/>
+</g>
+<text x="380" y="705" font-size="12" fill="var(--red)">남쪽 (Southbound)</text>
+<text x="452" y="640" font-size="12" fill="var(--red)">동쪽 (Eastbound)</text>
+<g font-size="14" font-weight="800" text-anchor="middle">
+<g><circle cx="112" cy="206" r="13" fill="#e9f53b" stroke="#333"/><text x="112" y="211" fill="#111">F</text></g>
+<g><circle cx="373" cy="554" r="13" fill="#e9f53b" stroke="#333"/><text x="373" y="559" fill="#111">G</text></g>
+<g><circle cx="537" cy="605" r="13" fill="#e9f53b" stroke="#333"/><text x="537" y="610" fill="#111">J</text></g>
+<g><circle cx="337" cy="274" r="15" fill="#e9f53b" stroke="#111" stroke-width="2"/><text x="337" y="279" fill="#111">K</text></g>
+<g><circle cx="409" cy="176" r="11" fill="#e9f53b" stroke="#333"/><text x="409" y="181" fill="#111" font-size="12">M</text></g>
+<g><circle cx="410" cy="100" r="13" fill="#e9f53b" stroke="#333"/><text x="410" y="105" fill="#111">R</text></g>
+<g><circle cx="324" cy="553" r="13" fill="#e9f53b" stroke="#333"/><text x="324" y="558" fill="#111">S</text></g>
+<g><circle cx="74" cy="391" r="13" fill="#e9f53b" stroke="#333"/><text x="74" y="396" fill="#111">W</text></g>
+<g><circle cx="230" cy="685" r="13" fill="#e9f53b" stroke="#333"/><text x="230" y="690" fill="#111">Z</text></g>
+</g>
+<g font-size="12" fill="var(--map-ink)">
+<text x="130" y="200">북인천IC</text>
+<text x="230" y="300">서운분기점 · 2,000↑</text>
+<text x="390" y="552">생태공원</text>
+<text x="272" y="580">소래</text>
+<text x="550" y="590" text-anchor="end">조남JCT</text>
+<text x="428" y="104">전호산</text>
+<text x="92" y="420">월미도</text>
+<text x="250" y="690">시화방조제</text>
+</g>
+<g transform="translate(570,60)" fill="var(--map-ink)"><path d="M0,-22 L7,0 L0,-6 L-7,0 Z"/><text y="16" text-anchor="middle" font-size="12" font-weight="700">N</text></g>
+<g transform="translate(24,712)" stroke="var(--map-ink)" stroke-width="2"><line x1="0" y1="0" x2="180" y2="0"/><line x1="0" y1="-5" x2="0" y2="5"/><line x1="180" y1="-5" x2="180" y2="5"/><text x="90" y="-8" font-size="11" text-anchor="middle" stroke="none" fill="var(--map-ink)">5 NM</text></g>
+</svg></div>
+<p class="small" style="margin-top:-6px">AIP 좌표로 그린 축척 도식 (진북 기준). 활주로·경로는 개념 표시이며 실제 비행은 AIP 지도 사용.</p>
+
+<div class="tw"><table>
+<tr><th>Pt</th><th>지명</th><th>KIP 기준</th><th>좌표 (WGS-84)</th></tr>
+<tr><td class="n">K</td><td>서운분기점 <b>· 출항 후 VFR 전환 기준점, 2,000 ft 이상 통과</b></td><td class="m">3.0 NM SW · R231/D3</td><td class="m">373125N 1264506E</td></tr>
+<tr><td class="n">G</td><td>생태공원 (갯골생태공원 일대) · K에서 거의 정남쪽</td><td class="m">10.0 NM S · R194/D9.8</td><td class="m">372338N 1264622E</td></tr>
+<tr><td class="n">J</td><td>조남JCT · G에서 동남동쪽 고속도로 분기점</td><td class="m">11.7 NM SSE · R169/D12</td><td class="m">372213N 1265206E</td></tr>
+<tr><td class="n">S</td><td>소래</td><td class="m">10.0 NM SSW · R201/D10</td><td class="m">372340N 1264439E</td></tr>
+<tr><td class="n">F</td><td>북인천IC</td><td class="m">10.3 NM NE of Incheon · R277/D8.2</td><td class="m">373319N 1263713E</td></tr>
+<tr><td class="n">M</td><td>김포공항 북측 농경지</td><td class="m">0.7 NM NNE · R014/D0.7</td><td class="m">373408N 1264737E</td></tr>
+<tr><td class="n">R</td><td>전호산</td><td class="m">2.8 NM N · R011/D2.8</td><td class="m">373615N 1264739E</td></tr>
+<tr><td class="n">W</td><td>월미도</td><td class="m">10.9 NM WSW · R248/D10.8</td><td class="m">372810N 1263553E</td></tr>
+<tr><td class="n">Z</td><td>시화방조제</td><td class="m">14.2 NM SW · D14.3</td><td class="m">372000N 1264120E</td></tr>
+</table></div>
+
+<h3>경로별 요령 (수업)</h3>
+<div class="two">
+<div>
+<h4>East bound · K → G → J</h4>
+<ul>
+<li>J는 산·레이더돔 지역: <b>J를 아래(남쪽)로 끼고</b> 동쪽으로 올라가서 직진</li>
+<li>랜드마크: <b>수리산 방공관제대대</b> (J 동남쪽 수리산 정상, 녹색 레이더 돔)</li>
+<li>이쯤에서 <b>3,500 ft로 올려 달라고</b> 요청</li>
+<li>J 주변은 ForeFlight 보면서 위치 확인</li>
+</ul></div>
+<div>
+<h4>South bound · K → G → 남쪽</h4>
+<ul>
+<li>남쪽으로 갈 때 <b>인천 파이널이 가까움</b> → 관제가 고도 올리지 말라고 함</li>
+<li><b>SOT VOR abeam</b> 지나면 상승</li>
+<li>Kilo에서 <b>헤딩 180</b>으로 가면 Golf</li>
+<li>Osan과는 교신이 잘 안 됨</li>
+</ul></div>
+</div>
+<p class="src">출처: 수업 슬라이드 16–18, 20 · 필기 2–3쪽 · 10/22 수업 정리(Squawk).</p>
+</section>
+
+<!-- ============ 4. IFR ARRIVAL ============ -->
+<section class="sec" id="arr">
+<h2>4 · IFR 입항 교신</h2>
+<div class="flow"><span>STAR</span><i>→</i><span>Seoul APP <b>119.1</b></span><i>→</i><span>ILS</span><i>→</i><span>Tower <b>118.1</b></span><i>→</i><span>W1/W2 개방</span><i>→</i><span>Apron <b>130.875</b></span></div>
+<div class="pbar"><button class="pbtn" type="button">연습 모드</button><span>조종사 문장 가리기</span></div>
+
+<div class="call"><div class="ag">Seoul Approach <span class="f">119.1</span><span class="d">입항</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">최초</span>Seoul Approach, HL5239, 8000, information <span class="v">[A]</span>.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx">HL5239, Seoul Approach, identified, maintain 8000, expect ILS RWY<span class="v">[숫자]</span>.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Maintain 8000, expect ILS RWY<span class="v">[숫자]</span>, HL5239.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">유도</span>HL5239, turn <span class="v">[left/right]</span> heading <span class="v">[방위]</span>, descend <span class="v">[고도]</span>, reduce speed <span class="v">[속도]</span>.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Heading <span class="v">[방위]</span>, descend <span class="v">[고도]</span>, speed <span class="v">[속도]</span>, HL5239.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">허가</span>HL5239, turn <span class="v">[ ]</span> heading <span class="v">[ ]</span>, maintain <span class="v">[고도]</span> until established, cleared ILS approach RWY<span class="v">[ ]</span>.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Heading <span class="v">[ ]</span>, maintain <span class="v">[고도]</span> until established, cleared ILS approach RWY<span class="v">[ ]</span>, HL5239.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">보고</span>Seoul Approach, HL5239, established RWY<span class="v">[ ]</span>.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">이양</span>HL5239, contact Gimpo Tower 118.1.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Contact Gimpo Tower 118.1, HL5239.</span></div>
+</div>
+
+<div class="call"><div class="ag">Gimpo Tower <span class="f">118.1</span> → Apron <span class="f">130.875</span><span class="d">입항</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">최초</span>Gimpo Tower, HL5239, <span class="v">[거리]</span> miles, RWY <span class="v">[숫자]</span></span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx">HL5239, Gimpo Tower, continue approach.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Continue approach, HL5239.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">착륙</span>HL5239, wind <span class="v">[방향/속도]</span>, RWY<span class="v">[ ]</span> cleared to land.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">RWY<span class="v">[ ]</span> cleared to land, HL5239.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">이탈/이양</span>HL5239, vacate via <span class="v">[W1/W2]</span>, <span class="ko">(개방 후)</span> contact Gimpo Apron 130.875.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Vacate via <span class="v">[W1/W2]</span>, HL5239. <span class="ko">(개방 후)</span> Contact Apron 130.875, HL5239.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">주기장 이동</span>Gimpo Apron, HL5239, vacate via <span class="v">[W1/W2]</span>, taxi to spot/stand <span class="v">[숫자]</span>.</span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx">HL5239, Gimpo Apron, taxi to spot/stand <span class="v">[숫자]</span>.</span></div>
+</div>
+<div class="box warn"><span class="t">"Continue approach"는 착륙 허가가 아니다</span>
+선행 교통 때문에 먼저 Continue approach를 받고, 착륙 허가(Cleared to land)는 따로 온다. 활주로 번호까지 확인.</div>
+<div class="box chk"><span class="t">접근 중 주의 (수업)</span>
+<ul>
+<li>200 KIAS 정도로 들어오는 경우가 많음 → 감속 계획 미리</li>
+<li>관제가 <b>FAF 고도보다 낮은 상태에서 중간에 넣어 줄</b> 수 있음 → Glideslope 위/아래 위치 확인하고 강하 주의</li>
+<li>"Established localizer" 보고 · 32 기준 <b>약 12 NM</b>에서 Tower로 이양</li>
+<li>Tower 최초 호출 예: "<span class="eng">XX miles on final RWY [ ]</span>"</li>
+</ul></div>
+<p class="src">출처: 수업 슬라이드 21–23 · 필기 3쪽.</p>
+</section>
+
+<!-- ============ 5. FLIGHT PLAN ============ -->
+<section class="sec" id="fpl">
+<h2>5 · 비행계획 (UBIKAIS FPL)</h2>
+<div class="box why"><span class="t">제출 타이밍</span><b>출발 1시간 전</b>에 제출하면 딱 맞음. 시간은 모두 <b>UTC</b> (KST −9).</div>
+
+<h3>계획 순서</h3>
+<ol>
+<li>목적지 / 임무 지역 결정 (착륙 공항 또는 인공강우·촬영 구역)</li>
+<li>연결 항로 확인 (G597 등) → 진입 Fix → 그 Fix에 맞는 <b>SID</b></li>
+<li>고도: MEA 이상 + 방향별 (동쪽 홀수 9,000 / 서쪽 짝수 10,000)</li>
+<li>복귀 경로 → <b>STAR</b> → 접근</li>
+</ol>
+
+<h3>SID 배정 (출항 Fix 기준)</h3>
+<div class="tw"><table>
+<tr><th>출항 Fix</th><th>RWY 14 (RNAV)</th><th>14 대체</th><th>RWY 32 (RNAV)</th><th>32 대체</th></tr>
+<tr><td class="n">NOPIK</td><td class="m">NOPIK 2U</td><td class="m">SEL 1F</td><td class="m">NOPIK 2T / 2Q</td><td class="m">SEL 1W</td></tr>
+<tr><td class="n">BULTI</td><td class="m">BULTI 2U / 2Z</td><td class="m">SOT 1E</td><td class="m">BULTI 2T / 2Q</td><td class="m">SOT 1W</td></tr>
+<tr><td class="n">OSPOT</td><td class="m">OSPOT 2U / 2Z</td><td class="m">SOT 1E</td><td class="m">OSPOT 2T / 2Q</td><td class="m">SOT 1W</td></tr>
+<tr><td class="n">EGOBA</td><td class="m">EGOBA 2U</td><td class="m">SEL 1F</td><td class="m">EGOBA 2T / 2Q</td><td class="m">SEL 1W</td></tr>
+</table></div>
+<p class="small" style="margin-top:-6px">패턴: <b>U·Z = RWY 14</b>, <b>T·Q = RWY 32</b>. 강원 임무는 EGOBA → 예: <span class="eng">EGOBA2T</span></p>
+
+<h3>STAR (진입 Fix 기준)</h3>
+<div class="tw"><table>
+<tr><th>진입 Fix</th><th>RWY 14</th><th>RWY 32</th></tr>
+<tr><td class="n">REBIT</td><td class="m">REBIT 2U / 2Z</td><td class="m">REBIT 2T / 2Q</td></tr>
+<tr><td class="n">OLMEN</td><td class="m">OLMEN 2U</td><td class="m">OLMEN 2T</td></tr>
+<tr><td class="n">GUKDO</td><td class="m">GUKDO 2U</td><td class="m">GUKDO 2T</td></tr>
+<tr><td class="n">KARBU</td><td class="m">KARBU 2U</td><td class="m">KARBU 2T</td></tr>
+</table></div>
+
+<h3>UBIKAIS 입력 항목</h3>
+<div class="tw"><table>
+<tr><th>항목</th><th>회사 입력값</th><th>의미</th></tr>
+<tr><td class="n">Priority / Filing</td><td class="m">FF · 030220</td><td>Filing time = 일·시·분 (DDHHMM, UTC)</td></tr>
+<tr><td class="n">의뢰부서</td><td>김포공항-항공정보실</td><td></td></tr>
+<tr><td class="n">7 Aircraft ID</td><td class="m">HL5247 · HL5239</td><td>등록부호</td></tr>
+<tr><td class="n">8 Flight rules</td><td class="m">I / Y</td><td>I 전 구간 IFR · V 전 구간 VFR · <b>Y IFR→VFR</b> · Z VFR→IFR</td></tr>
+<tr><td class="n">Type of flight</td><td class="m">G (일반항공)</td><td>Purpose: 사진촬영/측량, 기량유지 등</td></tr>
+<tr><td class="n">Type / Wake</td><td class="m">BE9L · L</td><td>King Air 90 계열 ICAO 형식부호 · Light</td></tr>
+<tr><td class="n">10 Equipment</td><td class="m">S/DC · S/C</td><td>장비/감시장비 — 기체마다 다름 (5247 S/DC, 5239 S/C)</td></tr>
+<tr><td class="n">13 Departure · Time</td><td class="m">RKSS 0300</td><td>EOBT UTC (0300Z = 12:00 KST)</td></tr>
+<tr><td class="n">15 Speed · Level</td><td class="m">N0180 · A090</td><td>180 kt TAS · 9,000 ft (A = 고도 100 ft 단위). VFR이면 "VFR"</td></tr>
+<tr><td class="n">16 Dest · EET · Altn</td><td class="m">AFIL · 0130 · RKNN/RKNW</td><td>임무 후 어디서 마칠지 미정이면 AFIL + 18번에 TORUS 표기 (수업 방식)</td></tr>
+<tr><td class="n">18 Other info</td><td>의뢰기관 / OPR / SPOT / 도착 Fix</td><td>기상 체크박스 3개 체크 → NOTAM and Weather checked by pilot 자동 체크</td></tr>
+<tr><td class="n">19 Supplementary</td><td class="m">E/0500 · P/002</td><td>Endurance(연료 체공시간) · 탑승인원 · R/VHF ELT · J/Light</td></tr>
+<tr><td class="n">A/ · N/ · C/</td><td>WHITE AND BLUE · 연락처 · 기장 성명</td><td>도색 · 비고 · PIC</td></tr>
+</table></div>
+<div class="box"><span class="t">Route 칸의 LCL</span>
+<span class="eng">DCT WONJU LCL 0050</span> = 원주 지역에서 <b>50분 로컬(임무) 비행</b>. Total EET는 임무시간 포함.</div>
+
+<h3>예시 ① 강원 인공강우 · IFR 출항</h3>
+<div class="fpl"><div class="hd">HL5247 · I · G (사진촬영/측량) · BE9L/L · S/DC</div>
+<dl>
+<div><dt>13 DEP / Time</dt><dd>RKSS 0300</dd></div>
+<div><dt>15 Speed / Level</dt><dd>N0180 A090</dd></div>
+<div><dt>16 DEST / EET</dt><dd>AFIL 0130</dd></div>
+<div><dt>ALTN / 2nd</dt><dd>RKNW / RKNN</dd></div>
+<div class="full"><dt>Route</dt><div class="rt">DCT EGOBA G597 BIKSI
+DCT GANGNEUNG LCL 0050
+DCT</div></div>
+<div class="full"><dt>18 Other information</dt><div class="rt">NATIONAL INSTITUTE OF METEOROLOGICAL SCIENCES
+OPR / SUNNYAIR INC
+SPOT / NO 513
+ARRIVAL AERODROME / TORUS</div></div>
+<div><dt>19 E / P</dt><dd>E/0500 P/002</dd></div>
+<div><dt>R / J</dt><dd>VHF ELT · Light</dd></div>
+</dl>
+<p class="small" style="margin:6px 0 0">원주 지역이면 <span class="eng">DCT EGOBA G597 TORUS DCT WONJU LCL 0050 DCT</span></p>
+</div>
+
+<h3>예시 ② 임무 후 김포 복귀 · IFR</h3>
+<div class="fpl"><div class="hd">HL5247 · I · G · BE9L/L · S/DC</div>
+<dl>
+<div><dt>13 DEP / Time</dt><dd>AFIL 0930</dd></div>
+<div><dt>15 Speed / Level</dt><dd>N0180 A100</dd></div>
+<div><dt>16 DEST / EET</dt><dd>RKSS 0040</dd></div>
+<div><dt>ALTN</dt><dd>RKSI</dd></div>
+<div class="full"><dt>Route</dt><div class="rt">DCT TORUS G597 KARBU DCT</div></div>
+<div class="full"><dt>18 Other information</dt><div class="rt">NATIONAL INSTITUTE OF METEOROLOGICAL SCIENCES
+WEATHER MODIFICATION
+OPR / SUNNYAIR INC
+DEPARTURE AERODROME / TORUS</div></div>
+<div><dt>19 E / P</dt><dd>E/0330 P/002</dd></div>
+</dl>
+<p class="small" style="margin:6px 0 0">복귀는 서쪽 → 짝수 <b>A100</b>. KARBU에서 STAR(KARBU 2U/2T).</p>
+</div>
+
+<h3>예시 ③ VFR 임무 (IFR 출항 → 캔슬) · Y</h3>
+<div class="fpl"><div class="hd">HL5239 · Y (IFR→VFR) · G · BE9L/L · S/C</div>
+<dl>
+<div><dt>13 DEP / Time</dt><dd>RKSS 1020</dd></div>
+<div><dt>15 Speed / Level</dt><dd>N0180 VFR</dd></div>
+<div><dt>16 DEST / EET</dt><dd>RKSS 0100</dd></div>
+<div><dt>ALTN</dt><dd>RKSI</dd></div>
+<div class="full"><dt>Route</dt><div class="rt">DCT CNL IFR VFR RKSSG DCT
+CHEONAN LCL 0100</div></div>
+<div class="full"><dt>18 Other information</dt><div class="rt">OPR / SUNNYAIR INC</div></div>
+</dl>
+<p class="small" style="margin:6px 0 0"><span class="eng">RKSSK</span> <span class="eng">RKSSG</span> = 김포 VFR 보고지점 K·G. 첫 화면은 <span class="eng">DCT CNL IFR VFR RKSSK RKSSG DCT</span>로 K를 넣었던 버전.</p>
+</div>
+<div class="box chk"><span class="t">작성 전후 확인</span>
+<ul>
+<li>Validate(오류검증) 후 Send · 휴대기기로 보내면 수신 측에 메시지가 안 감 (보안)</li>
+<li>Level 방향 규칙 · E/(연료) ≥ EET + 예비 · 기체별 Equipment 코드</li>
+<li>제출 값과 실제 Clearance가 다를 수 있으니 받은 값으로 비행</li>
+</ul></div>
+<p class="src">출처: 수업 슬라이드 10, 21 · UBIKAIS FPL 화면 시연 · 필기 4쪽 · 10/22 수업 정리(비행규칙 I/V/Y/Z).</p>
+</section>
+
+<!-- ============ 6. CARDS ============ -->
+<section class="sec" id="cards">
+<h2>6 · 암기 카드</h2>
+<div class="cbar"><button type="button" id="openAll">모두 펼치기</button><button type="button" id="closeAll">모두 접기</button><button type="button" id="shuffle">섞기</button></div>
+<div class="cards" id="cardList">
+<button class="card" type="button"><div class="q">Gimpo Delivery / Apron / Tower 주파수?</div><div class="hint">탭해서 확인</div><div class="a">121.975 / 130.875 / 118.1</div></button>
+<button class="card" type="button"><div class="q">Seoul Departure · Seoul Approach?</div><div class="hint">탭해서 확인</div><div class="a">125.15 · 119.1 (VFR 123.25/123.8)</div></button>
+<button class="card" type="button"><div class="q">Daegu Control · Gangneung Approach?</div><div class="hint">탭해서 확인</div><div class="a">134.175 · 124.6</div></button>
+<button class="card" type="button"><div class="q">김포 ATIS?</div><div class="hint">탭해서 확인</div><div class="a">126.4</div></button>
+<button class="card" type="button"><div class="q">RWY 14 운영 시 이륙/착륙 활주로?</div><div class="hint">탭해서 확인</div><div class="a">이륙 14L · 착륙 14R</div></button>
+<button class="card" type="button"><div class="q">RWY 32 운영 방식?</div><div class="hint">탭해서 확인</div><div class="a">3시간 단위 32L ↔ 32R 교대 → ATIS 확인</div></button>
+<button class="card" type="button"><div class="q">김포 커퓨?</div><div class="hint">탭해서 확인</div><div class="a">23:00–06:00 KST (1400–2100 UTC)</div></button>
+<button class="card" type="button"><div class="q">Gimpo CTR?</div><div class="hint">탭해서 확인</div><div class="a">Class B · ARP 반경 5 NM · SFC–3,000 ft AGL</div></button>
+<button class="card" type="button"><div class="q">표고 · 자기편차 · 전이고도?</div><div class="hint">탭해서 확인</div><div class="a">59 ft · 9°W · 14,000 ft</div></button>
+<button class="card" type="button"><div class="q">14R/32L, 14L/32R 크기?</div><div class="hint">탭해서 확인</div><div class="a">3,200×60 m · 3,600×45 m</div></button>
+<button class="card" type="button"><div class="q">West Apron 주기장 범위?</div><div class="hint">탭해서 확인</div><div class="a">506R ~ 524L · W1/W2로 진출입</div></button>
+<button class="card" type="button"><div class="q">RWY 14 출항 시 W2에서 어떻게?</div><div class="hint">탭해서 확인</div><div class="a">Back taxi RWY 14R → D1에서 Line up and wait</div></button>
+<button class="card" type="button"><div class="q">VFR 출항 / 입항 고도?</div><div class="hint">탭해서 확인</div><div class="a">2,000 ft / 3,000 ft</div></button>
+<button class="card" type="button"><div class="q">IFR 캔슬 시 K로의 선회 방향?</div><div class="hint">탭해서 확인</div><div class="a">32 출항 → Left turn · 14 출항 → Right turn</div></button>
+<button class="card" type="button"><div class="q">K · G · J 지명?</div><div class="hint">탭해서 확인</div><div class="a">서운분기점 · 생태공원 · 조남JCT</div></button>
+<button class="card" type="button"><div class="q">K의 KIP 기준 위치?</div><div class="hint">탭해서 확인</div><div class="a">R231 / D3 (3 NM SW)</div></button>
+<button class="card" type="button"><div class="q">SID 접미사 U·Z / T·Q?</div><div class="hint">탭해서 확인</div><div class="a">U·Z = RWY 14 · T·Q = RWY 32</div></button>
+<button class="card" type="button"><div class="q">EGOBA 출항 SID (14 / 32)?</div><div class="hint">탭해서 확인</div><div class="a">EGOBA 2U / EGOBA 2T·2Q (대체 SEL 1F / SEL 1W)</div></button>
+<button class="card" type="button"><div class="q">김포 STAR 진입 Fix 4개?</div><div class="hint">탭해서 확인</div><div class="a">REBIT · OLMEN · GUKDO · KARBU</div></button>
+<button class="card" type="button"><div class="q">Identified와 Radar contact?</div><div class="hint">탭해서 확인</div><div class="a">ICAO = Identified · FAA(군 관제) = Radar contact</div></button>
+<button class="card" type="button"><div class="q">Squawk ident 받으면?</div><div class="hint">탭해서 확인</div><div class="a">IDENT만 누름 · 복창 안 함</div></button>
+<button class="card" type="button"><div class="q">FPL Flight rules Y?</div><div class="hint">탭해서 확인</div><div class="a">IFR로 시작 → VFR로 변경 (Z는 반대)</div></button>
+<button class="card" type="button"><div class="q">King Air FPL 형식부호 · Wake?</div><div class="hint">탭해서 확인</div><div class="a">BE9L · L</div></button>
+<button class="card" type="button"><div class="q">N0180 A090 의미?</div><div class="hint">탭해서 확인</div><div class="a">TAS 180 kt · 고도 9,000 ft</div></button>
+<button class="card" type="button"><div class="q">비행계획 언제 제출?</div><div class="hint">탭해서 확인</div><div class="a">출발 1시간 전 · 시간은 UTC</div></button>
+<button class="card" type="button"><div class="q">강원 임무 갈 때 / 올 때 고도?</div><div class="hint">탭해서 확인</div><div class="a">9,000 (동쪽·홀수) / 10,000 (서쪽·짝수)</div></button>
+<button class="card" type="button"><div class="q">김포에서 금지되는 훈련은?</div><div class="hint">탭해서 확인</div><div class="a">Touch and go · Low approach</div></button>
+</div>
+</section>
+
+<footer>김포 운항 · 교신 · 비행계획 · 2026.11.03 수업 정리. 교신 문구는 수업 슬라이드의 연습용 예문이며 실제 관제 지시가 우선합니다.</footer>
+</div>
+<button id="top" type="button" aria-label="맨 위로">↑</button>
+<script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('nav.chips a'));
+  links.forEach(function(a){a.addEventListener('click',function(e){
+    var t=document.getElementById(a.dataset.id); if(!t) return; e.preventDefault();
+    t.scrollIntoView({block:'start'});
+    try{history.replaceState(null,'','#'+a.dataset.id)}catch(_){}
+  });});
+  var secs=[].slice.call(document.querySelectorAll('.sec'));
+  function mark(){
+    var cur=secs[0];
+    secs.forEach(function(s){ if(s.getBoundingClientRect().top<=110) cur=s; });
+    links.forEach(function(a){
+      var on=a.dataset.id===cur.id; a.classList.toggle('on',on);
+      if(on){ var n=a.parentNode, l=a.offsetLeft-n.clientWidth/2+a.clientWidth/2; n.scrollTo({left:l}); }
+    });
+  }
+  var tick=false; window.addEventListener('scroll',function(){ if(!tick){tick=true;requestAnimationFrame(function(){mark();tick=false;});} },{passive:true});
+  mark();
+  document.getElementById('top').addEventListener('click',function(){window.scrollTo({top:0});});
+  if(location.hash){var t=document.getElementById(location.hash.slice(1)); if(t) setTimeout(function(){t.scrollIntoView();},50);}
+
+  // practice mode
+  var KEY='rkss-practice';
+  function setP(on){document.body.classList.toggle('practice',on);
+    [].forEach.call(document.querySelectorAll('.ln.p.show'),function(l){l.classList.remove('show');});
+    [].forEach.call(document.querySelectorAll('.pbtn'),function(b){b.textContent=on?'연습 모드 끄기':'연습 모드';b.setAttribute('aria-pressed',on);});
+    try{localStorage.setItem(KEY,on?'1':'0')}catch(_){}
+  }
+  [].forEach.call(document.querySelectorAll('.pbtn'),function(b){b.addEventListener('click',function(){setP(!document.body.classList.contains('practice'));});});
+  [].forEach.call(document.querySelectorAll('.ln.p'),function(l){l.addEventListener('click',function(){ if(document.body.classList.contains('practice')) l.classList.toggle('show'); });});
+  var saved=false; try{saved=localStorage.getItem(KEY)==='1'}catch(_){}
+  setP(saved);
+
+  // cards
+  var list=document.getElementById('cardList');
+  list.addEventListener('click',function(e){var c=e.target.closest('.card'); if(c) c.classList.toggle('open');});
+  document.getElementById('openAll').addEventListener('click',function(){[].forEach.call(list.children,function(c){c.classList.add('open')});});
+  document.getElementById('closeAll').addEventListener('click',function(){[].forEach.call(list.children,function(c){c.classList.remove('open')});});
+  document.getElementById('shuffle').addEventListener('click',function(){
+    var a=[].slice.call(list.children); for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+    a.forEach(function(c){c.classList.remove('open');list.appendChild(c);});
+  });
+})();
+</script>
+<script>
+if('serviceWorker' in navigator && location.protocol==='https:' && !/claude/.test(location.hostname)){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+</script>
+</body></html>
