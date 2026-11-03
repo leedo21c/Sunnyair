@@ -113,7 +113,7 @@ footer{margin-top:30px;font-size:12.5px;color:var(--mute)}
 <ul>
 <li>여압 쌍발 터보프롭, 최대 이륙중량 10,100 lb (구형 LJ-1063~1137: 9,650 lb)</li>
 <li>엔진: P&amp;W <b>PT6A-21</b> ×2, 550 SHP flat-rated</li>
-<li>프로펠러: <b>4엽 Hartzell/Raisbeck Quiet Turbofan</b>(HL5247·5248 POH 보충판), constant-speed · full-feathering · reversing</li>
+<li>프로펠러: <b>3엽 McCauley</b>(HL5247·5248), constant-speed · full-feathering · reversing</li>
 <li>전기: 28 V DC, 250 A starter-generator ×2 + 배터리 1개</li>
 <li>기어: 전동 유압 파워팩(C90A LJ-1063 이후). 비상 시 핸드펌프</li>
 <li>Bleed air 하나로 여압·난방·디아이스 부츠·러더부스트·도어씰·진공(자이로)까지 해결</li>
@@ -131,7 +131,7 @@ footer{margin-top:30px;font-size:12.5px;color:var(--mute)}
 <div class="tw"><table>
 <tr><th>레버</th><th>무엇을 조절하나</th></tr>
 <tr><td class="n">Power</td><td>N1 governor 설정 → 연료량 → 토크. IDLE 아래(들어올려서) Beta/Reverse = 블레이드 각도 직접 조절</td></tr>
-<tr><td class="n">Propeller</td><td>Prop governor RPM ~2,200 (Raisbeck 그린아크 1,600–2,200, 순항 1,750). 맨 뒤 detent 넘기면 FEATHER</td></tr>
+<tr><td class="n">Propeller</td><td>Prop governor RPM 1,800~2,200. 맨 뒤 detent 넘기면 FEATHER</td></tr>
 <tr><td class="n">Condition</td><td>FUEL CUT-OFF(연료 밸브) / LOW IDLE(51% N1) ~ HIGH IDLE(70% N1)</td></tr>
 </table></div>
 <div class="box why"><span class="t">이렇게 기억</span>
@@ -311,7 +311,7 @@ DC 28 V → 인버터 → AC 115 V/26 V 400 Hz (AC 엔진계기·일부 항전).
 <h3>Governor 3단 방어</h3>
 <div class="tw"><table>
 <tr><th>장치</th><th>작동점</th><th>역할</th></tr>
-<tr><td class="n">Primary governor</td><td>~2,200 (그린아크 1,600–2,200)</td><td>Flyweight로 RPM 감지 → 피치 조절해 일정 RPM 유지</td></tr>
+<tr><td class="n">Primary governor</td><td>1,800–2,200</td><td>Flyweight로 RPM 감지 → 피치 조절해 일정 RPM 유지</td></tr>
 <tr><td class="n">Overspeed governor</td><td>2,288 (TEST 시 약 2,000)</td><td>Primary 고장 시 오일을 빼서 피치↑. RPM이 2,288에 딱 멈추면 Primary 고장 신호</td></tr>
 <tr><td class="n">Fuel topping governor</td><td>선택 RPM의 106% (Reverse 시 95%)</td><td>연료를 줄여 RPM 제한. Primary의 flyweight가 살아 있어야 작동</td></tr>
 </table></div>
