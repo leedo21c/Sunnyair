@@ -384,7 +384,7 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
           if(!a) out += '<p class="note">이 공항은 NOTAM 수집 목록에 없어요. 목록에 넣고 싶은 공항은 말씀해 주세요.</p>';
           else if(a.notam_error && !notams.length) out += '<p class="note">NOTAM 서버 연결을 준비 중이에요.' + (isFir ? '' : ' METAR·TAF는 정상적으로 갱신되고 있어요.') + '</p>';
           out += '<ul class="ntl">' + shown.map(notamCard).join('') + '</ul>' +
-            '<p class="wxsrc">NOTAM : ' + (d && d.updated ? ago(d.updated) + ' 수집' : '수집본 없음') + ' · 30분마다 갱신<br>참고용이에요. 실제 운항은 AIM·UBIKAIS 등 공식 출처로 확인하세요.</p>';
+            '<p class="wxsrc">NOTAM : ' + (d && d.notam_updated ? ago(d.notam_updated) + ' 수집 (ICAO API Data Service)' : '수집본 없음') + ' · 하루 3~4회 갱신<br>참고용이에요. 실제 운항은 AIM·UBIKAIS 등 공식 출처로 확인하세요.</p>';
           body.innerHTML = out;
           body.querySelectorAll('.nt-h').forEach(function(btn){ btn.onclick = function(){ var b = btn.nextElementSibling, on = b.hidden; b.hidden = !on; btn.setAttribute('aria-expanded', on); btn.querySelector('.nt-more').textContent = on ? '접기' : '눌러서 디코드 보기'; }; });
           body.querySelectorAll('#ntf button').forEach(function(b){ b.onclick = function(){ filt = b.dataset.f; paint(m, t, liveM, liveT); }; });

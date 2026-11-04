@@ -119,6 +119,35 @@ def notams_search(icao):
         time.sleep(1)
     return items
 
+ICAO_URLS = ["https://applications.icao.int/dataservices/api/notams-list",
+             "https://applications.icao.int/dataservices/api/notams-stored-list"]
+NOTAM_EVERY_H = 5.5   # ICAO 무료 100회 절약: 하루 약 3~4회만 NOTAM 조회 (METAR/TAF는 30분마다)
+
+def icao_notams_all():
+    """ICAO API Data Service — Stored NOTAMs, 대한민국(KOR) 전체를 1회 호출로 받음"""
+    key = os.environ.get("ICAO_API_KEY")
+    if not key:
+        raise RuntimeError("ICAO API 키 없음")
+    errs = []
+    for base in ICAO_URLS:
+        try:
+            txt = get(base + "?" + urllib.parse.urlencode({"api_key": key, "format": "json", "states": "KOR"}), timeout=90)
+            j = json.loads(txt)
+            rows = j if isinstance(j, list) else (j.get("data") or j.get("notams") or j.get("items") or [])
+            if not isinstance(rows, list):
+                raise RuntimeError("예상 밖 응답: " + txt[:200])
+            out = {}
+            for r in rows:
+                loc = (r.get("location") or "").strip().upper()
+                raw = (r.get("all") or r.get("message") or "").strip()
+                if loc and raw:
+                    out.setdefault(loc, []).append({"num": r.get("id") or "", "raw": raw,
+                                                    "start": r.get("startdate") or "", "end": r.get("enddate") or ""})
+            return out, len(rows)
+        except Exception as e:
+            errs.append(base.rsplit("/", 1)[-1] + ": " + repr(e)[:200])
+    raise RuntimeError(" | ".join(errs))
+
 def main():
     try:
         old = json.load(open(OUT, encoding="utf-8"))
@@ -133,22 +162,40 @@ def main():
         taf = awc("taf")
     except Exception as e:
         print("TAF 실패", e); taf = {}
+    icao_all, notam_err = None, None
+    last = old.get("notam_checked")
+    due = True
+    if last and not os.environ.get("FORCE_NOTAM"):
+        try:
+            due = (datetime.datetime.now(datetime.timezone.utc) - datetime.datetime.fromisoformat(last)).total_seconds() >= NOTAM_EVERY_H * 3600
+        except Exception:
+            due = True
+    data["notam_checked"] = old.get("notam_checked", "")
+    data["notam_updated"] = old.get("notam_updated", "")
+    if due and os.environ.get("ICAO_API_KEY"):
+        data["notam_checked"] = data["updated"]
+        try:
+            icao_all, total = icao_notams_all()
+            data["notam_updated"] = data["updated"]
+            print("ICAO NOTAM", total, "건,", len(icao_all), "개 지점")
+        except Exception as e:
+            notam_err = str(e)[:400]
+            print("ICAO NOTAM 실패", notam_err)
+    elif not os.environ.get("ICAO_API_KEY"):
+        notam_err = "NOTAM API 키 없음"
     for icao in AIRPORTS + FIRS:
         prev = old.get("airports", {}).get(icao, {})
         a = {"fir": icao in FIRS, "name": "인천 FIR (공역·항로)" if icao in FIRS else (met.get(icao) or taf.get(icao) or {}).get("name") or prev.get("name", ""),
              "metar": (met.get(icao) or {}).get("raw") or prev.get("metar", ""),
              "taf": (taf.get(icao) or {}).get("raw") or prev.get("taf", "")}
-        try:
-            a["notams"], note = notams(icao)
-            if note:
-                a["notam_note"] = note
-        except Exception as e:
-            print("NOTAM 실패", icao, e)
+        if icao_all is not None:
+            a["notams"] = icao_all.get(icao, [])
+        else:
             a["notams"] = prev.get("notams", [])
-            a["notam_error"] = str(e)[:400]
+            if notam_err:
+                a["notam_error"] = notam_err
         data["airports"][icao] = a
         print(icao, "NOTAM", len(a["notams"]), "METAR", bool(a["metar"]), "TAF", bool(a["taf"]))
-        time.sleep(1)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     json.dump(data, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
