@@ -32,7 +32,7 @@ def kma(kind, icao):
 
 def awc(kind):
     ids = ",".join(AIRPORTS)
-    txt = get(f"https://aviationweather.gov/api/data/{kind}?ids={ids}&format=json" + ("&hours=2" if kind == "metar" else ""))
+    txt = get(f"https://aviationweather.gov/api/data/{kind}?ids={ids}&format=json" + ("&hours=12" if kind == "metar" else ""))
     out = {}
     for item in json.loads(txt or "[]"):
         icao = item.get("icaoId")
