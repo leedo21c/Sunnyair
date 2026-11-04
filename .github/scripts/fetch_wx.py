@@ -51,8 +51,40 @@ def notams_dins(icao):
         raise RuntimeError("DINS: NOTAM 블록 없음 (" + str(len(txt)) + " bytes)")
     return items
 
+def notams_faa_api(icao):
+    """FAA NOTAM API (api.faa.gov 무료 등록) — GitHub Secrets의 FAA_CLIENT_ID / FAA_CLIENT_SECRET 사용"""
+    cid, sec = os.environ.get("FAA_CLIENT_ID"), os.environ.get("FAA_CLIENT_SECRET")
+    if not cid or not sec:
+        raise RuntimeError("FAA API 키 없음")
+    items, page = [], 1
+    while True:
+        q = urllib.parse.urlencode({"icaoLocation": icao, "responseFormat": "geoJson", "pageSize": 200, "pageNum": page})
+        j = json.loads(get("https://external-api.faa.gov/notamapi/v1/notams?" + q, headers={"client_id": cid, "client_secret": sec}))
+        feats = j.get("items") or []
+        for f in feats:
+            core = ((f.get("properties") or {}).get("coreNOTAMData") or {})
+            n = core.get("notam") or {}
+            raw = ""
+            for t in core.get("notamTranslation") or []:
+                if t.get("type") == "ICAO" and t.get("formattedText"):
+                    raw = t["formattedText"].strip(); break
+            if not raw:
+                raw = (n.get("text") or "").strip()
+            if raw:
+                items.append({"num": n.get("number") or "", "raw": raw, "start": n.get("effectiveStart") or "", "end": n.get("effectiveEnd") or ""})
+        total = int(j.get("totalCount") or 0)
+        if not feats or len(items) >= total or page >= 5:
+            break
+        page += 1
+    return items
+
 def notams(icao):
     errs = []
+    if os.environ.get("FAA_CLIENT_ID"):
+        try:
+            return notams_faa_api(icao), None
+        except Exception as e:
+            errs.append("faa-api: " + repr(e)[:200])
     try:
         return notams_search(icao), None
     except Exception as e:

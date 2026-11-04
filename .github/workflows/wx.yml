@@ -22,6 +22,9 @@ jobs:
         with:
           python-version: "3.12"
       - run: python .github/scripts/fetch_wx.py
+        env:
+          FAA_CLIENT_ID: ${{ secrets.FAA_CLIENT_ID }}
+          FAA_CLIENT_SECRET: ${{ secrets.FAA_CLIENT_SECRET }}
       - name: 변경 시 커밋
         run: |
           git config user.name "wx-bot"
