@@ -1,5 +1,6 @@
 """METAR/TAF(aviationweather.gov)와 NOTAM(FAA NMS-API)을 받아 wx/latest.json에 저장합니다.
 공채 노트 앱의 '기상 · NOTAM' 탭이 이 파일을 읽어요. 실패한 항목은 이전 값을 유지합니다."""
+# NMS 키 등록 후 첫 실행
 import json, os, sys, time, re, html, http.cookiejar, urllib.request, urllib.error, urllib.parse, datetime
 
 AIRPORTS = ["RKSS", "RKSI", "RKNN", "RKNW", "RKPC", "RKPK", "RKTU", "RKTN", "RKJJ", "RKNY", "RKPU", "RKJB"]
