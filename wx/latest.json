@@ -1,7 +1,8 @@
 {
- "updated": "2026-11-04T08:09:02+00:00",
+ "updated": "2026-11-04T08:11:30+00:00",
  "airports": {
   "RKSS": {
+   "fir": false,
    "name": "Seoul/Gimpo Intl, 41, KR",
    "metar": "METAR RKSS 040800Z 16004KT CAVOK 16/02 Q1022 NOSIG",
    "taf": "TAF RKSS 040500Z 0406/0512 12006KT CAVOK TN09/0421Z TX17/0506Z BECMG 0418/0420 9999 BKN045 BECMG 0422/0424 16006KT 6000 -RA FEW010 BKN030 OVC070 BECMG 0501/0503 34006KT 9999 NSW BKN045 BECMG 0507/0509 28010KT",
@@ -9,6 +10,7 @@
    "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   },
   "RKSI": {
+   "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
    "metar": "METAR RKSI 040800Z 14007KT CAVOK 16/05 Q1022 NOSIG",
    "taf": "TAF RKSI 040500Z 0406/0512 13006KT CAVOK TN11/0421Z TX15/0506Z BECMG 0416/0417 19010KT BECMG 0418/0419 12007KT 6000 FEW010 BKN060 TEMPO 0420/0501 08007KT 4000 -RA FEW010 BKN030 OVC060 BECMG 0502/0503 04007KT 9999 SCT040 BECMG 0504/0506 29010KT",
@@ -16,18 +18,23 @@
    "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   },
   "RKNN": {
+   "fir": false,
    "name": "",
    "metar": "",
    "taf": "",
-   "notams": []
+   "notams": [],
+   "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   },
   "RKNW": {
+   "fir": false,
    "name": "",
    "metar": "",
    "taf": "",
-   "notams": []
+   "notams": [],
+   "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   },
   "RKPC": {
+   "fir": false,
    "name": "Jeju Intl, 49, KR",
    "metar": "METAR RKPC 040800Z 09010KT 7000 -RA SCT030 OVC080 16/14 Q1021 NOSIG",
    "taf": "TAF RKPC 040500Z 0406/0512 10015G25KT 6000 -RA SCT030 OVC080 TN17/0418Z TX21/0503Z BECMG 0412/0414 08008KT SCT010 BKN030 OVC080 BECMG 0418/0420 25017G30KT 3500 RA BECMG 0421/0423 6000 -RA BECMG 0501/0503 9999 NSW SCT030 BKN080 BECMG 0504/0506 30013KT",
@@ -35,6 +42,7 @@
    "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   },
   "RKPK": {
+   "fir": false,
    "name": "Busan/Gimhae Intl, 48, KR",
    "metar": "METAR RKPK 040800Z 31005KT 9999 SCT050 BKN110 14/09 Q1023",
    "taf": "TAF RKPK 040500Z 0406/0512 33006KT 9999 SCT030 BKN150 TN12/0421Z TX17/0506Z BECMG 0407/0408 03006KT CAVOK BECMG 0416/0417 8000 -RA BKN030 OVC100 BECMG 0421/0422 06006KT 3200 RA BR BKN015 OVC030 BECMG 0506/0507 33008KT 4800 -RA BR BKN030 BECMG 0508/0509 33008G18KT 9999 NSW SCT030",
@@ -42,6 +50,7 @@
    "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   },
   "RKTU": {
+   "fir": false,
    "name": "Cheonju Intl, 43, KR",
    "metar": "METAR RKTU 040800Z 13006KT CAVOK 16/04 Q1023",
    "taf": "TAF RKTU 040500Z 0406/0512 12006KT CAVOK TX18/0407Z TN09/0421Z",
@@ -49,6 +58,7 @@
    "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   },
   "RKTN": {
+   "fir": false,
    "name": "Daegu, 27, KR",
    "metar": "METAR RKTN 040800Z 14001KT CAVOK 14/07 Q1024",
    "taf": "TAF RKTN 040500Z 0406/0512 12006KT CAVOK TN10/0421Z TX15/0506Z BECMG 0421/0422 21006KT 9000 -RA SCT015 BKN030 BECMG 0506/0507 27006KT 9999 NSW BKN030",
@@ -56,6 +66,7 @@
    "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   },
   "RKJJ": {
+   "fir": false,
    "name": "",
    "metar": "",
    "taf": "",
@@ -63,6 +74,7 @@
    "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   },
   "RKNY": {
+   "fir": false,
    "name": "Yangyang Intl, 42, KR",
    "metar": "METAR RKNY 040800Z 16003KT CAVOK 15/06 Q1022 NOSIG",
    "taf": "TAF RKNY 040500Z 0406/0512 12007KT CAVOK TN10/0421Z TX17/0506Z BECMG 0408/0410 27006KT BECMG 0423/0501 07006KT 9999 FEW030 BKN070 TEMPO 0502/0504 6000 -RA FEW010 BKN030 OVC060 BECMG 0508/0510 27010KT SCT030",
@@ -70,6 +82,7 @@
    "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   },
   "RKPU": {
+   "fir": false,
    "name": "",
    "metar": "",
    "taf": "",
@@ -77,6 +90,7 @@
    "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   },
   "RKJB": {
+   "fir": false,
    "name": "Muan Intl, 46, KR",
    "metar": "METAR RKJB 040800Z 10005KT CAVOK 15/09 Q1021 NOSIG",
    "taf": "TAF RKJB 040500Z 0406/0512 09006KT CAVOK TN13/0416Z TX17/0506Z BECMG 0413/0415 6000 -RA FEW010 BKN030 OVC080 BECMG 0417/0419 4000 RA SCT010CB BKN025 OVC060 BECMG 0422/0424 03010KT 6000 -RA FEW010 BKN025 OVC060 BECMG 0502/0504 35015G25KT 9999 NSW SCT030 BECMG 0506/0508 33010KT",
@@ -84,11 +98,12 @@
    "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   },
   "RKRR": {
+   "fir": true,
    "name": "인천 FIR (공역·항로)",
    "metar": "",
    "taf": "",
    "notams": [],
-   "fir": true
+   "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   }
  }
 }
