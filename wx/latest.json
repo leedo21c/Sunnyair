@@ -1,0 +1,71 @@
+{
+ "updated": "2026-11-04T07:00:00+00:00",
+ "sample": true,
+ "airports": {
+  "RKSS": {
+   "name": "Seoul/Gimpo Intl, 41, KR",
+   "metar": "METAR RKSS 040700Z 17007KT 140V200 CAVOK 19/01 Q1022 NOSIG",
+   "taf": "TAF RKSS 040500Z 0406/0512 12006KT CAVOK TN09/0421Z TX17/0506Z BECMG 0418/0420 9999 BKN045 BECMG 0422/0424 16006KT 6000 -RA FEW010 BKN030 OVC070 BECMG 0501/0503 34006KT 9999 NSW BKN045 BECMG 0507/0509 28010KT",
+   "notams": [
+    {
+     "num": "V0491/26",
+     "raw": "V0491/26 NOTAMN\nQ) RKRR/QPIAU/I/BO/A/000/999/3733N12647E005\nA) RKSS\nB) 2610291736\nC) 2702171600\nE) [US DOD PROCEDURAL NOTAM] INSTRUMENT APPROACH PROCEDURE NOT AUTHORIZED ILS OR LOC RWY 32L."
+    }
+   ]
+  },
+  "RKSI": {
+   "name": "",
+   "metar": "",
+   "taf": "",
+   "notams": []
+  },
+  "RKPC": {
+   "name": "",
+   "metar": "",
+   "taf": "",
+   "notams": []
+  },
+  "RKPK": {
+   "name": "",
+   "metar": "",
+   "taf": "",
+   "notams": []
+  },
+  "RKTU": {
+   "name": "",
+   "metar": "",
+   "taf": "",
+   "notams": []
+  },
+  "RKTN": {
+   "name": "",
+   "metar": "",
+   "taf": "",
+   "notams": []
+  },
+  "RKJJ": {
+   "name": "",
+   "metar": "",
+   "taf": "",
+   "notams": []
+  },
+  "RKNY": {
+   "name": "",
+   "metar": "",
+   "taf": "",
+   "notams": []
+  },
+  "RKPU": {
+   "name": "",
+   "metar": "",
+   "taf": "",
+   "notams": []
+  },
+  "RKJB": {
+   "name": "",
+   "metar": "",
+   "taf": "",
+   "notams": []
+  }
+ }
+}
