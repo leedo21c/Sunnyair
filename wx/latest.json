@@ -15,6 +15,18 @@
    "notams": [],
    "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
   },
+  "RKNN": {
+   "name": "",
+   "metar": "",
+   "taf": "",
+   "notams": []
+  },
+  "RKNW": {
+   "name": "",
+   "metar": "",
+   "taf": "",
+   "notams": []
+  },
   "RKPC": {
    "name": "Jeju Intl, 49, KR",
    "metar": "METAR RKPC 040800Z 09010KT 7000 -RA SCT030 OVC080 16/14 Q1021 NOSIG",
@@ -70,6 +82,13 @@
    "taf": "TAF RKJB 040500Z 0406/0512 09006KT CAVOK TN13/0416Z TX17/0506Z BECMG 0413/0415 6000 -RA FEW010 BKN030 OVC080 BECMG 0417/0419 4000 RA SCT010CB BKN025 OVC060 BECMG 0422/0424 03010KT 6000 -RA FEW010 BKN025 OVC060 BECMG 0502/0504 35015G25KT 9999 NSW SCT030 BECMG 0506/0508 33010KT",
    "notams": [],
    "notam_error": "search: <HTTPError 403: 'Forbidden'> | dins: URLError(gaierror(-2, 'Name or service not known'))"
+  },
+  "RKRR": {
+   "name": "인천 FIR (공역·항로)",
+   "metar": "",
+   "taf": "",
+   "notams": [],
+   "fir": true
   }
  }
 }

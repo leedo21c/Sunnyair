@@ -212,7 +212,7 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
 (function(){
   var DATA_URL = '../wx/latest.json';
   var AWC = 'https://aviationweather.gov/api/data/';
-  var PRESET = ['RKSS','RKSI','RKPC','RKPK'];
+  var PRESET = ['RKSS','RKSI','RKNN','RKNW','RKPC','RKPK','RKRR'];
 
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 
@@ -351,26 +351,45 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
       document.getElementById('wxf').onsubmit = function(e){ e.preventDefault(); var v = document.getElementById('wxq').value.trim().toUpperCase(); if(/^[A-Z]{4}$/.test(v)) ctx.setIcao(v); };
       load(false).then(function(d){
         var list = (d && d.airports) ? Object.keys(d.airports) : PRESET;
-        document.getElementById('wxchips').innerHTML = list.map(function(c){ return '<button type="button" data-c="' + c + '"' + (c === icao ? ' aria-pressed="true"' : '') + '>' + c + '</button>'; }).join('');
+        document.getElementById('wxchips').innerHTML = list.map(function(c){ var f = d && d.airports && d.airports[c] && d.airports[c].fir; return '<button type="button" data-c="' + c + '"' + (c === icao ? ' aria-pressed="true"' : '') + '>' + c + (f ? ' FIR' : '') + '</button>'; }).join('');
         document.querySelectorAll('#wxchips button').forEach(function(b){ b.onclick = function(){ ctx.setIcao(b.dataset.c); }; });
         var a = d && d.airports && d.airports[icao];
         var metar = a && a.metar, taf = a && a.taf, notams = (a && a.notams) || [];
+        var isFir = !!(a && a.fir), filt = 'all';
+        var FILTERS = [['all','전체'],['moa','MOA·공역'],['east','동해 쪽'],['moa56','MOA 5·6']];
+        function lonOf(n){ var p = parseNotam(n.raw || ''), c = p.q && p.q.coord, m = c && c.match(/^\d{4}[NS](\d{3})(\d{2})([EW])/); return m ? (+m[1] + m[2]/60) * (m[3] === 'W' ? -1 : 1) : null; }
+        function pick(n){
+          if(filt === 'all') return true;
+          var p = parseNotam(n.raw || ''), code = (p.q && p.q.code) || '', raw = n.raw || '';
+          if(filt === 'moa') return /^Q[RW]/.test(code) || /\bMOA\b|\bR-?\d|\bP-?\d|\bD-?\d|TRG|EXER/i.test(raw);
+          if(filt === 'east'){ var lon = lonOf(n); return lon !== null && lon >= 127.5; }
+          if(filt === 'moa56') return /MOA\s*-?\s*0?[56]\b/i.test(raw);
+          return true;
+        }
         function paint(m, t, liveM, liveT){
-          var out = '<h3 class="wxh">METAR <span>' + esc((a && a.name) || icao) + '</span></h3>' +
-            (m ? '<pre class="wxbox">' + esc(m) + '</pre>' : '<p class="note">METAR가 없어요.</p>') +
-            '<h3 class="wxh">TAF</h3>' + (t ? '<pre class="wxbox">' + fmtTaf(t) + '</pre>' : '<p class="note">TAF가 없어요.</p>') +
-            '<p class="wxsrc">' + (liveM || liveT ? 'METAR/TAF : 실시간 (aviationweather.gov)' : 'METAR/TAF : ' + (d && d.updated ? ago(d.updated) + ' 수집본' : '수집본 없음')) + '</p>' +
-            '<h3 class="wxh">NOTAM · ' + notams.length + '건</h3>';
+          var out = '';
+          if(!isFir){
+            out += '<h3 class="wxh">METAR <span>' + esc((a && a.name) || icao) + '</span></h3>' +
+              (m ? '<pre class="wxbox">' + esc(m) + '</pre>' : '<p class="note">METAR가 없어요.</p>') +
+              '<h3 class="wxh">TAF</h3>' + (t ? '<pre class="wxbox">' + fmtTaf(t) + '</pre>' : '<p class="note">TAF가 없어요.</p>') +
+              '<p class="wxsrc">' + (liveM || liveT ? 'METAR/TAF : 실시간 (aviationweather.gov)' : 'METAR/TAF : ' + (d && d.updated ? ago(d.updated) + ' 수집본' : '수집본 없음')) + '</p>';
+          } else {
+            out += '<p class="note" style="margin-top:14px">인천 FIR(RKRR)로 발행된 공역·항로·MOA NOTAM이에요. 아래 버튼으로 걸러 볼 수 있어요. "동해 쪽"은 Q줄 좌표가 동경 127°30′보다 동쪽인 NOTAM이에요.</p>' +
+              '<div class="chips" id="ntf">' + FILTERS.map(function(f){ return '<button type="button" data-f="' + f[0] + '"' + (f[0] === filt ? ' aria-pressed="true"' : '') + '>' + f[1] + '</button>'; }).join('') + '</div>';
+          }
+          var shown = notams.filter(pick);
+          out += '<h3 class="wxh">NOTAM · ' + shown.length + '건' + (shown.length !== notams.length ? ' <span>/ 전체 ' + notams.length + '건</span>' : '') + '</h3>';
           if(d && d.sample) out += '<p class="note">지금은 예시 데이터예요. 자동 갱신이 처음 돌면 실제 NOTAM으로 바뀌어요.</p>';
           if(!a) out += '<p class="note">이 공항은 NOTAM 수집 목록에 없어요. 목록에 넣고 싶은 공항은 말씀해 주세요.</p>';
-          else if(a.notam_error && !notams.length) out += '<p class="note">NOTAM 서버 연결을 준비 중이에요. METAR·TAF는 정상적으로 갱신되고 있어요.</p>';
-          out += '<ul class="ntl">' + notams.map(notamCard).join('') + '</ul>' +
-            '<p class="wxsrc">NOTAM : ' + (d && d.updated ? ago(d.updated) + ' 수집 (FAA NOTAM Search)' : '수집본 없음') + ' · 30분마다 갱신<br>참고용이에요. 실제 운항은 AIM·UBIKAIS 등 공식 출처로 확인하세요.</p>';
+          else if(a.notam_error && !notams.length) out += '<p class="note">NOTAM 서버 연결을 준비 중이에요.' + (isFir ? '' : ' METAR·TAF는 정상적으로 갱신되고 있어요.') + '</p>';
+          out += '<ul class="ntl">' + shown.map(notamCard).join('') + '</ul>' +
+            '<p class="wxsrc">NOTAM : ' + (d && d.updated ? ago(d.updated) + ' 수집' : '수집본 없음') + ' · 30분마다 갱신<br>참고용이에요. 실제 운항은 AIM·UBIKAIS 등 공식 출처로 확인하세요.</p>';
           body.innerHTML = out;
           body.querySelectorAll('.nt-h').forEach(function(btn){ btn.onclick = function(){ var b = btn.nextElementSibling, on = b.hidden; b.hidden = !on; btn.setAttribute('aria-expanded', on); btn.querySelector('.nt-more').textContent = on ? '접기' : '눌러서 디코드 보기'; }; });
+          body.querySelectorAll('#ntf button').forEach(function(b){ b.onclick = function(){ filt = b.dataset.f; paint(m, t, liveM, liveT); }; });
         }
         paint(metar, taf, false, false);
-        if(navigator.onLine){
+        if(navigator.onLine && !isFir){
           Promise.all([live('metar', icao).catch(function(){ return null; }), live('taf', icao).catch(function(){ return null; })])
             .then(function(r){ if(r[0] || r[1]) paint(r[0] || metar, r[1] || taf, !!r[0], !!r[1]); });
         }

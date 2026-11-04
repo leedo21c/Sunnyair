@@ -2,7 +2,8 @@
 공채 노트 앱의 '기상 · NOTAM' 탭이 이 파일을 읽어요. 실패한 항목은 이전 값을 유지합니다."""
 import json, os, sys, time, re, html, http.cookiejar, urllib.request, urllib.parse, datetime
 
-AIRPORTS = ["RKSS", "RKSI", "RKPC", "RKPK", "RKTU", "RKTN", "RKJJ", "RKNY", "RKPU", "RKJB"]
+AIRPORTS = ["RKSS", "RKSI", "RKNN", "RKNW", "RKPC", "RKPK", "RKTU", "RKTN", "RKJJ", "RKNY", "RKPU", "RKJB"]
+FIRS = ["RKRR"]  # 인천 FIR — 공역·항로·MOA NOTAM (METAR/TAF 없음)
 OUT = os.path.join(os.path.dirname(__file__), "..", "..", "wx", "latest.json")
 UA = {"User-Agent": "Mozilla/5.0 (study-notes weather fetcher)"}
 
@@ -132,9 +133,9 @@ def main():
         taf = awc("taf")
     except Exception as e:
         print("TAF 실패", e); taf = {}
-    for icao in AIRPORTS:
+    for icao in AIRPORTS + FIRS:
         prev = old.get("airports", {}).get(icao, {})
-        a = {"name": (met.get(icao) or taf.get(icao) or {}).get("name") or prev.get("name", ""),
+        a = {"fir": icao in FIRS, "name": "인천 FIR (공역·항로)" if icao in FIRS else (met.get(icao) or taf.get(icao) or {}).get("name") or prev.get("name", ""),
              "metar": (met.get(icao) or {}).get("raw") or prev.get("metar", ""),
              "taf": (taf.get(icao) or {}).get("raw") or prev.get("taf", "")}
         try:
