@@ -10,7 +10,7 @@
 <link rel="icon" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="gc-code" content="yfive">
-<meta name="app-build" content="1104-2242">
+<meta name="app-build" content="1104-2256">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>항공사 공채 대비 정리 노트</title>
 </head><body>
@@ -349,10 +349,11 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
     var icao = (ctx.icao || 'RKSS').toUpperCase();
     var h = ctx.top('기상 · NOTAM', null) + '<div class="pad view wx">' +
       '<form class="sbox" id="wxf" autocomplete="off"><label for="wxq" style="position:absolute;left:-9999px">공항 코드</label><input id="wxq" type="search" inputmode="latin" enterkeyhint="search" maxlength="4" placeholder="ICAO 공항 코드 (예: RKSS)" value="' + esc(icao) + '" style="text-transform:uppercase"></form>' +
-      '<div class="chips" id="wxchips"></div><div id="wxbody"><p class="note">불러오는 중…</p></div></div>';
+      '<div class="chips" id="wxchips"></div><div class="chips"><button type="button" id="wxrf">↻ 새로고침</button></div><div id="wxbody"><p class="note">불러오는 중…</p></div></div>';
     return {html:h, after:function(){
       var body = document.getElementById('wxbody');
       document.getElementById('wxf').onsubmit = function(e){ e.preventDefault(); var v = document.getElementById('wxq').value.trim().toUpperCase(); if(/^[A-Z]{4}$/.test(v)) ctx.setIcao(v); };
+      document.getElementById('wxrf').onclick = function(){ this.textContent = '불러오는 중…'; this.disabled = true; cache = null; ctx.setIcao(icao); };
       load(false).then(function(d){
         var list = (d && d.airports) ? Object.keys(d.airports) : PRESET;
         document.getElementById('wxchips').innerHTML = list.map(function(c){ var f = d && d.airports && d.airports[c] && d.airports[c].fir; return '<button type="button" data-c="' + c + '"' + (c === icao ? ' aria-pressed="true"' : '') + '>' + c + (f ? ' FIR' : '') + '</button>'; }).join('');
