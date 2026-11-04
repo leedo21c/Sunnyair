@@ -93,7 +93,10 @@ def nms_location(tok, loc):
                     raw = t["simpleText"].strip(); break
         if not raw:
             raw = (n.get("text") or "").strip()
-        num = ((n.get("series") or "") + (n.get("number") or "")).strip()
+        num, ser = (n.get("number") or "").strip(), (n.get("series") or "").strip()
+        if ser and not num.startswith(ser):
+            num = ser + num
+        raw = "\n".join(l.rstrip() for l in raw.replace("\r\n", "\n").replace("\r", "\n").split("\n")).strip()
         if not raw or (num, raw) in seen:
             continue
         seen.add((num, raw))

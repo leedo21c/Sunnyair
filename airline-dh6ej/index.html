@@ -10,7 +10,7 @@
 <link rel="icon" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="gc-code" content="yfive">
-<meta name="app-build" content="1104-2211">
+<meta name="app-build" content="1104-2242">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>항공사 공채 대비 정리 노트</title>
 </head><body>
@@ -277,7 +277,7 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
     var txt = raw.replace(/\r/g,'');
     var head = txt.match(/^\(?\s*([A-Z]\d{4}\/\d{2})\s+(NOTAM[NRC])(?:\s+([A-Z]\d{4}\/\d{2}))?/m);
     if(head){ o.num = head[1]; o.type = head[2]; o.ref = head[3]; }
-    var re = /(?:^|\s)([QABCDEFG])\)\s*([\s\S]*?)(?=\s[QABCDEFG]\)\s|$)/g, m;
+    var re = /(?:^|\s)([QABCDEFG])\)\s*([\s\S]*?)(?=\s[QABCDEFG]\)|$)/g, m;
     while((m = re.exec(txt))){ if(!o[m[1]]) o[m[1]] = m[2].replace(/\)\s*$/,'').trim(); }
     if(o.Q){
       var q = o.Q.replace(/\s+/g,'').split('/');
