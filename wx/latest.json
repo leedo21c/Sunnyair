@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T16:09:50+00:00",
+ "updated": "2026-11-04T16:30:30+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -795,7 +795,7 @@
   "RKJB": {
    "fir": false,
    "name": "Muan Intl, 46, KR",
-   "metar": "METAR RKJB 041600Z AUTO 06007KT 6000 RA ///034/// 13/12 Q1016",
+   "metar": "SPECI RKJB 041625Z AUTO 08007KT 4500 RA ///029/// 13/12 Q1015",
    "taf": "TAF RKJB 041100Z 0412/0518 09005KT CAVOK TN12/0416Z TX17/0506Z BECMG 0413/0415 6000 -RA FEW010 BKN030 OVC080 BECMG 0417/0419 4000 RA SCT010CB BKN028 OVC060 BECMG 0422/0424 03010KT 6000 -RA FEW010 BKN025 OVC060 BECMG 0502/0504 35015G25KT 9999 NSW SCT030 BECMG 0506/0508 33010KT",
    "notams": [
     {
@@ -4345,7 +4345,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-04T16:09:50+00:00",
- "notam_updated": "2026-11-04T16:09:50+00:00",
+ "notam_checked": "2026-11-04T16:30:30+00:00",
+ "notam_updated": "2026-11-04T16:30:30+00:00",
  "notam_source": "FAA NMS (시험)"
 }
