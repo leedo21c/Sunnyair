@@ -16,6 +16,20 @@ def get(url, data=None, headers=None, timeout=40):
     with OPENER.open(req, timeout=timeout) as r:
         return r.read().decode("utf-8", "replace")
 
+def kma(kind, icao):
+    """항공기상청 AMO API (IWXXM XML) — AWC에 없는 국내 공항 보완용 (msgText 원문만 사용)"""
+    for base in ("https://amoapi.kma.go.kr/amoApi/iwxxm3/", "http://amoapi.kma.go.kr/amoApi/iwxxm3/"):
+        try:
+            x = get(base + kind + "?icao=" + icao, timeout=20)
+            m = re.search(r"<(?:\w+:)?msgText>(.*?)</(?:\w+:)?msgText>", x, re.S)
+            if m:
+                t = html.unescape(m.group(1)).strip().rstrip("=").strip()
+                if t:
+                    return " ".join(t.split())
+        except Exception as e:
+            print("KMA", kind, icao, base[:5], repr(e)[:120])
+    return ""
+
 def awc(kind):
     ids = ",".join(AIRPORTS)
     txt = get(f"https://aviationweather.gov/api/data/{kind}?ids={ids}&format=json" + ("&hours=2" if kind == "metar" else ""))
@@ -185,6 +199,13 @@ def main():
         notam_err = "NOTAM API 키 없음"
     for icao in AIRPORTS + FIRS:
         prev = old.get("airports", {}).get(icao, {})
+        if icao not in FIRS:
+            if not (met.get(icao) or {}).get("raw"):
+                v = kma("metar", icao)
+                if v: met[icao] = {"raw": v if v.startswith(("METAR", "SPECI")) else "METAR " + v, "name": ""}
+            if not (taf.get(icao) or {}).get("raw"):
+                v = kma("taf", icao)
+                if v: taf[icao] = {"raw": v if v.startswith("TAF") else "TAF " + v, "name": ""}
         a = {"fir": icao in FIRS, "name": "인천 FIR (공역·항로)" if icao in FIRS else (met.get(icao) or taf.get(icao) or {}).get("name") or prev.get("name", ""),
              "metar": (met.get(icao) or {}).get("raw") or prev.get("metar", ""),
              "taf": (taf.get(icao) or {}).get("raw") or prev.get("taf", "")}
