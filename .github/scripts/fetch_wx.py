@@ -1,6 +1,5 @@
 """METAR/TAF(aviationweather.gov)와 NOTAM(FAA NMS-API)을 받아 wx/latest.json에 저장합니다.
 공채 노트 앱의 '기상 · NOTAM' 탭이 이 파일을 읽어요. 실패한 항목은 이전 값을 유지합니다."""
-# NMS 키 등록 후 첫 실행
 import json, os, sys, time, re, html, http.cookiejar, urllib.request, urllib.error, urllib.parse, datetime
 
 AIRPORTS = ["RKSS", "RKSI", "RKNN", "RKNW", "RKPC", "RKPK", "RKTU", "RKTN", "RKJJ", "RKNY", "RKPU", "RKJB"]
@@ -74,7 +73,7 @@ def nms_location(tok, loc):
     q = urllib.parse.urlencode({"location": loc})
     try:
         txt = get(NMS_HOST + "/nmsapi/v1/notams?" + q,
-                  headers={"Authorization": "Bearer " + tok, "nmsResponseFormat": "GEOJSON", "Accept": "application/json"}, timeout=60)
+                  headers={"Authorization": "Bearer " + tok, "nmsResponseFormat": "GEOJSON", "Accept": "application/json"}, timeout=30)
     except urllib.error.HTTPError as e:
         raise RuntimeError(loc + " " + http_err(e))
     j = json.loads(txt)
@@ -198,10 +197,10 @@ def main():
     for icao in AIRPORTS + FIRS:
         prev = old.get("airports", {}).get(icao, {})
         if icao not in FIRS:
-            if not (met.get(icao) or {}).get("raw"):
+            if os.environ.get("USE_KMA") and not (met.get(icao) or {}).get("raw"):
                 v = kma("metar", icao)
                 if v: met[icao] = {"raw": v if v.startswith(("METAR", "SPECI")) else "METAR " + v, "name": ""}
-            if not (taf.get(icao) or {}).get("raw"):
+            if os.environ.get("USE_KMA") and not (taf.get(icao) or {}).get("raw"):
                 v = kma("taf", icao)
                 if v: taf[icao] = {"raw": v if v.startswith("TAF") else "TAF " + v, "name": ""}
         a = {"fir": icao in FIRS, "name": "인천 FIR (공역·항로)" if icao in FIRS else (met.get(icao) or taf.get(icao) or {}).get("name") or prev.get("name", ""),
