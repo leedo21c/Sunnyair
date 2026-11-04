@@ -10,7 +10,7 @@
 <link rel="icon" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="gc-code" content="yfive">
-<meta name="app-build" content="1104-2256">
+<meta name="app-build" content="1104-2323">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>항공사 공채 대비 정리 노트</title>
 </head><body>
@@ -207,6 +207,28 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
 .qc{color:var(--muted); font-size:.9em}
 
 .extlink{display:inline-block; margin-top:4px; padding:9px 14px; border-radius:10px; background:var(--surface); border:1px solid var(--rule-strong); font-weight:600; font-size:13.5px; text-decoration:none; color:var(--link)}
+
+/* METAR·TAF 해석 */
+.wxtap{display:block; width:100%; text-align:left; padding:0; border:0; background:none; color:inherit; font:inherit}
+.wxtap .wxbox{transition:background .1s}
+.wxtap:active .wxbox{background:var(--press)}
+.wxtap .nt-more{display:block; text-align:right; margin:6px 2px 0}
+.wxdec{margin-top:8px; background:var(--surface); border:1px solid var(--rule); border-radius:14px; padding:12px; display:flex; flex-direction:column; gap:10px}
+.wxt{font-size:12.5px}
+.wxt th{white-space:nowrap; width:1%; text-align:left; vertical-align:top}
+.wxt td{vertical-align:top}
+.wxt td:nth-child(2){width:1%}
+.wxt code{white-space:nowrap; font-size:11.5px}
+.wxsum{margin:0; font-size:13px; display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.wxsub{margin:4px 0 0; font-size:12.5px; font-weight:700}
+.wxdec .raw{font-size:12px; white-space:pre-wrap; word-break:break-word; margin:0}
+.wxg{border:1px solid var(--rule); border-radius:12px; padding:10px; display:flex; flex-direction:column; gap:6px}
+.wxg.on{border-color:var(--link); box-shadow:inset 3px 0 0 var(--link)}
+.wxg-h{margin:0; font-size:13.5px; display:flex; align-items:center; gap:6px; flex-wrap:wrap}
+.wxg-t{margin:0; font-size:12px; line-height:1.5; font-variant-numeric:tabular-nums}
+.now{font-size:11px; font-weight:700; color:var(--bg); background:var(--link); border-radius:99px; padding:1px 7px}
+.fc{font-family:var(--f-mono); font-size:11px; font-weight:700; border-radius:4px; padding:1px 6px; color:#fff}
+.fc-VFR{background:#1f8a4c}.fc-MVFR{background:#2f6fd6}.fc-IFR{background:#c9372c}.fc-LIFR{background:#a12fb0}
 </style>
 <div class="shell"><main id="app" aria-live="polite"></main></div>
 <nav class="tabs" id="tabs" aria-label="메뉴"></nav>
@@ -321,6 +343,168 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
       '</div></li>';
   }
 
+  /* ---------- METAR / TAF 해석 ---------- */
+  var WXI = {'-':'약한 ','+':'강한 ','VC':'부근 '};
+  var WXD = {MI:'얕은 ',BC:'조각난 ',PR:'부분적 ',DR:'낮게 날리는 ',BL:'높게 날리는 ',SH:'소나기성 ',TS:'뇌우',FZ:'어는 '};
+  var WXP = {DZ:'이슬비',RA:'비',SN:'눈',SG:'쌀알눈',IC:'빙정',PL:'얼음싸라기',GR:'우박',GS:'작은 우박',UP:'미확인 강수',BR:'박무(엷은 안개)',FG:'안개',FU:'연기',VA:'화산재',DU:'먼지',SA:'모래',HZ:'연무',PY:'물보라',PO:'먼지회오리',SQ:'스콜',FC:'깔때기구름(토네이도)',SS:'모래폭풍',DS:'먼지폭풍'};
+  var CLD = {FEW:'조금 (1~2/8)',SCT:'흩어짐 (3~4/8)',BKN:'많음 (5~7/8)',OVC:'흐림 (8/8)'};
+  var DIRS = {N:'북',NE:'북동',E:'동',SE:'남동',S:'남',SW:'남서',W:'서',NW:'북서'};
+  function frac(x){ var f = String(x).split('/'); return f.length === 2 ? f[0] / f[1] : +x; }
+  function p2(n){ return String(n).padStart(2,'0'); }
+  function mkDate(day, hh, mm, ref){
+    ref = ref || new Date();
+    var y = ref.getUTCFullYear(), mo = ref.getUTCMonth();
+    if(day > ref.getUTCDate() + 2) mo -= 1;
+    else if(day < ref.getUTCDate() - 20) mo += 1;
+    return new Date(Date.UTC(y, mo, day, hh, mm || 0));
+  }
+  function utcKst(d, short){
+    var k = new Date(d.getTime() + 9*3600e3);
+    var u = p2(d.getUTCDate()) + '일 ' + p2(d.getUTCHours()) + ':' + p2(d.getUTCMinutes()) + 'Z';
+    var s = p2(k.getUTCDate()) + '일 ' + p2(k.getUTCHours()) + ':' + p2(k.getUTCMinutes());
+    return short ? '<b>' + s + ' KST</b>' : u + ' <span class="kst">· KST</span> <b>' + s + '</b>';
+  }
+  function ft(n){ return (+n * 100).toLocaleString() + 'ft'; }
+  function wxText(t){
+    if(t === 'NSW') return '특별한 기상현상 끝남';
+    var m = t.match(/^(\+|-|VC)?(MI|BC|PR|DR|BL|SH|TS|FZ)?((?:DZ|RA|SN|SG|IC|PL|GR|GS|UP|BR|FG|FU|VA|DU|SA|HZ|PY|PO|SQ|FC|SS|DS)*)$/);
+    if(!m || (!m[2] && !m[3])) return null;
+    var ph = (m[3].match(/../g) || []).map(function(c){ return WXP[c]; }).join('·');
+    var desc = m[2] ? WXD[m[2]] : '';
+    if(m[2] === 'TS') desc = ph ? '뇌우 동반 ' : '뇌우';
+    return (m[1] ? WXI[m[1]] : '') + desc + ph;
+  }
+  /* 토큰 하나(필요하면 둘)를 해석 → {k:항목, r:원문, v:해석, n:소비한 토큰 수, cat:{vis, ceil}} */
+  function elem(tk, i, st){
+    var t = tk[i], nx = tk[i+1] || '', m;
+    if(t === 'CAVOK'){ st.vis = 10000; st.cavok = true; return {k:'시정·구름', v:'CAVOK — 시정 10km 이상, 5,000ft(또는 최저 섹터고도) 아래 구름 없음, 뇌우·적란운 없음'}; }
+    if((m = t.match(/^(\d{3}|VRB)(\d{2,3})(?:G(\d{2,3}))?(KT|MPS)$/))){
+      var u = m[4] === 'KT' ? 'kt' : 'm/s';
+      if(m[1] === '000' && +m[2] === 0) return {k:'바람', v:'무풍 (Calm)'};
+      return {k:'바람', v:(m[1] === 'VRB' ? '풍향 불규칙' : m[1] + '° 방향에서') + ' <b>' + (+m[2]) + u + '</b>' + (m[3] ? ', 돌풍 <b>' + (+m[3]) + u + '</b>' : '')};
+    }
+    if((m = t.match(/^(\d{3})V(\d{3})$/))) return {k:'바람', v:'풍향 ' + m[1] + '° ~ ' + m[2] + '° 사이 변화'};
+    if((m = t.match(/^(\d{4})(N|NE|E|SE|S|SW|W|NW)?$/)) && !st.visDone){
+      st.visDone = true; var v = +m[1]; st.vis = v;
+      return {k:'시정', v: v === 9999 ? '<b>10km 이상</b>' : v === 0 ? '<b>50m 미만</b>' : '<b>' + (v >= 5000 ? (v/1000) + 'km' : v.toLocaleString() + 'm') + '</b>' + (m[2] ? ' (' + DIRS[m[2]] + '쪽 최저시정)' : '')};
+    }
+    if(/^\d$/.test(t) && /^\d\/\dSM$/.test(nx)){ var w = +t + frac(nx.replace('SM','')); st.vis = w*1609; st.visDone = true; return {k:'시정', r:t + ' ' + nx, n:2, v:'<b>' + w + ' SM</b> (약 ' + Math.round(w*1.609*10)/10 + 'km)'}; }
+    if((m = t.match(/^(P|M)?(\d+(?:\/\d+)?)SM$/))){ var s = frac(m[2]); st.vis = s*1609; st.visDone = true; return {k:'시정', v:'<b>' + (m[1] === 'P' ? s + ' SM 초과' : m[1] === 'M' ? s + ' SM 미만' : s + ' SM') + '</b> (약 ' + Math.round(s*1.609*10)/10 + 'km)'}; }
+    if((m = t.match(/^R(\d{2}[LRC]?)\/([PM]?)(\d{4})(?:V([PM]?)(\d{4}))?(FT)?\/?([UDN])?$/))){
+      var un = m[6] ? 'ft' : 'm', pm = function(p){ return p === 'P' ? ' 초과' : p === 'M' ? ' 미만' : ''; };
+      return {k:'활주로 가시거리', v:'RWY ' + m[1] + ' RVR <b>' + (+m[3]).toLocaleString() + un + pm(m[2]) + '</b>' + (m[5] ? ' ~ ' + (+m[5]).toLocaleString() + un + pm(m[4]) : '') + (m[7] ? ' (' + {U:'좋아지는 중',D:'나빠지는 중',N:'변화 없음'}[m[7]] + ')' : '')};
+    }
+    if((m = t.match(/^(FEW|SCT|BKN|OVC)(\d{3}|\/\/\/)(CB|TCU|\/\/\/)?$/))){
+      if(/BKN|OVC/.test(m[1]) && /\d{3}/.test(m[2])){ var h = +m[2]*100; if(st.ceil == null || h < st.ceil) st.ceil = h; }
+      return {k:'구름', v:CLD[m[1]] + ' · 밑면 <b>' + (/\d/.test(m[2]) ? ft(m[2]) : '알 수 없음') + '</b>' + (m[3] === 'CB' ? ' · <b class="k">적란운(CB)</b>' : m[3] === 'TCU' ? ' · <b class="k">탑상적운(TCU)</b>' : '')};
+    }
+    if((m = t.match(/^VV(\d{3}|\/\/\/)$/))){ if(/\d/.test(m[1])){ var vv = +m[1]*100; if(st.ceil == null || vv < st.ceil) st.ceil = vv; } return {k:'구름', v:'하늘 안 보임 · 수직시정 <b>' + (/\d/.test(m[1]) ? ft(m[1]) : '알 수 없음') + '</b>'}; }
+    if(t === 'NSC') return {k:'구름', v:'의미 있는 구름 없음'};
+    if(t === 'NCD') return {k:'구름', v:'구름 감지 안 됨 (자동관측)'};
+    if(t === 'SKC' || t === 'CLR') return {k:'구름', v:'맑음 (구름 없음)'};
+    if((m = t.match(/^(M?\d{2})\/(M?\d{2})?$/))){
+      var tc = +m[1].replace('M','-'), dc = m[2] ? +m[2].replace('M','-') : null;
+      return {k:'기온 / 이슬점', v:'기온 <b>' + tc + '°C</b>' + (dc != null ? ' · 이슬점 <b>' + dc + '°C</b> (차이 ' + (tc - dc) + '°' + (tc - dc <= 2 ? ', 안개 주의' : '') + ')' : '')};
+    }
+    if((m = t.match(/^Q(\d{4})$/))) return {k:'기압 (QNH)', v:'<b>' + (+m[1]) + ' hPa</b> (' + (m[1]*0.02953).toFixed(2) + ' inHg)'};
+    if((m = t.match(/^A(\d{4})$/))) return {k:'기압 (고도계)', v:'<b>' + (m[1]/100).toFixed(2) + ' inHg</b> (' + Math.round(m[1]/100/0.02953) + ' hPa)'};
+    if((m = t.match(/^RE(.+)$/)) && wxText(m[1])) return {k:'최근 기상', v:'최근(지난 1시간) ' + wxText(m[1])};
+    if(t === 'WS'){ var j = i+1, r = ['WS']; while(tk[j] && /^(R\d{2}[LRC]?|ALL|RWY|LDG|TKOF)$/.test(tk[j])){ r.push(tk[j]); j++; } return {k:'윈드시어', r:r.join(' '), n:r.length, v:'<b class="k">윈드시어</b> ' + esc(r.slice(1).join(' '))}; }
+    if((m = t.match(/^(TX|TN)(M?\d{2})\/(\d{2})(\d{2})Z$/))){ var dd = mkDate(+m[3], +m[4], 0, st.ref); return {k:m[1] === 'TX' ? '최고기온' : '최저기온', v:'<b>' + (+m[2].replace('M','-')) + '°C</b> · ' + utcKst(dd)}; }
+    if(t === 'NOSIG') return {k:'추세', v:'앞으로 2시간 큰 변화 없음 (NOSIG)'};
+    if(t === 'AUTO') return {k:'관측', v:'자동 관측'};
+    if(t === 'COR') return {k:'관측', v:'정정 보고'};
+    var w2 = wxText(t); if(w2) return {k:'날씨', v:'<b>' + w2 + '</b>'};
+    return {k:'기타', v:'—'};
+  }
+  function rowsHtml(list){
+    return '<table class="wxt"><tbody>' + list.map(function(r){ return '<tr><th>' + r.k + '</th><td><code>' + esc(r.r) + '</code></td><td>' + r.v + '</td></tr>'; }).join('') + '</tbody></table>';
+  }
+  function decodeRun(tk, st, stop){
+    var out = [], i = 0;
+    while(i < tk.length){
+      if(stop && stop(tk[i])) break;
+      var e = elem(tk, i, st); e.r = e.r || tk[i]; out.push(e); i += e.n || 1;
+    }
+    return {rows:out, used:i};
+  }
+  function fltCat(st){
+    var vis = st.vis, ceil = st.cavok ? null : st.ceil;
+    if(vis == null && ceil == null) return '';
+    var sm = vis == null ? 99 : vis / 1609.34, c = ceil == null ? 99999 : ceil;
+    var cat = (c < 500 || sm < 1) ? 'LIFR' : (c < 1000 || sm < 3) ? 'IFR' : (c <= 3000 || sm <= 5) ? 'MVFR' : 'VFR';
+    return '<span class="fc fc-' + cat + '">' + cat + '</span>';
+  }
+  function decodeMetar(raw){
+    var tk = raw.replace(/=$/, '').trim().split(/\s+/), i = 0, rows = [], st = {}, head = '';
+    if(/^(METAR|SPECI)$/.test(tk[0])){ rows.push({k:'종류', r:tk[0], v:tk[0] === 'SPECI' ? '특별 관측 (SPECI)' : '정시 관측 (METAR)'}); i++; }
+    if(/^[A-Z]{4}$/.test(tk[i] || '')){ rows.push({k:'공항', r:tk[i], v:esc(tk[i])}); i++; }
+    var m = (tk[i] || '').match(/^(\d{2})(\d{2})(\d{2})Z$/);
+    if(m){ var d = mkDate(+m[1], +m[2], +m[3]); rows.push({k:'관측 시각', r:tk[i], v:utcKst(d)}); i++;
+      var min = Math.round((Date.now() - d) / 60000);
+      head = '관측 ' + utcKst(d, true) + ' · ' + (min < 60 ? min + '분 전' : Math.floor(min/60) + '시간 ' + (min % 60) + '분 전'); }
+    var rest = tk.slice(i), rmk = rest.indexOf('RMK'), trendAt = -1;
+    var body = rmk > -1 ? rest.slice(0, rmk) : rest;
+    for(var j = 0; j < body.length; j++){ if(/^(BECMG|TEMPO)$/.test(body[j])){ trendAt = j; break; } }
+    var main = trendAt > -1 ? body.slice(0, trendAt) : body;
+    rows = rows.concat(decodeRun(main, st).rows);
+    var html = '<p class="wxsum">' + head + ' ' + fltCat(st) + '</p>' + rowsHtml(rows);
+    if(trendAt > -1){
+      var tr = body.slice(trendAt), tt = tr.shift(), tst = {};
+      var tr2 = tr.filter(function(x){ return !/^(FM|TL|AT)\d{4}$/.test(x); });
+      html += '<p class="wxsub">추세 (앞으로 2시간) — ' + (tt === 'TEMPO' ? '일시적으로' : '점차 바뀜') + '</p>' + rowsHtml([{k:'추세', r:tt + ' ' + tr.filter(function(x){ return /^(FM|TL|AT)\d{4}$/.test(x); }).join(' '), v:tt === 'TEMPO' ? '일시적 변화' : '점진적 변화'}].concat(decodeRun(tr2, tst).rows));
+    }
+    if(rmk > -1) html += '<p class="wxsub">비고 (RMK)</p><pre class="raw">' + esc(rest.slice(rmk + 1).join(' ')) + '</pre>';
+    return html;
+  }
+  function period(s, ref){
+    var m = s.match(/^(\d{2})(\d{2})\/(\d{2})(\d{2})$/);
+    if(!m) return null;
+    return [mkDate(+m[1], +m[2], 0, ref), mkDate(+m[3], +m[4], 0, ref)];
+  }
+  function decodeTaf(raw){
+    var tk = raw.replace(/=$/, '').trim().split(/\s+/), i = 0, hdr = [], ref = new Date(), valid = null;
+    if(tk[i] === 'TAF'){ i++; }
+    while(/^(AMD|COR|CNL)$/.test(tk[i] || '')){ hdr.push({k:'종류', r:tk[i], v:{AMD:'수정 예보',COR:'정정 예보',CNL:'취소'}[tk[i]]}); i++; }
+    if(/^[A-Z]{4}$/.test(tk[i] || '')){ hdr.push({k:'공항', r:tk[i], v:esc(tk[i])}); i++; }
+    var m = (tk[i] || '').match(/^(\d{2})(\d{2})(\d{2})Z$/);
+    if(m){ var iss = mkDate(+m[1], +m[2], +m[3]); ref = iss; hdr.push({k:'발표 시각', r:tk[i], v:utcKst(iss)}); i++; }
+    if((valid = period(tk[i] || '', ref))){ hdr.push({k:'유효 기간', r:tk[i], v:utcKst(valid[0]) + '<br>~ ' + utcKst(valid[1])}); i++; }
+    var groups = [], cur = {type:'BASE', tk:[]};
+    for(; i < tk.length; i++){
+      var t = tk[i];
+      if(/^FM\d{6}$/.test(t) || /^(BECMG|TEMPO)$/.test(t) || /^PROB\d{2}$/.test(t)){
+        if(cur.tk.length || cur.type !== 'BASE') groups.push(cur);
+        cur = {type:t, tk:[]};
+        if(/^PROB/.test(t) && tk[i+1] === 'TEMPO'){ cur.type = t + ' TEMPO'; i++; }
+        if(!/^FM/.test(t) && period(tk[i+1] || '', ref)){ cur.per = period(tk[i+1], ref); cur.perRaw = tk[i+1]; i++; }
+      } else cur.tk.push(t);
+    }
+    groups.push(cur);
+    for(var g = 0; g < groups.length; g++){
+      var G = groups[g];
+      if(G.type === 'BASE'){ G.per = valid; }
+      else if(/^FM/.test(G.type)){ var f = G.type.match(/^FM(\d{2})(\d{2})(\d{2})$/); G.per = [mkDate(+f[1], +f[2], +f[3], ref), null]; }
+    }
+    for(g = 0; g < groups.length; g++){
+      var G2 = groups[g];
+      if((G2.type === 'BASE' || /^FM/.test(G2.type)) && G2.per){
+        var nxt = null; for(var h = g+1; h < groups.length; h++){ if(/^FM/.test(groups[h].type)){ nxt = groups[h].per[0]; break; } }
+        G2.per[1] = nxt || (valid && valid[1]);
+      }
+    }
+    var now = Date.now();
+    var LBL = function(t){ if(t === 'BASE') return '기본 예보'; if(/^FM/.test(t)) return '이 시각부터 (FM)'; if(t === 'BECMG') return '점차 바뀜 (BECMG)'; if(t === 'TEMPO') return '일시적으로 (TEMPO)'; var p = t.match(/^PROB(\d{2})( TEMPO)?/); return p ? '확률 ' + (+p[1]) + '%' + (p[2] ? ' · 일시적' : '') + ' (' + t + ')' : t; };
+    var html = rowsHtml(hdr);
+    groups.forEach(function(G){
+      var on = G.per && G.per[0] && G.per[1] && now >= G.per[0] && now < G.per[1];
+      var st = {ref:ref}, dec = decodeRun(G.tk, st);
+      html += '<div class="wxg' + (on ? ' on' : '') + '"><p class="wxg-h"><b>' + LBL(G.type) + '</b>' + (on ? ' <span class="now">지금</span>' : '') + ' ' + fltCat(st) + '</p>' +
+        (G.per && G.per[0] ? '<p class="wxg-t">' + utcKst(G.per[0]) + (G.per[1] ? '<br>~ ' + utcKst(G.per[1]) : '') + '</p>' : '') +
+        (dec.rows.length ? rowsHtml(dec.rows) : '<p class="note">변화 내용 없음</p>') + '</div>';
+    });
+    return html;
+  }
   function fmtTaf(t){ return esc(t).replace(/\s+(BECMG|TEMPO|FM\d{6}|PROB\d{2}(?:\s+TEMPO)?)/g, '\n  $1'); }
   function ago(iso){
     if(!iso) return ''; var d = new Date(iso); if(isNaN(d)) return '';
@@ -372,12 +556,19 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
           if(filt === 'g597') return /\bG\s?-?597\b/i.test(raw);
           return true;
         }
+        var open = {metar:false, taf:false};
+        function tapBox(kind, shown, raw){
+          var dec = '';
+          try { dec = kind === 'metar' ? decodeMetar(raw) : decodeTaf(raw); } catch(e){ dec = '<p class="note">해석하지 못했어요.</p>'; }
+          return '<button type="button" class="wxtap" data-k="' + kind + '" aria-expanded="' + open[kind] + '"><pre class="wxbox">' + shown + '</pre><span class="nt-more">' + (open[kind] ? '접기' : '눌러서 해석 보기 (한국시간 포함)') + '</span></button>' +
+            '<div class="wxdec"' + (open[kind] ? '' : ' hidden') + '>' + dec + '</div>';
+        }
         function paint(m, t, liveM, liveT){
           var out = '';
           if(!isFir){
             out += '<h3 class="wxh">METAR <span>' + esc((a && a.name) || icao) + '</span></h3>' +
-              (m ? '<pre class="wxbox">' + esc(m) + '</pre>' : '<p class="note">METAR가 없어요.' + (MIL[icao] ? ' ' + MIL[icao] + '은(는) 공군 비행장이라 해외 기상망(aviationweather.gov)에 METAR·TAF가 올라오지 않아요. 항공기상청 사이트에서 확인해 주세요.' : '') + '</p>' + (MIL[icao] ? '<p><a class="extlink" href="https://amo.kma.go.kr/" target="_blank" rel="noopener">항공기상청(AMO) 열기 ↗</a></p>' : '')) +
-              '<h3 class="wxh">TAF</h3>' + (t ? '<pre class="wxbox">' + fmtTaf(t) + '</pre>' : '<p class="note">TAF가 없어요.</p>') +
+              (m ? tapBox('metar', esc(m), m) : '<p class="note">METAR가 없어요.' + (MIL[icao] ? ' ' + MIL[icao] + '은(는) 공군 비행장이라 해외 기상망(aviationweather.gov)에 METAR·TAF가 올라오지 않아요. 항공기상청 사이트에서 확인해 주세요.' : '') + '</p>' + (MIL[icao] ? '<p><a class="extlink" href="https://amo.kma.go.kr/" target="_blank" rel="noopener">항공기상청(AMO) 열기 ↗</a></p>' : '')) +
+              '<h3 class="wxh">TAF</h3>' + (t ? tapBox('taf', fmtTaf(t), t) : '<p class="note">TAF가 없어요.</p>') +
               '<p class="wxsrc">' + (liveM || liveT ? 'METAR/TAF : 실시간 (aviationweather.gov)' : 'METAR/TAF : ' + (d && d.updated ? ago(d.updated) + ' 수집본' : '수집본 없음')) + '</p>';
           } else {
             out += '<p class="note" style="margin-top:14px">인천 FIR(RKRR)로 발행된 공역·항로·MOA NOTAM이에요. 아래 버튼으로 걸러 볼 수 있어요. "동해 쪽"은 Q줄 좌표가 동경 127°30′보다 동쪽인 NOTAM이에요.</p>' +
@@ -391,6 +582,7 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
           out += '<ul class="ntl">' + shown.map(notamCard).join('') + '</ul>' +
             '<p class="wxsrc">NOTAM : ' + (d && d.notam_updated ? ago(d.notam_updated) + ' 수집 (' + (d.notam_source || 'FAA NMS') + ')' : '수집본 없음') + ' · 30분마다 갱신<br>참고용이에요. 실제 운항은 AIM·UBIKAIS 등 공식 출처로 확인하세요.</p>';
           body.innerHTML = out;
+          body.querySelectorAll('.wxtap').forEach(function(btn){ btn.onclick = function(){ var k = btn.dataset.k; open[k] = !open[k]; btn.setAttribute('aria-expanded', open[k]); btn.nextElementSibling.hidden = !open[k]; btn.querySelector('.nt-more').textContent = open[k] ? '접기' : '눌러서 해석 보기 (한국시간 포함)'; }; });
           body.querySelectorAll('.nt-h').forEach(function(btn){ btn.onclick = function(){ var b = btn.nextElementSibling, on = b.hidden; b.hidden = !on; btn.setAttribute('aria-expanded', on); btn.querySelector('.nt-more').textContent = on ? '접기' : '눌러서 디코드 보기'; }; });
           body.querySelectorAll('#ntf button').forEach(function(b){ b.onclick = function(){ filt = b.dataset.f; paint(m, t, liveM, liveT); }; });
         }
