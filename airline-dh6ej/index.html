@@ -10,6 +10,7 @@
 <link rel="icon" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="gc-code" content="yfive">
+<meta name="app-build" content="1104-1734">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>항공사 공채 대비 정리 노트</title>
 </head><body>
@@ -445,7 +446,7 @@ figcaption{font-size:11.5px; color:#4E5B67; padding:6px 2px 0; line-height:1.4}
     function paint(state, info){
       if(state === 'ok'){
         el.innerHTML = home ? '<p class="offok">✓ 이 기기에 저장됨 · 인터넷 없이도 열려요</p>'
-          : '<p class="offok">✓ 이 기기에 저장됨 (' + info.count + '개 파일 · ' + info.version + ')</p><p class="note">링크가 닫혀도 이 기기에서는 계속 열려요. 내용이 바뀌면 인터넷 연결 시 자동으로 갱신되고, 다시 저장하려면 아래 버튼을 누르세요.</p><button class="offbtn" type="button">다시 저장하기</button>';
+          : '<p class="offok">✓ 이 기기에 저장됨 (' + info.count + '개 파일 · ' + info.version + ' · 화면 ' + ((document.querySelector('meta[name="app-build"]')||{}).content||'-') + ')</p><p class="note">링크가 닫혀도 이 기기에서는 계속 열려요. 내용이 바뀌면 인터넷 연결 시 자동으로 갱신되고, 다시 저장하려면 아래 버튼을 누르세요.</p><button class="offbtn" type="button">다시 저장하기</button>';
       } else if(state === 'busy'){
         el.innerHTML = '<p class="offbusy">저장하는 중… 잠시만 기다려 주세요</p>';
       } else {
