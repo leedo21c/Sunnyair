@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-05T18:30:27+00:00",
+ "updated": "2026-11-05T19:00:37+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -116,7 +116,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 051800Z 33014KT CAVOK 10/03 Q1018 NOSIG",
+   "metar": "METAR RKSI 051830Z 32019KT CAVOK 10/M00 Q1019 NOSIG",
    "taf": "TAF RKSI 051700Z 0518/0624 32018G35KT CAVOK TN05/0521Z TX09/0606Z TN02/0621Z BECMG 0604/0606 32015G25KT BECMG 0611/0613 32010KT",
    "notams": [
     {
@@ -413,6 +413,14 @@
      "end": "2026-11-08T18:01:00Z",
      "fir": "",
      "q": ""
+    },
+    {
+     "num": "V0520/26",
+     "raw": "V0520/26 NOTAMN\nQ) RKRR/QPIAU/I/BO/A/000/999/3510N12856E005\nA) RKPK\nB) 2611051830\nC) 2611260001\nE) [US DOD PROCEDURAL NOTAM] INSTRUMENT APPROACH PROCEDURE NOT AUTHORIZED FOR PAR RWY 36L/R.",
+     "start": "2026-11-05T18:30:00Z",
+     "end": "2026-11-26T00:01:00Z",
+     "fir": "RKRR",
+     "q": "QPIAU"
     },
     {
      "num": "V0961/25",
@@ -4977,7 +4985,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-05T18:30:27+00:00",
- "notam_updated": "2026-11-05T18:30:27+00:00",
+ "notam_checked": "2026-11-05T19:00:37+00:00",
+ "notam_updated": "2026-11-05T19:00:37+00:00",
  "notam_source": "FAA NMS (시험)"
 }
