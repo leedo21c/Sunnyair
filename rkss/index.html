@@ -137,6 +137,13 @@ body.practice .pbtn{background:var(--band);color:var(--band-ink)}
 .cbar{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
 .cbar button{font:inherit;font-size:14px;font-weight:600;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
 
+details.acc{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0 12px}
+details.acc[open]{padding-bottom:8px}
+details.acc>summary{cursor:pointer;font-weight:700;color:var(--head);padding:11px 0;list-style:none;display:flex;justify-content:space-between;gap:8px}
+details.acc>summary::-webkit-details-marker{display:none}
+details.acc>summary::after{content:"＋";color:var(--accent)}
+details.acc[open]>summary::after{content:"－"}
+details.acc[open]>summary{border-bottom:1px solid var(--line);margin-bottom:6px}
 #top{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));
   width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--head);font-size:20px;
   box-shadow:0 2px 10px rgba(0,0,0,.18);cursor:pointer;z-index:6}
@@ -150,7 +157,7 @@ a{color:var(--accent)}
 <p>RKSS 공항 개요, IFR 출항부터 VFR 임무 전환·입항까지의 표준 교신, UBIKAIS 비행계획 작성. 실제 운항은 최신 AIP·NOTAM·ATC 지시와 회사 SOP가 기준입니다.</p>
 <p style="margin-top:8px"><a href="../" style="font-weight:700">← C90A 핵심 요약</a></p>
 </header>
-<nav class="chips" aria-label="섹션"><a href="#rkss" data-id="rkss">김포공항</a><a href="#dep" data-id="dep">IFR 출항 교신</a><a href="#vfr" data-id="vfr">IFR 캔슬·VFR</a><a href="#arr" data-id="arr">IFR 입항 교신</a><a href="#fpl" data-id="fpl">비행계획</a><a href="#cards" data-id="cards">암기 카드</a></nav>
+<nav class="chips" aria-label="섹션"><a href="#rkss" data-id="rkss">김포공항</a><a href="#dep" data-id="dep">IFR 출항 교신</a><a href="#vfr" data-id="vfr">IFR 캔슬·VFR</a><a href="#arr" data-id="arr">IFR 입항 교신</a><a href="#fpl" data-id="fpl">비행계획</a><a href="#cards" data-id="cards">암기 카드</a><a href="#extra" data-id="extra">10/22 보충</a></nav>
 
 <!-- ============ 1. RKSS ============ -->
 <section class="sec" id="rkss">
@@ -595,7 +602,263 @@ CHEONAN LCL 0100</div></div>
 </div>
 </section>
 
-<footer>김포 운항 · 교신 · 비행계획 · 2026.11.03 수업 정리. 교신 문구는 수업 슬라이드의 연습용 예문이며 실제 관제 지시가 우선합니다.</footer>
+<!-- ============ 7. 10/22 보충 ============ -->
+<section class="sec" id="extra">
+<h2>7 · 10/22 수업 보충 정리</h2>
+<p class="small">10/22 통합 정리본 중 위 탭과 겹치지 않는 핵심만 모았습니다. 항목을 탭하면 펼쳐집니다.</p>
+<div class="cbar"><button type="button" id="xOpen">모두 펼치기</button><button type="button" id="xClose">모두 접기</button></div>
+
+<details class="acc" open><summary>① 지상 운용 · 관제기관 역할</summary>
+<ul>
+<li>주기장 번호: <b>500번대 = 고정익</b> · <b>900번대 = 회전익</b></li>
+<li>탑승 동선은 격납고에서 항공기를 꺼낸 위치에 따라 바뀜</li>
+<li>C1·D1 = 두 활주로 사이 연결 · <b>P</b> = 평행 유도로 · <b>S/T</b> = West Apron 안</li>
+<li>머릿속 Taxi 연습: 주기장 → 첫 유도로 → 대기 위치 → 진입 활주로</li>
+</ul>
+<div class="tw"><table>
+<tr><th>기관</th><th>역할</th><th>수업 연결</th></tr>
+<tr><td class="n">Delivery</td><td>IFR clearance</td><td>허가한계·경로·고도·코드</td></tr>
+<tr><td class="n">Apron</td><td>시동·주기장 이동</td><td>West Apron · S·T·W1·W2</td></tr>
+<tr><td class="n">Tower</td><td>활주로 진입·횡단·이착륙</td><td>Hold short / Line up / Takeoff</td></tr>
+<tr><td class="n">Ground</td><td>관제 범위 내 지상 이동</td><td>반대편 활주로 · P 유도로 등</td></tr>
+<tr><td class="n">Departure</td><td>이륙 후 출항 관제</td><td>초기 상승 · SID · Vector</td></tr>
+</table></div>
+<h4>W1과 W2</h4>
+<div class="tw"><table>
+<tr><th>상황</th><th>수업 예시</th><th>확인할 점</th></tr>
+<tr><td class="n">32 출항</td><td>W1 이용</td><td>진입 위치와 실제 쓸 활주로 거리</td></tr>
+<tr><td class="n">14 출항</td><td>W2 → D1 부근 이동 후 방향 전환</td><td>W2 즉시 이륙은 가용거리 부족 가능 · 성능 계산과 정지 여유 우선</td></tr>
+</table></div>
+<ul>
+<li>활주로 위 방향 전환 표현: <span class="eng">Backtrack</span> · <span class="eng">180° turn</span> · D1을 이용한 Line-up</li>
+<li>복창: 활주로 번호 / 이동 한계 / 방향 전환 위치 / 대기 지시 · 불명확하면 D1 이용 가능 여부를 구체적으로 확인</li>
+<li>쌍발기 활주로 위 선회: 차등추력·브레이크 영향 고려</li>
+</ul>
+<div class="box"><span class="t">Tower 지시 3가지 구별</span>
+<b>Hold short</b> = 한계 앞 대기 · <b>Line up and wait</b> = 정렬 후 대기 · <b>Cleared for takeoff</b> = 이륙 허가.
+시동은 <b>Approved</b>, 이륙은 <b>Cleared</b>. 활주로 횡단은 번호와 함께 따로 확인.</div>
+</details>
+
+<details class="acc"><summary>② 추가 교신 예문</summary>
+<div class="pbar"><button class="pbtn" type="button">연습 모드</button><span>조종사 문장 가리기</span></div>
+<div class="call"><div class="ag">출항 · Delivery</div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">TORUS 방면</span>Gimpo Delivery, HL5239, request ATC clearance to TORUS, proposing niner thousand, information <span class="v">[ATIS]</span>.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">VFR 임무 (다발기)</span>Gimpo Delivery, HL5239, request ATC clearance, intending to cancel IFR after departure.<span class="ko">취소 의도를 알려도 IFR 허가는 그대로 유효</span></span></div>
+</div>
+<div class="call"><div class="ag">출항 후 · 항로</div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">이관 지연 시</span>HL5239, airborne.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">고도 제한 확인</span>HL5239, confirm <span class="v">[specified]</span> altitude restriction cancelled?</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">수평비행</span>Daegu Control, HL5239, niner thousand.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">상승 중</span>Daegu Control, HL5239, climbing to niner thousand.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">임무 의도</span>After TORUS, Gangneung local.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">Gangneung Approach, HL5239, fifteen miles west of TORUS, <span class="v">[altitude]</span>, request <span class="v">[mission/area]</span>.<span class="ko">인공강우 A·B·C 구역은 사전 협조 명칭과 일치시킬 것</span></span></div>
+</div>
+<div class="call"><div class="ag">임무 종료 · 복귀</div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">복귀 IFR</span><span class="v">[Approach]</span>, HL5239, mission complete, request IFR clearance to Gimpo.<span class="ko">Mission complete ≠ IFR 허가. 받은 뒤 Fix·Vector로 항로 연결</span></span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">입항</span>Report established.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">HL5239, established <span class="v">[on the assigned approach course]</span>.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">W2 개방 후</span>Gimpo Apron, HL5239, at Whiskey Two, request taxi to <span class="v">[stand]</span>.</span></div>
+</div>
+<div class="call"><div class="ag">VFR · 공역</div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">Kilo에서</span>Seoul Approach, HL5239, at Kilo, two thousand, destination Daegu, request southbound via Golf.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx"><span class="ph">MCRC 호출</span>Watchman, HL5239.</span></div>
+<div class="ln p"><span class="who">P</span><span class="tx">HL5239, <span class="v">[position]</span>, <span class="v">[altitude]</span>, request MOA five low condition.<span class="ko">대체: Area five low condition · "Cold" 회신 = 사용 상태 정보일 뿐 진입 승인 아님</span></span></div>
+<div class="ln a"><span class="who">ATC</span><span class="tx"><span class="ph">장주</span>Say maximum speed.<span class="ko">구성·제한·감속거리·안정화를 고려한 가능한 속도로 답함. VNE까지 가속하라는 뜻 아님</span></span></div>
+</div>
+<div class="box chk"><span class="t">Positive climb과 400 ft</span>
+<ul>
+<li>Positive climb 확인 → 기어 업 (SOP 기준). 선회·IFR 취소 시점과는 별개</li>
+<li>수업 예시: 400 ft 이후 IFR 취소·선회 요청</li>
+<li>고장·Memory item을 "400 ft까지 무조건 대기"로 일반화하지 않음</li>
+</ul></div>
+</details>
+
+<details class="acc"><summary>③ RNAV · 고도 제한 · 강하 계산</summary>
+<h4>SID → En route → STAR → Approach</h4>
+<div class="tw"><table>
+<tr><th>구간</th><th>확인 항목</th></tr>
+<tr><td class="n">SID</td><td>활주로, 첫 Fix, 방향, 고도·속도 제한</td></tr>
+<tr><td class="n">En route</td><td>항로명, 진행 방향, MEA, 계획·허가 고도</td></tr>
+<tr><td class="n">STAR</td><td>Fix별 경로·고도·속도, 관제 수정</td></tr>
+<tr><td class="n">Approach</td><td>절차명, 진입점, 제한, 최저치, 복행</td></tr>
+</table></div>
+<ul>
+<li>RNAV 적합성 = 장비 + 승인 + 데이터베이스 + 조종사 요건. GPS·오토파일럿만으로 판단 불가 (RNP 0.4 언급은 미확정)</li>
+<li>차트 고도 표기: At or above / At or below / At / Between</li>
+<li><b>Cancel level restriction ≠ 경로 취소</b> · 범위가 불명확하면 확인 교신</li>
+<li>제한을 성능상 못 맞추면 관제에 알림</li>
+<li>회사 기체는 느린 편 → Vector·단계 상승을 받을 수 있음</li>
+<li>여압·산소·촬영 장비는 기체마다 다름 → 계획 고도에 반영</li>
+</ul>
+<div class="box why"><span class="t">3° 강하 암산</span>
+<b>높이차(ft) ≈ 거리(NM) × 300</b> · <b>강하율(ft/min) ≈ GS(kt) × 5</b> (IAS 아님, GS)</div>
+<div class="two">
+<div class="tw"><table>
+<tr><th>거리</th><th>높이차</th></tr>
+<tr><td class="n">5 NM</td><td>1,500 ft</td></tr>
+<tr><td class="n">8 NM</td><td>2,400 ft</td></tr>
+<tr><td class="n">10 NM</td><td>3,000 ft</td></tr>
+<tr><td class="n">12 NM</td><td>3,600 ft</td></tr>
+<tr><td class="n">15 NM</td><td>4,500 ft</td></tr>
+<tr><td class="n">20 NM</td><td>6,000 ft</td></tr>
+</table></div>
+<div class="tw"><table>
+<tr><th>GS</th><th>강하율</th></tr>
+<tr><td class="n">90 kt</td><td>450 fpm</td></tr>
+<tr><td class="n">100 kt</td><td>500 fpm</td></tr>
+<tr><td class="n">120 kt</td><td>600 fpm</td></tr>
+<tr><td class="n">150 kt</td><td>750 fpm</td></tr>
+<tr><td class="n">180 kt</td><td>900 fpm</td></tr>
+<tr><td class="n">200 kt</td><td>1,000 fpm</td></tr>
+</table></div>
+</div>
+<ul>
+<li>정확한 값: 3° ≈ 318 ft/NM, 강하율 계수 ≈ 5.3</li>
+<li>예: 4,000 ft 높은 상태 → 12 NM이면 400 ft 높음, 15 NM이면 500 ft 낮음</li>
+<li>14 방향은 선회 후 Final이 짧음 → 감속·기어·플랩을 미리 준비</li>
+</ul>
+</details>
+
+<details class="acc"><summary>④ VFR 경로 · 복귀 · 장주</summary>
+<ul>
+<li>경로 설계: 목적지까지 직선 → 관제구역·R/P 공역·군 훈련공역·사격장·지형에 맞춰 수정</li>
+<li>도착 공항의 VFR Point·관제기관도 미리 확인</li>
+<li>북쪽 임무도 남쪽 구간 경유 후 고도 확보한 사례 (입항 흐름과 분리)</li>
+<li><b>Osan abeam 통과 ≠ 상승 허가</b> · 상승은 요청해서 받기</li>
+</ul>
+<div class="tw"><table>
+<tr><th>상황</th><th>수업 경로</th></tr>
+<tr><td class="n">남쪽 출항</td><td>K → G → 남쪽</td></tr>
+<tr><td class="n">동쪽 출항</td><td>K → J 또는 K → G → J</td></tr>
+<tr><td class="n">남쪽 복귀</td><td>G 대기 → K</td></tr>
+<tr><td class="n">동쪽 복귀</td><td>J → G → K</td></tr>
+</table></div>
+<ul>
+<li>K 시각 단서: 계양 IC·체육관 / G: 골프장·송도 건물 (지점 지명과 구분)</li>
+<li>S(소래)는 소음 때문에 동쪽 G를 쓰는 경우가 많음 · 옛 자료의 <b>L은 폐지, R 신설</b></li>
+<li>K 주변에서는 공항 쪽으로 너무 붙지 않게</li>
+</ul>
+<h4>다음 관제기관</h4>
+<div class="tw"><table>
+<tr><th>지역</th><th>기관</th></tr>
+<tr><td class="n">서울 주변</td><td>Seoul Approach ↔ Gimpo·Incheon·Suwon·Seoul Tower</td></tr>
+<tr><td class="n">성남 서울공항</td><td>호출 명칭 <b>Seoul Tower</b></td></tr>
+<tr><td class="n">남쪽 이동</td><td>Osan → 이후 Haemi 등</td></tr>
+<tr><td class="n">원주·강릉</td><td>임무 위치의 해당 Approach</td></tr>
+</table></div>
+<p class="small">Radar service terminated / Frequency change approved = 서비스 종료. 다음 공역 진입 허가는 별도.</p>
+<div class="box warn"><span class="t">AIP "Hold north of K"는 King Air용이 아님</span>
+ATC 허가 + 주간 + VMC + <b>C-172</b> 조건의 특정 절차 · 2,000 ft 이상 · 32L/14R 서쪽 1.5 NM 선 넘지 않기. G·K "대기"라는 말만으로 홀딩 형태를 정하지 말 것.</div>
+<ul>
+<li><b>다발기 재진입</b>: VFR 임무 완료 → 김포 도착 IFR clearance → Vector → ILS. G 대기 자체는 IFR 허가 아님</li>
+<li>장주 흐름: K → Downwind → Base → Final · 지상 단서: 계양산·경기장·아라뱃길·철도</li>
+<li>짧은 장주 → 보고지점·선회 위치 숙지, 기어·플랩·감속 미리</li>
+</ul>
+</details>
+
+<details class="acc"><summary>⑤ MOA · R/P 공역 협조</summary>
+<div class="flow"><span>사전 승인</span><i>→</i><span>당일 사용 상태</span><i>→</i><span>진입 직전 재확인</span><i>→</i><span>임무 중 감시·연락</span></div>
+<ul>
+<li>군 계획 흐름: 비행대대 → 비행단 작전과 → 공군작전사령부 → <b>MCRC</b></li>
+<li>확인 시점: <b>전날 전화 + 당일 연락 + 진입 직전</b> · 출발 후 군 항공기 통과로 갑자기 못 쓸 수 있음</li>
+<li><b>SODO</b> = Senior Operations Duty Officer · 한 기관 통화로 모든 절차가 끝나는 것 아님</li>
+<li>MOA <b>Low = 10,000 ft 이하</b> (수업 예시, 모든 MOA 공통 아님)</li>
+</ul>
+<div class="tw"><table>
+<tr><th>공역</th><th>협조</th><th>주의</th></tr>
+<tr><td class="n">R75</td><td>수방사 사전 협조 · 당일 연락 · 부여 코드</td><td>일반 VFR 코드와 구별</td></tr>
+<tr><td class="n">P73</td><td>수방사·관련 기관 공문</td><td>"청와대"로 공역 전체 정의 불가</td></tr>
+<tr><td class="n">P518</td><td>합참 승인 · 진입 시 인증 확인</td><td>P518 / P518W / P518E 구별</td></tr>
+<tr><td class="n">원전 주변</td><td>A·B 구역별 신청</td><td>해당 승인 문서 기준</td></tr>
+</table></div>
+<div class="box chk"><span class="t">휴대·확인</span>
+<ul>
+<li>승인 공문(사진) · 문서번호 · 담당 연락처 → 관제가 물어볼 수 있음</li>
+<li>승인 범위: 구역 / 기간 / 요일 / 시간 / 고도 / 비비행 조건</li>
+<li>한 구역 승인이 인접 구역으로 자동 확대되지 않음 · 주말·공휴일도 승인 조건 안에서만</li>
+<li>KADIZ 인근: 경계 식별, 경고 교신 청취</li>
+<li>장거리 임무는 인근 공항 급유 → 급유·주기장·VFR Point·입항 조건 사전 확인</li>
+</ul></div>
+</details>
+
+<details class="acc"><summary>⑥ 무전기 · 트랜스폰더</summary>
+<div class="tw"><table>
+<tr><th>MHz</th><th>기관</th></tr>
+<tr><td class="n">121.5</td><td>Guard</td></tr>
+<tr><td class="n">125.3</td><td>MCRC (Watchman · Acacia) · 수업값</td></tr>
+</table></div>
+<ul>
+<li>출발 전: ATIS → 이후 Guard 감시 → 임무 접근 시 필요한 기관 설정</li>
+<li>임무 중: <b>Approach + MCRC 듀얼 수신</b>, 송신 라디오는 따로 선택</li>
+<li>순서: 두 주파수 준비 → 두 수신 확인 → 송신 스위치 확인 → 청취 유지</li>
+<li>수업 연결: Osan–Watchman / Daegu–Acacia (실제 응답 기관은 확인)</li>
+</ul>
+<div class="tw"><table>
+<tr><th>상황</th><th>코드</th></tr>
+<tr><td class="n">IFR</td><td>ATC 부여 네 자리 그대로 복창 (03으로 시작한 경험담 · 규칙 아님)</td></tr>
+<tr><td class="n">VFR</td><td>HL5107 <span class="eng">1207</span> · HL5239 <span class="eng">1237</span> · 국내 일반 1200</td></tr>
+<tr><td class="n">특정 공역</td><td>공역 협조·관제가 지정한 코드</td></tr>
+<tr><td class="n">P518 인증</td><td>말로 전달하는 네 자리 값 ≠ Squawk 입력값</td></tr>
+</table></div>
+<ul>
+<li>Mode A: 각 자리 <b>0–7</b>만 (8·9 입력 불가)</li>
+<li>HL5239는 트랜스폰더 2대에 IFR·VFR 코드 미리 넣고 선택 스위치로 전환</li>
+<li>전환 확인: 비행규칙 / 코드 지시 / 활성 장비 / 표시값</li>
+</ul>
+</details>
+
+<details class="acc"><summary>⑦ 임무 좌표 입력</summary>
+<div class="tw"><table>
+<tr><th>형식</th><th>같은 위치</th></tr>
+<tr><td class="n">DD 십진도</td><td class="m">36.5° N</td></tr>
+<tr><td class="n">DDM 도·십진분</td><td class="m">36°30.0′ N</td></tr>
+<tr><td class="n">DMS 도분초</td><td class="m">36°30′00″ N</td></tr>
+</table></div>
+<div class="box why"><span class="t">변환</span>십진도 = 도 + 분 ÷ 60 + 초 ÷ 3,600 · 소수부 × 60 = 분(또는 초)<br><b>36.5° ≠ 36°05′</b> — 소수점 아래 숫자를 분으로 옮기지 말 것</div>
+<ol>
+<li>원자료 형식 (DD / DDM / DMS / UTM 등)</li>
+<li>순서·방향 (위도–경도, N/S, E/W)</li>
+<li>장비·앱 입력 형식 일치</li>
+<li>자릿수 · 소수점 · 누락</li>
+<li>지도에서 예상 임무 지역에 찍히는지 대조</li>
+</ol>
+<p class="small">분·초는 60 미만이면 7·8·9 포함 가능 · 형식 표기가 없으면 전달자에게 확인.</p>
+</details>
+
+<details class="acc"><summary>⑧ 콜아웃 · PF/PM</summary>
+<div class="tw"><table>
+<tr><th>구분</th><th>의미</th></tr>
+<tr><td class="n">PF</td><td>비행 수행 · 조종·설정 요청</td></tr>
+<tr><td class="n">PM</td><td>감시 · 교신 · 절차 지원 · 교차 점검</td></tr>
+<tr><td class="n">Standard callout</td><td>정해진 상황의 정해진 표현</td></tr>
+<tr><td class="n">General callout</td><td>표준 문구 밖의 즉시 이해되는 소통</td></tr>
+</table></div>
+<ul>
+<li>플랩 명칭: 타 기종 Flaps one/two → <b>King Air는 Approach / Landing</b></li>
+<li>Minimums (자동 음성 또는 PM) → 착륙 계속 / 복행을 명확히 결정·행동</li>
+<li>응답이 없거나 조건 미충족이면 그대로 진행하지 않음</li>
+<li>이전 기종 습관 대신 회사 SOP 표현을 같은 승무원끼리 미리 맞추기</li>
+</ul>
+</details>
+
+<details class="acc"><summary>⑨ 혼동하기 쉬운 개념</summary>
+<div class="tw"><table>
+<tr><th>두 개념</th><th>구분</th></tr>
+<tr><td class="n">계획 고도 / 허가 고도</td><td>제출값 / 현재 ATC 허가값</td></tr>
+<tr><td class="n">고도 제한 취소 / 경로 변경</td><td>제한 해제 / 비행경로 수정</td></tr>
+<tr><td class="n">IFR 취소 / 선회 허가</td><td>비행규칙 전환 / 진행 경로</td></tr>
+<tr><td class="n">사전 승인 / 공역 상태</td><td>허용 문서 / 지금 쓸 수 있는지</td></tr>
+<tr><td class="n">레이더 음영 / 통신 음영</td><td>감시 가능 / 교신 가능</td></tr>
+<tr><td class="n">듀얼 수신 / 송신 선택</td><td>듣는 두 채널 / 말하는 한 채널</td></tr>
+<tr><td class="n">Squawk / 구두 인증</td><td>장비 입력값 / 말로 확인하는 값</td></tr>
+<tr><td class="n">높이차 / MSL 고도</td><td>기준점과의 차 / 해수면 기준</td></tr>
+</table></div>
+<div class="box"><span class="t">출발 전 다섯 가지</span>
+<b>목적지·경로</b>(SID·STAR·VFR Point) · <b>항공기</b>(이륙거리·RNAV·여압·임무장비) · <b>공역·문서</b>(승인 범위·문서번호·당일 연락) · <b>통신·코드</b>(다음 기관·듀얼 수신·활성 트랜스폰더) · <b>복귀·접근</b>(IFR 재진입·복귀 고도·복행)</div>
+</details>
+</section>
+
+<footer>김포 운항 · 교신 · 비행계획 · 2026.11.03 수업 정리 · 10/22 보충 추가. 교신 문구는 수업 슬라이드의 연습용 예문이며 실제 관제 지시가 우선합니다.</footer>
 </div>
 <button id="top" type="button" aria-label="맨 위로">↑</button>
 <script>
@@ -632,6 +895,9 @@ CHEONAN LCL 0100</div></div>
   var saved=false; try{saved=localStorage.getItem(KEY)==='1'}catch(_){}
   setP(saved);
 
+  var xs=[].slice.call(document.querySelectorAll('details.acc'));
+  document.getElementById('xOpen').addEventListener('click',function(){xs.forEach(function(d){d.open=true})});
+  document.getElementById('xClose').addEventListener('click',function(){xs.forEach(function(d){d.open=false})});
   // cards
   var list=document.getElementById('cardList');
   list.addEventListener('click',function(e){var c=e.target.closest('.card'); if(c) c.classList.toggle('open');});
