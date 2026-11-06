@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06T07:30:28+00:00",
+ "updated": "2026-11-06T08:00:35+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -116,7 +116,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 060700Z 33013KT CAVOK 09/M08 Q1026 NOSIG",
+   "metar": "METAR RKSI 060730Z 32014KT 280V340 CAVOK 09/M08 Q1026 NOSIG",
    "taf": "TAF RKSI 060500Z 0606/0712 32015G30KT CAVOK TN02/0621Z TX08/0705Z BECMG 0618/0620 33010KT BECMG 0710/0712 03007KT",
    "notams": [
     {
@@ -1804,14 +1804,6 @@
      "raw": "D3356/26 NOTAMN\nQ)RKRR/QRRCA/IV/BO/W/000/025/3700N12556E016\nA)RKRR B)2611012300 C)2611071300\nD)01 2300-2359, 02 0000-0900 2300-2359, 03 0000-1100 2300-2359, 04\n0000-0900 2300-2359, 05 0000-1300 2300-2359, 06 0000-1300, 07\n0900-1300\nE)RESTRICTED AREA RK R124 ACT\nF)SFC G)2500FT AMSL",
      "start": "2026-11-01T23:00:00.000Z",
      "end": "2026-11-07T13:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QRRCA"
-    },
-    {
-     "num": "D3357/26",
-     "raw": "D3357/26 NOTAMN\nQ)RKRR/QRRCA/IV/BO/W/000/035/3433N12521E005\nA)RKRR B)2611020000 C)2611060800\nD)02 0000-0800, 03 0400-1100, 05 06 0400-0800\nE)RESTRICTED AREA RK R125 ACT\nF)SFC G)3500FT AMSL",
-     "start": "2026-11-02T00:00:00Z",
-     "end": "2026-11-06T08:00:00Z",
      "fir": "RKRR",
      "q": "QRRCA"
     },
@@ -5138,7 +5130,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-06T07:30:28+00:00",
- "notam_updated": "2026-11-06T07:30:28+00:00",
+ "notam_checked": "2026-11-06T08:00:35+00:00",
+ "notam_updated": "2026-11-06T08:00:35+00:00",
  "notam_source": "FAA NMS (시험)"
 }
