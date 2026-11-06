@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06T06:30:26+00:00",
+ "updated": "2026-11-06T07:00:35+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -116,7 +116,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 060600Z 31013KT 280V350 CAVOK 10/M08 Q1026 NOSIG",
+   "metar": "METAR RKSI 060630Z 32013KT CAVOK 09/M08 Q1026 NOSIG",
    "taf": "TAF RKSI 060500Z 0606/0712 32015G30KT CAVOK TN02/0621Z TX08/0705Z BECMG 0618/0620 33010KT BECMG 0710/0712 03007KT",
    "notams": [
     {
@@ -574,6 +574,30 @@
      "end": "2026-11-12T03:00:00Z",
      "fir": "RKRR",
      "q": "QOBCE"
+    },
+    {
+     "num": "A1652/26",
+     "raw": "A1652/26 NOTAMN\nQ)RKRR/QCTAS/I/BO/AE/000/999/3643N12730E060\nA)RKTU B)2611121400 C)2611121700\nE)TAR U/S DUE TO MAINT",
+     "start": "2026-11-12T14:00:00.000Z",
+     "end": "2026-11-12T17:00:00.000Z",
+     "fir": "RKRR",
+     "q": "QCTAS"
+    },
+    {
+     "num": "A1653/26",
+     "raw": "A1653/26 NOTAMN\nQ)RKRR/QCPAS/I/BO/A/000/999/3643N12730E005\nA)RKTU B)2611100900 C)2611101100\nE)PAR RWY 06R/24L, 24R U/S DUE TO MAINT",
+     "start": "2026-11-10T09:00:00.000Z",
+     "end": "2026-11-10T11:00:00.000Z",
+     "fir": "RKRR",
+     "q": "QCPAS"
+    },
+    {
+     "num": "A1654/26",
+     "raw": "A1654/26 NOTAMN\nQ)RKRR/QICAS/I/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611110900 C)2611111100\nE)ILS RWY 06R/24L U/S DUE TO MAINT",
+     "start": "2026-11-11T09:00:00Z",
+     "end": "2026-11-11T11:00:00Z",
+     "fir": "RKRR",
+     "q": "QICAS"
     },
     {
      "num": "V0515/26",
@@ -5018,7 +5042,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-06T06:30:26+00:00",
- "notam_updated": "2026-11-06T06:30:26+00:00",
+ "notam_checked": "2026-11-06T07:00:35+00:00",
+ "notam_updated": "2026-11-06T07:00:35+00:00",
  "notam_source": "FAA NMS (시험)"
 }
