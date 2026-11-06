@@ -18,7 +18,8 @@
 :root{
   --bg:#f4f5f2; --card:#ffffff; --ink:#18201c; --mute:#5f6a64; --line:#dde2dc; --leader:#b9c2bb;
   --resp:#155c3b; --head:#10221a;
-  --tabN:#1f7a4c; --tabA:#b07800; --tabE:#b3261e; --tab:var(--tabN);
+  --tabN:#1f7a4c; --tabA:#b07800; --tabE:#b3261e; --tabL:#2f5f9e; --tab:var(--tabN);
+  --respA:#8f6200; --respE:#b3261e; --respL:#2f5f9e; --box:#b3261e; --box-bg:#fdeeec;
   --memo:#8a5a00; --memo-bg:#fff4dc; --gap-bg:#fff4dc; --gap:#7a5200;
   --warn-bg:#fcebe9; --warn:#a3231b; --note-bg:#eaf2ed; --note:#24533b;
   --done:#9aa59e; --cur:#e9f3ec; --shade:rgba(10,16,13,.45);
@@ -29,17 +30,19 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0f1412; --card:#171e1b; --ink:#e3e9e5; --mute:#9aa7a0; --line:#2a3530; --leader:#3d4a44;
-  --resp:#7fd8a6; --head:#eef4f0; --tabN:#4fbf85; --tabA:#e7b14a; --tabE:#ff8077;
+  --resp:#7fd8a6; --head:#eef4f0; --tabN:#4fbf85; --tabA:#e7b14a; --tabE:#ff8077; --tabL:#86b4f0;
+  --respA:#f0bd55; --respE:#ff8a80; --respL:#9cc3f5; --box:#ff8077; --box-bg:#2c1513;
   --memo:#f1c46a; --memo-bg:#2d2412; --gap-bg:#2d2412; --gap:#f1c46a;
   --warn-bg:#2c1513; --warn:#ff8f86; --note-bg:#16261e; --note:#9fd8b7;
   --done:#5b6862; --cur:#1b2a23; --shade:rgba(0,0,0,.6); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f1412; --card:#171e1b; --ink:#e3e9e5; --mute:#9aa7a0; --line:#2a3530; --leader:#3d4a44;
-  --resp:#7fd8a6; --head:#eef4f0; --tabN:#4fbf85; --tabA:#e7b14a; --tabE:#ff8077;
+  --resp:#7fd8a6; --head:#eef4f0; --tabN:#4fbf85; --tabA:#e7b14a; --tabE:#ff8077; --tabL:#86b4f0;
+  --respA:#f0bd55; --respE:#ff8a80; --respL:#9cc3f5; --box:#ff8077; --box-bg:#2c1513;
   --memo:#f1c46a; --memo-bg:#2d2412; --gap-bg:#2d2412; --gap:#f1c46a;
   --warn-bg:#2c1513; --warn:#ff8f86; --note-bg:#16261e; --note:#9fd8b7;
   --done:#5b6862; --cur:#1b2a23; --shade:rgba(0,0,0,.6); color-scheme:dark}
-body[data-tab="A"]{--tab:var(--tabA)} body[data-tab="E"]{--tab:var(--tabE)}
+body[data-tab="A"]{--tab:var(--tabA);--resp:var(--respA)} body[data-tab="E"]{--tab:var(--tabE);--resp:var(--respE)} body[data-tab="L"]{--tab:var(--tabL);--resp:var(--respL)}
 [hidden]{display:none!important}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
@@ -56,11 +59,12 @@ header{position:sticky;top:0;z-index:20;background:var(--bg);padding-top:env(saf
 .top .sp{flex:1 1 0}
 .ibtn{min-width:38px;height:34px;padding:0 10px;border-radius:9px;border:1px solid var(--line);background:var(--card);font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:4px}
 .ibtn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tabs{display:grid;grid-template-columns:repeat(var(--ntab,3),1fr);gap:6px}
 .tabs button{height:34px;border-radius:9px;font-size:13px;font-weight:800;letter-spacing:.06em;border:1px solid var(--line);background:var(--card);color:var(--mute)}
 .tabs button[data-t="N"][aria-selected="true"]{background:var(--tabN);border-color:var(--tabN);color:#fff}
 .tabs button[data-t="A"][aria-selected="true"]{background:var(--tabA);border-color:var(--tabA);color:#1b1300}
 .tabs button[data-t="E"][aria-selected="true"]{background:var(--tabE);border-color:var(--tabE);color:#fff}
+.tabs button[data-t="L"][aria-selected="true"]{background:var(--tabL);border-color:var(--tabL);color:#fff}
 .proc{display:flex;align-items:stretch;gap:6px;padding-block:8px 8px}
 .proc .nav{width:40px;border-radius:10px;border:1px solid var(--line);background:var(--card);font-size:20px;color:var(--ink)}
 .proc .nav:disabled{opacity:.3}
@@ -172,6 +176,41 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
 .fine{font-size:12.5px;color:var(--mute);line-height:1.5}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:10px;font-size:14px;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.on{opacity:1}
+/* 암기 항목(원본 네모 상자) */
+.row.box .no{color:var(--box);font-weight:800}
+.row.box::after{content:"";position:absolute;right:0;top:0;bottom:0;width:4px;background:var(--box)}
+.row.box .ch{font-weight:700}
+.legend{font-size:11.5px;color:var(--box);font-weight:700;display:inline-flex;align-items:center;gap:5px}
+.legend i{display:inline-block;width:4px;height:13px;background:var(--box);border-radius:1px}
+/* 삭선 (회사 미사용) */
+.row.strk .ch,.row.strk .rs,.row.strk .no,.grp.strk b,.grp.strk .no{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--mute);color:var(--done)!important}
+.row.strk .chk span{border-style:dashed;opacity:.5}
+.row.strk,.grp.strk{opacity:.62}
+body.hidestrk .row.strk,body.hidestrk .grp.strk{display:none}
+body.edit .row,body.edit .grp{cursor:pointer}
+body.edit .row .chk span{border-color:var(--warn)}
+.editbar{position:sticky;top:0;display:flex;align-items:center;gap:8px;background:var(--warn);color:#fff;border-radius:10px;padding:8px 12px;margin:0 0 8px;font-size:14px;font-weight:600}
+.editbar button{margin-left:auto;background:#fff;color:var(--warn);border-radius:8px;padding:5px 10px;font-weight:800;font-size:13px}
+#strikeBtn[aria-pressed="true"]{background:var(--warn);border-color:var(--warn);color:#fff}
+.sh-strk{width:100%;height:42px;border-radius:10px;border:1px dashed var(--line);background:var(--bg);font-weight:700;font-size:14px;color:var(--mute);margin:-4px 0 12px}
+.sh-strk[aria-pressed="true"]{color:var(--warn);border-color:var(--warn)}
+/* LIMIT 참고 페이지 */
+.row.rf .ln{grid-template-columns:1fr}
+.row.rf .bd{padding-left:14px}
+.row.rf .rs{font-variant-numeric:tabular-nums}
+.see{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-left:4px solid var(--tabL);border-radius:10px;padding:9px 12px;margin:0 0 8px;font-size:14px;font-weight:700;color:var(--ink)}
+.see small{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--tabL)}
+.see .ar{margin-left:auto;color:var(--mute)}
+.tbl tr.hl td{background:var(--cur);font-weight:800}
+.tbl td{font-variant-numeric:tabular-nums}
+.tbl.multi td:not(:first-child),.tbl.multi th:not(:first-child){text-align:right}
+.tbl.multi td{font-weight:700;color:var(--ink)}
+.tbl.multi td:not(:first-child){white-space:nowrap;font-size:13px}
+.tbl.multi th,.tbl.multi td{padding:7px 8px}
+.tbl{overflow-x:auto}
+.tabs button{white-space:nowrap;letter-spacing:.02em;font-size:12px;padding:0 2px}
+.tbl.multi td:last-child{color:var(--resp)}
+
 </style>
 </head>
 <body data-tab="N">
@@ -180,6 +219,7 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
     <div class="top">
       <span class="brand">Sunny Air · King Air C90A</span><span class="sp"></span>
       <button class="ibtn" id="hideBtn" aria-pressed="false" type="button">응답 가리기</button>
+      <button class="ibtn" id="strikeBtn" aria-pressed="false" type="button" title="회사에서 쓰지 않는 항목에 삭선">삭선</button>
       <button class="ibtn" id="setBtn" type="button" aria-label="설정">설정</button>
     </div>
     <div class="tabs" role="tablist" id="tabs"></div>
@@ -203,6 +243,7 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
   <div class="sh-ch" id="shCh"></div>
   <div class="sh-rs" id="shRs"></div>
   <div class="sh-why" id="shWhy" hidden><b>왜?</b><span></span></div>
+  <button type="button" class="sh-strk" id="shStrk" aria-pressed="false">삭선 (회사 미사용 항목으로 표시)</button>
   <label class="ml" for="memo">내 메모</label>
   <textarea id="memo" placeholder="예: 들어서 올리는 토글"></textarea>
   <div class="saved" id="saved"></div>
@@ -225,8 +266,12 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
     <button type="button" data-v="auto">자동</button><button type="button" data-v="light">밝게</button><button type="button" data-v="dark">어둡게</button>
   </div>
   <label class="tg">목록에 메모 한 줄 미리보기 <input type="checkbox" id="preTg"></label>
-  <h3>메모 백업</h3>
-  <p class="fine">메모와 체크는 이 기기의 이 앱 안에만 저장됩니다. 아이폰에서는 Safari와 홈 화면 앱의 저장 공간이 서로 달라요. 기기를 바꾸거나 앱을 지우기 전에 파일로 저장해 두세요.</p>
+  <h3>삭선 (회사 미사용 항목)</h3>
+  <p class="fine">위의 <b>삭선</b> 버튼을 누르고 항목을 탭하면 줄이 그어집니다. 삭선 항목은 진행률과 “체크하고 다음”에서 빠집니다.</p>
+  <label class="tg">삭선 항목 숨기기 <input type="checkbox" id="hsTg"></label>
+  <button class="wide danger" type="button" id="unstrike">모든 삭선 해제</button>
+  <h3>메모·삭선 백업</h3>
+  <p class="fine">메모·삭선·체크는 이 기기의 이 앱 안에만 저장됩니다. 아이폰에서는 Safari와 홈 화면 앱의 저장 공간이 서로 달라요. 기기를 바꾸거나 앱을 지우기 전에 파일로 저장해 두세요.</p>
   <button class="wide" type="button" id="expBtn">메모를 파일로 저장</button>
   <button class="wide" type="button" id="impBtn">메모 파일 불러오기</button>
   <input type="file" id="impFile" accept="application/json,.json" hidden>
@@ -243,24 +288,34 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
 (function(){
   "use strict";
   var KEY=(window.CL&&window.CL.key)||"c90a-checklist-v1";
-  var S={memos:{},checks:{},last:null,prefs:{theme:"auto",preview:true,hide:false}};
-  try{var raw=localStorage.getItem(KEY); if(raw){var o=JSON.parse(raw); S.memos=o.memos||{}; S.checks=o.checks||{}; S.last=o.last||null; S.prefs=Object.assign(S.prefs,o.prefs||{});}}catch(e){}
+  var S={memos:{},checks:{},strike:{},last:null,prefs:{theme:"auto",preview:true,hide:false,hideStruck:false}};
+  try{var raw=localStorage.getItem(KEY); if(raw){var o=JSON.parse(raw); S.memos=o.memos||{}; S.checks=o.checks||{}; S.strike=o.strike||{}; S.last=o.last||null; S.prefs=Object.assign(S.prefs,o.prefs||{});}}catch(e){}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){toast("이 기기에 저장할 수 없습니다");}}
 
   var D=window.CL, P=D.procs, byId={};
   P.forEach(function(p,i){p.ix=i; byId[p.id]=p; p.items.forEach(function(it,j){
-    it.k=j+":"+it[0]+":"+it[1]; it.head=it[2]===null; });});
+    it.k=j+":"+it[0]+":"+it[1]; it.head=it[2]===null; it.box=/^!/.test(it[0]); if(it.box) p.memory=true; });});
+  /* 데이터가 바뀌어 키가 달라진 메모·삭선을 같은 항목 이름으로 옮김 */
+  (function migrate(){var moved=0;
+    [S.memos,S.strike].forEach(function(bag){Object.keys(bag).forEach(function(pid){var p=byId[pid]; if(!p) return; var m=bag[pid];
+      var keys={}; p.items.forEach(function(it){keys[it.k]=1;});
+      Object.keys(m).forEach(function(k){ if(keys[k]) return; var name=k.split(":").slice(2).join(":");
+        var hit=p.items.filter(function(it){return it[1]===name&&!m[it.k];});
+        if(hit.length===1){m[hit[0].k]=m[k]; moved++;} if(hit.length===1||bag===S.strike) delete m[k];});});});
+    if(moved) save();})();
   var cur=(S.last&&byId[S.last.proc])?byId[S.last.proc]:P[0];
   var $=function(id){return document.getElementById(id);};
   var main=$("main");
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
   function tabProcs(t){return P.filter(function(p){return p.tab===t;});}
-  function checkable(p){return p.items.filter(function(it){return !it.head;});}
+  function strk(p,it){return !!(S.strike[p.id]||{})[it.k];}
+  function checkable(p){return p.ref?[]:p.items.filter(function(it){return !it.head&&!strk(p,it);});}
   function checks(p){return S.checks[p.id]||(S.checks[p.id]={});}
   function memo(p,it){return (S.memos[p.id]||{})[it.k]||"";}
   function count(p){var c=checks(p),n=0,t=checkable(p); t.forEach(function(it){if(c[it.k])n++;}); return [n,t.length];}
-  function numHTML(n){var m=/^([*+]?)(.*)$/.exec(n); return (m[1]?"<sup>"+m[1]+"</sup>":"")+esc(m[2]);}
-  function isSub(n){return /^[*+]?[a-z]$/.test(n);}
+  function numHTML(n){var m=/^!?([*+]?)(.*)$/.exec(n); return (m[1]?"<sup>"+m[1]+"</sup>":"")+esc(m[2]);}
+  function isSub(n){return /^!?[*+]?[a-z]$/.test(n);}
+  var edit=false;
 
   /* theme & prefs */
   function applyPrefs(){
@@ -268,10 +323,12 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
     [].forEach.call($("themeSeg").children,function(b){b.setAttribute("aria-pressed",String(b.dataset.v===S.prefs.theme));});
     document.body.classList.toggle("hide",!!S.prefs.hide); $("hideBtn").setAttribute("aria-pressed",String(!!S.prefs.hide));
     $("preTg").checked=!!S.prefs.preview; document.body.classList.toggle("nopre",!S.prefs.preview);
+    $("hsTg").checked=!!S.prefs.hideStruck; document.body.classList.toggle("hidestrk",!!S.prefs.hideStruck&&!edit);
+    document.body.classList.toggle("edit",edit); $("strikeBtn").setAttribute("aria-pressed",String(edit));
   }
 
   /* tabs */
-  if(D.tabs.length<2) $("tabs").hidden=true;
+  if(D.tabs.length<2) $("tabs").hidden=true; $("tabs").style.setProperty("--ntab",D.tabs.length);
   D.tabs.forEach(function(t){var b=document.createElement("button"); b.type="button"; b.setAttribute("role","tab"); b.dataset.t=t.id; b.textContent=t.name;
     b.addEventListener("click",function(){ if(cur.tab===t.id) return; var lastIn=(S.lastTab||{})[t.id]; go(byId[lastIn]||tabProcs(t.id)[0],0);}); $("tabs").appendChild(b);});
 
@@ -283,38 +340,44 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
     $("pickN").textContent=cur.t;
     $("prevP").disabled=pos===0; $("nextP").disabled=pos===list.length-1;
     var c=checks(cur), h="";
+    if(edit) h+='<div class="editbar">삭선 편집 중 · 항목을 탭하면 삭선/해제<button type="button" id="editDone">완료</button></div>';
+    if(cur.see&&byId[cur.see[0]]) h+='<button type="button" class="see" data-see="'+esc(cur.see[0])+'"><small>LIMIT</small>'+esc(cur.see[1])+'<span class="ar">›</span></button>';
     if(cur.warn) h+='<div class="info warn">'+esc(cur.warn)+'</div>';
     if(cur.gap) h+='<div class="info gap">'+esc(cur.gap)+'</div>';
     if(cur.note) h+='<div class="info note">'+esc(cur.note)+'</div>';
-    h+='<div class="srcl">'+(cur.memory?'<span class="mem">MEMORY ITEM</span>':'')+'<span>출처: '+esc(cur.src)+'</span></div>';
+    h+='<div class="srcl">'+(cur.memory?'<span class="legend"><i></i>원본 네모 상자 = 암기 항목</span>':'')+'<span>출처: '+esc(cur.src)+'</span></div>';
     h+='<div class="list">';
     var firstOpen=null;
     cur.items.forEach(function(it,j){
+      var sk=strk(cur,it);
       if(it.head){
-        h+='<div class="grp'+(it[0]===""?" hd":"")+'" data-j="'+j+'">'+(it[0]?'<span class="no">'+numHTML(it[0])+'</span>':'')+'<b>'+esc(it[1])+'</b>'+((it[3]||memo(cur,it))?'<button type="button" class="wy" data-open="'+j+'">'+(memo(cur,it)?'메모':'왜?')+'</button>':'')+'</div>';
+        h+='<div class="grp'+(it[0]===""?" hd":"")+(sk?" strk":"")+'" data-j="'+j+'"'+(edit?' data-st="'+j+'"':'')+'>'+(it[0]?'<span class="no">'+numHTML(it[0])+'</span>':'')+'<b>'+esc(it[1])+'</b>'+((it[3]||memo(cur,it))?'<button type="button" class="wy" data-open="'+j+'">'+(memo(cur,it)?'메모':'왜?')+'</button>':'')+'</div>';
         return;
       }
-      var d=!!c[it.k]; if(!d&&firstOpen===null) firstOpen=j;
-      var m=memo(cur,it);
-      h+='<div class="row'+(d?' done':'')+(isSub(it[0])?' sub':'')+'" data-j="'+j+'">'+
-        '<button type="button" class="chk" data-chk="'+j+'" aria-label="'+esc(it[1])+' 체크" aria-pressed="'+d+'"><span></span></button>'+
-        '<button type="button" class="bd" data-open="'+j+'"><div class="ln"><span class="no">'+numHTML(it[0])+'</span><span class="tx"><span class="ch">'+esc(it[1])+(it[3]?'<span class="wi" aria-label="설명 있음">i</span>':'')+'</span>'+(it[2]==='—'?'':'<span class="ld"></span><span class="rs" data-peek>'+esc(it[2])+'</span>')+'</span></div>'+
+      var d=!!c[it.k]&&!sk; if(!d&&!sk&&!cur.ref&&firstOpen===null) firstOpen=j;
+      var m=memo(cur,it), act=edit?'data-st="'+j+'"':'data-open="'+j+'"';
+      h+='<div class="row'+(d?' done':'')+(isSub(it[0])?' sub':'')+(it.box?' box':'')+(sk?' strk':'')+(cur.ref?' rf':'')+'" data-j="'+j+'">'+
+        (cur.ref?'':'<button type="button" class="chk" '+(edit?act:'data-chk="'+j+'"')+' aria-label="'+esc(it[1])+' 체크" aria-pressed="'+d+'"><span></span></button>')+
+        '<button type="button" class="bd" '+act+'><div class="ln">'+(cur.ref?'':'<span class="no">'+numHTML(it[0])+'</span>')+'<span class="tx"><span class="ch">'+esc(it[1])+(it[3]?'<span class="wi" aria-label="설명 있음">i</span>':'')+'</span>'+(it[2]==='—'?'':'<span class="ld"></span><span class="rs" data-peek>'+esc(it[2])+'</span>')+'</span></div>'+
         (m?'<div class="meta"><span class="mp">✎ '+(S.prefs.preview?esc(m.split("\n")[0]):'메모 있음')+'</span></div>':'')+
         '</button></div>';
     });
     h+='</div>';
-    if(cur.table){h+='<div class="tbl"><div class="cap">'+esc(cur.table.cap)+'</div><table><tr>'+cur.table.head.map(function(x){return '<th>'+esc(x)+'</th>';}).join("")+'</tr>'+
-      cur.table.rows.map(function(r){return '<tr>'+r.map(function(x){return '<td>'+esc(x)+'</td>';}).join("")+'</tr>';}).join("")+'</table></div>';}
+    if(!cur.items.length) h=h.replace(/<div class="list"><\/div>$/,"");
+    (cur.tables||(cur.table?[cur.table]:[])).forEach(function(tb){h+='<div class="tbl'+(tb.head.length>2?' multi':'')+'"><div class="cap">'+esc(tb.cap)+'</div><table><tr>'+tb.head.map(function(x){return '<th>'+esc(x)+'</th>';}).join("")+'</tr>'+
+      tb.rows.map(function(r,ri){return '<tr'+(tb.hl===ri?' class="hl"':'')+'>'+r.map(function(x){return '<td>'+esc(x)+'</td>';}).join("")+'</tr>';}).join("")+'</table></div>';});
     var cn=count(cur), nxt=list[pos+1];
     h+='<div class="foot">';
     if(cn[0]===cn[1]&&cn[1]>0) h+='<div class="done-all">'+esc(cur.t)+' 완료</div>';
     if(nxt) h+='<button type="button" class="next" id="goNext"><span><small>다음 절차</small><b>'+esc(nxt.t)+'</b></span><span class="ar">›</span></button>';
-    h+='<button type="button" class="reset" id="resetCur">이 절차 체크 지우기</button></div>';
+    if(!cur.ref) h+='<button type="button" class="reset" id="resetCur">이 절차 체크 지우기</button>';
+    h+='</div>';
     main.innerHTML=h;
     if(firstOpen!==null){var r=main.querySelector('.row[data-j="'+firstOpen+'"]'); if(r) r.classList.add("cur");}
     $("barI").style.width=(cn[1]?cn[0]/cn[1]*100:0)+"%";
     if($("goNext")) $("goNext").addEventListener("click",function(){go(nxt,0);});
-    $("resetCur").addEventListener("click",function(){S.checks[cur.id]={}; save(); render(); toast("체크를 지웠습니다");});
+    if($("resetCur")) $("resetCur").addEventListener("click",function(){S.checks[cur.id]={}; save(); render(); toast("체크를 지웠습니다");});
+    if($("editDone")) $("editDone").addEventListener("click",function(){setEdit(false);});
   }
 
   function go(p,y){
@@ -324,6 +387,8 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
 
   /* list interactions */
   main.addEventListener("click",function(e){
+    var sv=e.target.closest("[data-see]"); if(sv){ go(byId[sv.dataset.see],0); return; }
+    var st=e.target.closest("[data-st]"); if(st){ toggleStrike(+st.dataset.st); return; }
     var c=e.target.closest("[data-chk]");
     if(c){ toggle(+c.dataset.chk); return; }
     if(document.body.classList.contains("hide")){var pk=e.target.closest("[data-peek]"); if(pk&&!pk.classList.contains("peek")){pk.classList.add("peek"); return;}}
@@ -331,6 +396,11 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
   });
   function toggle(j){var it=cur.items[j], c=checks(cur); if(c[it.k]) delete c[it.k]; else c[it.k]=1; save(); var y=window.scrollY; render(); window.scrollTo(0,y);
     if(navigator.vibrate) try{navigator.vibrate(8);}catch(e){} }
+  function toggleStrike(j){var it=cur.items[j], m=S.strike[cur.id]||(S.strike[cur.id]={});
+    if(m[it.k]) delete m[it.k]; else {m[it.k]=1; delete checks(cur)[it.k];}
+    save(); var y=window.scrollY; render(); window.scrollTo(0,y);}
+  function setEdit(on){edit=on; applyPrefs(); var y=window.scrollY; render(); window.scrollTo(0,y); if(on) toast("항목을 탭해 삭선/해제");}
+  $("strikeBtn").addEventListener("click",function(){setEdit(!edit);});
 
   /* sheets */
   var openSheet=null;
@@ -348,16 +418,18 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
   function openItem(j){ sj=j; fillItem(); show($("itemSheet")); }
   function fillItem(){
     var it=cur.items[sj];
-    $("shK").textContent=cur.t+(it[0]?" · "+it[0].replace(/^[*+]/,""):"")+(/^[*+]/.test(it[0])?"  ("+(it[0][0]==="*"?"첫 비행 이후 생략 가능":"첫 비행 이후 수행")+")":"");
+    var n0=it[0].replace(/^!/,""); $("shK").textContent=cur.t+(n0?" · "+n0.replace(/^[*+]/,""):"")+(/^[*+]/.test(n0)?"  ("+(n0[0]==="*"?"첫 비행 이후 생략 가능":"첫 비행 이후 수행")+")":"")+(it.box?"  · 암기 항목":"");
     $("shCh").textContent=it[1]; $("shRs").textContent=it.head?"":it[2]; $("shRs").hidden=it.head;
     $("shWhy").hidden=!it[3]; $("shWhy").querySelector("span").textContent=it[3]||"";
     $("memo").value=memo(cur,it); $("saved").textContent=memo(cur,it)?"저장됨 · 이 기기":"";
+    var sk=strk(cur,it); $("shStrk").setAttribute("aria-pressed",String(sk)); $("shStrk").textContent=sk?"삭선 해제":"삭선 (회사 미사용 항목으로 표시)";
     var prev=neighbor(-1), next=neighbor(1);
     $("shPrev").disabled=prev===null; $("shNext").disabled=next===null;
     var done=!!checks(cur)[it.k];
-    $("shCheck").hidden=it.head; $("shCheck").textContent=done?"체크 해제":(next===null?"체크":"체크하고 다음");
+    $("shCheck").hidden=it.head||cur.ref||sk; $("shCheck").textContent=done?"체크 해제":(next===null?"체크":"체크하고 다음");
   }
-  function neighbor(d){for(var j=sj+d;j>=0&&j<cur.items.length;j+=d){if(!cur.items[j].head) return j;} return null;}
+  function neighbor(d){for(var j=sj+d;j>=0&&j<cur.items.length;j+=d){if(!cur.items[j].head&&!strk(cur,cur.items[j])) return j;} return null;}
+  $("shStrk").addEventListener("click",function(){var it=cur.items[sj], m=S.strike[cur.id]||(S.strike[cur.id]={}); if(m[it.k]) delete m[it.k]; else {m[it.k]=1; delete checks(cur)[it.k];} save(); fillItem();});
   function storeMemo(){var it=cur.items[sj], v=$("memo").value.replace(/\s+$/,""); S.memos[cur.id]=S.memos[cur.id]||{};
     if(v) S.memos[cur.id][it.k]=v; else delete S.memos[cur.id][it.k]; save(); $("saved").textContent=v?"저장됨 · 이 기기":"메모 없음";}
   $("memo").addEventListener("input",function(){$("saved").textContent="입력 중…"; clearTimeout(saveT); saveT=setTimeout(storeMemo,350);});
@@ -374,7 +446,7 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
     $("plTitle").textContent=t.name+" · "+t.ko;
     var h=""; tabProcs(cur.tab).forEach(function(p,i){var cn=count(p);
       h+='<button type="button" class="pi'+(p===cur?' on':'')+'" data-p="'+p.id+'"><span class="ix">'+(i+1<10?"0":"")+(i+1)+'</span><span class="tt">'+esc(p.t)+(p.sub?'<small>'+esc(p.sub)+'</small>':'')+'</span>'+
-      (p.memory?'<span class="mem">M</span>':'')+'<span class="pr'+(cn[0]===cn[1]&&cn[1]?' full':'')+'">'+cn[0]+'/'+cn[1]+'</span></button>';});
+      (p.memory?'<span class="mem">M</span>':'')+(p.ref?'':'<span class="pr'+(cn[0]===cn[1]&&cn[1]?' full':'')+'">'+cn[0]+'/'+cn[1]+'</span>')+'</button>';});
     $("plBody").innerHTML=h; show($("procSheet"));
     var on=$("plBody").querySelector(".on"); if(on) on.scrollIntoView({block:"center"});
   }
@@ -388,11 +460,15 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
   $("setBtn").addEventListener("click",function(){show($("setSheet"));});
   $("themeSeg").addEventListener("click",function(e){var b=e.target.closest("[data-v]"); if(!b) return; S.prefs.theme=b.dataset.v; save(); applyPrefs();});
   $("preTg").addEventListener("change",function(){S.prefs.preview=this.checked; save(); applyPrefs(); render();});
+  $("hsTg").addEventListener("change",function(){S.prefs.hideStruck=this.checked; save(); applyPrefs(); render();});
+  $("unstrike").addEventListener("click",function(){
+    if(this.dataset.arm!=="1"){this.dataset.arm="1"; this.textContent="한 번 더 누르면 모든 삭선이 해제됩니다"; var b=this; setTimeout(function(){b.dataset.arm=""; b.textContent="모든 삭선 해제";},3000); return;}
+    S.strike={}; save(); render(); hide(); toast("삭선을 모두 해제했습니다");});
   $("resetAll").addEventListener("click",function(){
     if(this.dataset.arm!=="1"){this.dataset.arm="1"; this.textContent="한 번 더 누르면 모두 지워집니다"; var b=this; setTimeout(function(){b.dataset.arm=""; b.textContent="모든 절차의 체크 지우기";},3000); return;}
     S.checks={}; save(); render(); hide(); toast("모든 체크를 지웠습니다");});
   $("expBtn").addEventListener("click",function(){
-    var data=JSON.stringify({app:"c90a-checklist",version:D.version,saved:new Date().toISOString(),memos:S.memos},null,1);
+    var data=JSON.stringify({app:"c90a-checklist",version:D.version,saved:new Date().toISOString(),memos:S.memos,strike:S.strike},null,1);
     var blob=new Blob([data],{type:"application/json"}), name="C90A_메모_"+new Date().toISOString().slice(0,10)+".json";
     try{var f=new File([blob],name,{type:"application/json"});
       if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:name}).catch(function(){}); return;}}catch(e){}
@@ -401,11 +477,12 @@ body[data-tab="A"] .sh-nav .go{color:#1b1300}
   $("impBtn").addEventListener("click",function(){$("impFile").click();});
   $("impFile").addEventListener("change",function(){var f=this.files[0]; if(!f) return; var r=new FileReader();
     r.onload=function(){try{var o=JSON.parse(r.result); if(!o.memos) throw 0; var n=0;
+      if(o.strike) Object.keys(o.strike).forEach(function(pid){S.strike[pid]=Object.assign(S.strike[pid]||{},o.strike[pid]);});
       Object.keys(o.memos).forEach(function(pid){S.memos[pid]=S.memos[pid]||{}; Object.keys(o.memos[pid]).forEach(function(k){S.memos[pid][k]=o.memos[pid][k]; n++;});});
       save(); render(); hide(); toast("메모 "+n+"개를 불러왔습니다");}catch(e){toast("메모 백업 파일이 아닙니다");}};
     r.readAsText(f); this.value="";});
-  var nN=tabProcs("N").length,nA=tabProcs("A").length,nE=tabProcs("E").length;
-  $("about").textContent=D.about?("데이터 "+D.version+" · "+D.about):"데이터 "+D.version+" · NORMAL "+nN+" · ABNORMAL "+nA+" · EMERGENCY "+nE+"개 절차. NORMAL은 회사 교안(POH N-1~N-18), ABNORMAL·EMERGENCY는 Burger C90A 체크리스트 v1.4와 C90A/B Workbook 기준이며 각 절차에 출처를 표시했습니다. 최종 기준은 기체별 POH/AFM과 회사 SOP입니다.";
+  var nN=tabProcs("N").length,nA=tabProcs("A").length,nE=tabProcs("E").length,nL=tabProcs("L").length;
+  $("about").textContent="데이터 "+D.version+" · NORMAL "+nN+" · ABNORMAL "+nA+" · EMERGENCY "+nE+" · LIMIT "+nL+"쪽. 기준: Beechcraft Pilot’s Check List King Air C90A (LJ-1138~LJ-1299, P/N 90-590024-21B1, 2024.6). 오른쪽 빨간 줄은 원본의 네모 상자(암기 항목). 원본에 없는 훈련용 절차 2개는 출처에 표시했습니다. 최종 기준은 기체 POH/AFM과 회사 SOP입니다.";
 
   var tt; function toast(m){var t=$("toast"); t.textContent=m; t.classList.add("on"); clearTimeout(tt); tt=setTimeout(function(){t.classList.remove("on");},1800);}
 
