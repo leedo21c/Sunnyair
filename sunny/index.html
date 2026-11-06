@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sunny Air</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Sunny Air">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#ffffff">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+:root{
+  --bg:#ffffff; --line:#e3e6ea; --ink:#1b2430; --mute:#8a94a3;
+  --c90a:#155c3b; --e90:#173058; --c208:#2f8a22; --lim:#7d2320; --rkss:#c2540a;
+  --acc:var(--c90a);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;overflow:hidden}
+body{display:flex;flex-direction:column;height:100dvh}
+header{flex:none;padding:calc(env(safe-area-inset-top) + 6px) 14px 6px;display:flex;align-items:center;gap:10px;
+  border-bottom:3px solid var(--acc);transition:border-color .2s}
+header img{height:24px;width:auto;display:block}
+header .now{margin-left:auto;font-size:13px;font-weight:700;color:var(--acc);letter-spacing:.02em;transition:color .2s}
+main{flex:1;position:relative;min-height:0}
+iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff;visibility:hidden}
+iframe.on{visibility:visible}
+nav{flex:none;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);background:#fff;
+  padding:4px max(6px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 4px) max(6px,env(safe-area-inset-left))}
+nav button{appearance:none;border:0;background:none;font:inherit;color:var(--mute);
+  display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px 4px;border-radius:10px;cursor:pointer}
+nav .chip{min-width:44px;height:26px;padding:0 6px;border-radius:8px;display:grid;place-items:center;
+  font-size:12px;font-weight:800;letter-spacing:.02em;color:#fff;background:#c4cad3;transition:background .15s}
+nav .lbl{font-size:10.5px;font-weight:600}
+nav button.on{color:var(--ink)}
+nav button.on .chip{background:var(--c)}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#111418;--line:#262c34;--ink:#e8ecf1;--mute:#7c8693}
+  nav{background:#111418}
+  header img{background:#fff;border-radius:6px;padding:2px 4px;height:28px}
+  nav .chip{background:#3a414b}
+}
+</style>
+</head>
+<body>
+<header>
+  <img src="logo.png" alt="Sunny Air">
+  <span class="now" id="now"></span>
+</header>
+<main id="stage"></main>
+<nav id="tabs" aria-label="앱"></nav>
+
+<script>
+(function(){
+  "use strict";
+  // 탭 목록: 폴더는 저장소의 기존 앱 그대로 사용 (내용 업데이트는 각 폴더에서)
+  var APPS=[
+    {id:"c90a", path:"../checklist/", chip:"C90A", lbl:"체크리스트", title:"C90A CHECKLIST", c:"var(--c90a)"},
+    {id:"e90",  path:"../e90/",       chip:"E90",  lbl:"체크리스트", title:"E90 CHECKLIST",  c:"var(--e90)"},
+    {id:"c208", path:"../c208/",      chip:"C208", lbl:"체크리스트", title:"C208 CHECKLIST", c:"var(--c208)"},
+    {id:"lim",  path:"../poh/",       chip:"LIMIT",lbl:"C90A 리미트", title:"C90A LIMITATION", c:"var(--lim)"},
+    {id:"rkss", path:"../rkss/",      chip:"RKSS", lbl:"김포·교신", title:"RKSS 김포",       c:"var(--rkss)"}
+  ];
+  var KEY="sunny-hub-tab";
+  var stage=document.getElementById("stage"), tabs=document.getElementById("tabs"), now=document.getElementById("now");
+  var frames={}, btns={};
+  var base=new URL(".",location.href);
+  var appURL={}; APPS.forEach(function(a){appURL[a.id]=new URL(a.path,base).href;});
+
+  function get(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function set(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+
+  function load(a){
+    if(frames[a.id])return frames[a.id];
+    var f=document.createElement("iframe");
+    f.title=a.title; f.src=a.path;
+    f.addEventListener("load",function(){patch(f);});
+    stage.appendChild(f); frames[a.id]=f; return f;
+  }
+
+  // 각 앱 안의 "다른 앱으로 가는 링크"를 탭 전환으로 바꾸고, 링크만 있는 줄은 숨김
+  function patch(f){
+    var doc; try{doc=f.contentDocument;}catch(e){return;}
+    if(!doc)return;
+    var root=new URL("../",base).href;
+    doc.querySelectorAll("a[href]").forEach(function(a){
+      var u; try{u=new URL(a.getAttribute("href"),doc.baseURI).href.split("#")[0];}catch(e){return;}
+      var hit=null; APPS.forEach(function(x){if(appURL[x.id]===u)hit=x.id;});
+      if(hit){a.addEventListener("click",function(ev){ev.preventDefault();show(hit);});a.dataset.hub="1";}
+      else if(u===root){a.dataset.hub="1";}
+    });
+    doc.querySelectorAll("p").forEach(function(p){
+      var links=p.querySelectorAll("a");
+      if(!links.length)return;
+      for(var i=0;i<links.length;i++){if(!links[i].dataset.hub)return;}
+      var rest=p.textContent; links.forEach(function(l){rest=rest.split(l.textContent).join("");});
+      if(/^[\s·←→|\-]*$/.test(rest))p.style.display="none";
+    });
+  }
+
+  function show(id){
+    var a=APPS.find(function(x){return x.id===id;})||APPS[0];
+    var f=load(a);
+    Object.keys(frames).forEach(function(k){frames[k].classList.toggle("on",k===a.id);});
+    Object.keys(btns).forEach(function(k){btns[k].classList.toggle("on",k===a.id);btns[k].setAttribute("aria-current",k===a.id?"page":"false");});
+    document.documentElement.style.setProperty("--acc",a.c);
+    now.textContent=a.title;
+    set(KEY,a.id);
+  }
+
+  APPS.forEach(function(a){
+    var b=document.createElement("button");
+    b.type="button"; b.style.setProperty("--c",a.c);
+    b.innerHTML='<span class="chip">'+a.chip+'</span><span class="lbl">'+a.lbl+'</span>';
+    b.addEventListener("click",function(){
+      if(b.classList.contains("on")){ // 같은 탭 다시 누르면 맨 위로
+        try{frames[a.id].contentWindow.scrollTo({top:0,behavior:"smooth"});}catch(e){}
+      } else show(a.id);
+    });
+    tabs.appendChild(b); btns[a.id]=b;
+  });
+
+  show(get(KEY)||"c90a");
+  // 나머지 앱도 뒤에서 미리 불러와 오프라인 캐시를 채워 둠
+  setTimeout(function(){APPS.forEach(load);},1200);
+
+  if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});
+})();
+</script>
+</body>
+</html>
