@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06T20:30:27+00:00",
+ "updated": "2026-11-06T21:00:36+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -108,7 +108,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 062000Z 33011KT CAVOK 05/M10 Q1033 NOSIG",
+   "metar": "METAR RKSI 062030Z 35008KT CAVOK 04/M11 Q1033 NOSIG",
    "taf": "TAF RKSI 061700Z 0618/0724 33010KT CAVOK TN01/0621Z TX08/0706Z TN03/0721Z BECMG 0712/0714 03007KT 9999 SCT030 BKN160",
    "notams": [
     {
@@ -502,14 +502,6 @@
      "end": "2026-11-15T15:00:00.000Z",
      "fir": "RKRR",
      "q": "QMPLC"
-    },
-    {
-     "num": "A1554/26",
-     "raw": "A1554/26 NOTAMN\nQ)RKRR/QMXLC/IV/BO/A/000/999/3643N12730E005\nA)RKTU B)2611061500 C)2611062100\nE)TXL BEHIND ACFT STAND NR 3 AND ACFT STAND NR 3 CLSD DUE TO WIP",
-     "start": "2026-11-06T15:00:00.000Z",
-     "end": "2026-11-06T21:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QMXLC"
     },
     {
      "num": "A1555/26",
@@ -4840,14 +4832,6 @@
      "q": "QARXX"
     },
     {
-     "num": "Z0838/26",
-     "raw": "Z0838/26 NOTAMN\nQ)RKRR/QARCS/I/NBO/E/000/999/3535N12700E999\nA)RKRR B)2611061300 C)2611062100\nE)CONDITIONAL ROUTE(CDR2) AVBL AS FLW, NEW\nNR ROUTE        TIME FM    TIME TO     LOWER LVL      UPPER LVL\n1 MASTA-UPGOS   11061300   11062100    6,000FT AMSL   FL600\n\n2 RUGMA-ANROD   11061300   11062100    11,000FT AMSL  FL600\n\n3 BOPTA-PONIK   11061300   11062100    FL150          FL600\n\n4 KARBU-LANAT   11061300   11061915    FL150          FL600",
-     "start": "2026-11-06T13:00:00Z",
-     "end": "2026-11-06T21:00:00Z",
-     "fir": "RKRR",
-     "q": "QARCS"
-    },
-    {
      "num": "Z0839/26",
      "raw": "Z0839/26 NOTAMC Z0837/26\nQ)RKRR/QARXX/IV/BO/E/000/999/3535N12700E999\nA)RKRR B)2611050940\nE)ALTN RTE NEW NOTAM TO FLW",
      "start": "2026-11-05T09:40:00.000Z",
@@ -4898,7 +4882,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-06T20:30:27+00:00",
- "notam_updated": "2026-11-06T20:30:27+00:00",
+ "notam_checked": "2026-11-06T21:00:36+00:00",
+ "notam_updated": "2026-11-06T21:00:36+00:00",
  "notam_source": "FAA NMS (시험)"
 }
