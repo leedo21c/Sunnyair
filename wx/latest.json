@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-07T23:30:25+00:00",
+ "updated": "2026-11-07T23:52:26+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -38,22 +38,6 @@
      "end": "2026-12-23T15:00:00.000Z",
      "fir": "RKRR",
      "q": "QFAXX"
-    },
-    {
-     "num": "A1639/26",
-     "raw": "A1639/26 NOTAMC A1527/26\nQ)RKRR/QMXAK/IV/BO/A/000/999/3733N12648E005\nA)RKSS B)2611042344\nE)TWY B1 RESUMED NML OPS",
-     "start": "2026-11-04T23:44:00Z",
-     "end": "2026-11-07T23:44:00Z",
-     "fir": "RKRR",
-     "q": "QMXAK"
-    },
-    {
-     "num": "A1640/26",
-     "raw": "A1640/26 NOTAMC A1528/26\nQ)RKRR/QMXAK/IV/BO/A/000/999/3733N12648E005\nA)RKSS B)2611042345\nE)TWY P RESUMED NML OPS",
-     "start": "2026-11-04T23:45:00.000Z",
-     "end": "2026-11-07T23:45:00.000Z",
-     "fir": "RKRR",
-     "q": "QMXAK"
     },
     {
      "num": "V0491/26",
@@ -100,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 072300Z 04008KT CAVOK 05/M04 Q1035 NOSIG",
+   "metar": "METAR RKSI 072330Z 04009KT CAVOK 05/M04 Q1035 NOSIG",
    "taf": "TAF RKSI 072300Z 0800/0906 04008KT CAVOK TX09/0805Z TN06/0821Z TX11/0905Z BECMG 0804/0806 9999 FEW010 BKN040 OVC100 TEMPO 0807/0815 07009KT -RA FEW010 BKN030 OVC060 BECMG 0823/0901 34010KT BECMG 0903/0905 SCT040 BKN120",
    "notams": [
     {
@@ -4730,7 +4714,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-07T23:30:25+00:00",
- "notam_updated": "2026-11-07T23:30:25+00:00",
+ "notam_checked": "2026-11-07T23:52:26+00:00",
+ "notam_updated": "2026-11-07T23:52:26+00:00",
  "notam_source": "FAA NMS (시험)"
 }
