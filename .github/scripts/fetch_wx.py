@@ -145,6 +145,47 @@ def icao_notams_all():
             errs.append(base.rsplit("/", 1)[-1] + ": " + repr(e)[:200])
     raise RuntimeError(" | ".join(errs))
 
+def obs_time(raw, now):
+    m = re.search(r"\b(\d{2})(\d{2})(\d{2})Z\b", raw or "")
+    if not m:
+        return None
+    d, h, mi = map(int, m.groups())
+    t = now.replace(hour=h, minute=mi, second=0, microsecond=0)
+    try:
+        t = t.replace(day=d)
+    except ValueError:
+        return None
+    if t > now + datetime.timedelta(hours=12):  # 월이 바뀐 경우 → 지난달
+        prev = now.replace(day=1) - datetime.timedelta(days=1)
+        try:
+            t = prev.replace(day=d, hour=h, minute=mi, second=0, microsecond=0)
+        except ValueError:
+            return None
+    return t
+
+def wait_fresh_metar(met, key="RKSS", tries=7, gap=120):
+    for i in range(tries):
+        now = datetime.datetime.now(datetime.timezone.utc)
+        want = now.replace(minute=0, second=0, microsecond=0)
+        if now.minute < 3:          # 정시 직후 3분 안이면 아직 관측 전 → 직전 시간 기준
+            want -= datetime.timedelta(hours=1)
+        got = obs_time((met.get(key) or {}).get("raw"), now)
+        if got and got >= want:
+            if i: print(f"METAR {key} 최신 확인 ({got:%H%M}Z), 재시도 {i}회")
+            return met
+        print(f"METAR {key} 대기 중: 받은 {got and f'{got:%H%M}Z'} / 기대 {want:%H%M}Z → {gap}초 뒤 재시도")
+        time.sleep(gap)
+        try:
+            new = awc("metar")
+            for k, v in new.items():
+                o = obs_time((met.get(k) or {}).get("raw"), now)
+                n = obs_time(v.get("raw"), now)
+                if v.get("raw") and (o is None or (n and n >= o)):
+                    met[k] = v
+        except Exception as e:
+            print("METAR 재시도 실패", e)
+    return met
+
 def main():
     try:
         old = json.load(open(OUT, encoding="utf-8"))
@@ -155,6 +196,10 @@ def main():
         met = awc("metar")
     except Exception as e:
         print("METAR 실패", e); met = {}
+    # 정시 METAR는 관측 후 5~10분 뒤에야 aviationweather.gov에 올라옴.
+    # :00/:30 직후에 실행되면 직전 시간 METAR만 받아서 최대 1시간 30분까지 묵을 수 있으므로,
+    # RKSS 최신 정시 관측이 아직 없으면 2분 간격으로 최대 14분 더 기다렸다가 다시 받는다.
+    met = wait_fresh_metar(met)
     try:
         taf = awc("taf")
     except Exception as e:
