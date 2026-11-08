@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-08T09:30:26+00:00",
+ "updated": "2026-11-08T10:00:34+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 080900Z 07006KT 020V100 CAVOK 07/03 Q1033 NOSIG",
+   "metar": "METAR RKSI 080930Z 07005KT 040V110 9999 -RA NSC 07/04 Q1033 NOSIG",
    "taf": "TAF RKSI 080500Z 0806/0912 04010KT 9999 FEW040 OVC070 TN06/0821Z TX11/0905Z TEMPO 0807/0814 07009KT -RA FEW010 BKN040 OVC070 BECMG 0901/0903 34012KT SCT040",
    "notams": [
     {
@@ -364,7 +364,7 @@
   "RKTU": {
    "fir": false,
    "name": "Cheonju Intl, 43, KR",
-   "metar": "SPECI RKTU 080912Z 02003KT 9999 -RA NSC 07/M02 Q1033 RMK CIG070",
+   "metar": "SPECI RKTU 080937Z 03004KT CAVOK 07/M02 Q1033 RMK CIG080",
    "taf": "TAF RKTU 080500Z 0806/0912 12006KT 9999 SCT030 BKN100 TN04/0821Z TX12/0906Z",
    "notams": [
     {
@@ -4544,14 +4544,6 @@
      "q": "QKKKK"
     },
     {
-     "num": "Z0839/26",
-     "raw": "Z0839/26 NOTAMC Z0837/26\nQ)RKRR/QARXX/IV/BO/E/000/999/3535N12700E999\nA)RKRR B)2611050940\nE)ALTN RTE NEW NOTAM TO FLW",
-     "start": "2026-11-05T09:40:00.000Z",
-     "end": "2026-11-08T09:40:00.000Z",
-     "fir": "RKRR",
-     "q": "QARXX"
-    },
-    {
      "num": "Z0841/26",
      "raw": "Z0841/26 NOTAMC Z0834/26\nQ)RKRR/QWMXX/IV/BO/W/000/999/3535N12700E999\nA)RKRR B)2611060509\nE)SPACE LAUNCH VEHICLE NEW NOTAM TO FLW",
      "start": "2026-11-06T05:09:00Z",
@@ -4610,7 +4602,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-08T09:30:26+00:00",
- "notam_updated": "2026-11-08T09:30:26+00:00",
+ "notam_checked": "2026-11-08T10:00:34+00:00",
+ "notam_updated": "2026-11-08T10:00:34+00:00",
  "notam_source": "FAA NMS (시험)"
 }
