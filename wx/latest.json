@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-08T06:30:27+00:00",
+ "updated": "2026-11-08T07:00:33+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 080600Z 04009KT 9999 -RA FEW045 OVC080 07/01 Q1032 NOSIG",
+   "metar": "METAR RKSI 080630Z 04012KT 9999 -RA FEW045 OVC080 07/01 Q1032 NOSIG",
    "taf": "TAF RKSI 080500Z 0806/0912 04010KT 9999 FEW040 OVC070 TN06/0821Z TX11/0905Z TEMPO 0807/0814 07009KT -RA FEW010 BKN040 OVC070 BECMG 0901/0903 34012KT SCT040",
    "notams": [
     {
@@ -440,22 +440,6 @@
      "q": "QMRLH"
     },
     {
-     "num": "A1645/26",
-     "raw": "A1645/26 NOTAMC A1642/26\nQ)RKRR/QMRXX/IV/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611050643\nE)RWY 06R/24L NEW NOTAM TO FLW",
-     "start": "2026-11-05T06:43:00.000Z",
-     "end": "2026-11-08T06:43:00.000Z",
-     "fir": "RKRR",
-     "q": "QMRXX"
-    },
-    {
-     "num": "A1646/26",
-     "raw": "A1646/26 NOTAMN\nQ)RKRR/QMRLC/IV/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611070300 C)2611080700\nD)0300-0700\nE)RWY 06R/24L CLSD DUE TO WIP",
-     "start": "2026-11-07T03:00:00.000Z",
-     "end": "2026-11-08T07:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QMRLC"
-    },
-    {
      "num": "A1648/26",
      "raw": "A1648/26 NOTAMN\nQ)RKRR/QOBCE/IV/M/AE/000/999/3643N12730E005\nA)RKTU B)2611102330 C)2611120300\nD)10 2330-2359, 11 0000-0800 2300-2359, 12 0000-0300\nE)OBST(CRANE) ERECTED AS FLW\n\n1. PSN : 364335.71N1273033.83E\n2. HGT : 239FT AGL (70M)",
      "start": "2026-11-10T23:30:00Z",
@@ -494,6 +478,14 @@
      "end": "2026-11-10T04:03:00.000Z",
      "fir": "RKRR",
      "q": "QMRXX"
+    },
+    {
+     "num": "A1661/26",
+     "raw": "A1661/26 NOTAMC A1646/26\nQ)RKRR/QMRAK/IV/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611080646\nE)RWY 06R/24L RESUMED NML OPS",
+     "start": "2026-11-08T06:46:00Z",
+     "end": "2026-11-11T06:46:00Z",
+     "fir": "RKRR",
+     "q": "QMRAK"
     },
     {
      "num": "V0515/26",
@@ -632,12 +624,12 @@
      "q": "QPIAU"
     },
     {
-     "num": "C2049/26",
-     "raw": "C2049/26 NOTAMN\nQ)RKRR/QMXLC/IV/BO/A/000/999/3508N12649E005\nA)RKJJ B)2611080529 C)2611080900\nE)TWY G CLSD DUE TO WIP",
-     "start": "2026-11-08T05:29:00Z",
-     "end": "2026-11-08T09:00:00Z",
+     "num": "C2050/26",
+     "raw": "C2050/26 NOTAMC C2049/26\nQ)RKRR/QMXAK/IV/BO/A/000/999/3508N12649E005\nA)RKJJ B)2611080630\nE)TWY G RESUMED NORMAL OPS",
+     "start": "2026-11-08T06:30:00.000Z",
+     "end": "2026-11-11T06:30:00.000Z",
      "fir": "RKRR",
-     "q": "QMXLC"
+     "q": "QMXAK"
     },
     {
      "num": "V0486/26",
@@ -1942,14 +1934,6 @@
      "end": "2026-11-15T09:00:00.000Z",
      "fir": "RKRR",
      "q": "QRDCA"
-    },
-    {
-     "num": "D3456/26",
-     "raw": "D3456/26 NOTAMN\nQ)RKRR/QRPCA/IV/NBO/W/000/100/3626N12903E006\nA)RKRR B)2611040100 C)2611080640\nD)04 0100-0150, 06 0210-0300, 08 0550-0640\nE)TEMPO PROHIBITED AREA ACT AS FLW :\n1. AREA : A CIRCLE RADIUS 5NM CENTERED ON 362558N1290312E\n2. RMK : EXC ACFT APPROVED BY THE AIRSPACE USER(031-669-5052)\nF)SFC G)10000FT AMSL",
-     "start": "2026-11-04T01:00:00.000Z",
-     "end": "2026-11-08T06:40:00.000Z",
-     "fir": "RKRR",
-     "q": "QRPCA"
     },
     {
      "num": "D3458/26",
@@ -4690,7 +4674,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-08T06:30:27+00:00",
- "notam_updated": "2026-11-08T06:30:27+00:00",
+ "notam_checked": "2026-11-08T07:00:33+00:00",
+ "notam_updated": "2026-11-08T07:00:33+00:00",
  "notam_source": "FAA NMS (시험)"
 }
