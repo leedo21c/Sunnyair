@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-08T02:30:28+00:00",
+ "updated": "2026-11-08T03:00:35+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 080200Z 03004KT 9999 -RA FEW045 OVC060 06/M00 Q1035 NOSIG",
+   "metar": "METAR RKSI 080230Z 02005KT 9999 -RA FEW045 OVC060 06/M00 Q1035 NOSIG",
    "taf": "TAF AMD RKSI 080100Z 0801/0906 04008KT 9999 -RA FEW040 OVC070 TX09/0805Z TN06/0821Z TX11/0905Z BECMG 0802/0804 NSW TEMPO 0807/0815 07009KT -RA BKN030 BECMG 0823/0901 34010KT BECMG 0903/0905 SCT040 BKN120",
    "notams": [
     {
@@ -440,14 +440,6 @@
      "q": "QMRLH"
     },
     {
-     "num": "A1643/26",
-     "raw": "A1643/26 NOTAMC A1595/26\nQ)RKRR/QMRAK/IV/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611050257\nE)RWY 06L/24R RESUMED NML OPS",
-     "start": "2026-11-05T02:57:00.000Z",
-     "end": "2026-11-08T02:57:00.000Z",
-     "fir": "RKRR",
-     "q": "QMRAK"
-    },
-    {
      "num": "A1645/26",
      "raw": "A1645/26 NOTAMC A1642/26\nQ)RKRR/QMRXX/IV/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611050643\nE)RWY 06R/24L NEW NOTAM TO FLW",
      "start": "2026-11-05T06:43:00.000Z",
@@ -502,14 +494,6 @@
      "end": "2026-11-10T04:03:00.000Z",
      "fir": "RKRR",
      "q": "QMRXX"
-    },
-    {
-     "num": "A1660/26",
-     "raw": "A1660/26 NOTAMN\nQ)RKRR/QMRLC/IV/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611072130 C)2611080300\nE)RWY 06L/24R CLSD DUE TO WIP",
-     "start": "2026-11-07T21:30:00Z",
-     "end": "2026-11-08T03:00:00Z",
-     "fir": "RKRR",
-     "q": "QMRLC"
     },
     {
      "num": "V0515/26",
@@ -614,14 +598,6 @@
      "end": "2026-12-31T16:00:00.000Z",
      "fir": "RKRR",
      "q": "QICAS"
-    },
-    {
-     "num": "C2019/26",
-     "raw": "C2019/26 NOTAMN\nQ)RKRR/QMRLC/IV/NBO/A/000/999/3508N12649E005\nA)RKJJ B)2611072300 C)2611080300\nE)RWY 04L/22R CLSD DUE TO WIP",
-     "start": "2026-11-07T23:00:00Z",
-     "end": "2026-11-08T03:00:00Z",
-     "fir": "RKRR",
-     "q": "QMRLC"
     },
     {
      "num": "C2020/26",
@@ -4152,14 +4128,6 @@
      "q": "QRTCA"
     },
     {
-     "num": "E5198/26",
-     "raw": "E5198/26 NOTAMC E5194/26\nQ)RKRR/QRTXX/IV/BO/W/050/070/3553N12631E004\nA)RKRR B)2611050231\nE)TEMPO RESTRICTED AREA NEW NOTAM TO FLW",
-     "start": "2026-11-05T02:31:00Z",
-     "end": "2026-11-08T02:31:00Z",
-     "fir": "RKRR",
-     "q": "QRTXX"
-    },
-    {
      "num": "E5199/26",
      "raw": "E5199/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/070/140/3553N12631E004\nA)RKRR B)2611141500 C)2611211459\nE)TEMPO RESTRICTED AREA ACT AS FLW\nA CIRCLE RADIUS 3NM CENTERED ON 355320N1263058E\nF)7000FT AMSL G)FL140",
      "start": "2026-11-14T15:00:00.000Z",
@@ -4738,7 +4706,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-08T02:30:28+00:00",
- "notam_updated": "2026-11-08T02:30:28+00:00",
+ "notam_checked": "2026-11-08T03:00:35+00:00",
+ "notam_updated": "2026-11-08T03:00:35+00:00",
  "notam_source": "FAA NMS (시험)"
 }
