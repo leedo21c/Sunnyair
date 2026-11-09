@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-09T18:31:17+00:00",
+ "updated": "2026-11-09T19:00:39+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 091800Z 34006KT CAVOK 04/M03 Q1029 NOSIG",
+   "metar": "METAR RKSI 091830Z 34006KT CAVOK 05/M03 Q1028 NOSIG",
    "taf": "TAF RKSI 091700Z 0918/1024 34008KT CAVOK TN03/0921Z TX12/1005Z TN06/1021Z BECMG 1006/1008 24006KT 9999 SCT045 BECMG 1011/1013 31007KT BECMG 1018/1020 05006KT 4000 BR",
    "notams": [
     {
@@ -348,7 +348,7 @@
   "RKTU": {
    "fir": false,
    "name": "Cheonju Intl, 43, KR",
-   "metar": "METAR RKTU 091800Z 36001KT 4800 BR NSC 01/00 Q1028",
+   "metar": "SPECI RKTU 091829Z 24002KT 4000 BR NSC 00/00 Q1028",
    "taf": "TAF RKTU 091700Z 0918/1024 27006KT 1600 BR SCT010 TN00/0921Z TX15/1006Z BECMG 1000/1001 4800 SCT030 BECMG 1001/1002 9999 NSW",
    "notams": [
     {
@@ -4578,7 +4578,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-09T18:31:17+00:00",
- "notam_updated": "2026-11-09T18:31:17+00:00",
+ "notam_checked": "2026-11-09T19:00:39+00:00",
+ "notam_updated": "2026-11-09T19:00:39+00:00",
  "notam_source": "FAA NMS (시험)"
 }
