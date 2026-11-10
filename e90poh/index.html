@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="E90 요약">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#0f4c5c">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>King Air E90 핵심 요약</title>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* Layout: one reading column, sticky section chips on top, cards only for warnings & memory items */
+:root{
+  --bg:#f1f5f5; --surface:#ffffff; --ink:#16242a; --mute:#5b6576; --line:#d7dde6;
+  --head:#0f4c5c; --accent:#1f7a8c; --band:#0f4c5c; --band-ink:#ffffff;
+  --sky:#e4f1f3; --amber:#9d5c00; --amber-bg:#fff2da; --red:#b02a20; --red-bg:#fcebe9;
+  --green:#1c6f3e; --green-bg:#e5f3ea; --code-bg:#e9edf3; --diagram:#ffffff;
+  --sans:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Noto Sans CJK KR","Malgun Gothic",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,"DejaVu Sans Mono",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d131b; --surface:#151d28; --ink:#e4e9f0; --mute:#9aa5b6; --line:#283444;
+  --head:#9fd8e3; --accent:#62bfd0; --band:#17525f; --band-ink:#ffffff;
+  --sky:#12292e; --amber:#f1b453; --amber-bg:#30240f; --red:#ff8f85; --red-bg:#391613;
+  --green:#82d3a0; --green-bg:#122d1d; --code-bg:#1f2a38; --diagram:#ffffff; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d131b; --surface:#151d28; --ink:#e4e9f0; --mute:#9aa5b6; --line:#283444;
+  --head:#9fd8e3; --accent:#62bfd0; --band:#17525f; --band-ink:#ffffff;
+  --sky:#12292e; --amber:#f1b453; --amber-bg:#30240f; --red:#ff8f85; --red-bg:#391613;
+  --green:#82d3a0; --green-bg:#122d1d; --code-bg:#1f2a38; --diagram:#ffffff; color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 96px}
+header.hero{padding-block:22px 14px}
+.hero .eyebrow{font-size:12px;letter-spacing:.08em;color:var(--mute);text-transform:uppercase}
+.hero h1{font-size:26px;line-height:1.25;margin:4px 0 6px;color:var(--head);text-wrap:balance}
+.hero p{margin:0;color:var(--mute);font-size:14px}
+nav.chips{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);
+  margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px))) 0;padding:8px max(16px,env(safe-area-inset-left,0px));
+  display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+nav.chips::-webkit-scrollbar{display:none}
+nav.chips a{flex:0 0 auto;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--bg)}
+nav.chips a.on{background:var(--band);color:var(--band-ink);border-color:var(--band)}
+nav.chips a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sec{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 54px);padding-top:14px}
+h2{font-size:19px;line-height:1.3;color:var(--band-ink);background:var(--band);margin:0 0 12px;padding:10px 14px;border-radius:8px;text-wrap:balance}
+h3{font-size:17px;color:var(--head);margin:22px 0 8px;padding-bottom:4px;border-bottom:2px solid var(--accent);text-wrap:balance}
+h4{font-size:15px;color:var(--accent);margin:16px 0 6px}
+p{margin:6px 0 10px}
+ul,ol{margin:4px 0 12px;padding-left:20px} li{margin:3px 0}
+.two{display:block}
+@media (min-width:720px){.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}.two>div{min-width:0}}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:6px 0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.45}
+.tw table{min-width:100%}
+th{background:var(--sky);color:var(--head);text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top;min-width:6.5em}
+tr:last-child td{border-bottom:none}
+td.n{font-weight:700;color:var(--head);font-variant-numeric:tabular-nums}
+.eng{font-family:var(--mono);font-size:.82em;background:var(--code-bg);padding:1px 5px;border-radius:4px;white-space:nowrap}
+.box{padding:12px 14px;margin:10px 0 14px;border-radius:8px;background:var(--sky);border-left:4px solid var(--accent)}
+.box .t{display:block;font-weight:700;margin-bottom:3px;color:var(--head)}
+.box.why{background:var(--green-bg);border-color:var(--green)} .box.why .t{color:var(--green)}
+.box.warn{background:var(--red-bg);border-color:var(--red)} .box.warn .t{color:var(--red)}
+.box.chk{background:var(--amber-bg);border-color:var(--amber)} .box.chk .t{color:var(--amber)}
+.box ul{margin-bottom:4px}
+.mem{border:2px solid var(--red);border-radius:10px;padding:12px 14px;margin:12px 0;background:var(--surface)}
+.mem .h{font-weight:800;color:var(--red);font-size:15px;letter-spacing:.02em;margin-bottom:4px}
+.mem ol{margin:0;padding-left:22px;font-weight:600}
+.mem .small{font-weight:400}
+.flow{border-top:1px solid var(--line)}
+.step{padding:10px 0;border-bottom:1px solid var(--line)}
+.step .it{font-weight:700;color:var(--head);margin-bottom:3px}
+.step .it span{font-weight:400;color:var(--mute);font-size:13px}
+.step .ex{font-size:15px}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;margin-left:6px;vertical-align:2px}
+.tag.r{background:var(--red-bg);color:var(--red)} .tag.y{background:var(--amber-bg);color:var(--amber)} .tag.g{background:var(--green-bg);color:var(--green)}
+.num{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:6px 0 14px}
+@media (min-width:560px){.num{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.num div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+.num b{display:block;font-size:19px;color:var(--head);font-variant-numeric:tabular-nums;line-height:1.25}
+.num span{font-size:12.5px;color:var(--mute)}
+.small{font-size:13px;color:var(--mute)}
+.src{font-size:12.5px;color:var(--mute)}
+.diagram{overflow-x:auto;background:var(--diagram);border:1px solid var(--line);border-radius:8px;padding:8px;margin:6px 0 12px}
+.diagram svg{display:block;min-width:620px;width:100%;height:auto}
+.save{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:12px}
+.save button{font:inherit;font-size:15px;font-weight:700;padding:10px 16px;border-radius:10px;border:none;background:var(--band);color:var(--band-ink);cursor:pointer}
+.save button:disabled{opacity:.6}
+.save span{font-size:13px;color:var(--mute)}
+.hint{font-size:12.5px;color:var(--mute);margin:-6px 0 10px}
+#top{position:fixed;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));
+  width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--head);font-size:20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.18);cursor:pointer;z-index:6}
+footer{margin-top:30px;font-size:12.5px;color:var(--mute)}
+.tw td:first-child{overflow-wrap:normal}
+</style>
+</head><body>
+<div class="wrap">
+<header class="hero"><div class="eyebrow">써니항공 OE · HL5239 · 2026.11</div>
+<h1>King Air E90 핵심 요약</h1>
+<p>교육기 HL5239(E90, LW-58)의 POH/AFM을 한계 · 시스템 · 절차 · 성능 · 암기 숫자로 정리했습니다. C90A와 다른 점은 <span class="tag y">≠C90A</span>로 표시. 최종 기준은 기내 AFM·플래카드와 회사 SOP입니다.</p>
+<p class="small" style="margin-top:6px"><b>출처</b> FAA Approved AFM P/N 90-590012-3 (Rev. A11, Nov 2001 + TC2·TC3) · Pilot's Operating Manual P/N 90-590012-5 (A8). 스캔본을 문자 인식해 옮겼고 속도·한계 쪽은 원본 화면과 대조했습니다.</p>
+<p style="margin-top:8px"><a href="../e90/" style="font-weight:700">→ E90 체크리스트 (회사 카드)</a><br><a href="../" style="font-weight:700">→ C90A 핵심 요약</a> · <a href="../poh/" style="font-weight:700">C90A 리미테이션</a></p></header>
+<nav class="chips" aria-label="섹션"><a href="#overview" data-id="overview">개요</a><a href="#limits" data-id="limits">한계</a><a href="#engine" data-id="engine">엔진·프롭</a><a href="#fuel" data-id="fuel">연료</a><a href="#electric" data-id="electric">전기</a><a href="#airframe" data-id="airframe">기어·여압·방빙</a><a href="#normal" data-id="normal">정상절차</a><a href="#emergency" data-id="emergency">비상</a><a href="#perf" data-id="perf">성능</a><a href="#numbers" data-id="numbers">숫자</a></nav>
+
+<section class="sec" id="overview">
+<h2>0 · 한 장으로 보는 King Air E90</h2>
+<div class="two">
+<div>
+<h3>기체 기본</h3>
+<ul>
+<li>여압 쌍발 터보프롭, Normal category. VFR·IFR 주야간, 결빙 비행 승인(해당 장비 장착·작동 시)</li>
+<li>엔진: P&amp;W Canada <b>PT6A-28</b> ×2, <b>550 SHP</b> · N1 100 % = 37,500 rpm</li>
+<li>프로펠러: Hartzell 3엽, full-feathering · constant-speed · reversing (HC-B3TN-3/-3B). 직경 90⅜–93⅜ in, Feather 87° / Reverse −11°</li>
+<li>중량: Ramp <b>10,160</b> / Takeoff <b>10,100</b> / Landing <b>9,700 lb</b>(4,400 kg), ZFW 제한 없음</li>
+<li>연료: 사용가능 <b>474 gal</b> = Main 392(한쪽 196) + <b>Aux 82</b>(한쪽 41)</li>
+<li>전기: 28 V DC, 250 A starter-generator ×2 + <b>24 V 45 Ah Ni-Cd</b> 배터리</li>
+<li>기어: <b>28 V 전기 모터 + 토크샤프트·체인</b>. 비상 시 바닥의 클러치 핸들 + 래칫 펌핑</li>
+<li>크기: 날개폭 50 ft 3 in(15.3 m) · 길이 35 ft 6 in(10.8 m) · 높이 14 ft 3 in(4.3 m)</li>
+</ul>
+<div class="box why"><span class="t">이렇게 기억</span>
+C90A와 조종석 흐름은 거의 같지만 <b>엔진이 PT6A-28</b>이라 ITT 여유가 크고, <b>Aux 탱크</b>가 있어 연료 관리가 한 단계 더 있고, <b>기어와 전기 계통이 구형 방식</b>이다. 이 세 가지만 따로 익히면 된다.</div>
+</div>
+<div>
+<h3>C90A와 다른 점 <span class="tag y">≠C90A</span></h3>
+<div class="tw"><table>
+<tr><th>항목</th><th>E90 (HL5239)</th><th>C90A (HL5247·5248)</th></tr>
+<tr><td>엔진</td><td class="n">PT6A-28</td><td>PT6A-21</td></tr>
+<tr><td>ITT 최대</td><td class="n">750 °C</td><td>695 °C</td></tr>
+<tr><td>Torque</td><td class="n">1,315 @2,200 · 1,520 @1,900 rpm</td><td>1,315</td></tr>
+<tr><td>V<sub>MCA</sub></td><td class="n">88 KCAS (86 KIAS)</td><td>90</td></tr>
+<tr><td>V<sub>YSE</sub> 블루라인</td><td class="n">111 KCAS (110 KIAS)</td><td>108</td></tr>
+<tr><td>V<sub>A</sub></td><td class="n">175</td><td>169</td></tr>
+<tr><td>Gear 속도</td><td class="n">내림·내린 상태 156 / 올림 146(또는 130)</td><td>182 / 163</td></tr>
+<tr><td>Flap 속도</td><td class="n">APP 174 / DOWN 140(또는 130)</td><td>184 / 148</td></tr>
+<tr><td>최대 고도</td><td class="n">31,000 ft</td><td>30,000 ft</td></tr>
+<tr><td>최대 차압</td><td class="n">4.7 psi</td><td>5.1 psi</td></tr>
+<tr><td>착륙중량</td><td class="n">9,700 lb</td><td>9,600 lb</td></tr>
+<tr><td>연료</td><td class="n">474 gal (Aux 탱크 있음)</td><td>384 gal</td></tr>
+<tr><td>기어 구동</td><td class="n">전기 모터 · 수동은 래칫</td><td>유압 파워팩 · 핸드펌프</td></tr>
+<tr><td>전기 구성</td><td class="n">Isolation limiter 325 A ×2</td><td>Bus tie / Gen tie</td></tr>
+<tr><td>Emergency descent</td><td class="n">159 KIAS</td><td>182</td></tr>
+<tr><td>하중배수 (Flap up)</td><td class="n">+3.70 / −1.68 g</td><td>+3.29 / −1.33 g</td></tr>
+<tr><td>AvGas·Standby pump 고장</td><td class="n">18,000 ft 이하</td><td>8,000 ft 이하</td></tr>
+</table></div>
+<p class="small">같은 것: V<sub>MO</sub> 226 kt / .46 M, 최대 이륙중량 10,100 lb, 시동 ITT 1,090 °C, 최대 N1 101.5 %, Prop 2,200 rpm, 측풍 25 kt, 결빙 최소 140 kt.</p>
+</div>
+</div>
+</section>
+
+<section class="sec" id="limits">
+<h2>1 · 한계 (AFM Section I)</h2>
+<div class="two">
+<div>
+<h3>엔진 운용 한계 <span class="tag g">AFM 1-1</span></h3>
+<div class="tw"><table>
+<tr><th>조건</th><th>Torque ft-lb</th><th>ITT °C</th><th>N1 %</th><th>Prop</th><th>Oil °C</th></tr>
+<tr><td>Take-off (5분)</td><td class="n">1,315</td><td class="n">750</td><td class="n">101.5</td><td class="n">2,200</td><td>10–99</td></tr>
+<tr><td>Max continuous</td><td class="n">1,315 / 1,520</td><td class="n">750</td><td class="n">101.5</td><td class="n">2,200</td><td>10–99</td></tr>
+<tr><td>Cruise climb</td><td class="n">1,315 / 1,520</td><td class="n">710</td><td class="n">101.5</td><td class="n">2,200</td><td>0–99</td></tr>
+<tr><td>Cruise</td><td class="n">1,315 / 1,520</td><td class="n">750 (10,000 ft 미만 695)</td><td class="n">101.5</td><td class="n">2,200</td><td>0–99</td></tr>
+<tr><td>Low idle</td><td>—</td><td class="n">660</td><td>50 최소</td><td>—</td><td>−40–99</td></tr>
+<tr><td>Starting</td><td>—</td><td class="n">1,090 (2초)</td><td>—</td><td>—</td><td>−40 최소</td></tr>
+<tr><td>Acceleration (2초)</td><td class="n">2,100</td><td class="n">850</td><td class="n">102.6</td><td class="n">2,420</td><td>0–99</td></tr>
+<tr><td>Max reverse (1분)</td><td>—</td><td class="n">750</td><td class="n">88</td><td class="n">2,100</td><td>0–99</td></tr>
+</table></div>
+<ul>
+<li>Torque <b>1,315는 2,200 rpm</b>, <b>1,520은 1,900 rpm</b>일 때. 순항 Torque 한계는 고도·온도에 따라 달라짐(순항표)</li>
+<li>Oil press <b>80–100 psi</b>(N1 72 %↑). 80 미만은 비행 완료까지만 감출력으로 허용·정비 보고. <b>40 미만은 위험</b> → 엔진 정지 또는 최소 출력으로 가능한 한 빨리 착륙</li>
+<li>Max continuous는 조종사 판단에 따른 <b>비상용</b> 정격</li>
+<li>OAT −30 °C 아래로 10 °C마다 최대 N1 2.2 %씩 감소</li>
+<li>Low idle ITT가 높으면 전기부하↓ 또는 N1↑</li>
+<li><b>Starter</b>: 40초 ON / 60초 OFF / 40초 ON / 60초 OFF / 40초 ON → <b>30분 OFF</b></li>
+</ul>
+<h3>발전기 부하 vs 최소 N1 <span class="tag g">AFM 1-2</span></h3>
+<div class="tw"><table>
+<tr><th>Loadmeter</th><th>지상</th><th>5,000 ft</th><th>25,000 ft</th><th>30,000 ft</th></tr>
+<tr><td class="n">0–.25</td><td>51 %</td><td>51 %</td><td>58 %</td><td>60 %</td></tr>
+<tr><td class="n">.25–.5</td><td>51 %</td><td>60 %</td><td>67 %</td><td>70 %</td></tr>
+<tr><td class="n">.5–.75</td><td>57 %</td><td>65 %</td><td>74 %</td><td>78 %</td></tr>
+<tr><td class="n">.75–.9</td><td>60 %</td><td>68 %</td><td>78 %</td><td>82 %</td></tr>
+<tr><td class="n">.9–1.0</td><td>63 %</td><td>69 %</td><td>80 %</td><td>85 %</td></tr>
+</table></div>
+<p class="small">25,000 ft 위에서는 Generator load <b>.80</b> 이하. 낮은 N1에서 큰 부하는 ITT 가속 한계(850 °C) 초과 원인.</p>
+<h3>중량 · 무게중심</h3>
+<div class="tw"><table>
+<tr><th>무게</th><th>전방 한계 (datum 뒤)</th></tr>
+<tr><td class="n">10,100 lb (4,581 kg)</td><td class="n">152.0 in</td></tr>
+<tr><td class="n">9,700 lb (4,400 kg)</td><td class="n">150.7 in</td></tr>
+<tr><td class="n">7,850 lb 이하</td><td class="n">144.7 in</td></tr>
+<tr><td class="n">후방 한계 (전 중량)</td><td class="n">160.0 in</td></tr>
+</table></div>
+<p class="small">기어 내림 기준. Datum = 노즈 잭포인트(F.S. 83.5) 앞 83.5 in. MAC 앞전 135.9 in, 길이 75.9 in. 후방·노즈 화물칸 각 350 lb. 만재 연료 474 gal의 CG는 F.S. 156.7.</p>
+</div>
+<div>
+<h3>속도 한계 (KCAS) <span class="tag g">AFM 1-4</span></h3>
+<div class="tw"><table>
+<tr><th>항목</th><th>값</th></tr>
+<tr><td>V<sub>MO</sub> / M<sub>MO</sub></td><td class="n">226 kt / .46 M</td></tr>
+<tr><td>15,500 ft 위</td><td class="n">1,000 ft마다 4 kt 감소 (플래카드)</td></tr>
+<tr><td>V<sub>A</sub></td><td class="n">175 kt — 그 위에서 급조작 금지</td></tr>
+<tr><td>V<sub>FE</sub> Approach 35 %</td><td class="n">174 kt (흰 삼각형)</td></tr>
+<tr><td>V<sub>FE</sub> Full down 100 %</td><td class="n">140 kt 또는 130 kt</td></tr>
+<tr><td>V<sub>LE</sub></td><td class="n">156 kt</td></tr>
+<tr><td>V<sub>LO</sub> 내림</td><td class="n">156 kt</td></tr>
+<tr><td>V<sub>LO</sub> 올림</td><td class="n">146 kt 또는 130 kt</td></tr>
+<tr><td>V<sub>YSE</sub> (Blue radial)</td><td class="n">111 kt</td></tr>
+<tr><td>V<sub>MC</sub> (Red radial)</td><td class="n">88 kt</td></tr>
+<tr><td>녹색호 / 흰색호</td><td class="n">88–226 / 76–140(또는 130)</td></tr>
+</table></div>
+<div class="box chk"><span class="t">"또는" 값은 기체 플래카드로 확인</span>
+AFM은 Full flap과 Gear 올림 속도를 두 가지로 싣는다(140·146 kt 계열 / 130·130 kt 계열). HL5239에 어느 쪽이 적용되는지는 <b>오버헤드 패널 AIRSPEED LIMITATIONS 플래카드</b>와 속도계 흰색호 끝으로 확인.</div>
+<h3>운용 한계</h3>
+<div class="tw"><table>
+<tr><th>항목</th><th>값</th></tr>
+<tr><td>최대 운용고도</td><td class="n">31,000 ft</td></tr>
+<tr><td>이륙 최대 외기온도</td><td class="n">ISA +37 °C</td></tr>
+<tr><td>최대 객실 차압</td><td class="n">4.7 psi (녹색호 0–4.7)</td></tr>
+<tr><td>하중배수 (10,100 lb)</td><td class="n">+3.70 / −1.68 g</td></tr>
+<tr><td>곡기·스핀</td><td class="n">금지</td></tr>
+<tr><td>Prop 과속</td><td class="n">최대 2,420 · 2,200 초과 = Primary gov 고장 · 2,288 초과 = 양쪽 gov 고장</td></tr>
+<tr><td>Flight idle stop</td><td class="n">2,000 rpm에서 600 ± 60 ft-lb (SL 표준일)</td></tr>
+</table></div>
+<div class="mem"><div class="h">POWER LEVERS — 비행 중 들어 올리지 말 것</div>
+<ol><li>비행 중 Power lever를 들어 올리거나 Flight idle 아래로 당기면 급격한 기수 내림과 강하율 → 기체 손상·부상</li>
+<li>Reverse는 <b>엔진이 돌 때만</b>(플래카드)</li>
+<li>Prop sync는 이착륙 시 <b>OFF</b>(플래카드)</li>
+<li>착륙 전 객실 <b>감압</b>(플래카드)</li></ol></div>
+<h3>계기 마킹</h3>
+<ul>
+<li>ITT 녹색 400–750, 적선 750, 점선 적선 1,090 °C</li>
+<li>Torque 녹색 400–1,315, 적선 1,315(2,200 rpm), 점선 적선 1,520(1,900 rpm)</li>
+<li>Prop 녹색 1,800–2,200 · Oil temp 녹색 10–99 °C</li>
+<li>Vacuum: 30,000–15,000 ft 3.0–4.3 inHg / 15,000 ft–SL 4.3–5.9 inHg</li>
+<li>Pneumatic 12–20 psi · Prop deice 14–18 A · 연료계 황색호 0–265 lb</li>
+</ul>
+<h3>결빙 한계</h3>
+<ul>
+<li>지속 결빙비행 최소 <b>140 kt</b>. −24 °C 이하 결빙조건 운용 비권장(Windshield 방빙 능력)</li>
+<li>야간 결빙비행 전 Wing ice light 모두 작동(MMEL 구제 불가)</li>
+<li>Severe icing(AD 98-04-24) 단서: ① 평소 안 붙는 곳에 넓게 얼음 ② 날개 윗면 보호영역 뒤 ③ 나셀·스피너 평소보다 뒤까지 → 즉시 ATC Priority, <b>Autopilot 사용 금지</b></li>
+<li>승인 제빙·방빙액: SAE AMS 1424 Type I, AMS 1428 Type II, Type IV는 지정 제품만</li>
+</ul>
+<div class="box"><span class="t">결빙 비행 승인 장비 (플래카드)</span>
+날개·꼬리 Surface deice, 전열식 Prop deice, Fuel vent heater, Stall warning heat, Pitot heat, <b>왼쪽 Windshield heat</b>, Engine air inlet 전열 boot, Inertial separator, Alternate static, Auto ignition.</div>
+</div>
+</div>
+</section>
+
+<section class="sec" id="engine">
+<h2>2-1 · 엔진(PT6A-28)과 프로펠러</h2>
+<div class="two">
+<div>
+<h3>엔진 구조</h3>
+<ul>
+<li>3단 축류 + 1단 원심 압축기를 1단 Compressor turbine이 구동. 별도의 1단 Power turbine이 출력축 구동 → <b>Free turbine</b></li>
+<li><b>Reverse flow</b>: 공기는 나셀 아래로 들어와 엔진 뒤쪽 스크린으로 유입, 배기는 앞쪽 2개 배기구</li>
+<li>연료 노즐 <b>14개</b>, 점화 플러그 2개, 공압식(pneumatic) FCU</li>
+<li>N1 100 % = <b>37,500 rpm</b>, 최대 38,100 rpm(101.5 %). Power turbine은 Prop 2,200 rpm일 때 33,000 rpm</li>
+<li>Accessory(N1) 구동: 연료펌프·FCU·오일펌프·Starter/gen·N1 tach. N2 기어박스: Prop·Primary gov·Overspeed gov·Fuel topping gov</li>
+<li>Torque는 감속기어의 축방향 힘이 피스톤을 밀어 생기는 <b>오일 압력</b>으로 측정</li>
+</ul>
+<h3>3개의 레버</h3>
+<div class="tw"><table>
+<tr><th>레버</th><th>무엇을 조절하나</th></tr>
+<tr><td class="n">Power</td><td>FCU의 N1 governor → 출력. IDLE detent 위로 들어 뒤로 = Beta·Reverse</td></tr>
+<tr><td class="n">Propeller</td><td>Primary governor speeder spring, 1,800–2,200 rpm. 맨 뒤 detent 넘기면 pilot valve를 들어 Feather</td></tr>
+<tr><td class="n">Condition</td><td>CUT-OFF / LO IDLE(50–51 %) / HI IDLE(70 % N1)</td></tr>
+</table></div>
+<h3>오일</h3>
+<ul>
+<li>엔진당 계통 <b>3.5 gal(14 qt)</b>, 탱크 2.3 gal. 딥스틱은 보충용으로 5 qt까지 표시. 1.5 qt는 배출되지 않고 남음</li>
+<li>오일은 윤활·냉각 외에 <b>Prop 피치 변경, Torquemeter, 연료 가열</b>에도 쓰임</li>
+<li>Magnetic chip detector: 감속기 드레인 플러그. <b>CHIP DETECT 적색등 = 급속한 엔진 열화, 곧 출력 상실 가능</b></li>
+</ul>
+<h3>Auto ignition</h3>
+<p>결빙 비행과 <b>14,000 ft 위 야간 비행</b>에 ARM. Torque가 약 425 ft-lb 위면 녹색 ARM등, <b>약 400 ft-lb 아래로 떨어지면 점화기 자동 작동</b> + IGNITION등 점등. 강하 중 점화기가 오래 돌지 않도록 ARM 상태에서는 425 ft-lb 밑으로 줄이지 않는다.</p>
+</div>
+<div>
+<h3>프로펠러 · 거버너</h3>
+<ul>
+<li>카운터웨이트 + Feathering spring이 블레이드를 <b>High pitch·Feather 쪽</b>으로, 거버너가 올린 오일 압력이 <b>Low pitch·Reverse 쪽</b>으로 민다 → 오일 압력을 잃으면 Feather</li>
+<li>High pitch stop이 없어 엔진을 끄면 스스로 Feather</li>
+<li><b>Primary governor</b>: 전 영역 조절, 1,800–2,200 rpm</li>
+<li><b>Overspeed governor</b>: <b>2,288 rpm</b>에서 오일을 덤프. 시험 스위치로 약 1,960–2,140 rpm으로 재설정(AFM 런업 기준 1,900–2,100에서 안정)</li>
+<li><b>Fuel topping governor</b>: <b>2,332 rpm</b>에서 연료를 줄여 N1↓. Reverse 때는 선택 rpm 살짝 아래로 재설정</li>
+<li>Primary low pitch stop: 기계적으로 감시되는 유압 stop. Secondary low pitch stop은 일부 기체에만 장착(적색등)</li>
+</ul>
+<h3>Autofeather</h3>
+<ul>
+<li>스위치 ARM + <b>양쪽 Power lever가 90 % N1 위치 위</b>일 때 완전 무장(녹색 ARM등 2개)</li>
+<li>한쪽 Torque가 설정치 아래로 떨어지면 그쪽 거버너 오일 덤프 → Feather 시작, <b>반대쪽은 무장 해제</b>(등 꺼짐)</li>
+<li>시험(런업): 약 <b>500 ft-lb</b>에서 TEST → 한쪽을 줄이면 <b>약 400</b>에서 반대쪽 등 꺼짐, <b>약 200–220</b>에서 양쪽 등 꺼지고 Feather 시작. Feather되며 Torque가 올라 등이 깜박이는 것은 정상</li>
+<li>이륙·착륙용. 이륙 활주 중 ARM등 점등 확인, 상승에서 OFF, 착륙 전 다시 ARM</li>
+</ul>
+<div class="box warn"><span class="t">엔진 고장 시 Autofeather를 쓰는 중이면</span>
+Prop이 <b>완전히 멈출 때까지 고장 엔진 Power lever를 줄이지 않는다.</b> 줄이면 회로가 해제돼 자동 Feather가 안 된다.</div>
+<h3>Synchrophaser</h3>
+<p>왼쪽이 Master, 오른쪽이 Slave. 수동 설정에서 <b>±30 rpm</b>까지만 따라간다(왼쪽이 Feather돼도 오른쪽이 따라 줄지 않게). 기어를 내린 채 켜져 있으면 PROP SYNCH ON등. 못 따라가면 OFF → 수동 동조 → ON.</p>
+<h3>엔진 결빙 방지</h3>
+<ul>
+<li><b>Inertial separator</b>(T-handle을 당김): +5 °C 이하 가시수분에서 Vane을 내려 물방울·얼음을 밖으로. 완전 내림/완전 올림만, 중간 위치 없음. 내리면 Torque가 조금 떨어지는 것으로 확인</li>
+<li>Engine lip boot: 전열식, 얼음이 생기기 전에 ON</li>
+<li>Fuel control heat: FCU 온도보상 라인 전열 재킷. <b>모든 비행에서 ON</b></li>
+<li>Oil-to-fuel heat exchanger: 항상 자동 작동</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section class="sec" id="fuel">
+<h2>2-2 · 연료 시스템</h2>
+<div class="box"><span class="t">한 문장 요약</span>
+좌우가 독립된 계통이고 Crossfeed 밸브 하나로만 이어진다. 각 쪽은 <b>Main(날개 탱크들 → Nacelle 탱크, 중력)</b>과 <b>Aux(중앙부 41 gal → Jet pump로 Nacelle 탱크에 이송)</b>로 나뉜다.</div>
+<div class="two">
+<div>
+<h3>탱크와 펌프</h3>
+<ul>
+<li>Main 한쪽 <b>196 gal</b>: Nacelle 탱크 + Leading edge 탱크 + Box section bladder 2개 + Integral(wet) 탱크. 날개 끝 쪽 주입구 하나로 급유</li>
+<li>Aux 한쪽 <b>41 gal</b>: 중앙부 탱크, 자체 주입구</li>
+<li><b>Engine-driven fuel pump</b>(고압, FCU와 함께) + <b>Primary boost pump</b>(역시 엔진 구동, N1이 돌면 작동)</li>
+<li><b>Standby pump</b>(전기, Nacelle 탱크 바닥): Primary boost 고장 백업, <b>Crossfeed 때 필수</b>, 18,000 ft 위 뜨거운 AvGas</li>
+<li>Standby pump·Firewall valve 전원은 이중: Subpanel feeder bus(10 A CB) + <b>Battery emergency bus(5 A 퓨즈, Master 스위치와 무관하게 항상 살아 있음)</b></li>
+<li><b>FUEL PRESSURE 적색등</b>: 9–11 psi 아래. Standby pump를 켜면 꺼진다</li>
+</ul>
+<div class="box warn"><span class="t">셧다운 때 Standby pump 스위치 OFF</span>
+Battery bus에 직접 물려 있어 켜 두면 배터리가 방전된다.</div>
+<h3>Aux 이송</h3>
+<ul>
+<li>Jet transfer pump: Boost pump 압력(motive flow)으로 Aux → Nacelle 탱크. 스위치는 motive flow 차단밸브를 여닫는다</li>
+<li><b>시동 후에 ON</b>(시동 중엔 엔진 연료압이 모자랄 수 있음)</li>
+<li>AUX EMPTY등이 켜지면 Transfer 스위치 OFF</li>
+<li>Boost pump 둘 다 고장이거나 차단밸브 고장이면 이송 안 됨 → Aux 연료계가 줄지 않고 AUX EMPTY등도 안 켜짐</li>
+<li>Firewall valve를 닫으면 그쪽 Aux 연료는 쓸 수 없다</li>
+</ul>
+</div>
+<div>
+<h3>연료 한계·관리 <span class="tag g">AFM 1-3</span></h3>
+<ul>
+<li>Aux는 <b>Main이 가득일 때만</b> 채운다. Aux에 연료가 있으면 <b>Aux부터</b> 쓴다</li>
+<li>연료계가 황색호거나 Main 한쪽 <b>265 lb 미만이면 이륙 금지</b></li>
+<li>Crossfeed는 <b>단발 운용 때만</b>. 양쪽 엔진을 한쪽에서 먹이지 말 것. 탱크 간 이송 기능이 아니다</li>
+<li>FUEL PRESSURE등 점등 상태 운용은 엔진구동 펌프 오버홀 간 <b>10시간</b> 한도</li>
+<li>Standby pump 1개 고장으로 이륙 가능(그쪽에서는 Crossfeed 불가)</li>
+<li>승인 연료 Jet A · A-1 · B. AvGas(80/87–115/145)는 오버홀 간 <b>150시간</b>, Standby pump 고장 시 <b>18,000 ft 이하</b>, <b>Main 탱크만</b>(Aux에 AvGas 금지)</li>
+<li>방빙첨가제(MIL-I-27686·85470) <b>0.10–0.15 %</b>. 필요 여부는 OAT vs 최소 오일온도 그래프로 판단</li>
+</ul>
+<h3>Crossfeed 순서 (예: 왼쪽 엔진 정지)</h3>
+<div class="mem"><div class="h">연료를 주는 쪽 = 죽은 엔진 쪽</div>
+<ol><li>죽은 쪽(왼쪽) Standby pump — ON</li>
+<li>산 쪽(오른쪽) Aux transfer — OFF</li>
+<li>Crossfeed — OPEN → FUEL CROSSFEED등 ON, FUEL PRESSURE등 둘 다 OFF</li></ol>
+<div class="small">해제: Standby pump OFF → Crossfeed CLOSED → Aux transfer ON(필요 시)</div></div>
+<h3>드레인 (한쪽 날개)</h3>
+<p>Sump 드레인 여럿 + 필터 드레인 1: Leading edge 탱크, Integral 탱크(에일러론 앞), Firewall fuel filter(카울 안 당김 링), Standby boost pump, Sump strainer·Jet transfer pump, Aux 탱크(날개 뿌리, 플랩 앞) 등. 프리플라이트 순서는 AFM 2-1.</p>
+<p class="small">연료계는 lb 단위. 토글 스위치로 MAIN / AUXILIARY를 골라 읽는다.</p>
+</div>
+</div>
+</section>
+
+<section class="sec" id="electric">
+<h2>2-3 · 전기 시스템</h2>
+<div class="box"><span class="t">한 문장 요약</span>
+C90A의 Bus tie 고리 구조와 달리 <b>좌우 Main bus를 325 A Isolation limiter(퓨즈) 2개로 묶은</b> 구형 구성이다. 필수 장비는 다이오드를 거쳐 <b>두 곳에서</b> 전원을 받는다.</div>
+<div class="two">
+<div>
+<h3>구성</h3>
+<ul>
+<li>배터리: 24 V 45 Ah Ni-Cd, 오른쪽 날개 중앙부. <b>Battery emergency bus</b>에 직결 → Standby pump·Firewall valve 등 필수 부하(오른쪽 날개 밑 퓨즈 패널)</li>
+<li>Starter/generator 250 A ×2, 28.25 V. 병렬 운전(부하 균등). 과전압 릴레이 32–34 V에서 Field 차단</li>
+<li>시동 전류: 처음 약 700 A → N1 20 %쯤 약 300 A</li>
+<li>각 Generator → Reverse current 다이오드 → 자기 쪽 bus. 양쪽은 <b>Isolation limiter 325 A</b>로 연결</li>
+<li>Subpanel feeder가 50 A CB + 다이오드로 Dual bus 2개씩 공급 → 어느 Generator로도 양쪽 Dual bus를 살릴 수 있다</li>
+<li>Inverter 2대 중 하나 선택 → 115 V 400 Hz AC, 엔진계기는 26 V AC(오른쪽 벽 표시형 퓨즈, 끊어지면 빨간 버튼)</li>
+<li>Loadmeter는 정격의 분수(1.0 = 100 %). 아래 버튼을 누르면 그쪽 bus <b>전압</b></li>
+<li>Battery·Generator 스위치는 <b>Gang bar</b>로 한 번에 차단</li>
+</ul>
+<h3>Current limiter 점검</h3>
+<p>부하를 발전기 1대 용량으로 줄이고 → 왼쪽 Generator OFF → 왼쪽 Loadmeter 전압 버튼. <b>전압이 읽히면 Limiter 정상</b>, 0이면 끊어진 것. 오른쪽도 같은 방법. 비행 중 교체 불가.</p>
+<p class="small">AFM Before start 32번: Voltmeter CHECK — "전압이 없으면 Current limiter 단선".</p>
+</div>
+<div>
+<h3>외부 전원(GPU)</h3>
+<ul>
+<li>연결 전 배터리 <b>20 V 이상</b>(아니면 충전), 음극 접지식</li>
+<li>연결·시동 중 <b>Battery 스위치 ON</b>(전압 과도현상 흡수), Generator는 GPU를 뗀 뒤 ON</li>
+<li>시동용 최대 1,000 A까지</li>
+</ul>
+<h3>Ni-Cd 배터리 상태 점검 <span class="tag g">AFM 2-12</span></h3>
+<div class="tw"><table>
+<tr><th>언제</th><th>방법</th><th>판정</th></tr>
+<tr><td>시동 후</td><td>한 엔진 시동 → Gen ON → 28 V → Loadmeter 안정 후 Battery 스위치 잠깐 OFF</td><td>바늘 변화 <b>.025 이하</b>(겨우 보이는 정도)가 5분 안에. 아니면 90초마다 재확인</td></tr>
+<tr><td>비행 중</td><td>Battery 잠깐 OFF, 변화 확인</td><td>.025 초과면 Battery OFF로 목적지까지, <b>착륙 때는 ON</b></td></tr>
+<tr><td>셧다운</td><td>Gen 하나 OFF → 28 V → Battery 잠깐 OFF</td><td>3분 안에 만족 못 하면 배터리 탈거 점검</td></tr>
+</table></div>
+<div class="box why"><span class="t">왜</span>
+Loadmeter 변화량 = 배터리 충전 전류. 충전 전류가 계속 높으면 과열 → <b>Thermal runaway</b> 위험. Battery charge current detector(BATTERY CHARGE 황색등)가 달린 기체는 등이 같은 일을 한다: 시동 후 약 6초에 켜져 5분 안에 꺼지면 정상, 비행 중 켜지면 Battery OFF.</div>
+<h3>Annunciator</h3>
+<p><b>적색</b>: GEN OUT · BLEED AIR LINE FAILURE · CHIP DETECT · FUEL PRESSURE · FIRE · CABIN DOOR OPEN · INVERTER OUT · SMOKE(노즈 항전실) · SECONDARY LOW PITCH STOP<br><b>황색</b>: IGN IND · FUEL CROSSFEED · PROP SYNCH ON · PROP REVERSE NOT READY(Prop lever가 High rpm 아님) · ALT WARN(<b>객실고도 10,000 ft 초과</b>)<br><b>녹색</b>: AUTOFEATHER ARM</p>
+</div>
+</div>
+</section>
+
+<section class="sec" id="airframe">
+<h2>2-4 · 기어 · 공압 · 여압 · 방빙 · 산소</h2>
+<div class="two">
+<div>
+<h3>착륙장치 <span class="tag y">≠C90A</span></h3>
+<ul>
+<li><b>28 V split-field 전기 모터</b>(Main spar 앞). Main은 토크샤프트, Nose는 이중 체인으로 구동. 50 A CB(페데스탈)</li>
+<li>오른쪽 Main strut <b>Safety switch</b>: 지상에서 제어회로를 끊고 핸들 Downlock hook을 건다(적색 <b>DN LCK REL</b> 버튼으로 수동 해제 가능)</li>
+<li>녹색 GEAR DOWN 3개, 핸들 안 적색등 2개(이동 중·Unlocked, 경고음 때도 점등)</li>
+<li>경고음: Power lever를 줄였는데 기어가 Down·locked가 아닐 때. <b>Flap UP일 때만</b> HORN SILENCE 가능</li>
+<li>노즈 스티어링은 러더 페달 직결, 올라가면 자동 중립</li>
+<li>타이어: Main 8.50×10 10-ply <b>54–60 psi</b>, Nose 6.50×10 6-ply <b>50–55 psi</b></li>
+</ul>
+<h3>플랩 · 브레이크</h3>
+<ul>
+<li>플랩: 전기식, UP 0 % / APPROACH 35 % / DOWN 100 %. 20 A CB. Full에서 Approach로 돌아가려면 <b>35 % 아래까지 올린 뒤</b> 스위치를 Approach detent로</li>
+<li>브레이크: 유압, 좌우석 페달(Shuttle valve). Parking brake는 페달을 밟아 압력을 만든 뒤 핸들을 당김</li>
+</ul>
+<h3>Bleed air · 공압</h3>
+<ul>
+<li>압축기 Bleed air를 <b>18 psi</b>로 조절 → Surface deice 부츠, 오토파일럿. 진공(자이로)은 Bleed air ejector</li>
+<li>한쪽 엔진으로 충분. 각 라인의 체크밸브가 죽은 엔진 쪽 역류를 막는다</li>
+<li><b>Bleed air warning</b>: Bleed 라인 옆 플라스틱 튜브가 열에 녹아 압력이 빠지면 BLEED AIR LINE FAILURE등</li>
+<li>Door seal도 Bleed air로 팽창</li>
+</ul>
+<h3>여압</h3>
+<ul>
+<li>Flow control unit(각 나셀)이 Bleed air + 외기를 섞어 객실로. 약 <b>12 lb/min</b></li>
+<li>Outflow valve + Safety valve(후방 압력격벽). 지상에서는 Safety valve가 열려 차압 0, <b>이륙하면 닫혀</b> 여압 시작. 이륙 직후 왼쪽 → 오른쪽 순으로 시차를 두고 들어와 압력 "범프"를 줄인다</li>
+<li>최대 차압 <b>4.7 psi</b>. 그 뒤로는 객실고도가 기체와 같은 비율로 상승</li>
+<li>객실고도 <b>10,000 ft</b>에서 ALT WARN</li>
+<li>강하: 객실고도를 <b>착륙장 표고 + 500 ft</b>로. 여압 스케줄 유지에 N1 약 <b>75 %</b> 필요</li>
+<li>런업 점검: Bleed OPEN → 표고 −500 ft 설정 → 스위치 TEST(Safety switch 우회) → 객실 승강계로 가압 확인</li>
+</ul>
+</div>
+<div>
+<h3>환경(냉난방)</h3>
+<ul>
+<li>난방: Bleed air + <b>전기 히터 8소자</b>. ELEC HEAT <b>GRD MAX</b>는 지상 급속 난방용, 솔레노이드로 붙어 있다가 <b>이륙하면 NORM으로 떨어진다</b>(NORM은 4소자 자동)</li>
+<li>냉방: 전기 구동 에어컨 16,000 Btu(노즈). 지상에서는 <b>Bleed valve를 닫으면</b> 더 잘 식는다</li>
+<li>에어컨·전기히터 사용 시 N1·ITT·Generator 한계 주시. 시동·Air start 때 Cabin temp mode OFF</li>
+<li>에어컨·전기히터 CB는 페데스탈 왼쪽 바닥의 <b>큰 빨간 버튼</b>(발로 조작)</li>
+<li>Manual heat에서 OFF로 가기 전 Manual temp를 1분간 최저로(바이패스 밸브를 닫아 둠)</li>
+</ul>
+<h3>방빙·제빙</h3>
+<div class="tw"><table>
+<tr><th>계통</th><th>핵심</th></tr>
+<tr><td class="n">Surface deice</td><td>Bleed air 부츠. <b>½–1 in</b> 쌓인 뒤 SINGLE(약 7초 팽창 후 자동 수축). 고장 시 MANUAL(누르는 동안 팽창)</td></tr>
+<tr><td class="n">Prop deice</td><td>전열, <b>14–18 A</b>. 타이머가 약 30초 간격 4구간(한쪽 바깥·안쪽 → 반대쪽). <b>Prop 정지 중 작동 금지</b></td></tr>
+<tr><td class="n">Windshield</td><td>BOTH / OFF / PILOT. 얼음 생기기 전 ON. 부하가 크면 전기 히터를 잠가 Windshield를 우선. <b>Standby compass가 흔들린다</b></td></tr>
+<tr><td class="n">Pitot · Stall warn</td><td>ON. 지상 장시간 사용 금지(소자 손상)</td></tr>
+<tr><td class="n">Fuel vent heat</td><td>ON</td></tr>
+<tr><td class="n">Alternate static</td><td>오른쪽 벽 밸브. 고도·속도 보정표 사용</td></tr>
+</table></div>
+<p class="small">런업 부츠 점검(TC2): HIGH IDLE, Pneumatic 12–20 psi → SINGLE(날개 약 6초 뒤 수평꼬리) → MANUAL → 양 날개·양 수평꼬리 부츠 팽창과 Vacuum hold-down을 눈으로.</p>
+<h3>산소</h3>
+<ul>
+<li>실린더 22·49·64 cu ft 중 장착품(후방 압력격벽 뒤). 만충 <b>1,850 ± 50 psig</b> @70 °F. 조종석 오버헤드 뒤 Push-pull 노브로 개방</li>
+<li>Constant flow. 마스크 플러그 색으로 유량 구분: <b>주황 2.7 L/min = 22,000 ft까지</b>, <b>빨강 3.7 L/min = 30,000 ft까지</b></li>
+<li>49 cu ft 만충 지속(분): 주황 — 2명 228 · 4명 114 · 6명 72 / 빨강 — 2명 168 · 4명 84 · 6명 54. 게이지 %를 곱한다</li>
+<li>조종사 마스크는 좌석 아래. 꽂고 시계 방향 ¼ 회전, 빨간 Flow indicator가 뜨는지 확인</li>
+<li>객실고도 10,000 ft 이상에서 사용 권장</li>
+</ul>
+<h3>화재</h3>
+<ul>
+<li>감지: 나셀당 <b>적외선 광전소자 3개</b>(온도가 아니라 불빛을 본다). 불이 꺼지면 자동 복귀. 시험 스위치 OFF·1·2·3(+SMOKE)</li>
+<li>소화: 엔진당 Bromotrifluoromethane 2.5 lb, 450 psi. 덮개를 들고 버튼. <b>엔진당 1발</b></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section class="sec" id="normal">
+<h2>3 · 정상 절차의 숫자와 "왜" (AFM Section II)</h2>
+<p class="small">회사 E-90 카드에 없는 AFM의 숫자·주의사항 위주. 항목 순서는 <a href="../e90/">E90 체크리스트</a> 앱 참고.</p>
+<div class="two">
+<div>
+<h3>Before start — 연료 계통 점검 흐름</h3>
+<div class="flow">
+<div class="step"><div class="it">Firewall valve CLOSED → Standby pump ON <span>(21–23)</span></div><div class="ex">Battery 스위치가 OFF인데 펌프 소리가 난다 = <b>Battery emergency bus 퓨즈 정상</b>.</div></div>
+<div class="step"><div class="it">Battery ON <span>(24)</span></div><div class="ex">FUEL PRESSURE등 <b>ON</b> — 밸브가 닫혀 압력이 안 간다.</div></div>
+<div class="step"><div class="it">Firewall valve OPEN <span>(25)</span></div><div class="ex">등 <b>OFF</b> — 밸브가 실제로 열렸다.</div></div>
+<div class="step"><div class="it">왼쪽 Standby OFF → Crossfeed OPEN → CLOSE → 오른쪽 Standby OFF <span>(26–29)</span></div><div class="ex">왼쪽 등 ON → Crossfeed를 열면 CROSSFEED등 ON, 왼쪽 등 <b>OFF</b>(오른쪽 펌프가 넘겨 줌) = Crossfeed 밸브 작동 확인.</div></div>
+<div class="step"><div class="it">Fuel quantity(Main·Aux) · Fire detector · Voltmeter <span>(30–32)</span></div><div class="ex">전압 없음 = Current limiter 단선. GPU를 쓸 땐 배터리 20 V 이상.</div></div>
+</div>
+<h3>시동</h3>
+<div class="mem"><div class="h">오른쪽 먼저 · 숫자</div>
+<ol><li>Start switch ON → FUEL PRESSURE등 OFF 확인</li>
+<li>N1 <b>12 % 이상에서 5초 안정</b> 뒤 Condition lever LO IDLE</li>
+<li>ITT <b>1,090 °C</b> 최대. <b>10초 안에 ITT 상승 없으면</b> CUT-OFF + Start OFF → 30초 배유 → Clearing</li>
+<li>N1 <b>51 %</b> 이상에서 Start switch OFF</li>
+<li>오른쪽 HIGH IDLE → Generator ON(배터리 상태 점검) → 왼쪽 시동 → 왼쪽 Gen ON → 오른쪽 LO IDLE</li>
+<li>Inverter 둘 다 점검 후 하나 선택, Oil press 확인</li></ol>
+<div class="small">Engine clearing: Condition CUT-OFF, STARTER ONLY로 15초 이상(Starter 한계 준수). 시동을 중단했으면 엔진이 완전히 멈춘 뒤 처음부터.</div></div>
+<h3>After start · Taxi</h3>
+<ul>
+<li>Fuel control heat ON, Aux transfer는 <b>시동 후</b> ON → AUX EMPTY등 Press-to-test</li>
+<li>Beta는 N1이 올라가기 전까지 택시 중 사용 가능(블레이드 침식 최소)</li>
+<li>런업 중 <b>CHIP DETECT 점등이면 이륙 금지</b>, 엔진 정지 후 원인 조사</li>
+</ul>
+</div>
+<div>
+<h3>Before takeoff — 런업 숫자</h3>
+<div class="tw"><table>
+<tr><th>점검</th><th>방법·값</th></tr>
+<tr><td class="n">Overspeed gov</td><td>Prop HIGH RPM, 1,900 rpm 아래에서 TEST를 잡고 Power↑ → <b>1,900–2,100</b>에서 안정. 1,900으로 줄인 뒤 스위치 놓기</td></tr>
+<tr><td class="n">Primary gov</td><td>1,900 rpm에서 Exercise</td></tr>
+<tr><td class="n">Autofeather</td><td>약 500 ft-lb에서 TEST: 400에서 반대쪽 등 꺼짐, 약 220에서 Feather 시작. 끝나면 ARM</td></tr>
+<tr><td class="n">Vacuum · Pneumatic</td><td><b>HIGH IDLE</b>에서(Bleed air가 충분해야 정상 지시)</td></tr>
+<tr><td class="n">Manual feather</td><td>LO IDLE에서</td></tr>
+<tr><td class="n">Engine anti-ice</td><td><b>1,000 ft-lb 이상</b>에서 당김 → Torque 떨어짐, 밀면 복귀</td></tr>
+<tr><td class="n">Auto ignition</td><td>IDLE에서 ARM → IGNITION등 ON. <b>425 ft-lb</b> 위로 올리면 등 OFF·녹색 ARM ON</td></tr>
+<tr><td class="n">Prop deice</td><td>14–18 A, 2분 이상 보며 약 30초마다 바늘이 살짝 튀는지</td></tr>
+</table></div>
+<p class="small">* 표(Autopilot, Overspeed gov, Primary gov, Secondary low pitch stop)는 Quick turn-around 때 조종사 판단으로 생략 가능. 오일 온도는 "첨가제 없이 운용할 최소 오일온도" 이상. 이륙 전 Bleed air valve OPEN, 여압 설정.</p>
+<h3>이륙 · 상승 · 순항</h3>
+<ul>
+<li>이륙 Flap <b>0 %</b>. 출력을 올리며 <b>AUTOFEATHER ARM등</b> 확인. 속도가 붙으면 Torque·ITT가 올라간다(0 → 67 kt에 약 15 ft-lb)</li>
+<li>이륙 중 CHIP DETECT → 회항해 조사. 순항 중 점등·깜박임 → <b>즉시 그 엔진 정지</b></li>
+<li>상승: Climb power, <b>Prop sync ON, Autofeather OFF</b></li>
+<li>Cruise climb: SL–10,000 ft <b>150</b> / –20,000 <b>130</b> / –25,000 <b>120</b> / –31,000 <b>110 kt</b></li>
+<li>순항: Aux 이송 감시 → AUX EMPTY 점등 시 Transfer OFF. 난기류 통과 <b>175 KIAS</b></li>
+</ul>
+<h3>착륙 · 셧다운</h3>
+<ul>
+<li>Before landing: Prop sync OFF, <b>Autofeather ARM</b>, 여압 확인. Prop HIGH RPM과 Beta는 <b>접지 후</b></li>
+<li>Max reverse landing: Condition <b>HIGH IDLE</b> + Prop HIGH RPM → 접지 후 들어서 Reverse → LO IDLE. <b>40 kt 위에서 Reverse 해제</b>(블레이드 침식)</li>
+<li>Balked landing: Take-off power, Prop HIGH RPM → Balked climb speed(10,100 lb 96 · 9,700 lb 95 kt) → <b>100 KIAS로 가속</b> → Flap UP → Gear UP</li>
+<li>Shutdown: ITT <b>585 °C 아래 1분</b> → Prop FEATHER → Condition CUT-OFF. 정상 셧다운에 Firewall valve는 닫지 않는다. Standby pump OFF 확인</li>
+<li>저시정에서는 Landing·Taxi light, 연무·구름에서는 Beacon·Strobe를 꺼도 된다(반사)</li>
+</ul>
+<div class="box chk"><span class="t">회사 카드와 AFM이 다른 표현</span>
+카드 "Prop Levers FWD"·"Fuel Firewall Valves OPEN"은 AFM의 긴 점검 흐름을 줄인 것. 카드에 없는 Standby pump·Crossfeed 점검, Overspeed governor·Autofeather 시험을 OE에서 언제·누가 하는지는 교관에게 확인.</div>
+</div>
+</div>
+<h3>한랭기(눈·슬러시·얼음)</h3>
+<ul>
+<li>날개 아래 연료탱크 밑면의 서리는 그대로 가능, <b>그 밖의 날개·꼬리·조종면 서리는 제거</b></li>
+<li>시동 전 Prop을 손으로 정상 회전 방향으로 돌려 자유로운지 확인. 시동 후 Prop을 Low·High pitch·Reverse로 움직여 굳은 오일을 흘려보낸다</li>
+<li>택시 중 Flap은 올린 채. OAT +5 °C 이하 + 가시수분 이륙이면 Engine anti-ice ON</li>
+<li>Type II·IV 원액 사용 시 Rotation 조종력이 일시적으로 약 20 lb 증가. 500 ft AGL 위에서 기어를 한 번 더 작동하면 오염물 제거에 도움</li>
+<li>가능하면 Parking brake 대신 Chock</li>
+</ul>
+</section>
+
+<section class="sec" id="emergency">
+<h2>4 · 비상 절차 (AFM Section III)</h2>
+<div class="two">
+<div>
+<div class="mem"><div class="h">ENGINE FAILURE DURING TAKEOFF — 이륙속도 전</div>
+<ol><li>Power levers — IDLE</li>
+<li>Brakes — AS REQUIRED</li>
+<li class="small">남은 활주로가 모자라면: Condition CUT-OFF → Firewall valves CLOSED → Gang bar DOWN</li></ol></div>
+<div class="mem"><div class="h">ENGINE FAILURE — 이륙 후, 즉시 착륙 불가</div>
+<ol><li>Power — TAKE-OFF</li>
+<li>Prop levers — HIGH RPM</li>
+<li>Airspeed — 고장 시 속도 유지(장애물 회피까지). V<sub>YSE</sub>를 넘었을 때만 줄인다</li>
+<li>Landing gear — UP</li>
+<li>고장 엔진 확인</li>
+<li>Prop lever(고장 엔진) — FEATHER</li>
+<li>Airspeed — V<sub>YSE</sub> 110 KIAS(장애물 고도 통과 후)</li></ol>
+<div class="small">Clean-up: Condition CUT-OFF · Bleed valve(필요 시) · Auto-ignition OFF · Firewall valve CLOSED · Generator OFF · Fuel control heat OFF · Autofeather OFF → Electrical load MONITOR. 고장 엔진에서 연기·냄새가 들어오면 그쪽 Bleed valve를 닫는다.</div></div>
+<div class="mem"><div class="h">ENGINE FAILURE / FIRE IN FLIGHT · CHIP DETECT</div>
+<ol><li>Power lever — IDLE</li>
+<li>Prop lever — FEATHER</li>
+<li>Condition lever — CUT-OFF</li>
+<li>Fuel firewall valve — CLOSED</li>
+<li>Bleed air valve — AS REQUIRED</li>
+<li>Fire extinguisher — ACTUATE(필요 시)</li></ol>
+<div class="small">Clean-up: Auto-ignition OFF · Generator OFF · Fuel control heat OFF · Prop sync OFF → Electrical load MONITOR</div></div>
+<h3>그 밖의 엔진 절차</h3>
+<ul>
+<li><b>두 번째 엔진 Flame-out</b>: Power IDLE → <b>Prop은 Feather하지 않는다</b>(엔진이 안 돌면 Unfeather 불가) → Condition CUT-OFF → Air start</li>
+<li><b>V<sub>MC</sub> 아래에서 고장</b>: 산 엔진 출력을 줄여 조종 유지 → 기수를 내려 V<sub>MC</sub> 위로 가속 → 출력 → 고장 엔진 IDLE·FEATHER</li>
+<li><b>지상 엔진 화재</b>: Condition CUT-OFF → Firewall valve CLOSED → <b>STARTER ONLY</b> → 소화기(필요 시)</li>
+<li><b>단발 착륙</b>: 산 엔진 Prop HIGH RPM, 접근 속도 <b>정상 +10 kt</b></li>
+<li><b>단발 Go-around</b>: Take-off power → Flap UP → Gear UP → V<sub>YSE</sub></li>
+</ul>
+<h3>Air start</h3>
+<div class="tw"><table>
+<tr><th></th><th>Starter assist</th><th>Windmilling (Starter 없이)</th></tr>
+<tr><td>준비</td><td colspan="2">Cabin temp mode OFF · Radar STBY/OFF · Windshield heat OFF · Power IDLE · Condition CUT-OFF · Firewall valve OPEN</td></tr>
+<tr><td>조건</td><td>산 엔진 ITT 700 °C 이하로, 전기부하 최소</td><td class="n">140 KIAS 이상 · 20,000 ft 아래 · Prop HIGH RPM · 죽은 쪽 Gen OFF</td></tr>
+<tr><td>점화</td><td>Start switch ON, IGNITION등 확인</td><td>Auto ignition ARM</td></tr>
+<tr><td>연료</td><td class="n">8초 뒤 Condition LO IDLE</td><td class="n">8초 뒤 Condition LO IDLE</td></tr>
+<tr><td>이후</td><td>51 % N1에서 Start OFF → Gen ON → Fuel control heat ON</td><td>ITT 정점 뒤 Power → Gen ON → Auto ign OFF → Fuel control heat ON</td></tr>
+</table></div>
+<p class="small">먼저 고장 원인을 판단. 20,000 ft 위 시동은 뜨겁다 — ITT 한계를 넘지 않게 Condition lever를 잠깐씩 CUT-OFF로.</p>
+</div>
+<div>
+<h3>연료 · 전기</h3>
+<ul>
+<li><b>Boost pump 고장</b>(FUEL PRESSURE등): 그쪽 Standby pump ON → 등 OFF 확인</li>
+<li><b>GEN OUT</b>: Generator 스위치 OFF 후 ON(리셋). 안 되면 OFF, 남은 발전기 <b>Load 1.0 이하</b></li>
+<li><b>Loadmeter 1.0 초과</b>: Battery OFF로 관찰 → 여전히 높으면 불필요 부하 OFF → Battery ON</li>
+<li><b>CB trip</b>: 비필수 회로는 비행 중 리셋 금지. 필수 회로는 1회, 다시 튀면 금지</li>
+<li><b>Subpanel feeder CB trip</b> = 단락, 리셋 금지. 잃을 수 있는 것: 연료계, FUEL PRESSURE등, Crossfeed 밸브, AUX EMPTY등, Aux transfer 밸브</li>
+<li><b>Inverter 고장</b>: 다른 Inverter 선택</li>
+</ul>
+<div class="mem"><div class="h">ELECTRICAL SMOKE OR FIRE</div>
+<ol><li>Master switch — OFF (Gang bar)</li>
+<li>Oxygen — ON, 마스크 착용</li>
+<li>모든 전기 스위치 — OFF</li>
+<li>Battery·Generator — ON</li>
+<li>필수 장비만 하나씩 ON(고장 장비 격리)</li></ol>
+<div class="small">Gang bar를 내리면 <b>객실이 감압되고 전기 구동 계기가 죽는다.</b> 감압 상태면 Dump와 Storm window가 연기 배출에 도움.</div></div>
+<div class="mem"><div class="h">LANDING GEAR EMERGENCY EXTENSION <span class="tag y">≠C90A</span></div>
+<ol><li>Airspeed — <b>120 KIAS</b></li>
+<li>Landing gear relay CB — PULL</li>
+<li>Landing gear handle — DOWN</li>
+<li>Emergency engage handle — 들어 올려 <b>시계 방향 50°</b> 돌려 고정</li>
+<li>Extension lever — 녹색 3개가 켜질 때까지 펌핑</li></ol>
+<div class="small"><b>녹색 3개 뒤에는 펌핑 금지</b>(구동부 손상). 수동으로는 올릴 수 없다. 비상 내림 뒤에는 잭에 올리기 전까지 기어 조작부·스위치·CB를 건드리지 않는다(Up 회로 고장일 수 있어 지상에서 접힐 수 있음).<br>연습 후 복귀: Engage handle 반시계로 돌려 내림 → Lever 보관 → CB IN → Handle UP.</div></div>
+<h3>여압 · Bleed · 문</h3>
+<ul>
+<li><b>차압이 적색호</b>: Controller 재설정, 또는 Bleed valve 둘 다 CLOSE, 또는 DUMP</li>
+<li><b>여압 상실</b>(고고도): 산소 마스크 → 강하</li>
+<li><b>Emergency descent</b>: Power IDLE → Prop HIGH RPM → Flap APPROACH → Gear DOWN → <b>159 KIAS 최대</b></li>
+<li><b>BLEED AIR LINE FAILURE등</b>: 그쪽 Bleed valve CLOSED → 엔진계기 관찰. 파열이면 <b>ITT↑ · Torque↓ · N1↑</b> → 여건이 되면 엔진 정지. 밸브를 닫아도 등은 꺼지지 않는다</li>
+<li><b>CABIN DOOR등</b>: 객실 감압(고도 고려) → <b>지상에 내릴 때까지 문 확인 금지</b>. 여압 상태에서 핸들을 건드리면 문이 한 번에 열릴 수 있다</li>
+<li><b>Emergency exit</b>: 오른쪽 세 번째 창. 덮개 → Release 버튼 → 핸들을 당기고 밀어냄. 여압 중 열지 말 것</li>
+</ul>
+<h3>기타</h3>
+<ul>
+<li><b>Prop deice 전류 이상</b>: 0 A → 스위치 확인(OFF였으면 30초 뒤 ON, ON인데 0이면 OFF) · 14 A 미만·18–23 A → 계속 사용, 진동 시 rpm 잠깐↑ · <b>23 A 초과</b> → 결빙 회피, 비상시에만</li>
+<li><b>Static 막힘 의심</b>(승강계가 둔함): Alternate로 전환, 보정표 적용. 평소엔 NORMAL 확인</li>
+<li><b>Zero thrust 모사</b>: Prop <b>1,800 rpm</b>, Torque <b>100 ft-lb</b></li>
+<li><b>Spin 진입</b>: 조종간 끝까지 앞으로 + 반대 러더 + 양쪽 IDLE을 동시에, 에일러론 중립. 회전이 멎으면 중립 후 부드럽게 회복(시험 비행으로 검증된 절차는 아님)</li>
+<li><b>Severe icing 이탈</b>: ATC Priority, 급기동 금지, Autopilot 해제(조종간을 잡고), 이상 롤이면 받음각↓, 대기 중 Flap 내리지 않기·이미 내렸으면 얼음이 없어질 때까지 유지. 징후는 0 °C 아래의 비·튀는 물방울, −18 °C까지 가능</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section class="sec" id="perf">
+<h2>5 · 성능 (AFM Section IV · POM 6·7장)</h2>
+<p class="small">AFM 그래프의 <b>예제 조건 값</b>입니다(실제 계획은 그래프로). 예제: Billings 이륙 — OAT 25 °C, 기압고도 3,966 ft, 9,800 lb, 정풍 9.5 kt / Denver 착륙 — 15 °C, 5,650 ft, 8,855 lb, 정풍 9.5 kt. 포장·수평·건조 활주로.</p>
+<div class="two">
+<div>
+<h3>이착륙 거리 (예제)</h3>
+<div class="tw"><table>
+<tr><th>항목</th><th>ft</th><th>m</th></tr>
+<tr><td>이륙 Ground roll (Flap 0 %)</td><td class="n">1,830</td><td class="n">558</td></tr>
+<tr><td>이륙 50 ft 장애물 통과</td><td class="n">2,400</td><td class="n">732</td></tr>
+<tr><td>Accelerate-stop (V<sub>1</sub> 95 KIAS)</td><td class="n">4,130</td><td class="n">1,259</td></tr>
+<tr><td>Lift-off에서 엔진 고장, 50 ft 통과</td><td class="n">4,220–4,260</td><td class="n">1,286–1,298</td></tr>
+<tr><td>착륙 Ground roll (Reverse 없이)</td><td class="n">1,050</td><td class="n">320</td></tr>
+<tr><td>착륙 50 ft 장애물 통과</td><td class="n">2,160</td><td class="n">658</td></tr>
+</table></div>
+<ul>
+<li>Accelerate-stop: 2초 인지 시간 포함, 결정속도에서 양쪽 IDLE·최대 제동. <b>그래프 값에 11 % 가산(최대 610 ft = 186 m)</b></li>
+<li>단발 이륙거리는 Lift-off에서 고장, 즉시 Feather 가정. 그래프 음영 영역의 무게는 기어 내림 단발 상승구배가 양(+)이 아니다</li>
+<li>예제 단발 상승구배(100 KIAS, Flap 0 %) <b>3.65 %</b> → 50 ft에서 100 ft까지 1,370 ft(418 m) 더</li>
+<li>착륙거리 조건: Flap 100 %, Final에서 강하율 800 fpm이 되게 출력, 최대 제동</li>
+<li>최소 이륙 출력은 2,200 rpm·67 KIAS 기준 그래프(OAT·기압고도). 그 이상 나오면 한계 안에서 사용 가능</li>
+<li>AFM의 Enroute climb 요구로는 구조 한계 10,100 lb까지 감량 불필요</li>
+<li>풀밭(짧고 마른 잔디) 운용 성능은 별도 Supplement</li>
+</ul>
+<h3>상승 (예제)</h3>
+<ul>
+<li>양발 상승: 17,000 ft, −10 °C, 9,563 lb → <b>1,110 fpm</b> @111 KIAS</li>
+<li>단발 상승(Max continuous, 고장 Prop Feather): 9,000 ft, 9,563 lb → <b>405 fpm</b> @109 KIAS</li>
+<li>Balked landing climb(Take-off power, Flap 100 %, Gear down): 5,650 ft, 15 °C, 8,855 lb → <b>1,030 fpm</b> @94 KIAS</li>
+<li>Stall(예제): 10,100 lb, Idle, Gear down, Flap 35 %, 30° bank → 88 KCAS. 회복 중 최대 고도 손실 약 <b>850 ft</b></li>
+</ul>
+</div>
+<div>
+<h3>무게별 속도 (KIAS)</h3>
+<div class="tw"><table>
+<tr><th>무게 lb</th><th>양발 상승</th><th>단발 상승</th><th>Balked</th><th>접근</th></tr>
+<tr><td class="n">10,100</td><td>112</td><td>110</td><td>96</td><td>102</td></tr>
+<tr><td class="n">9,700</td><td>—</td><td>—</td><td>95</td><td>100</td></tr>
+<tr><td class="n">9,000</td><td>109</td><td>107</td><td>94</td><td>97</td></tr>
+<tr><td class="n">8,000</td><td>106</td><td>104</td><td>91</td><td>92</td></tr>
+<tr><td class="n">7,000</td><td>103</td><td>101</td><td>90</td><td>86</td></tr>
+</table></div>
+<p class="small">이륙(Flap 0 %): Lift-off <b>95</b>, 50 ft <b>100 KIAS</b>. 플래카드 권장 접근속도 96 kt.</p>
+<h3>Maximum recommended cruise — ISA, 1,900 rpm</h3>
+<div class="tw"><table>
+<tr><th>기압고도</th><th>Torque/엔진</th><th>연료 합계 lb/h</th><th>TAS @9,000 lb</th></tr>
+<tr><td class="n">SL</td><td>1,520</td><td>738</td><td>221</td></tr>
+<tr><td class="n">6,000</td><td>1,520</td><td>704</td><td>234</td></tr>
+<tr><td class="n">10,000</td><td>1,520</td><td>708</td><td>244</td></tr>
+<tr><td class="n">12,000</td><td>1,520</td><td>708</td><td>249</td></tr>
+<tr><td class="n">14,000</td><td>1,433</td><td>672</td><td>249</td></tr>
+<tr><td class="n">16,000</td><td>1,333</td><td>628</td><td>248</td></tr>
+<tr><td class="n">18,000</td><td>1,242</td><td>588</td><td>247</td></tr>
+<tr><td class="n">20,000</td><td>1,158</td><td>550</td><td>245</td></tr>
+<tr><td class="n">24,000</td><td>999</td><td>478</td><td>241</td></tr>
+<tr><td class="n">28,000</td><td>857</td><td>414</td><td>234</td></tr>
+<tr><td class="n">31,000</td><td>755</td><td>368</td><td>223</td></tr>
+</table></div>
+<div class="box why"><span class="t">읽는 법</span>
+12,000 ft까지는 <b>Torque 한계(1,520 @1,900 rpm)</b>로 출력이 정해지고, 그 위로는 <b>ITT 한계</b>가 먼저 걸려 Torque가 줄어든다. TAS는 12,000–14,000 ft 부근에서 최대(약 249 kt). 저고도 임무는 시간당 약 700 lb(약 105 gal) 수준.</div>
+<h3>비행계획 예제의 감</h3>
+<ul>
+<li>시동·런업·택시·이륙 가속 연료 <b>60 lb</b></li>
+<li>3,966 → 17,000 ft 상승: 12분, 121 lb, 36 NM</li>
+<li>17,000 ft 순항 연료유량 엔진당 약 290 lb/h, TAS 246 kt</li>
+<li>예비 45분 = 약 435 lb(580 lb/h)</li>
+<li>기압고도: 29.92에서 0.1 inHg 낮을 때마다 표고 +100 ft</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section class="sec" id="numbers">
+<h2>6 · 암기 숫자 카드</h2>
+<h3>속도 (E90)</h3>
+<div class="num">
+<div><b>88 / 86</b><span>V<sub>MC</sub> KCAS / KIAS</span></div>
+<div><b>99 / 110</b><span>V<sub>XSE</sub> / V<sub>YSE</sub> KIAS (Blue 111 CAS)</span></div>
+<div><b>102 / 112</b><span>V<sub>X</sub> / V<sub>Y</sub> 양발</span></div>
+<div><b>226 / .46 M</b><span>V<sub>MO</sub> / M<sub>MO</sub></span></div>
+<div><b>175</b><span>V<sub>A</sub> · 난기류 통과</span></div>
+<div><b>156 / 146</b><span>Gear 내림·내린 상태 / 올림 (또는 130)</span></div>
+<div><b>174 / 140</b><span>Flap APP / DOWN (또는 130)</span></div>
+<div><b>95 / 100</b><span>Lift-off / 50 ft (Flap 0 %)</span></div>
+<div><b>102 / 100</b><span>접근 @10,100 / 9,700 lb</span></div>
+<div><b>96 → 100</b><span>Balked climb → 가속 후 Flap UP</span></div>
+<div><b>159</b><span>Emergency descent 최대</span></div>
+<div><b>120</b><span>Gear 수동 내림</span></div>
+<div><b>140</b><span>결빙 최소 · Windmill air start 최소</span></div>
+<div><b>25 kt</b><span>최대 시연 측풍</span></div>
+<div><b>40 kt</b><span>이 위에서 Reverse 해제</span></div>
+<div><b>150·130·120·110</b><span>Cruise climb (10·20·25·31천 ft)</span></div>
+</div>
+<h3>엔진·프롭</h3>
+<div class="num">
+<div><b>750 °C</b><span>최대 ITT (Cruise climb 710)</span></div>
+<div><b>1,315 / 1,520</b><span>Torque @2,200 / @1,900 rpm</span></div>
+<div><b>1,090 °C</b><span>시동 ITT (2초)</span></div>
+<div><b>850 °C / 2,100</b><span>가속 순간 ITT / Torque (2초)</span></div>
+<div><b>660 °C</b><span>LOW IDLE ITT</span></div>
+<div><b>12 % · 5초</b><span>연료 투입 N1</span></div>
+<div><b>51 %</b><span>Start switch OFF N1</span></div>
+<div><b>51 / 70 %</b><span>LO IDLE / HI IDLE</span></div>
+<div><b>101.5 %</b><span>최대 N1 (= 38,100 rpm)</span></div>
+<div><b>2,200 / 2,420</b><span>최대 Prop / 과속 한계</span></div>
+<div><b>2,288 / 2,332</b><span>Overspeed gov / Fuel topping gov</span></div>
+<div><b>1,900–2,100</b><span>Overspeed gov 시험 rpm</span></div>
+<div><b>500 → 400 → 220</b><span>Autofeather 시험 Torque</span></div>
+<div><b>90 % N1</b><span>Autofeather 완전 무장</span></div>
+<div><b>425 / 400</b><span>Auto ignition ARM등 / 점화 Torque</span></div>
+<div><b>80–100 / 40</b><span>Oil psi 정상 / 최소</span></div>
+<div><b>585 °C 1분</b><span>셧다운 전 ITT</span></div>
+<div><b>40·60·40·60·40·30분</b><span>Starter 주기(초)</span></div>
+<div><b>88 % · 1분</b><span>Max reverse N1 · 시간</span></div>
+<div><b>1,800 rpm · 100</b><span>Zero thrust 모사</span></div>
+</div>
+<h3>연료·전기·기타</h3>
+<div class="num">
+<div><b>474 gal</b><span>사용가능 (Main 392 + Aux 82)</span></div>
+<div><b>265 lb</b><span>Main 한쪽 이륙 최소</span></div>
+<div><b>9–11 psi</b><span>FUEL PRESSURE등</span></div>
+<div><b>10 h</b><span>FUEL PRESSURE등 점등 운용 한도</span></div>
+<div><b>150 h · 18,000 ft</b><span>AvGas 한도</span></div>
+<div><b>0.10–0.15 %</b><span>방빙첨가제</span></div>
+<div><b>24 V 45 Ah</b><span>Ni-Cd 배터리</span></div>
+<div><b>28.25 V · 250 A</b><span>Generator</span></div>
+<div><b>325 A</b><span>Isolation limiter</span></div>
+<div><b>.025</b><span>배터리 점검 Loadmeter 변화</span></div>
+<div><b>20 V</b><span>GPU 연결 전 최소 배터리</span></div>
+<div><b>.80</b><span>25,000 ft 위 Generator load</span></div>
+<div><b>4.7 psi</b><span>최대 차압</span></div>
+<div><b>10,000 ft</b><span>ALT WARN 객실고도</span></div>
+<div><b>표고 + 500 ft</b><span>강하 시 객실고도 설정</span></div>
+<div><b>75 % N1</b><span>강하 중 여압 유지</span></div>
+<div><b>18 / 12–20 psi</b><span>Pneumatic 조절 / 게이지</span></div>
+<div><b>14–18 A · 23 A</b><span>Prop deice 정상 · 초과 시 결빙 회피</span></div>
+<div><b>½–1 in</b><span>부츠 작동 얼음 두께</span></div>
+<div><b>+5 °C</b><span>이하 가시수분 → Engine anti-ice</span></div>
+<div><b>1,850 psig</b><span>산소 만충</span></div>
+<div><b>54–60 / 50–55</b><span>타이어 psi Main / Nose</span></div>
+<div><b>31,000 ft</b><span>최대 운용고도</span></div>
+<div><b>10,100 / 9,700</b><span>이륙 / 착륙 lb</span></div>
+</div>
+<h3>기체에서 직접 확인할 것</h3>
+<div class="tw"><table>
+<tr><th>항목</th><th>AFM 내용</th><th>확인 방법</th></tr>
+<tr><td>Full flap · Gear 올림 속도</td><td>140·146 kt 또는 130·130 kt</td><td>오버헤드 플래카드, 속도계 흰색호</td></tr>
+<tr><td>Secondary low pitch stop</td><td>"if installed"</td><td>Annunciator에 등이 있는지, Prop test 스위치 표기</td></tr>
+<tr><td>산소 실린더 용량 · 마스크</td><td>22·49·64 cu ft / 주황·빨강 플러그</td><td>정비기록, 마스크 플러그 색</td></tr>
+<tr><td>Battery charge detector</td><td>Supplement(장착 시)</td><td>BATTERY CHARGE 황색등 유무</td></tr>
+<tr><td>오토파일럿·항전</td><td>Supplement가 여러 종</td><td>실제 장착 장비에 맞는 Supplement만 적용</td></tr>
+<tr><td>임무 장비(카메라·센서)</td><td>AFM 본문에 없음</td><td>개조 Supplement·중량중심 자료, 회사 SOP</td></tr>
+</table></div>
+<div class="box why"><span class="t">OE에서 교관에게 물어보면 좋은 것</span>
+① HL5239의 Flap·Gear 속도 계열 ② 회사 카드에 없는 런업 시험(Overspeed gov·Autofeather·Standby pump·Crossfeed)을 언제 하는지 ③ Aux 탱크를 평소 채우는지, Aux transfer 운용 ④ 수동 기어 내림 핸들 위치와 연습 여부 ⑤ 임무 고도에서 쓰는 출력 설정(Torque·rpm)과 연료 계획 기준.</div>
+<p class="small src">출처: Beech King Air E90 FAA Approved Airplane Flight Manual P/N 90-590012-3 (Rev. A11, Nov 2001; TC2 May 2003, TC3 Dec 2011) · Pilot's Operating Manual P/N 90-590012-5 (A8, Aug 1994) 6·7·8·9·10장 · Supplement 90-590012-23(Autofeather), -45(Battery charge detector). 2026.11.10 정리.</p>
+</section>
+
+<footer>King Air E90 핵심 요약 · HL5239 POH 기준 · 2026.11.10 · 학습용 — 실제 운항은 기내 AFM·플래카드와 회사 SOP를 따릅니다.</footer>
+</div>
+<button id="top" type="button" aria-label="맨 위로">↑</button>
+<script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('nav.chips a'));
+  links.forEach(function(a){a.addEventListener('click',function(e){
+    var t=document.getElementById(a.dataset.id); if(!t) return; e.preventDefault();
+    t.scrollIntoView({block:'start'});
+    try{history.replaceState(null,'','#'+a.dataset.id)}catch(_){}
+  });});
+  var secs=[].slice.call(document.querySelectorAll('.sec'));
+  function mark(){
+    var cur=secs[0];
+    secs.forEach(function(s){ if(s.getBoundingClientRect().top<=110) cur=s; });
+    links.forEach(function(a){
+      var on=a.dataset.id===cur.id; a.classList.toggle('on',on);
+      if(on){ var n=a.parentNode, l=a.offsetLeft-n.clientWidth/2+a.clientWidth/2; n.scrollTo({left:l}); }
+    });
+  }
+  var tick=false; window.addEventListener('scroll',function(){ if(!tick){tick=true;requestAnimationFrame(function(){mark();tick=false;});} },{passive:true});
+  mark();
+  document.getElementById('top').addEventListener('click',function(){window.scrollTo({top:0});});
+  if(location.hash){var t=document.getElementById(location.hash.slice(1)); if(t) setTimeout(function(){t.scrollIntoView();},50);}
+})();
+</script>
+<script>
+if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+</script>
+</body></html>

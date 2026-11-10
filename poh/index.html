@@ -536,6 +536,7 @@ const LIM=[
   ['E90 착륙 (50 ft) @MLW 9,700 lb','643 m','2,110 ft · GlobalAir는 1,092 m(3,584 ft) 표기, factored 값일 수 있음','W'],
   ['E90 BFL @MTOW 10,100 lb','1,319 m','4,329 ft','W'],
   ['E90 Accelerate-Go @MTOW','1,220–1,400 m','~4,000–4,600 ft · BFL 기반 추정, 공개 AGD 수치 없음','W'],
+  ['E90 AFM 예제 (HL5239 POH)','이륙 732 m · 착륙 658 m','50 ft 통과 2,400 / 2,160 ft · 이륙 9,800 lb PA 3,966 ft 25 °C, 착륙 8,855 lb PA 5,650 ft 15 °C, 정풍 9.5 kt · Accelerate-stop 1,259 m(4,130 ft)','A'],
   ['C90-1 BFL (참고)','1,585 m','5,200 ft · 원형 C90 AGD는 공개 수치 없음','W'],
   ['실제 운항','AFM 차트','PA·OAT·바람·경사로 산출(ft → ×0.3048 m). 우리 C90A(MLW 9,600)와 중량 기준 다름','W']]},
  {id:'misc',t:'하중 · 고도 · 기타',rows:[
@@ -614,5 +615,5 @@ setHide(store.get('poh-hide',false));
 show(['lim','core','quiz','c208'].includes(location.hash.slice(1))?location.hash.slice(1):store.get('poh-tab','lim'));
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
-<p class="foot" style="max-width:760px;margin:0 auto;padding:0 16px 120px"><a href="../">C90A 핵심 요약</a> · <a href="../checklist/">C90A 체크리스트</a> · <a href="../e90/">E90 체크리스트</a> · <a href="../c208/">C208 체크리스트</a></p>
+<p class="foot" style="max-width:760px;margin:0 auto;padding:0 16px 120px"><a href="../">C90A 핵심 요약</a> · <a href="../checklist/">C90A 체크리스트</a> · <a href="../e90/">E90 체크리스트</a> · <a href="../e90poh/">E90 핵심 요약</a> · <a href="../c208/">C208 체크리스트</a></p>
 </body></html>
