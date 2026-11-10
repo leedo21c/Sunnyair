@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T10:59:20+00:00",
+ "updated": "2026-11-10T11:00:39+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -149,22 +149,6 @@
      "end": "2026-11-13T00:28:00.000Z",
      "fir": "RKRR",
      "q": "QCPXX"
-    },
-    {
-     "num": "C2067/26",
-     "raw": "C2067/26 NOTAMN\nQ)RKRR/QCPAS/I/BO/A/000/999/3726N12758E005\nA)RKNW B)2611100900 C)2611101100\nE)PAR RWY 03/21 U/S DUE TO MAINT",
-     "start": "2026-11-10T09:00:00Z",
-     "end": "2026-11-10T11:00:00Z",
-     "fir": "RKRR",
-     "q": "QCPAS"
-    },
-    {
-     "num": "M0284/26",
-     "raw": "M0284/26 NOTAMR M0279/26\n  Q) RKRR/QCPAS//////\n  A) RKNW\n  B) 2611100900\n  C) 2611101100\n  E) PAR RWY 03/21 U/S DUE TO MAINT\n\nNOTAM REQUEST QUALITY CHECKLIST\n RKNW BOPS SH/033-934-4255 NOTAMR 2611092245\n 1)S 2)S 3)S 4)S 5)S 6)S 7)S",
-     "start": "2026-11-10T09:00:00Z",
-     "end": "2026-11-10T11:00:00Z",
-     "fir": "RKRR",
-     "q": "QCPAS"
     },
     {
      "num": "Z0772/26",
@@ -437,14 +421,6 @@
      "end": "2026-11-12T17:00:00.000Z",
      "fir": "RKRR",
      "q": "QCTAS"
-    },
-    {
-     "num": "A1653/26",
-     "raw": "A1653/26 NOTAMN\nQ)RKRR/QCPAS/I/BO/A/000/999/3643N12730E005\nA)RKTU B)2611100900 C)2611101100\nE)PAR RWY 06R/24L, 24R U/S DUE TO MAINT",
-     "start": "2026-11-10T09:00:00.000Z",
-     "end": "2026-11-10T11:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QCPAS"
     },
     {
      "num": "A1654/26",
@@ -4745,7 +4721,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-10T10:59:20+00:00",
- "notam_updated": "2026-11-10T10:59:20+00:00",
+ "notam_checked": "2026-11-10T11:00:39+00:00",
+ "notam_updated": "2026-11-10T11:00:39+00:00",
  "notam_source": "FAA NMS (시험)"
 }
