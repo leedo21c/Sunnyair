@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12T07:30:27+00:00",
+ "updated": "2026-11-12T08:00:33+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -76,7 +76,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 120700Z 20009KT 9999 SCT035 15/11 Q1024 NOSIG",
+   "metar": "METAR RKSI 120730Z 21008KT 170V230 9999 SCT035 15/11 Q1024 NOSIG",
    "taf": "TAF RKSI 120500Z 1206/1312 19010KT 9999 SCT030 TN09/1221Z TX17/1306Z BECMG 1212/1214 27007KT BECMG 1218/1220 12006KT 4000 BR BKN030 BECMG 1223/1301 15007KT 9999 NSW SCT030",
    "notams": [
     {
@@ -118,6 +118,22 @@
      "end": "2026-11-12T17:00:00.000Z",
      "fir": "RKRR",
      "q": "QMXLC"
+    },
+    {
+     "num": "A1677/26",
+     "raw": "A1677/26 NOTAMN\nQ)RKRR/QFAHX/IV/NBO/A/000/999/3728N12626E005\nA)RKSI B)2611130900 C)2612090900\nE)SEASONAL BIRDS CONCENTRATION IN VICINITY OF AD\n- TYPE OF BIRDS : GEESE AND CRANES\n- MAX WEIGHT : 4000 GRAMS\n- FLOCK SIZE : 50 TO 500 BIRDS",
+     "start": "2026-11-13T09:00:00Z",
+     "end": "2026-12-09T09:00:00Z",
+     "fir": "RKRR",
+     "q": "QFAHX"
+    },
+    {
+     "num": "A1678/26",
+     "raw": "A1678/26 NOTAMN\nQ)RKRR/QCLAS/I/M/E/000/999/3728N12626E005\nA)RKSI B)2611160100 C)2611160300\nE)RKSI SELCAL CHECK NOT AVBL ON GND DUE TO MAINT",
+     "start": "2026-11-16T01:00:00.000Z",
+     "end": "2026-11-16T03:00:00.000Z",
+     "fir": "RKRR",
+     "q": "QCLAS"
     }
    ]
   },
@@ -126,7 +142,16 @@
    "name": "",
    "metar": "",
    "taf": "",
-   "notams": []
+   "notams": [
+    {
+     "num": "C2072/26",
+     "raw": "C2072/26 NOTAMN\nQ)RKRR/QCTAS/I/BO/AE/000/999/3745N12857E060\nA)RKNN B)2611162300 C)2611170200\nE)TAR U/S DUE TO MAINT",
+     "start": "2026-11-16T23:00:00Z",
+     "end": "2026-11-17T02:00:00Z",
+     "fir": "RKRR",
+     "q": "QCTAS"
+    }
+   ]
   },
   "RKNW": {
    "fir": false,
@@ -477,14 +502,6 @@
      "end": "2026-11-13T07:00:00Z",
      "fir": "RKRR",
      "q": "QCPAS"
-    },
-    {
-     "num": "A1663/26",
-     "raw": "A1663/26 NOTAMC A1655/26\nQ)RKRR/QCTXX/I/BO/AE/000/999/3554N12840E060\nA)RKTN B)2611090741\nE)TAR U/S NEW NOTAM TO FLW",
-     "start": "2026-11-09T07:41:00.000Z",
-     "end": "2026-11-12T07:41:00.000Z",
-     "fir": "RKRR",
-     "q": "QCTXX"
     },
     {
      "num": "A1664/26",
@@ -1571,14 +1588,6 @@
      "raw": "D3407/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/090/3709N13035E044\nA)RKRR B)2611082300 C)2611130900\nD)08 2300-09 0900, 10 0200-0900, 11 0200-0900 2300-2359, 12\n0000-0900 2300-2359, 13 0000-0900\nE)DANGER AREA RK D115 ACT\nF)SFC G)9000FT AMSL",
      "start": "2026-11-08T23:00:00Z",
      "end": "2026-11-13T09:00:00Z",
-     "fir": "RKRR",
-     "q": "QRDCA"
-    },
-    {
-     "num": "D3410/26",
-     "raw": "D3410/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/025/3335N12805E039\nA)RKRR B)2611110400 C)2611120800\nD)0400-0800\nE)DANGER AREA RK D118 ACT\nF)SFC G)2500FT AMSL",
-     "start": "2026-11-11T04:00:00.000Z",
-     "end": "2026-11-12T08:00:00.000Z",
      "fir": "RKRR",
      "q": "QRDCA"
     },
@@ -4733,11 +4742,35 @@
      "end": "2026-11-12T21:00:00.000Z",
      "fir": "RKRR",
      "q": "QARCS"
+    },
+    {
+     "num": "Z0866/26",
+     "raw": "Z0866/26 NOTAMC Z0865/26\nQ)RKRR/QCEXX/I/BO/E/000/999/3321N12628E250\nA)RKRR B)2611120734\nE)RSR HALLA NEW NOTAM TO FLW",
+     "start": "2026-11-12T07:34:00.000Z",
+     "end": "2026-11-15T07:34:00.000Z",
+     "fir": "RKRR",
+     "q": "QCEXX"
+    },
+    {
+     "num": "Z0867/26",
+     "raw": "Z0867/26 NOTAMN\nQ)RKRR/QCEAS/I/BO/E/000/999/3321N12628E250\nA)RKRR B)2611170000 C)2612041059\nE)RSR HALLA PSR PART U/S DUE TO MAINT",
+     "start": "2026-11-17T00:00:00.000Z",
+     "end": "2026-12-04T10:59:00.000Z",
+     "fir": "RKRR",
+     "q": "QCEAS"
+    },
+    {
+     "num": "Z0868/26",
+     "raw": "Z0868/26 NOTAMN\nQ)RKRR/QCEAS/I/BO/E/000/999/3321N12628E250\nA)RKRR B)2611170000 C)2612041059\nD)NOV 17-19 23-25 27 30 0000-0759, DEC 01-03 0000-0759, 04 0000-1059\nE)RSR HALLA U/S DUE TO MAINT",
+     "start": "2026-11-17T00:00:00.000Z",
+     "end": "2026-12-04T10:59:00.000Z",
+     "fir": "RKRR",
+     "q": "QCEAS"
     }
    ]
   }
  },
- "notam_checked": "2026-11-12T07:30:27+00:00",
- "notam_updated": "2026-11-12T07:30:27+00:00",
+ "notam_checked": "2026-11-12T08:00:33+00:00",
+ "notam_updated": "2026-11-12T08:00:33+00:00",
  "notam_source": "FAA NMS (시험)"
 }
