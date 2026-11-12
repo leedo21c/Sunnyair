@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12T20:30:29+00:00",
+ "updated": "2026-11-12T21:00:36+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 122000Z 12006KT 3500 BR BKN040 11/11 Q1023 NOSIG",
+   "metar": "METAR RKSI 122030Z 12005KT 3500 BR BKN040 11/11 Q1023 NOSIG",
    "taf": "TAF RKSI 121700Z 1218/1324 14006KT 6000 BKN030 BKN100 TN09/1221Z TX17/1306Z TN11/1321Z BECMG 1312/1314 06007KT 9999 TEMPO 1318/1324 6000 -RA SCT010 BKN030 BKN100",
    "notams": [
     {
@@ -4744,14 +4744,6 @@
      "q": "QARCN"
     },
     {
-     "num": "Z0863/26",
-     "raw": "Z0863/26 NOTAMN\nQ)RKRR/QARCS/I/NBO/E/000/999/3535N12700E999\nA)RKRR B)2611121300 C)2611122100\nE)CONDITIONAL ROUTE(CDR2) AVBL AS FLW, NEW\nNR ROUTE        TIME FM    TIME TO     LOWER LVL      UPPER LVL\n1 MASTA-UPGOS   11121300   11122100    6,000FT AMSL   FL600\n\n2 RUGMA-ANROD   11121300   11122100    11,000FT AMSL  FL600\n\n3 BOPTA-PONIK   11121300   11122100    FL150          FL600\n\n4 KARBU-LANAT   11121300   11121915    FL150          FL600",
-     "start": "2026-11-12T13:00:00.000Z",
-     "end": "2026-11-12T21:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QARCS"
-    },
-    {
      "num": "Z0866/26",
      "raw": "Z0866/26 NOTAMC Z0865/26\nQ)RKRR/QCEXX/I/BO/E/000/999/3321N12628E250\nA)RKRR B)2611120734\nE)RSR HALLA NEW NOTAM TO FLW",
      "start": "2026-11-12T07:34:00.000Z",
@@ -4794,7 +4786,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-12T20:30:29+00:00",
- "notam_updated": "2026-11-12T20:30:29+00:00",
+ "notam_checked": "2026-11-12T21:00:36+00:00",
+ "notam_updated": "2026-11-12T21:00:36+00:00",
  "notam_source": "FAA NMS (시험)"
 }
