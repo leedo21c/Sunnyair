@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13T10:30:25+00:00",
+ "updated": "2026-11-13T11:00:36+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 131000Z 03002KT 7000 NSC 14/11 Q1021 NOSIG",
+   "metar": "METAR RKSI 131030Z 05002KT 7000 FEW035 OVC140 14/12 Q1022 NOSIG",
    "taf": "TAF RKSI 130500Z 1306/1412 15006KT 6000 FEW020 SCT035 BKN200 TN11/1321Z TX14/1406Z BECMG 1312/1314 06007KT FEW015 BKN040 BKN100 TEMPO 1318/1320 -RA FEW010 BKN030 OVC080 BECMG 1320/1322 03007KT -RA FEW010 BKN030 OVC080 BECMG 1406/1408 36006KT NSW BECMG 1411/1412 FEW010 SCT040",
    "notams": [
     {
@@ -1512,14 +1512,6 @@
      "q": "QRDCA"
     },
     {
-     "num": "D3418/26",
-     "raw": "D3418/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/050/3757N12423E019\nA)RKRR B)2611090900 C)2611131100\nD)09 0900-1400, 10 0100-1400, 11 0100-1100, 12 0100-1400, 13\n0100-1100\nE)DANGER AREA RK D131 ACT\nF)SFC G)5000FT AMSL",
-     "start": "2026-11-09T09:00:00Z",
-     "end": "2026-11-13T11:00:00Z",
-     "fir": "RKRR",
-     "q": "QRDCA"
-    },
-    {
      "num": "D3422/26",
      "raw": "D3422/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/030/3738N12421E018\nA)RKRR B)2611120830 C)2611131130\nD)0830-1130\nE)DANGER AREA RK D153 ACT\nF)SFC G)3000FT AMSL",
      "start": "2026-11-12T08:30:00Z",
@@ -2014,38 +2006,6 @@
      "end": "2026-12-15T14:59:00.000Z",
      "fir": "RKRR",
      "q": "QRDCA"
-    },
-    {
-     "num": "D3549/26",
-     "raw": "D3549/26 NOTAMC D3508/26\nQ)RKRR/QRDXX/IV/BO/W/000/200/3623N13027E026\nA)RKRR B)2611101049\nE)DANGER AREA RK D120 NEW NOTAM TO FLW",
-     "start": "2026-11-10T10:49:00.000Z",
-     "end": "2026-11-13T10:49:00.000Z",
-     "fir": "RKRR",
-     "q": "QRDXX"
-    },
-    {
-     "num": "D3550/26",
-     "raw": "D3550/26 NOTAMC D3507/26\nQ)RKRR/QRDXX/IV/BO/W/000/050/3623N13027E026\nA)RKRR B)2611101049\nE)DANGER AREA RK D120 NEW NOTAM TO FLW",
-     "start": "2026-11-10T10:49:00Z",
-     "end": "2026-11-13T10:49:00Z",
-     "fir": "RKRR",
-     "q": "QRDXX"
-    },
-    {
-     "num": "D3551/26",
-     "raw": "D3551/26 NOTAMC D3527/26\nQ)RKRR/QRDXX/IV/BO/W/000/190/3801N12923E027\nA)RKRR B)2611101050\nE)DANGER AREA RK D156 NEW NOTAM TO FLW",
-     "start": "2026-11-10T10:50:00.000Z",
-     "end": "2026-11-13T10:50:00.000Z",
-     "fir": "RKRR",
-     "q": "QRDXX"
-    },
-    {
-     "num": "D3552/26",
-     "raw": "D3552/26 NOTAMC D3526/26\nQ)RKRR/QRDXX/IV/BO/W/000/035/3801N12923E027\nA)RKRR B)2611101050\nE)DANGER AREA RK D156 NEW NOTAM TO FLW",
-     "start": "2026-11-10T10:50:00.000Z",
-     "end": "2026-11-13T10:50:00.000Z",
-     "fir": "RKRR",
-     "q": "QRDXX"
     },
     {
      "num": "D3553/26",
@@ -4370,7 +4330,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-13T10:30:25+00:00",
- "notam_updated": "2026-11-13T10:30:25+00:00",
+ "notam_checked": "2026-11-13T11:00:36+00:00",
+ "notam_updated": "2026-11-13T11:00:36+00:00",
  "notam_source": "FAA NMS (시험)"
 }
