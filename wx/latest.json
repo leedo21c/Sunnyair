@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13T19:30:28+00:00",
+ "updated": "2026-11-13T20:00:35+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -30,14 +30,6 @@
      "end": "2026-12-23T15:00:00.000Z",
      "fir": "RKRR",
      "q": "QFAXX"
-    },
-    {
-     "num": "A1669/26",
-     "raw": "A1669/26 NOTAMN\nQ)RKRR/QWULW/IV/BO/AW/000/005/3733N12648E004\nA)RKSS B)2611111400 C)2611132000\nD)1400-2000\nE)DRONE ACT(DRONE DETECTION SYSTEM INSPECTION) WILL TAKE PLACE AS FLW\nA CIRCLE RADIUS 3.2NM CENTERED ON 373325N1264751E\nF)SFC G)500FT AMSL",
-     "start": "2026-11-11T14:00:00.000Z",
-     "end": "2026-11-13T20:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QWULW"
     },
     {
      "num": "V0491/26",
@@ -76,7 +68,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 131900Z 12006KT 6000 -RA FEW045 OVC070 12/10 Q1018 NOSIG",
+   "metar": "METAR RKSI 131930Z 12007KT 4000 -RA BR FEW010 BKN045 OVC070 12/11 Q1018 NOSIG",
    "taf": "TAF RKSI 131700Z 1318/1424 11006KT 4000 -RA FEW010 BKN025 OVC070 TN11/1321Z TX14/1406Z TN09/1421Z TEMPO 1318/1321 2500 BECMG 1403/1405 08007KT 6000 BECMG 1408/1410 02008KT NSW BECMG 1415/1417 SCT030",
    "notams": [
     {
@@ -4246,11 +4238,19 @@
      "end": "2026-11-13T21:00:00.000Z",
      "fir": "RKRR",
      "q": "QARCS"
+    },
+    {
+     "num": "Z0881/26",
+     "raw": "Z0881/26 NOTAMN\nQ)RKRR/QARCS/I/NBO/E/000/999/3535N12700E999\nA)RKRR B)2611132100 C)2611142100\nE)CONDITIONAL ROUTE(CDR2) AVBL AS FLW, NEW\nNR ROUTE        TIME FM    TIME TO     LOWER LVL      UPPER LVL\n1 MASTA-UPGOS   11132100   11142100    6,000FT AMSL   FL600\n\n2 RUGMA-ANROD   11132100   11142100    11,000FT AMSL  FL600\n\n3 BOPTA-PONIK   11132100   11132300    FL150          FL600\n                11140700   11142100\n\n4 KARBU-LANAT   11132215   11140200    FL150          FL600\n                11140445   11140815\n                11141115   11141915",
+     "start": "2026-11-13T21:00:00Z",
+     "end": "2026-11-14T21:00:00Z",
+     "fir": "RKRR",
+     "q": "QARCS"
     }
    ]
   }
  },
- "notam_checked": "2026-11-13T19:30:28+00:00",
- "notam_updated": "2026-11-13T19:30:28+00:00",
+ "notam_checked": "2026-11-13T20:00:35+00:00",
+ "notam_updated": "2026-11-13T20:00:35+00:00",
  "notam_source": "FAA NMS (시험)"
 }
