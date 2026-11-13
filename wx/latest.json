@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13T12:30:38+00:00",
+ "updated": "2026-11-13T13:00:37+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 131200Z 05004KT 5000 BR NSC 13/12 Q1021 NOSIG",
+   "metar": "METAR RKSI 131230Z 05005KT 5000 BR NSC 13/11 Q1021 NOSIG",
    "taf": "TAF RKSI 131100Z 1312/1418 09006KT 6000 FEW015 SCT035 OVC150 TN11/1321Z TX14/1406Z BECMG 1314/1316 05007KT -RA FEW015 BKN030 OVC100 TEMPO 1407/1409 01008KT NSW BECMG 1410/1412 01008KT NSW BECMG 1415/1417 FEW010 SCT040",
    "notams": [
     {
@@ -220,7 +220,7 @@
   "RKPK": {
    "fir": false,
    "name": "Busan/Gimhae Intl, 48, KR",
-   "metar": "METAR RKPK 131200Z 03001KT CAVOK 14/09 Q1022",
+   "metar": "SPECI RKPK 131245Z 34001KT 9999 -RA FEW030 BKN100 13/10 Q1022 RMK CIG100",
    "taf": "TAF RKPK 131100Z 1312/1418 33006KT 9999 SCT030 BKN100 TN10/1316Z TX15/1406Z BECMG 1315/1316 03006KT 8000 -RA BKN030 OVC100 BECMG 1321/1322 20006KT 4800 -RA BR BKN015 OVC030",
    "notams": [
     {
@@ -1478,14 +1478,6 @@
      "end": "2026-11-15T11:00:00.000Z",
      "fir": "RKRR",
      "q": "QRDCA"
-    },
-    {
-     "num": "D3402/26",
-     "raw": "D3402/26 NOTAMN\nQ)RKRR/QRRCA/IV/BO/W/000/400/3553N12605E011\nA)RKRR B)2611082300 C)2611131300\nD)2300-1300\nE)RESTRICTED AREA RK R105 ACT\nF)SFC G)FL400",
-     "start": "2026-11-08T23:00:00.000Z",
-     "end": "2026-11-13T13:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QRRCA"
     },
     {
      "num": "D3413/26",
@@ -4290,7 +4282,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-13T12:30:38+00:00",
- "notam_updated": "2026-11-13T12:30:38+00:00",
+ "notam_checked": "2026-11-13T13:00:37+00:00",
+ "notam_updated": "2026-11-13T13:00:37+00:00",
  "notam_source": "FAA NMS (시험)"
 }
