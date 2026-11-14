@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-14T08:52:24+00:00",
+ "updated": "2026-11-14T09:00:32+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -1504,14 +1504,6 @@
      "q": "QRDCA"
     },
     {
-     "num": "D3415/26",
-     "raw": "D3415/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/037/3548N12515E022\nA)RKRR B)2611082300 C)2611140900\nD)08 2300-2359, 09-12 0000-0900 2300-2359, 13 0000-0900, 14 0500-0900\nE)DANGER AREA RK D123 ACT\nF)SFC G)3700FT AMSL",
-     "start": "2026-11-08T23:00:00.000Z",
-     "end": "2026-11-14T09:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QRDCA"
-    },
-    {
      "num": "D3432/26",
      "raw": "D3432/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/053/3727N12910E004\nA)RKRR B)2610301930 C)2612191030\nD)1930-1030\nE)TEMPO DANGER AREA ACT AS FLW\nA CIRCLE RADIUS 3NM CENTERED ON 372712N1290942E\n\nRMK:THIS AREA IS ESTABLISHED FOR DRONE FLIGHT\nF)SFC G)5300FT AGL",
      "start": "2026-10-30T19:30:00.000Z",
@@ -1982,14 +1974,6 @@
      "end": "2026-11-27T07:00:00Z",
      "fir": "RKRR",
      "q": "QRDCA"
-    },
-    {
-     "num": "D3542/26",
-     "raw": "D3542/26 NOTAMN\nQ)RKRR/QRACA/IV/BO/W/025/050/3640N12938E016\nA)RKRR B)2611082300 C)2611140900\nD)08 2300-13 1100, 14 0000-0900\nE)CATA 7H ACT\nF)2500FT AGL G)5000FT AMSL",
-     "start": "2026-11-08T23:00:00.000Z",
-     "end": "2026-11-14T09:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QRACA"
     },
     {
      "num": "D3548/26",
@@ -4290,7 +4274,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-14T08:52:24+00:00",
- "notam_updated": "2026-11-14T08:52:24+00:00",
+ "notam_checked": "2026-11-14T09:00:32+00:00",
+ "notam_updated": "2026-11-14T09:00:32+00:00",
  "notam_source": "FAA NMS (시험)"
 }
