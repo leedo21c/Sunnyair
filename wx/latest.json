@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13T23:30:25+00:00",
+ "updated": "2026-11-14T00:00:42+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -68,7 +68,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 132300Z 12006KT 4000 -RA BR BKN035 OVC070 11/10 Q1019 NOSIG",
+   "metar": "METAR RKSI 132330Z 10006KT 3000 -RA BR BKN035 OVC070 11/10 Q1019 NOSIG",
    "taf": "TAF RKSI 132300Z 1400/1506 11007KT 4000 -RA FEW010 BKN025 OVC070 TX13/1406Z TN09/1421Z TX17/1506Z BECMG 1402/1404 07007KT 6000 BECMG 1413/1415 02008KT NSW BECMG 1417/1419 SCT030 BECMG 1500/1502 32010KT CAVOK",
    "notams": [
     {
@@ -384,20 +384,36 @@
      "q": "QWULW"
     },
     {
-     "num": "A1671/26",
-     "raw": "A1671/26 NOTAMN\nQ)RKRR/QMRLC/IV/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611140300 C)2611150700\nD)0300-0700\nE)RWY 06R/24L CLSD DUE TO WIP",
-     "start": "2026-11-14T03:00:00.000Z",
-     "end": "2026-11-15T07:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QMRLC"
-    },
-    {
      "num": "A1685/26",
      "raw": "A1685/26 NOTAMC A1670/26\nQ)RKRR/QMRXX/IV/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611132328\nE)RWY 06L/24R NEW NOTAM TO FLW",
      "start": "2026-11-13T23:28:00Z",
      "end": "2026-11-16T23:28:00Z",
      "fir": "RKRR",
      "q": "QMRXX"
+    },
+    {
+     "num": "A1686/26",
+     "raw": "A1686/26 NOTAMN\nQ)RKRR/QMRLC/IV/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611142130 C)2611150300\nE)RWY 06L/24R CLSD DUE TO WIP",
+     "start": "2026-11-14T21:30:00Z",
+     "end": "2026-11-15T03:00:00Z",
+     "fir": "RKRR",
+     "q": "QMRLC"
+    },
+    {
+     "num": "A1687/26",
+     "raw": "A1687/26 NOTAMC A1671/26\nQ)RKRR/QMRXX/IV/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611132332\nE)RWY 06R/24L NEW NOTAM TO FLW",
+     "start": "2026-11-13T23:32:00Z",
+     "end": "2026-11-16T23:32:00Z",
+     "fir": "RKRR",
+     "q": "QMRXX"
+    },
+    {
+     "num": "A1688/26",
+     "raw": "A1688/26 NOTAMN\nQ)RKRR/QMRLC/IV/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611150300 C)2611150700\nE)RWY 06R/24L CLSD DUE TO WIP",
+     "start": "2026-11-15T03:00:00Z",
+     "end": "2026-11-15T07:00:00Z",
+     "fir": "RKRR",
+     "q": "QMRLC"
     },
     {
      "num": "Z0768/26",
@@ -4266,7 +4282,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-13T23:30:25+00:00",
- "notam_updated": "2026-11-13T23:30:25+00:00",
+ "notam_checked": "2026-11-14T00:00:42+00:00",
+ "notam_updated": "2026-11-14T00:00:42+00:00",
  "notam_source": "FAA NMS (시험)"
 }
