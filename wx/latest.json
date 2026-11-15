@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-15T11:30:24+00:00",
+ "updated": "2026-11-15T12:00:33+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -40,14 +40,6 @@
      "q": "QPIAU"
     },
     {
-     "num": "Z0809/26",
-     "raw": "Z0809/26 NOTAMN\nQ)RKRR/QWMLW/IV/BO/AW/000/002/3736N12647E001\nA)RKSS B)2611151000 C)2611151200\nE)FIREWORKS WILL TAKE PLACE AS FLW :\nA CIRCLE RADIUS 100M CENTERED ON 373547N1264720E\nF)SFC G)200FT AMSL",
-     "start": "2026-11-15T10:00:00Z",
-     "end": "2026-11-15T12:00:00Z",
-     "fir": "RKRR",
-     "q": "QWMLW"
-    },
-    {
      "num": "Z0810/26",
      "raw": "Z0810/26 NOTAMN\nQ)RKRR/QWMLW/IV/BO/AW/000/002/3736N12647E001\nA)RKSS B)2611291000 C)2611291200\nE)FIREWORKS WILL TAKE PLACE AS FLW :\nA CIRCLE RADIUS 100M CENTERED ON 373547N1264720E\nF)SFC G)200FT AMSL",
      "start": "2026-11-29T10:00:00.000Z",
@@ -68,7 +60,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 151100Z 34008KT 6000 NSC 11/06 Q1018 NOSIG",
+   "metar": "METAR RKSI 151130Z 34007KT 7000 NSC 11/06 Q1018 NOSIG",
    "taf": "TAF RKSI 151100Z 1512/1618 32010KT CAVOK TN07/1521Z TX16/1606Z BECMG 1513/1515 02006KT BECMG 1519/1521 09008KT 9999 SCT030",
    "notams": [
     {
@@ -3818,7 +3810,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-15T11:30:24+00:00",
- "notam_updated": "2026-11-15T11:30:24+00:00",
+ "notam_checked": "2026-11-15T12:00:33+00:00",
+ "notam_updated": "2026-11-15T12:00:33+00:00",
  "notam_source": "FAA NMS (시험)"
 }
