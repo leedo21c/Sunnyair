@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17T06:30:33+00:00",
+ "updated": "2026-11-17T07:00:33+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -63,13 +63,12 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 170600Z 26004KT 230V290 9999 SCT025 BKN040 BKN120 15/10 Q1018 NOSIG",
+   "metar": "METAR RKSI 170630Z 31006KT 9999 FEW025 BKN040 BKN110 14/10 Q1018 NOSIG",
    "taf": "TAF RKSI 170500Z 1706/1812 33008KT 9999 FEW015 BKN035 OVC060 TN07/1721Z TX09/1805Z TEMPO 1706/1712 6000 -RA FEW010 BKN025 OVC060 BECMG 1715/1717 33015G25KT BECMG 1719/1721 SCT040 TEMPO 1804/1807 30012KT -RA FEW015 BKN035 OVC070 BECMG 1808/1810 28012KT",
    "notams": [
     {
@@ -104,16 +103,14 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKNN": {
    "fir": false,
    "name": "",
    "metar": "",
    "taf": "",
-   "notams": [],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   "notams": []
   },
   "RKNW": {
    "fir": false,
@@ -129,8 +126,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKPC": {
    "fir": false,
@@ -170,8 +166,7 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKPK": {
    "fir": false,
@@ -307,8 +302,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKTU": {
    "fir": false,
@@ -420,8 +414,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKTN": {
    "fir": false,
@@ -469,8 +462,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKJJ": {
    "fir": false,
@@ -534,8 +526,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKNY": {
    "fir": false,
@@ -551,8 +542,7 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKPU": {
    "fir": false,
@@ -592,8 +582,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKJB": {
    "fir": false,
@@ -713,8 +702,7 @@
      "fir": "RKRR",
      "q": "QCATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKRR": {
    "fir": true,
@@ -3675,14 +3663,6 @@
      "q": "QRTCA"
     },
     {
-     "num": "E5261/26",
-     "raw": "E5261/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/150/3732N13022E016\nA)RKRR B)2611170400 C)2611170700\nE)TEMPO RESTRICTED AREA ACT AS FLW\nAREA BOUNDED BY THE FOLLOWING\n374200N1300910E-374200N1303410E-372200N1303410E-372200N1300910E-37420\n0N1300910E\nF)SFC G)FL150",
-     "start": "2026-11-17T04:00:00Z",
-     "end": "2026-11-17T07:00:00Z",
-     "fir": "RKRR",
-     "q": "QRTCA"
-    },
-    {
      "num": "E5262/26",
      "raw": "E5262/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/050/3720N13020E030\nA)RKRR B)2611170900 C)2611172100\nE)TEMPO RESTRICTED AREA ACT AS FLW\nAREA BOUNDED BY THE FOLLOWING\n374000N1295500E-374000N1304500E-370000N1304500E-370000N1295500E-37400\n0N1295500E\nF)SFC G)5000FT AMSL",
      "start": "2026-11-17T09:00:00.000Z",
@@ -3743,14 +3723,6 @@
      "raw": "E5278/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/090/3733N12713E002\nA)RKRR B)2611152300 C)2611220900\nD)15 2300-2359, 16-21 0000-0300 0400-0900 2300-2359, 22 0000-0300\n0400-0900\nE)TEMPO RESTRICTED AREA ACT AS FLW\nA CIRCLE RADIUS 1.5NM CENTERED ON 373300N1271317E\nF)SFC G)9000FT AMSL",
      "start": "2026-11-15T23:00:00.000Z",
      "end": "2026-11-22T09:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QRTCA"
-    },
-    {
-     "num": "E5279/26",
-     "raw": "E5279/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/090/3238N12508E046\nA)RKRR B)2611170500 C)2611170630\nE)TEMPO RESTRICTED AREA ACT AS FLW\nAREA BOUNDED BY THE FOLLOWING\n331000N1243005E-331002N1254558E-321844N1254548E-320640N1254044E-32062\n5N1243034E-331000N1243005E\nF)SFC G)9000FT AMSL",
-     "start": "2026-11-17T05:00:00Z",
-     "end": "2026-11-17T06:30:00Z",
      "fir": "RKRR",
      "q": "QRTCA"
     },
@@ -4235,6 +4207,22 @@
      "q": "QRTCA"
     },
     {
+     "num": "E5374/26",
+     "raw": "E5374/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/005/3501N12833E001\nA)RKRR B)2611222300 C)2611270900\nD)2300-0900\nE)TEMPO RESTRICTED AREA ACT AS FLW\nA CIRCLE RADIUS 0.5NM CENTERED ON 350114N1283250E\nF)SFC G)500FT AMSL",
+     "start": "2026-11-22T23:00:00Z",
+     "end": "2026-11-27T09:00:00Z",
+     "fir": "RKRR",
+     "q": "QRTCA"
+    },
+    {
+     "num": "E5375/26",
+     "raw": "E5375/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/100/3536N12956E017\nA)RKRR B)2612122300 C)2612130800\nE)TEMPO RESTRICTED AREA ACT AS FLW\nAREA BOUNDED BY THE FOLLOWING\n354700N1294005E-354300N1301212E-353736N1301212E-352756N1295148E-35280\n0N1294005E-354700N1294005E\nF)SFC G)FL100",
+     "start": "2026-12-12T23:00:00.000Z",
+     "end": "2026-12-13T08:00:00.000Z",
+     "fir": "RKRR",
+     "q": "QRTCA"
+    },
+    {
      "num": "G4039/26",
      "raw": "G4039/26 NOTAMR G4038/26\nQ)RKRR/QKKKK/K/K/K/000/999/3535N12700E999\nA)RKRR B)2610312242 C)2612011500EST\nE)CHECKLIST\nYEAR=2026 NIL\n\nLATEST PUBLICATIONS\nAIP AMDT : 11/26\nAIP SUP : 87/26\nAIC : 39/26\nAIRAC AIP AMDT : 11/26 (WEF 1600 UTC 25 NOV 2026)\nAIRAC AIP SUP : 88/26 (WEF 1600 UTC 25 NOV 2026)\n\nCHECKLIST OF SUP AND AIC\nAIRAC AIP SUP : 2/23, 102/25, 35/26, 41/26, 45/26, 46/26, 56/26,\n62/26, 63/26, 64/26, 65/26,  69/26, 70/26, 71/26, 80/26, 81/26,\n82/26, 83/26, 84/26, 88/26\n\nAIP SUP : 23/10, 67/25, 80/25, 82/25, 83/25, 101/25, 2/26, 16/26,\n20/26, 36/26, 38/26, 47/26, 48/26, 49/26, 50/26, 52/26, 53/26,\n54/26, 59/26, 60/26, 61/26, 66/26, 67/26, 68/26, 72/26, 73/26,\n74/26, 75/26, 76/26, 77/26, 78/26, 79/26, 85/26, 86/26, 87/26\n\nAIC : 5/21,  7/21,  2/25,  6/25,  9/25,  1/26,  8/26, 10/26, 11/26,\n16/26, 18/26, 20/26, 21/26, 22/26, 25/26, 26/26, 27/26, 28/26,\n29/26, 30/26, 32/26, 33/26, 34/26, 35/26, 36/26, 37/26, 38/26, 39/26",
      "start": "2026-10-31T22:42:00.000Z",
@@ -4346,11 +4334,10 @@
      "fir": "RKRR",
      "q": "QARCS"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   }
  },
- "notam_checked": "2026-11-17T06:30:33+00:00",
- "notam_updated": "2026-11-17T06:00:34+00:00",
+ "notam_checked": "2026-11-17T07:00:33+00:00",
+ "notam_updated": "2026-11-17T07:00:33+00:00",
  "notam_source": "FAA NMS (시험)"
 }
