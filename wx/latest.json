@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-18T23:30:29+00:00",
+ "updated": "2026-11-19T00:00:42+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -76,7 +76,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 182300Z 35008KT CAVOK 01/M05 Q1020 NOSIG",
+   "metar": "METAR RKSI 182330Z 34011KT 9999 FEW045 02/M06 Q1020 NOSIG",
    "taf": "TAF RKSI 182300Z 1900/2006 34010KT 9999 BKN045 TX05/1905Z TNM01/1921Z TX03/2005Z BECMG 1901/1903 33015G25KT BECMG 1910/1912 34010KT BECMG 1922/1924 33015G25KT BECMG 2004/2006 34010KT",
    "notams": [
     {
@@ -315,7 +315,7 @@
   "RKTU": {
    "fir": false,
    "name": "Cheonju Intl, 43, KR",
-   "metar": "SPECI RKTU 182312Z 31006KT 9999 -SN NSC 01/M05 Q1020 RMK CIG050",
+   "metar": "SPECI RKTU 182342Z 30005KT 9999 BKN040 01/M04 Q1020 RMK CIG040",
    "taf": "TAF RKTU 182300Z 1900/2006 30010KT 9999 BKN030 TX05/1906Z TNM05/1921Z TEMPO 1900/1906 4800 -RASN BR",
    "notams": [
     {
@@ -455,12 +455,44 @@
      "q": "QCPAK"
     },
     {
+     "num": "A1712/26",
+     "raw": "A1712/26 NOTAMC A1680/26\nQ)RKRR/QCPXX/I/BO/A/000/999/3554N12840E005\nA)RKTN B)2611190003\nE)PAR RWY 13R/31L, 31R NEW NOTAM TO FLW",
+     "start": "2026-11-19T00:03:00.000Z",
+     "end": "2026-11-22T00:03:00.000Z",
+     "fir": "RKRR",
+     "q": "QCPXX"
+    },
+    {
+     "num": "A1713/26",
+     "raw": "A1713/26 NOTAMN\nQ)RKRR/QCPAS/I/BO/A/000/999/3554N12840E005\nA)RKTN B)2611190400 C)2611190700\nE)PAR RWY 13R/31L, 31R U/S DUE TO MAINT",
+     "start": "2026-11-19T04:00:00.000Z",
+     "end": "2026-11-19T07:00:00.000Z",
+     "fir": "RKRR",
+     "q": "QCPAS"
+    },
+    {
      "num": "M0258/26",
      "raw": "M0258/26 NOTAMC M0257/26\n  Q) RKRR/QCPAK//////\n  A) RKTN\n  B) 2611160045\n\n   E) NOTAM REQUEST QUALIFY CHEKLIST\n    RKTN APP KS/0539893265 NOTAMN 2611160938\n    1)S 2)S 3)S 4)S 5)S 6)S 7)S",
      "start": "2026-11-16T00:45:00Z",
      "end": "2026-11-19T00:45:00Z",
      "fir": "RKRR",
      "q": "QCPAK"
+    },
+    {
+     "num": "M0259/26",
+     "raw": "M0259/26 NOTAMR M0255/26\n  Q) RKRR/QCPAS//////\n  A) RKTN\n  B) 2611190400\n  C) 2611190700\n  E) PAR RWY 13R/31L, 31R U/S DUE TO MAINT\n\n NOTAM REQUEST QUALITY CHECKLIST\n RKTN APP JI/0539893265 NOTAMN 2611182335\n 1)S 2)S 3)S 4)S 5)S 6)S 7)S",
+     "start": "2026-11-19T04:00:00Z",
+     "end": "2026-11-19T07:00:00Z",
+     "fir": "RKRR",
+     "q": "QCPAS"
+    },
+    {
+     "num": "M0260/26",
+     "raw": "M0260/26 NOTAMR M0256/26\n  Q) RKRR/QNNAS//////\n  A) RKTN\n  B) 2611190400\n  C) 2611190600\n  E) TACAN U/S DUE TO MAINT\n\n NOTAM REQUEST QUALITY CHECKLIST\n RKTN APP JI/0539893265 NOTAMN 2611182335\n 1)S 2)S 3)S 4)S 5)S 6)S 7)S",
+     "start": "2026-11-19T04:00:00Z",
+     "end": "2026-11-19T06:00:00Z",
+     "fir": "RKRR",
+     "q": "QNNAS"
     },
     {
      "num": "V0518/26",
@@ -4241,7 +4273,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-18T23:30:29+00:00",
- "notam_updated": "2026-11-18T23:30:29+00:00",
+ "notam_checked": "2026-11-19T00:00:42+00:00",
+ "notam_updated": "2026-11-19T00:00:42+00:00",
  "notam_source": "FAA NMS (시험)"
 }
