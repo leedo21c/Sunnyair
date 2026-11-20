@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-20T13:30:32+00:00",
+ "updated": "2026-11-20T14:00:43+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -71,13 +71,12 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 201300Z 01005KT CAVOK 01/M08 Q1023 NOSIG",
+   "metar": "METAR RKSI 201330Z 01008KT CAVOK 01/M08 Q1023 NOSIG",
    "taf": "TAF RKSI 201100Z 2012/2118 36007KT CAVOK TNM03/2021Z TX02/2105Z BECMG 2015/2017 07006KT BECMG 2021/2023 34008KT BECMG 2115/2117 07006KT",
    "notams": [
     {
@@ -112,16 +111,14 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKNN": {
    "fir": false,
    "name": "",
    "metar": "",
    "taf": "",
-   "notams": [],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   "notams": []
   },
   "RKNW": {
    "fir": false,
@@ -161,8 +158,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKPC": {
    "fir": false,
@@ -202,8 +198,7 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKPK": {
    "fir": false,
@@ -331,8 +326,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKTU": {
    "fir": false,
@@ -436,8 +430,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKTN": {
    "fir": false,
@@ -501,8 +494,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKJJ": {
    "fir": false,
@@ -606,8 +598,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKNY": {
    "fir": false,
@@ -623,8 +614,7 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKPU": {
    "fir": false,
@@ -664,13 +654,12 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKJB": {
    "fir": false,
    "name": "Muan Intl, 46, KR",
-   "metar": "SPECI RKJB 201310Z AUTO 10006KT 9000 ///004/// ///020/// 01/01 Q1023",
+   "metar": "SPECI RKJB 201351Z AUTO 09003KT 060V120 4300 RA ///014/// 01/01 Q1024",
    "taf": "TAF RKJB 201100Z 2012/2118 08006KT 6000 -RASN FEW010 BKN030 OVC060 TN01/2021Z TX07/2105Z BECMG 2013/2015 4000 -SNRA BECMG 2022/2024 9999 NSW BECMG 2101/2103 02010KT SCT035 BKN080 BECMG 2110/2112 08006KT TEMPO 2112/2115 4000 -SNRA FEW010 BKN030 OVC060",
    "notams": [
     {
@@ -793,8 +782,7 @@
      "fir": "RKRR",
      "q": "QCATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKRR": {
    "fir": true,
@@ -4426,11 +4414,10 @@
      "fir": "RKRR",
      "q": "QARCS"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   }
  },
- "notam_checked": "2026-11-20T13:30:32+00:00",
- "notam_updated": "2026-11-20T13:00:39+00:00",
+ "notam_checked": "2026-11-20T14:00:43+00:00",
+ "notam_updated": "2026-11-20T14:00:43+00:00",
  "notam_source": "FAA NMS (시험)"
 }
