@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-20T10:30:31+00:00",
+ "updated": "2026-11-20T11:00:38+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -76,7 +76,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 201000Z 36008KT CAVOK 01/M09 Q1021 NOSIG",
+   "metar": "METAR RKSI 201030Z 02006KT CAVOK 01/M09 Q1022 NOSIG",
    "taf": "TAF AMD RKSI 200847Z 2009/2112 34010KT CAVOK TNM03/2021Z TX02/2105Z TEMPO 2009/2012 34015G25KT",
    "notams": [
     {
@@ -1503,14 +1503,6 @@
      "q": "QRRCA"
     },
     {
-     "num": "D3516/26",
-     "raw": "D3516/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/050/3757N12423E019\nA)RKRR B)2611170500 C)2611201100\nD)17 0500-1400 2300-2359, 18 0000-1100, 19 0100-1400, 20 0100-1100\nE)DANGER AREA RK D131 ACT\nF)SFC G)5000FT AMSL",
-     "start": "2026-11-17T05:00:00Z",
-     "end": "2026-11-20T11:00:00Z",
-     "fir": "RKRR",
-     "q": "QRDCA"
-    },
-    {
      "num": "D3518/26",
      "raw": "D3518/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/005/3752N12914E024\nA)RKRR B)2611162300 C)2611220230\nD)16 2300-17 0900, 22 0030-0230\nE)DANGER AREA RK D135 ACT\nF)SFC G)500FT AMSL",
      "start": "2026-11-16T23:00:00.000Z",
@@ -1915,14 +1907,6 @@
      "raw": "D3619/26 NOTAMN\nQ)RKRR/QRRCA/IV/BO/W/000/003/3345N12613E006\nA)RKRR B)2611180000 C)2611211000\nD)18 0000-0800, 19-21 0000-1000\nE)RESTRICTED AREA RK R149 ACT\nF)SFC G)300FT AMSL",
      "start": "2026-11-18T00:00:00Z",
      "end": "2026-11-21T10:00:00Z",
-     "fir": "RKRR",
-     "q": "QRRCA"
-    },
-    {
-     "num": "D3620/26",
-     "raw": "D3620/26 NOTAMN\nQ)RKRR/QRRCA/IV/BO/W/000/001/3548N12617E005\nA)RKRR B)2611180700 C)2611201100\nD)0700-1100\nE)RESTRICTED AREA RK R151A ACT\nF)SFC G)100FT AMSL",
-     "start": "2026-11-18T07:00:00Z",
-     "end": "2026-11-20T11:00:00Z",
      "fir": "RKRR",
      "q": "QRRCA"
     },
@@ -4449,7 +4433,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-20T10:30:31+00:00",
- "notam_updated": "2026-11-20T10:30:31+00:00",
+ "notam_checked": "2026-11-20T11:00:38+00:00",
+ "notam_updated": "2026-11-20T11:00:38+00:00",
  "notam_source": "FAA NMS (시험)"
 }
