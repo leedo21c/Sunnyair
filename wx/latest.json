@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-21T10:30:30+00:00",
+ "updated": "2026-11-21T11:00:37+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -76,7 +76,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 211000Z 32015KT CAVOK 01/M10 Q1028 NOSIG",
+   "metar": "METAR RKSI 211030Z 31013KT CAVOK 01/M10 Q1028 NOSIG",
    "taf": "TAF RKSI 210500Z 2106/2212 34010KT CAVOK TNM03/2121Z TX05/2205Z TEMPO 2118/2122 04007KT BECMG 2122/2124 06005KT BECMG 2206/2208 14006KT 9999 BKN035",
    "notams": [
     {
@@ -503,22 +503,6 @@
      "q": "QMXAK"
     },
     {
-     "num": "C2133/26",
-     "raw": "C2133/26 NOTAMN\nQ)RKRR/QMXLC/IV/BO/A/000/999/3508N12649E005\nA)RKJJ B)2611220300 C)2611220900\nE)TWY G CLSD DUE TO WIP",
-     "start": "2026-11-22T03:00:00.000Z",
-     "end": "2026-11-22T09:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QMXLC"
-    },
-    {
-     "num": "C2134/26",
-     "raw": "C2134/26 NOTAMN\nQ)RKRR/QMRLC/IV/NBO/A/000/999/3508N12649E005\nA)RKJJ B)2611202300 C)2611220300\nD)20 2300-2359, 21 0000-0900 2300-2359, 22 0000-0300\nE)RWY 04R/22L CLSD DUE TO WIP",
-     "start": "2026-11-20T23:00:00Z",
-     "end": "2026-11-22T03:00:00Z",
-     "fir": "RKRR",
-     "q": "QMRLC"
-    },
-    {
      "num": "C2135/26",
      "raw": "C2135/26 NOTAMN\nQ)RKRR/QMRLC/IV/NBO/A/000/999/3508N12649E005\nA)RKJJ B)2611231200 C)2611252100\nD)1200-2100\nE)RWY 04L/22R CLSD DUE TO WIP",
      "start": "2026-11-23T12:00:00.000Z",
@@ -549,6 +533,30 @@
      "end": "2026-11-25T10:00:00.000Z",
      "fir": "RKRR",
      "q": "QPIAU"
+    },
+    {
+     "num": "C2148/26",
+     "raw": "C2148/26 NOTAMC C2134/26\nQ)RKRR/QMRAK/IV/NBO/A/000/999/3508N12649E005\nA)RKJJ B)2611211031\nE)RWY 04R/22L RESUMED NML OPS",
+     "start": "2026-11-21T10:31:00.000Z",
+     "end": "2026-11-24T10:31:00.000Z",
+     "fir": "RKRR",
+     "q": "QMRAK"
+    },
+    {
+     "num": "C2149/26",
+     "raw": "C2149/26 NOTAMC C2133/26\nQ)RKRR/QMXAK/IV/BO/A/000/999/3508N12649E005\nA)RKJJ B)2611211031\nE)TWY G RESUMED NML OPS",
+     "start": "2026-11-21T10:31:00Z",
+     "end": "2026-11-24T10:31:00Z",
+     "fir": "RKRR",
+     "q": "QMXAK"
+    },
+    {
+     "num": "C2150/26",
+     "raw": "C2150/26 NOTAMN\nQ)RKRR/QMXLC/IV/BO/A/000/999/3508N12649E005\nA)RKJJ B)2611212300 C)2611220900\nE)TWY G CLSD DUE TO WIP",
+     "start": "2026-11-21T23:00:00.000Z",
+     "end": "2026-11-22T09:00:00.000Z",
+     "fir": "RKRR",
+     "q": "QMXLC"
     },
     {
      "num": "V0486/26",
@@ -4313,7 +4321,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-21T10:30:30+00:00",
- "notam_updated": "2026-11-21T10:30:30+00:00",
+ "notam_checked": "2026-11-21T11:00:37+00:00",
+ "notam_updated": "2026-11-21T11:00:37+00:00",
  "notam_source": "FAA NMS (시험)"
 }
