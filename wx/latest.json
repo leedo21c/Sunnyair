@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-21T07:30:28+00:00",
+ "updated": "2026-11-21T08:00:38+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -71,12 +71,13 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
   },
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 210700Z 32006KT 270V350 CAVOK 02/M08 Q1026 NOSIG",
+   "metar": "METAR RKSI 210730Z 30008KT 260V320 CAVOK 02/M08 Q1027 NOSIG",
    "taf": "TAF RKSI 210500Z 2106/2212 34010KT CAVOK TNM03/2121Z TX05/2205Z TEMPO 2118/2122 04007KT BECMG 2122/2124 06005KT BECMG 2206/2208 14006KT 9999 BKN035",
    "notams": [
     {
@@ -103,14 +104,16 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
   },
   "RKNN": {
    "fir": false,
    "name": "",
    "metar": "",
    "taf": "",
-   "notams": []
+   "notams": [],
+   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
   },
   "RKNW": {
    "fir": false,
@@ -150,7 +153,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
   },
   "RKPC": {
    "fir": false,
@@ -190,7 +194,8 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ]
+   ],
+   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
   },
   "RKPK": {
    "fir": false,
@@ -318,7 +323,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
   },
   "RKTU": {
    "fir": false,
@@ -414,7 +420,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
   },
   "RKTN": {
    "fir": false,
@@ -478,7 +485,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
   },
   "RKJJ": {
    "fir": false,
@@ -574,7 +582,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
   },
   "RKNY": {
    "fir": false,
@@ -590,7 +599,8 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ]
+   ],
+   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
   },
   "RKPU": {
    "fir": false,
@@ -630,7 +640,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
   },
   "RKJB": {
    "fir": false,
@@ -758,7 +769,8 @@
      "fir": "RKRR",
      "q": "QCATT"
     }
-   ]
+   ],
+   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
   },
   "RKRR": {
    "fir": true,
@@ -4334,10 +4346,11 @@
      "fir": "RKRR",
      "q": "QARCS"
     }
-   ]
+   ],
+   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
   }
  },
- "notam_checked": "2026-11-21T07:30:28+00:00",
+ "notam_checked": "2026-11-21T08:00:38+00:00",
  "notam_updated": "2026-11-21T07:30:28+00:00",
  "notam_source": "FAA NMS (시험)"
 }
