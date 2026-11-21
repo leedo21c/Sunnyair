@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-21T08:30:37+00:00",
+ "updated": "2026-11-21T09:00:36+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -76,7 +76,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 210800Z 31009KT 280V340 CAVOK 01/M08 Q1027 NOSIG",
+   "metar": "METAR RKSI 210830Z 30007KT CAVOK 01/M08 Q1027 NOSIG",
    "taf": "TAF RKSI 210500Z 2106/2212 34010KT CAVOK TNM03/2121Z TX05/2205Z TEMPO 2118/2122 04007KT BECMG 2122/2124 06005KT BECMG 2206/2208 14006KT 9999 BKN035",
    "notams": [
     {
@@ -1803,14 +1803,6 @@
      "raw": "D3610/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/003/3503N12916E007\nA)RKRR B)2611170000 C)2611221100\nD)0000-1100\nE)DANGER AREA RK D143 ACT\nF)SFC G)300FT AMSL",
      "start": "2026-11-17T00:00:00Z",
      "end": "2026-11-22T11:00:00Z",
-     "fir": "RKRR",
-     "q": "QRDCA"
-    },
-    {
-     "num": "D3612/26",
-     "raw": "D3612/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/003/3304N12625E008\nA)RKRR B)2611170100 C)2611210900\nD)17 18 0100-0800, 20 21 0000-0900\nE)DANGER AREA RK D150 ACT\nF)SFC G)300FT AMSL",
-     "start": "2026-11-17T01:00:00Z",
-     "end": "2026-11-21T09:00:00Z",
      "fir": "RKRR",
      "q": "QRDCA"
     },
@@ -4333,11 +4325,19 @@
      "end": "2026-11-21T21:00:00.000Z",
      "fir": "RKRR",
      "q": "QARCS"
+    },
+    {
+     "num": "Z0891/26",
+     "raw": "Z0891/26 NOTAMN\nQ)RKRR/QARCS/I/NBO/E/000/999/3535N12700E999\nA)RKRR B)2611212100 C)2611222100\nE)CONDITIONAL ROUTE(CDR2) AVBL AS FLW, NEW\nNR ROUTE        TIME FM    TIME TO     LOWER LVL      UPPER LVL\n1 MASTA-UPGOS   11212100   11212245    6,000FT AMSL   FL600\n                11220000   11222100\n\n2 RUGMA-ANROD   11212100   11222100    11,000FT AMSL  FL600\n\n3 BOPTA-PONIK   11212100   11220300    FL150          FL600\n                11220700   11222100\n\n4 KARBU-LANAT   11212230   11220800    FL150          FL600\n                11221045   11221930",
+     "start": "2026-11-21T21:00:00.000Z",
+     "end": "2026-11-22T21:00:00.000Z",
+     "fir": "RKRR",
+     "q": "QARCS"
     }
    ]
   }
  },
- "notam_checked": "2026-11-21T08:30:37+00:00",
- "notam_updated": "2026-11-21T08:30:37+00:00",
+ "notam_checked": "2026-11-21T09:00:36+00:00",
+ "notam_updated": "2026-11-21T09:00:36+00:00",
  "notam_source": "FAA NMS (시험)"
 }
