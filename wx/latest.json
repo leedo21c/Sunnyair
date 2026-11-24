@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T10:30:29+00:00",
+ "updated": "2026-11-24T11:00:45+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -76,7 +76,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 241000Z 32016KT 9999 FEW040 00/M08 Q1026 NOSIG",
+   "metar": "METAR RKSI 241030Z 32015KT 9999 FEW040 00/M10 Q1026 NOSIG",
    "taf": "TAF RKSI 240500Z 2406/2512 34017G35KT 9999 SCT040 TNM03/2421Z TX09/2505Z BECMG 2412/2414 34010KT BECMG 2415/2417 04007KT BECMG 2500/2502 14008KT BECMG 2503/2505 23010KT BECMG 2507/2509 22015G25KT",
    "notams": [
     {
@@ -431,14 +431,6 @@
      "q": "QCPAS"
     },
     {
-     "num": "A1736/26",
-     "raw": "A1736/26 NOTAMN\nQ)RKRR/QICAS/I/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611240900 C)2611241100\nE)ILS RWY 06R/24L U/S DUE TO MAINT",
-     "start": "2026-11-24T09:00:00.000Z",
-     "end": "2026-11-24T11:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QICAS"
-    },
-    {
      "num": "A1739/26",
      "raw": "A1739/26 NOTAMN\nQ)RKRR/QCTXX/I/BO/AE/000/999/3643N12730E060\nA)RKTU B)2611301500 C)2702281459\nE)PRIMARY RADAR U/S\nRADAR SERVICES AVBL ON TRANSPONDER EQPT ACFT ONLY",
      "start": "2026-11-30T15:00:00.000Z",
@@ -533,22 +525,6 @@
      "end": "2026-12-31T16:00:00.000Z",
      "fir": "RKRR",
      "q": "QICAS"
-    },
-    {
-     "num": "C2148/26",
-     "raw": "C2148/26 NOTAMC C2134/26\nQ)RKRR/QMRAK/IV/NBO/A/000/999/3508N12649E005\nA)RKJJ B)2611211031\nE)RWY 04R/22L RESUMED NML OPS",
-     "start": "2026-11-21T10:31:00.000Z",
-     "end": "2026-11-24T10:31:00.000Z",
-     "fir": "RKRR",
-     "q": "QMRAK"
-    },
-    {
-     "num": "C2149/26",
-     "raw": "C2149/26 NOTAMC C2133/26\nQ)RKRR/QMXAK/IV/BO/A/000/999/3508N12649E005\nA)RKJJ B)2611211031\nE)TWY G RESUMED NML OPS",
-     "start": "2026-11-21T10:31:00Z",
-     "end": "2026-11-24T10:31:00Z",
-     "fir": "RKRR",
-     "q": "QMXAK"
     },
     {
      "num": "C2155/26",
@@ -4057,7 +4033,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-24T10:30:29+00:00",
- "notam_updated": "2026-11-24T10:30:29+00:00",
+ "notam_checked": "2026-11-24T11:00:45+00:00",
+ "notam_updated": "2026-11-24T11:00:45+00:00",
  "notam_source": "FAA NMS (시험)"
 }
