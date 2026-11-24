@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T00:30:28+00:00",
+ "updated": "2026-11-24T01:00:36+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -76,7 +76,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 240000Z 34013KT CAVOK 01/M09 Q1024 NOSIG",
+   "metar": "METAR RKSI 240030Z 34013KT CAVOK 02/M08 Q1024 NOSIG",
    "taf": "TAF RKSI 232300Z 2400/2506 34015G25KT 9999 SCT040 TX03/2405Z TNM03/2421Z TX09/2505Z BECMG 2403/2405 34017G35KT BECMG 2412/2414 34010KT BECMG 2415/2417 04007KT BECMG 2500/2502 14008KT BECMG 2503/2505 23010KT",
    "notams": [
     {
@@ -94,6 +94,14 @@
      "end": "2026-12-09T09:00:00Z",
      "fir": "RKRR",
      "q": "QFAHX"
+    },
+    {
+     "num": "A1733/26",
+     "raw": "A1733/26 NOTAMN\nQ)RKRR/QFMAU/IV/BO/A/000/999/3728N12626E005\nA)RKSI B)2611240029 C)2611240900\nE)TDWR(TERMINAL DOPPLER WEATHER RADAR) NOT AVBL DUE TO WIP",
+     "start": "2026-11-24T00:29:00.000Z",
+     "end": "2026-11-24T09:00:00.000Z",
+     "fir": "RKRR",
+     "q": "QFMAU"
     },
     {
      "num": "Z0870/26",
@@ -340,7 +348,7 @@
   "RKTU": {
    "fir": false,
    "name": "Cheonju Intl, 43, KR",
-   "metar": "METAR RKTU 240000Z 33003KT 9999 BKN045 02/M07 Q1023",
+   "metar": "SPECI RKTU 240034Z 35008G14KT 9999 -SN BKN045 BKN070 02/M09 Q1024 RMK CIG045",
    "taf": "TAF RKTU 232300Z 2400/2506 30010KT CAVOK TNM04/2421Z TX08/2506Z BECMG 2403/2404 30010G20KT",
    "notams": [
     {
@@ -414,6 +422,30 @@
      "end": "2026-11-26T13:50:00.000Z",
      "fir": "RKRR",
      "q": "QMXAK"
+    },
+    {
+     "num": "A1734/26",
+     "raw": "A1734/26 NOTAMN\nQ)RKRR/QCTAS/I/BO/AE/000/999/3643N12730E060\nA)RKTU B)2611261400 C)2611261700\nE)TAR U/S DUE TO MAINT",
+     "start": "2026-11-26T14:00:00.000Z",
+     "end": "2026-11-26T17:00:00.000Z",
+     "fir": "RKRR",
+     "q": "QCTAS"
+    },
+    {
+     "num": "A1735/26",
+     "raw": "A1735/26 NOTAMN\nQ)RKRR/QCPAS/I/BO/A/000/999/3643N12730E005\nA)RKTU B)2611241100 C)2611241300\nE)PAR RWY 06R/24L, RWY 24R U/S DUE TO MAINT",
+     "start": "2026-11-24T11:00:00.000Z",
+     "end": "2026-11-24T13:00:00.000Z",
+     "fir": "RKRR",
+     "q": "QCPAS"
+    },
+    {
+     "num": "A1736/26",
+     "raw": "A1736/26 NOTAMN\nQ)RKRR/QICAS/I/NBO/A/000/999/3643N12730E005\nA)RKTU B)2611240900 C)2611241100\nE)ILS RWY 06R/24L U/S DUE TO MAINT",
+     "start": "2026-11-24T09:00:00.000Z",
+     "end": "2026-11-24T11:00:00.000Z",
+     "fir": "RKRR",
+     "q": "QICAS"
     },
     {
      "num": "Z0768/26",
@@ -504,30 +536,6 @@
      "q": "QICAS"
     },
     {
-     "num": "C2136/26",
-     "raw": "C2136/26 NOTAMN\nQ)RKRR/QCPAS/I/BO/A/000/999/3508N12649E005\nA)RKJJ B)2611240800 C)2611241000\nE)PAR RWY 04L/22R U/S DUE TO MAINT",
-     "start": "2026-11-24T08:00:00.000Z",
-     "end": "2026-11-24T10:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QCPAS"
-    },
-    {
-     "num": "C2137/26",
-     "raw": "C2137/26 NOTAMN\nQ)RKRR/QNNAS/IV/BO/E/000/999/3508N12649E025\nA)RKJJ B)2611240800 C)2611241000\nE)TACAN KWJ CH88X U/S DUE TO MAINT",
-     "start": "2026-11-24T08:00:00.000Z",
-     "end": "2026-11-24T10:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QNNAS"
-    },
-    {
-     "num": "C2138/26",
-     "raw": "C2138/26 NOTAMN\nQ)RKRR/QPIAU/I/NBO/A/000/999/3508N12649E005\nA)RKJJ B)2611250800 C)2611251000\nE)SURVEILLANCE APCH TO RWY 04R/22L, 04L/22R NOT AVBL DUE TO MAINT",
-     "start": "2026-11-25T08:00:00.000Z",
-     "end": "2026-11-25T10:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QPIAU"
-    },
-    {
      "num": "C2148/26",
      "raw": "C2148/26 NOTAMC C2134/26\nQ)RKRR/QMRAK/IV/NBO/A/000/999/3508N12649E005\nA)RKJJ B)2611211031\nE)RWY 04R/22L RESUMED NML OPS",
      "start": "2026-11-21T10:31:00.000Z",
@@ -566,6 +574,54 @@
      "end": "2026-11-26T21:00:00.000Z",
      "fir": "RKRR",
      "q": "QMRLC"
+    },
+    {
+     "num": "C2166/26",
+     "raw": "C2166/26 NOTAMC C2137/26\nQ)RKRR/QNNXX/IV/BO/E/000/999/3508N12649E025\nA)RKJJ B)2611240033\nE)TACAN KWJ CH88X NEW NOTAM TO FLW",
+     "start": "2026-11-24T00:33:00.000Z",
+     "end": "2026-11-27T00:33:00.000Z",
+     "fir": "RKRR",
+     "q": "QNNXX"
+    },
+    {
+     "num": "C2167/26",
+     "raw": "C2167/26 NOTAMC C2136/26\nQ)RKRR/QCPXX/I/BO/A/000/999/3508N12649E005\nA)RKJJ B)2611240033\nE)PAR RWY 04L/22R NEW NOTAM TO FLW",
+     "start": "2026-11-24T00:33:00Z",
+     "end": "2026-11-27T00:33:00Z",
+     "fir": "RKRR",
+     "q": "QCPXX"
+    },
+    {
+     "num": "C2168/26",
+     "raw": "C2168/26 NOTAMN\nQ)RKRR/QNNAS/IV/BO/E/000/999/3508N12649E025\nA)RKJJ B)2611250850 C)2611251050\nE)TACAN KWJ CH88X U/S DUE TO MAINT",
+     "start": "2026-11-25T08:50:00Z",
+     "end": "2026-11-25T10:50:00Z",
+     "fir": "RKRR",
+     "q": "QNNAS"
+    },
+    {
+     "num": "C2169/26",
+     "raw": "C2169/26 NOTAMN\nQ)RKRR/QCPAS/I/BO/A/000/999/3508N12649E005\nA)RKJJ B)2611250850 C)2611251050\nE)PAR RWY 04L/22R, RWY 04R U/S DUE TO MAINT",
+     "start": "2026-11-25T08:50:00.000Z",
+     "end": "2026-11-25T10:50:00.000Z",
+     "fir": "RKRR",
+     "q": "QCPAS"
+    },
+    {
+     "num": "C2170/26",
+     "raw": "C2170/26 NOTAMC C2138/26\nQ)RKRR/QPICN/I/NBO/A/000/999/3508N12649E005\nA)RKJJ B)2611240038\nE)SURVEILLANCE APCH TO RWY 04R/22L, 04L/22R NOTAM CNL",
+     "start": "2026-11-24T00:38:00Z",
+     "end": "2026-11-27T00:38:00Z",
+     "fir": "RKRR",
+     "q": "QPICN"
+    },
+    {
+     "num": "C2171/26",
+     "raw": "C2171/26 NOTAMN\nQ)RKRR/QCTAS/I/BO/AE/000/999/3508N12649E060\nA)RKJJ B)2611251100 C)2611251300\nE)TAR U/S DUE TO MAINT",
+     "start": "2026-11-25T11:00:00Z",
+     "end": "2026-11-25T13:00:00Z",
+     "fir": "RKRR",
+     "q": "QCTAS"
     },
     {
      "num": "V0486/26",
@@ -4018,7 +4074,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-24T00:30:28+00:00",
- "notam_updated": "2026-11-24T00:30:28+00:00",
+ "notam_checked": "2026-11-24T01:00:36+00:00",
+ "notam_updated": "2026-11-24T01:00:36+00:00",
  "notam_source": "FAA NMS (시험)"
 }
