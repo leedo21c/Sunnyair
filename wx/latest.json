@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25T14:30:36+00:00",
+ "updated": "2026-11-25T15:00:45+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 251400Z 22015KT 9999 BKN040 11/04 Q1018 NOSIG",
+   "metar": "METAR RKSI 251430Z 22014KT 180V240 9999 BKN040 11/04 Q1018 NOSIG",
    "taf": "TAF RKSI 251100Z 2512/2618 22015G25KT 9999 SCT040 TN09/2519Z TX15/2605Z TEMPO 2512/2514 BKN040 BECMG 2518/2520 21012KT 6000 BKN030 BECMG 2523/2601 20015G25KT 9999 SCT030 BECMG 2606/2608 17010KT CAVOK",
    "notams": [
     {
@@ -685,22 +685,6 @@
      "end": "2026-11-30T15:00:00Z",
      "fir": "RKRR",
      "q": "QFWAS"
-    },
-    {
-     "num": "A1706/26",
-     "raw": "A1706/26 NOTAMR A1414/26\nQ)RKRR/QPDAU/I/NBO/A/000/999/3459N12623E005\nA)RKJB B)2611180435 C)2611251459\nE)FLW SID NOT AVBL DUE TO WIP\n- RWY 01 RNAV MAKSA 1N\n- RWY 01 RNAV DOTOL 1N\n- RWY 01 KWA 3N",
-     "start": "2026-11-18T04:35:00.000Z",
-     "end": "2026-11-25T14:59:00.000Z",
-     "fir": "RKRR",
-     "q": "QPDAU"
-    },
-    {
-     "num": "A1707/26",
-     "raw": "A1707/26 NOTAMR A1415/26\nQ)RKRR/QPIAU/I/NBO/A/000/999/3459N12623E005\nA)RKJB B)2611180437 C)2611251459\nE)INSTR APCH PROC NOT AVBL DUE TO WIP\n- ILS Y OR LOC Y RWY 01\n- ILS Z OR LOC Z RWY 01\n- RNP RWY 01 (LPV)\n- ILS Y OR LOC Y RWY 19\n- ILS Z OR LOC Z RWY 19\n- RNP RWY 19\n- VOR RWY 19",
-     "start": "2026-11-18T04:37:00.000Z",
-     "end": "2026-11-25T14:59:00.000Z",
-     "fir": "RKRR",
-     "q": "QPIAU"
     },
     {
      "num": "A1724/26",
@@ -4001,7 +3985,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-25T14:30:36+00:00",
- "notam_updated": "2026-11-25T14:30:36+00:00",
+ "notam_checked": "2026-11-25T15:00:45+00:00",
+ "notam_updated": "2026-11-25T15:00:45+00:00",
  "notam_source": "FAA NMS (시험)"
 }
