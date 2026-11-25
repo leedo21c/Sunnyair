@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25T17:30:29+00:00",
+ "updated": "2026-11-25T18:00:38+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 251700Z 22012KT 9999 BKN035 11/06 Q1019 NOSIG",
+   "metar": "METAR RKSI 251730Z 22012KT 9999 BKN035 11/06 Q1019 NOSIG",
    "taf": "TAF RKSI 251700Z 2518/2624 22015G25KT 6000 BKN035 TN10/2519Z TX15/2605Z TN10/2619Z BECMG 2519/2521 21012KT BECMG 2523/2601 20015G25KT 9999 SCT030 BECMG 2606/2608 17010KT CAVOK",
    "notams": [
     {
@@ -119,7 +119,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKSI HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKNN": {
    "fir": false,
@@ -198,8 +199,7 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ],
-   "notam_error": "RKPC HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKPK": {
    "fir": false,
@@ -351,7 +351,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKPK HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKTU": {
    "fir": false,
@@ -463,8 +464,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKTU HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKTN": {
    "fir": false,
@@ -600,8 +600,7 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ],
-   "notam_error": "RKNY HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKPU": {
    "fir": false,
@@ -641,7 +640,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKPU HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKJB": {
    "fir": false,
@@ -1232,14 +1232,6 @@
      "end": "2026-11-27T07:00:00.000Z",
      "fir": "RKRR",
      "q": "QRDCA"
-    },
-    {
-     "num": "D3381/26",
-     "raw": "D3381/26 NOTAMN\nQ)RKRR/QRACA/IV/NBO/W/200/220/3338N12455E123\nA)RKRR B)2611251245 C)2611251745\nE)MULTIPLE U.S. MIL ACT WILL BE CONDUCTED WI INCHEON FIR AS FLW:\n5NM EITHER SIDE OF CENTER LINE\n314314N1253948E-324700N1243300E-335000N1241000E-353200N1241000E\nATC WILL NOT CLEAR NON-PARTICIPATING FLT THRU THIS AREA\n\nRMK : INCLUDING ALL ATS RTE IN THIS AREA\nF)FL200 G)FL220",
-     "start": "2026-11-25T12:45:00Z",
-     "end": "2026-11-25T17:45:00Z",
-     "fir": "RKRR",
-     "q": "QRACA"
     },
     {
      "num": "D3432/26",
@@ -3977,11 +3969,10 @@
      "fir": "RKRR",
      "q": "QARCS"
     }
-   ],
-   "notam_error": "RKRR HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   }
  },
- "notam_checked": "2026-11-25T17:30:29+00:00",
- "notam_updated": "2026-11-25T17:30:29+00:00",
+ "notam_checked": "2026-11-25T18:00:38+00:00",
+ "notam_updated": "2026-11-25T18:00:38+00:00",
  "notam_source": "FAA NMS (시험)"
 }
