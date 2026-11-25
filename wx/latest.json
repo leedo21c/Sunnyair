@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25T19:30:30+00:00",
+ "updated": "2026-11-25T20:00:37+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 251900Z 22013G24KT 9999 BKN035 11/06 Q1018 NOSIG",
+   "metar": "METAR RKSI 251930Z 22013KT 9999 BKN035 11/06 Q1018 NOSIG",
    "taf": "TAF RKSI 251700Z 2518/2624 22015G25KT 6000 BKN035 TN10/2519Z TX15/2605Z TN10/2619Z BECMG 2519/2521 21012KT BECMG 2523/2601 20015G25KT 9999 SCT030 BECMG 2606/2608 17010KT CAVOK",
    "notams": [
     {
@@ -126,8 +126,7 @@
    "name": "",
    "metar": "",
    "taf": "",
-   "notams": [],
-   "notam_error": "RKNN HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   "notams": []
   },
   "RKNW": {
    "fir": false,
@@ -294,14 +293,6 @@
      "end": "2026-11-27T08:00:00.000Z",
      "fir": "RKRR",
      "q": "QMRXX"
-    },
-    {
-     "num": "A1743/26",
-     "raw": "A1743/26 NOTAMN\nQ)RKRR/QMRLC/IV/NBO/A/000/999/3511N12856E005\nA)RKPK B)2611241400 C)2611252000\nD)1400-2000\nE)RWY 18R/36L CLSD DUE TO MAINT\nRMK : EXCEPT CROSS RWY VIA TWY E1, E2, E3, E4, E5, C1, C2, C3, C4,\n      C5, C6, C7",
-     "start": "2026-11-24T14:00:00Z",
-     "end": "2026-11-25T20:00:00Z",
-     "fir": "RKRR",
-     "q": "QMRLC"
     },
     {
      "num": "V0469/26",
@@ -503,7 +494,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKTN HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKJJ": {
    "fir": false,
@@ -3970,7 +3962,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-25T19:30:30+00:00",
- "notam_updated": "2026-11-25T19:30:30+00:00",
+ "notam_checked": "2026-11-25T20:00:37+00:00",
+ "notam_updated": "2026-11-25T20:00:37+00:00",
  "notam_source": "FAA NMS (시험)"
 }
