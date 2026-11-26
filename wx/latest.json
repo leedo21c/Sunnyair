@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T12:12:36+00:00",
+ "updated": "2026-11-26T12:30:31+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -127,8 +127,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKSI HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKNN": {
    "fir": false,
@@ -496,7 +495,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKTN HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKJJ": {
    "fir": false,
@@ -616,7 +616,8 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ]
+   ],
+   "notam_error": "RKNY HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKPU": {
    "fir": false,
@@ -3979,7 +3980,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-26T12:12:36+00:00",
- "notam_updated": "2026-11-26T12:12:36+00:00",
+ "notam_checked": "2026-11-26T12:30:31+00:00",
+ "notam_updated": "2026-11-26T12:30:31+00:00",
  "notam_source": "FAA NMS (시험)"
 }
