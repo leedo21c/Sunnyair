@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T22:30:30+00:00",
+ "updated": "2026-11-26T23:00:36+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -92,7 +92,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 262200Z 19013KT 120V220 9999 SCT025 BKN045 14/12 Q1015 NOSIG",
+   "metar": "METAR RKSI 262230Z 18012KT 9999 SCT025 BKN045 13/12 Q1015 NOSIG",
    "taf": "TAF RKSI 261700Z 2618/2724 15007KT 9999 FEW025 TN09/2619Z TX15/2705Z TN05/2720Z BECMG 2620/2622 FEW010 BKN020 TEMPO 2702/2704 20010KT 6000 -RA BECMG 2705/2707 23010KT SCT025 BECMG 2709/2711 29010KT BKN025 BECMG 2715/2717 32015G25KT SCT030",
    "notams": [
     {
@@ -119,8 +119,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKSI HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKNN": {
    "fir": false,
@@ -143,7 +142,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKNW HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKPC": {
    "fir": false,
@@ -319,7 +319,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKPK HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKTU": {
    "fir": false,
@@ -415,8 +416,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKTU HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKTN": {
    "fir": false,
@@ -560,7 +560,8 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ]
+   ],
+   "notam_error": "RKNY HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKPU": {
    "fir": false,
@@ -720,7 +721,8 @@
      "fir": "RKRR",
      "q": "QCATT"
     }
-   ]
+   ],
+   "notam_error": "RKJB HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKRR": {
    "fir": true,
@@ -3891,7 +3893,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-26T22:30:30+00:00",
- "notam_updated": "2026-11-26T22:30:30+00:00",
+ "notam_checked": "2026-11-26T23:00:36+00:00",
+ "notam_updated": "2026-11-26T23:00:36+00:00",
  "notam_source": "FAA NMS (시험)"
 }
