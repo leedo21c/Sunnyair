@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T11:30:30+00:00",
+ "updated": "2026-11-26T12:00:42+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -92,7 +92,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 261100Z 12006KT CAVOK 11/10 Q1017 NOSIG",
+   "metar": "METAR RKSI 261130Z 14006KT CAVOK 10/09 Q1017 NOSIG",
    "taf": "TAF RKSI 261100Z 2612/2718 15007KT 9999 FEW025 TN10/2619Z TX15/2705Z BECMG 2620/2622 FEW010 BKN020 TEMPO 2702/2704 20010KT 6000 -RA BECMG 2705/2707 23010KT SCT025 BECMG 2709/2711 29010KT BKN025 BECMG 2715/2717 32015G25KT SCT030",
    "notams": [
     {
@@ -127,7 +127,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKSI HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKNN": {
    "fir": false,
@@ -143,14 +144,6 @@
    "taf": "",
    "notams": [
     {
-     "num": "C2164/26",
-     "raw": "C2164/26 NOTAMC C2140/26\nQ)RKRR/QCPXX/I/BO/A/000/999/3726N12758E005\nA)RKNW B)2611231132\nE)PAR RWY 03/21 NEW NOTAM TO FLW",
-     "start": "2026-11-23T11:32:00.000Z",
-     "end": "2026-11-26T11:32:00.000Z",
-     "fir": "RKRR",
-     "q": "QCPXX"
-    },
-    {
      "num": "Z0772/26",
      "raw": "Z0772/26 NOTAMN\nQ)RKRR/QFATT/IV/BO/A/000/999/3726N12758E005\nA)RKNW B)2611251600 C)2612091600\nE)TRIGGER NOTAM - PERM AIRAC AIP AMDT 11/26 WEF 1600 UTC 25 NOV 2026\n-ESTABLISHMENT AND INFORMATION OF SID, STAR, IAC PROCEDURES, CHART\n NUMBERS.\n-ESTABLISHMENT OF VISUAL SEGMENT SURFACE(VSS) PENETRATION.",
      "start": "2026-11-25T16:00:00.000Z",
@@ -158,8 +151,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKNW HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKPC": {
    "fir": false,
@@ -199,7 +191,8 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ]
+   ],
+   "notam_error": "RKPC HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKPK": {
    "fir": false,
@@ -3986,7 +3979,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-26T11:30:30+00:00",
- "notam_updated": "2026-11-26T11:30:30+00:00",
+ "notam_checked": "2026-11-26T12:00:42+00:00",
+ "notam_updated": "2026-11-26T12:00:42+00:00",
  "notam_source": "FAA NMS (시험)"
 }
