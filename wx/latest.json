@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-26T14:00:40+00:00",
+ "updated": "2026-11-26T14:30:31+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
    "name": "Seoul/Gimpo Intl, 41, KR",
-   "metar": "METAR RKSS 261300Z 16006KT CAVOK 09/08 Q1017 NOSIG",
+   "metar": "METAR RKSS 261400Z 15005KT CAVOK 09/08 Q1017 NOSIG",
    "taf": "TAF RKSS 261100Z 2612/2718 16007KT CAVOK TN08/2621Z TX18/2706Z BECMG 2619/2621 9999 BKN040 BECMG 2702/2704 23015G25KT 6000 -RA FEW010 BKN030 OVC070 BECMG 2707/2709 27006KT 9999 NSW SCT045",
    "notams": [
     {
@@ -92,7 +92,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 261330Z 15006KT CAVOK 10/09 Q1017 NOSIG",
+   "metar": "METAR RKSI 261400Z 15007KT CAVOK 10/09 Q1017 NOSIG",
    "taf": "TAF RKSI 261100Z 2612/2718 15007KT 9999 FEW025 TN10/2619Z TX15/2705Z BECMG 2620/2622 FEW010 BKN020 TEMPO 2702/2704 20010KT 6000 -RA BECMG 2705/2707 23010KT SCT025 BECMG 2709/2711 29010KT BKN025 BECMG 2715/2717 32015G25KT SCT030",
    "notams": [
     {
@@ -151,13 +151,12 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKNW HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKPC": {
    "fir": false,
    "name": "Jeju Intl, 49, KR",
-   "metar": "METAR RKPC 261300Z 24010KT CAVOK 15/09 Q1020 NOSIG",
+   "metar": "METAR RKPC 261400Z 25006KT 220V280 CAVOK 14/09 Q1020 NOSIG",
    "taf": "TAF RKPC 261100Z 2612/2718 21008KT CAVOK TN13/2619Z TX21/2705Z BECMG 2702/2704 24015G25KT BECMG 2711/2713 28012KT BECMG 2716/2718 30015G25KT 9999 SCT030",
    "notams": [
     {
@@ -197,7 +196,7 @@
   "RKPK": {
    "fir": false,
    "name": "Busan/Gimhae Intl, 48, KR",
-   "metar": "METAR RKPK 261300Z 36002KT 9999 FEW050 07/05 Q1020",
+   "metar": "METAR RKPK 261400Z 31001KT 9999 FEW050 06/05 Q1020",
    "taf": "TAF RKPK 261100Z 2612/2718 24006KT 9999 SCT050 TN07/2621Z TX19/2706Z BECMG 2702/2703 21012KT BECMG 2708/2709 21006KT",
    "notams": [
     {
@@ -333,7 +332,7 @@
   "RKTU": {
    "fir": false,
    "name": "Cheonju Intl, 43, KR",
-   "metar": "METAR RKTU 261300Z 25001KT 8000 FEW045 05/03 Q1018",
+   "metar": "METAR RKTU 261400Z 18001KT 8000 FEW040 04/02 Q1018",
    "taf": "TAF RKTU 261100Z 2612/2718 24006KT CAVOK TX18/2706Z TN01/2718Z BECMG 2617/2618 4800 BR SCT015 BKN030 BECMG 2623/2624 9999 NSW",
    "notams": [
     {
@@ -453,7 +452,7 @@
   "RKTN": {
    "fir": false,
    "name": "Daegu, 27, KR",
-   "metar": "METAR RKTN 261300Z 00000KT CAVOK 05/03 Q1020",
+   "metar": "METAR RKTN 261400Z 15001KT CAVOK 05/04 Q1020",
    "taf": "TAF RKTN 261100Z 2612/2718 24006KT 9999 FEW050 TN02/2621Z TX18/2706Z BECMG 2702/2703 24010KT BECMG 2709/2710 24006KT",
    "notams": [
     {
@@ -589,7 +588,7 @@
   "RKNY": {
    "fir": false,
    "name": "Yangyang Intl, 42, KR",
-   "metar": "METAR RKNY 261300Z AUTO 21002KT 9999 NCD 10/01 Q1016",
+   "metar": "METAR RKNY 261400Z AUTO 05002KT 9999 NCD 12/02 Q1016",
    "taf": "TAF RKNY 261100Z 2612/2718 27015G25KT 9999 FEW045 TN10/2619Z TX19/2705Z BECMG 2619/2621 BKN045 BECMG 2623/2701 28010KT SCT045 BECMG 2702/2704 27015G25KT BECMG 2705/2707 27018G35KT",
    "notams": [
     {
@@ -600,7 +599,8 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ]
+   ],
+   "notam_error": "RKNY HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKPU": {
    "fir": false,
@@ -645,7 +645,7 @@
   "RKJB": {
    "fir": false,
    "name": "Muan Intl, 46, KR",
-   "metar": "METAR RKJB 261300Z 17007KT 9999 FEW025 14/11 Q1019 NOSIG",
+   "metar": "METAR RKJB 261400Z AUTO 15005KT 9999 NCD 12/11 Q1019",
    "taf": "TAF RKJB 261100Z 2612/2718 15006KT 9999 SCT030 TN10/2619Z TX19/2705Z BECMG 2613/2615 4000 BR FEW010 BKN025 BECMG 2621/2623 21010KT 6000 NSW FEW025 BECMG 2703/2705 19015G25KT BECMG 2709/2711 26006KT BECMG 2713/2715 30015G25KT BKN030",
    "notams": [
     {
@@ -760,8 +760,7 @@
      "fir": "RKRR",
      "q": "QCATT"
     }
-   ],
-   "notam_error": "RKJB HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKRR": {
    "fir": true,
@@ -3940,7 +3939,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-26T14:00:40+00:00",
- "notam_updated": "2026-11-26T14:00:40+00:00",
+ "notam_checked": "2026-11-26T14:30:31+00:00",
+ "notam_updated": "2026-11-26T14:30:31+00:00",
  "notam_source": "FAA NMS (시험)"
 }
