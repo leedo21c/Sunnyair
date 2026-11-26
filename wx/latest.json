@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T12:30:31+00:00",
+ "updated": "2026-11-26T13:00:43+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -92,7 +92,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 261200Z 13005KT CAVOK 10/09 Q1017 NOSIG",
+   "metar": "METAR RKSI 261230Z 14006KT CAVOK 10/09 Q1017 NOSIG",
    "taf": "TAF RKSI 261100Z 2612/2718 15007KT 9999 FEW025 TN10/2619Z TX15/2705Z BECMG 2620/2622 FEW010 BKN020 TEMPO 2702/2704 20010KT 6000 -RA BECMG 2705/2707 23010KT SCT025 BECMG 2709/2711 29010KT BKN025 BECMG 2715/2717 32015G25KT SCT030",
    "notams": [
     {
@@ -134,7 +134,8 @@
    "name": "",
    "metar": "",
    "taf": "",
-   "notams": []
+   "notams": [],
+   "notam_error": "RKNN HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKNW": {
    "fir": false,
@@ -150,8 +151,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKNW HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKPC": {
    "fir": false,
@@ -327,7 +327,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKPK HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKTU": {
    "fir": false,
@@ -495,8 +496,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKTN HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKJJ": {
    "fir": false,
@@ -616,8 +616,7 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ],
-   "notam_error": "RKNY HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKPU": {
    "fir": false,
@@ -777,7 +776,8 @@
      "fir": "RKRR",
      "q": "QCATT"
     }
-   ]
+   ],
+   "notam_error": "RKJB HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKRR": {
    "fir": true,
@@ -1568,14 +1568,6 @@
      "end": "2026-11-28T11:00:00Z",
      "fir": "RKRR",
      "q": "QRDCA"
-    },
-    {
-     "num": "D3605/26",
-     "raw": "D3605/26 NOTAMN\nQ)RKRR/QRRCA/IV/BO/W/000/050/3739N12549E008\nA)RKRR B)2611240300 C)2611261300\nD)24 26 0300-1300\nE)RESTRICTED AREA RK R154 ACT\nF)SFC G)5000FT AMSL",
-     "start": "2026-11-24T03:00:00Z",
-     "end": "2026-11-26T13:00:00Z",
-     "fir": "RKRR",
-     "q": "QRRCA"
     },
     {
      "num": "D3606/26",
@@ -3194,14 +3186,6 @@
      "q": "QKKKK"
     },
     {
-     "num": "E5181/26",
-     "raw": "E5181/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/030/3615N12923E005\nA)RKRR B)2611260900 C)2611261300\nE)TEMPO RESTRICTED AREA ACT AS FLW\nA CIRCLE RADIUS 4NM CENTERED ON 361448N1292234E\nF)SFC G)3000FT AMSL",
-     "start": "2026-11-26T09:00:00.000Z",
-     "end": "2026-11-26T13:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QRTCA"
-    },
-    {
      "num": "E5195/26",
      "raw": "E5195/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/030/3635N12925E002\nA)RKRR B)2611170900 C)2611301300\nD)17 30 0900-1300\nE)TEMPO RESTRICTED AREA ACT AS FLW\nA CIRCLE RADIUS 1NM CENTERED ON 363456N1292446E\nF)SFC G)3000FT AMSL",
      "start": "2026-11-17T09:00:00Z",
@@ -3214,14 +3198,6 @@
      "raw": "E5275/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/005/3600N12825E002\nA)RKRR B)2612020000 C)2612020800\nE)TEMPO RESTRICTED AREA ACT AS FLW\nAREA BOUNDED BY THE FOLLOWING\n355929N1282444E-355958N1282503E-360001N1282447E-355956N1282447E-35594\n8N1282441E-355947N1282430E-355932N1282426E-355929N1282444E\nF)SFC G)500FT AGL",
      "start": "2026-12-02T00:00:00.000Z",
      "end": "2026-12-02T08:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QRTCA"
-    },
-    {
-     "num": "E5285/26",
-     "raw": "E5285/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/030/3615N12923E002\nA)RKRR B)2611260400 C)2611261300\nE)TEMPO RESTRICTED AREA ACT AS FLW\nA CIRCLE RADIUS 1NM CENTERED ON 361448N1292234E\nF)SFC G)3000FT AMSL",
-     "start": "2026-11-26T04:00:00.000Z",
-     "end": "2026-11-26T13:00:00.000Z",
      "fir": "RKRR",
      "q": "QRTCA"
     },
@@ -3980,7 +3956,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-26T12:30:31+00:00",
- "notam_updated": "2026-11-26T12:30:31+00:00",
+ "notam_checked": "2026-11-26T13:00:43+00:00",
+ "notam_updated": "2026-11-26T13:00:43+00:00",
  "notam_source": "FAA NMS (시험)"
 }
