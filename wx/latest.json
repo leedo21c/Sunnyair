@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T21:51:27+00:00",
+ "updated": "2026-11-26T22:00:39+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -119,8 +119,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKSI HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKNN": {
    "fir": false,
@@ -183,7 +182,8 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ]
+   ],
+   "notam_error": "RKPC HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKPK": {
    "fir": false,
@@ -415,7 +415,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKTU HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKTN": {
    "fir": false,
@@ -447,8 +448,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKTN HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKJJ": {
    "fir": false,
@@ -720,7 +720,8 @@
      "fir": "RKRR",
      "q": "QCATT"
     }
-   ]
+   ],
+   "notam_error": "RKJB HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKRR": {
    "fir": true,
@@ -3891,7 +3892,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-26T21:51:27+00:00",
- "notam_updated": "2026-11-26T21:51:27+00:00",
+ "notam_checked": "2026-11-26T22:00:39+00:00",
+ "notam_updated": "2026-11-26T22:00:39+00:00",
  "notam_source": "FAA NMS (시험)"
 }
