@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T06:30:29+00:00",
+ "updated": "2026-11-26T07:00:37+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -92,7 +92,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 260600Z 18017KT 9999 FEW030 15/08 Q1017 NOSIG",
+   "metar": "METAR RKSI 260630Z 19017KT 9999 FEW030 15/08 Q1017 NOSIG",
    "taf": "TAF RKSI 260500Z 2606/2712 20015G25KT 9999 SCT025 TN10/2619Z TX15/2705Z BECMG 2607/2609 17010KT BECMG 2620/2622 FEW010 BKN020 TEMPO 2702/2704 20010KT 6000 -RA BECMG 2705/2707 23008KT SCT025 BECMG 2710/2712 29008KT BKN025",
    "notams": [
     {
@@ -143,14 +143,6 @@
    "metar": "",
    "taf": "",
    "notams": [
-    {
-     "num": "C2141/26",
-     "raw": "C2141/26 NOTAMN\nQ)RKRR/QICAS/I/NBO/A/000/999/3726N12758E005\nA)RKNW B)2611260400 C)2611260700\nE)ILS RWY 03/21 U/S DUE TO MAINT",
-     "start": "2026-11-26T04:00:00Z",
-     "end": "2026-11-26T07:00:00Z",
-     "fir": "RKRR",
-     "q": "QICAS"
-    },
     {
      "num": "C2164/26",
      "raw": "C2164/26 NOTAMC C2140/26\nQ)RKRR/QCPXX/I/BO/A/000/999/3726N12758E005\nA)RKNW B)2611231132\nE)PAR RWY 03/21 NEW NOTAM TO FLW",
@@ -264,14 +256,6 @@
      "q": "QICAS"
     },
     {
-     "num": "A1576/26",
-     "raw": "A1576/26 NOTAMR A1411/26\nQ)RKRR/QMPLC/IV/BO/A/000/999/3511N12856E005\nA)RKPK B)2610270739 C)2611301500\nE)ACFT STAND NR 39 AND NR 59 CLSD DUE TO WIP",
-     "start": "2026-10-27T07:39:00.000Z",
-     "end": "2026-11-30T15:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QMPLC"
-    },
-    {
      "num": "A1609/26",
      "raw": "A1609/26 NOTAMN\nQ)RKRR/QCPAS/I/BO/A/000/999/3511N12856E005\nA)RKPK B)2611021400 C)2701290000\nD)1400-0000\nE)PAR RWY 36L, 36R U/S DUE TO MAINT",
      "start": "2026-11-02T14:00:00.000Z",
@@ -302,6 +286,14 @@
      "end": "2026-11-27T08:00:00.000Z",
      "fir": "RKRR",
      "q": "QMRXX"
+    },
+    {
+     "num": "A1753/26",
+     "raw": "A1753/26 NOTAMR A1576/26\nQ)RKRR/QMPLC/IV/BO/A/000/999/3511N12856E005\nA)RKPK B)2611260655 C)2612311500\nE)ACFT STAND NR 39 AND NR 59 CLSD DUE TO WIP",
+     "start": "2026-11-26T06:55:00.000Z",
+     "end": "2026-12-31T15:00:00.000Z",
+     "fir": "RKRR",
+     "q": "QMPLC"
     },
     {
      "num": "V0469/26",
@@ -615,7 +607,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKJJ HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKNY": {
    "fir": false,
@@ -1540,14 +1533,6 @@
      "raw": "D3598/26 NOTAMN\nQ)RKRR/QRRCA/IV/BO/W/000/025/3700N12556E016\nA)RKRR B)2611222300 C)2611270900\nD)22 2300-2359, 23 24 0000-1000 2300-2359, 25 26 0000-0900\n2300-2359, 27 0000-0900\nE)RESTRICTED AREA RK R124 ACT\nF)SFC G)2500FT AMSL",
      "start": "2026-11-22T23:00:00Z",
      "end": "2026-11-27T09:00:00Z",
-     "fir": "RKRR",
-     "q": "QRRCA"
-    },
-    {
-     "num": "D3599/26",
-     "raw": "D3599/26 NOTAMN\nQ)RKRR/QRRCA/IV/BO/W/000/035/3433N12521E005\nA)RKRR B)2611230300 C)2611260600\nD)23 24 0300-0900, 25 2000-26 0600\nE)RESTRICTED AREA RK R125 ACT\nF)SFC G)3500FT AMSL",
-     "start": "2026-11-23T03:00:00Z",
-     "end": "2026-11-26T06:00:00Z",
      "fir": "RKRR",
      "q": "QRRCA"
     },
@@ -3768,14 +3753,6 @@
      "q": "QRTCN"
     },
     {
-     "num": "E5452/26",
-     "raw": "E5452/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/010/3647N12733E001\nA)RKRR B)2611260045 C)2611260700\nE)TEMPO RESTRICTED AREA ACT AS FLW\nA CIRCLE RADIUS 1NM CENTERED ON 364700N1273300E\nF)SFC G)1000FT AMSL",
-     "start": "2026-11-26T00:45:00.000Z",
-     "end": "2026-11-26T07:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QRTCA"
-    },
-    {
      "num": "E5453/26",
      "raw": "E5453/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/030/3557N12631E002\nA)RKRR B)2612080930 C)2612081300\nE)TEMPO RESTRICTED AREA ACT AS FLW\nA CIRCLE RADIUS 1NM CENTERED ON 355643N1263106E\nF)SFC G)3000FT AMSL",
      "start": "2026-12-08T09:30:00.000Z",
@@ -4071,11 +4048,10 @@
      "fir": "RKRR",
      "q": "QARCS"
     }
-   ],
-   "notam_error": "RKRR HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   }
  },
- "notam_checked": "2026-11-26T06:30:29+00:00",
- "notam_updated": "2026-11-26T06:30:29+00:00",
+ "notam_checked": "2026-11-26T07:00:37+00:00",
+ "notam_updated": "2026-11-26T07:00:37+00:00",
  "notam_source": "FAA NMS (시험)"
 }
