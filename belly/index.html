@@ -114,6 +114,10 @@ nav.tabs .on{color:var(--ink);font-weight:700}
 .seg .on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .tot{font:700 40px/1 "Barlow Condensed";margin:8px 0 12px}
 .hide{display:none}
+.air{display:grid;grid-template-columns:minmax(0,1fr) 72px 60px 36px;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.air input{height:44px;border:1px solid var(--line);border-radius:8px;background:var(--pan);padding:0 8px;font-size:16px;width:100%}
+.air .u{grid-column:1/-1;font-size:13px;color:var(--mut);margin-top:-2px}
+.airh{display:grid;grid-template-columns:minmax(0,1fr) 72px 60px 36px;gap:6px;font-size:12px;color:var(--mut);margin-top:10px}
 .file{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;flex:1;cursor:pointer}
 .file input{position:absolute;inset:0;opacity:0;cursor:pointer}
 .ph2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
@@ -150,7 +154,8 @@ select{height:44px;border:1px solid var(--line);border-radius:10px;background:va
 <div><b class="num" id="prot">0g</b><span>단백질</span><div class="pbar"><i id="pfill"></i></div></div>
 <div><b class="num" id="exd">0/4</b><span>운동 완료</span></div>
 </div></div>
-<h2>오늘 먹은 것 <small>탭해서 삭제</small></h2>
+<h2>오늘 먹은 것 <small>× 눌러 삭제</small></h2>
+<div class="row hide" id="aiRow" style="margin-bottom:6px"><label class="btn file">음식 사진으로 추가<input type="file" accept="image/*" id="aiFile"></label></div>
 <div id="meals"></div>
 <h2>하루 체크리스트 <small>시간은 기준, 순서대로</small></h2>
 <ul class="cl" id="cl"></ul>
@@ -172,6 +177,13 @@ select{height:44px;border:1px solid var(--line);border-radius:10px;background:va
 </section>
 
 <section id="t-log" class="hide">
+<h2>이번 주 식단 <small id="wkr"></small></h2>
+<div class="stats" style="margin-top:4px">
+<div><b class="num" id="w-k">–</b><span>하루 평균 kcal</span></div>
+<div><b class="num" id="w-p">–</b><span>하루 평균 단백질</span></div>
+<div><b class="num" id="w-d">0/7</b><span>기록한 날</span></div>
+</div>
+<p class="hint" id="w-note"></p>
 <h2>체중 <small>매일 아침 공복</small></h2>
 <div class="row"><input class="inp num" id="win" type="number" step="0.1" inputmode="decimal" placeholder="69.0"><span>kg</span><button class="btn" id="wsave">기록</button></div>
 <div class="stats">
@@ -219,6 +231,14 @@ select{height:44px;border:1px solid var(--line);border-radius:10px;background:va
 <div class="hint">끼니</div><div class="seg" id="slot"></div>
 <div class="tot num" id="sh-t"></div>
 <div class="row"><button class="btn ghost" id="sh-c" style="flex:1">취소</button><button class="btn" id="sh-a" style="flex:2">추가</button></div>
+</div></div>
+
+<div class="sheet" id="ais"><div>
+<h3>사진 속 음식</h3><div class="hint" id="ai-st"></div>
+<div id="ai-list"></div>
+<div class="hint" style="margin-top:8px">끼니</div><div class="seg" id="ai-slot"></div>
+<div class="tot num" id="ai-t"></div>
+<div class="row"><button class="btn ghost" id="ai-c" style="flex:1">취소</button><button class="btn" id="ai-a" style="flex:2">모두 추가</button></div>
 </div></div>
 
 <script>
@@ -291,6 +311,32 @@ async function renderPhotos(){
   $("todayPh").innerHTML=tp;A.innerHTML=opts;B.innerHTML=opts;A.value=a;B.value=b;$("cmp").innerHTML=cmp;$("strip").innerHTML=strip;
 }
 
+/* 음식 사진 인식 (Claude 안에서만) */
+let sampler=null,aiItems=[],aiSlot=0,aiAbort=null;
+function renderAI(){
+  $("ai-list").innerHTML=aiItems.length?'<div class="airh"><span>음식</span><span>kcal</span><span>단백질g</span><span></span></div>'+aiItems.map((x,i)=>'<div class="air"><input data-ai="'+i+'|n" aria-label="음식 이름"><input class="num" type="number" inputmode="numeric" data-ai="'+i+'|k" aria-label="칼로리"><input class="num" type="number" inputmode="numeric" data-ai="'+i+'|p" aria-label="단백질"><button class="x" data-aidel="'+i+'" aria-label="빼기">×</button><span class="u"></span></div>').join(""):"";
+  document.querySelectorAll("#ai-list .air").forEach((row,i)=>{const x=aiItems[i];row.querySelector('[data-ai$="|n"]').value=x.n;row.querySelector('[data-ai$="|k"]').value=x.k;row.querySelector('[data-ai$="|p"]').value=x.p;row.querySelector(".u").textContent=x.u});
+  $("ai-slot").innerHTML=SLOTS.map((s,i)=>'<button class="'+(i===aiSlot?"on":"")+'" data-as="'+i+'">'+s+'</button>').join("");
+  aiTotal();$("ai-a").disabled=!aiItems.length;
+}
+function aiTotal(){const k=aiItems.reduce((a,x)=>a+(+x.k||0),0),p=aiItems.reduce((a,x)=>a+(+x.p||0),0);$("ai-t").textContent=aiItems.length?"+ "+fmt(k)+" kcal · "+Math.round(p)+"g":""}
+const clampN=(v,m)=>Math.max(0,Math.min(m,Math.round(+v||0)));
+async function analyze(file){
+  aiItems=[];aiSlot=autoSlot();$("ai-st").textContent="사진을 보는 중… 10초쯤 걸려요";renderAI();$("ais").classList.add("open");
+  try{
+    const blob=await compress(file);aiAbort=new AbortController();
+    const prompt="이 음식 사진을 보고 한 사람이 먹을 음식을 항목별로 추정하세요. 한국 음식 1인분 상식을 기준으로, 사진에 보이는 양(그릇 크기, 남은 양)에 맞춰 조정하세요. 반찬·소스·음료도 보이면 따로 넣으세요. 반드시 JSON만 답하세요: {\"items\":[{\"name\":\"한국어 음식 이름\",\"amount\":\"양 설명, 예: 1공기 210g\",\"kcal\":정수,\"protein\":단백질 g 정수}],\"note\":\"한 줄 메모(확실하지 않은 점)\"}. 음식이 없으면 items는 빈 배열.";
+    const r=await sampler.json(prompt,{images:[blob],modelTier:"default",signal:aiAbort.signal});
+    const arr=r&&Array.isArray(r.items)?r.items.slice(0,12):[];
+    aiItems=arr.map(x=>({n:String(x.name||"음식").slice(0,40),u:String(x.amount||"사진 추정").slice(0,40),k:clampN(x.kcal,4000),p:clampN(x.protein,300)}));
+    $("ai-st").textContent=aiItems.length?(r.note?String(r.note).slice(0,120)+" · ":"")+"숫자는 눌러서 고칠 수 있어요.":"음식을 찾지 못했어요. 다른 사진으로 해 보세요.";
+  }catch(e){
+    if(e&&e.name==="AbortError")return;
+    $("ai-st").textContent=e&&e.code==="rate_limited"?"요청이 많아요. 잠시 후 다시 해 주세요.":e&&e.code==="not_granted"?"사진 인식 권한이 없어요.":"분석하지 못했어요. 다시 시도하거나 음식 사전에서 골라 주세요.";
+  }
+  renderAI();
+}
+
 let db=null,uid=null;const timers={},chains={},pending={};
 function persist(key){
   try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}
@@ -318,8 +364,8 @@ function renderToday(){
   const dd=day(cur);$("exd").textContent=EX.filter(r=>routineDone(r,dd.e[r.id])).length+"/4";
   $("meals").innerHTML=SLOTS.map((s,si)=>{
     const items=dd.f.map((x,i)=>({...x,i})).filter(x=>x.m===si);
-    const sum=items.reduce((a,x)=>a+x.k*x.q,0);
-    return '<div class="meal"><h3><span>'+s+'</span><span class="num">'+fmt(sum)+' kcal</span></h3>'+
+    const sum=items.reduce((a,x)=>a+x.k*x.q,0),ps=items.reduce((a,x)=>a+x.p*x.q,0);
+    return '<div class="meal"><h3><span>'+s+'</span><span class="num">'+fmt(sum)+' kcal'+(ps?' · '+Math.round(ps)+'g':'')+'</span></h3>'+
     items.map(x=>'<div class="fi"><span class="n">'+esc(x.n)+(x.q!==1?' ×'+x.q:'')+' <span class="hint">'+esc(x.u)+'</span></span><span class="k num">'+fmt(x.k*x.q)+'</span><button class="x" data-del="'+x.i+'" aria-label="삭제">×</button></div>').join("")+
     '<button class="addb" data-add="'+si+'">+ '+s+' 추가</button></div>'}).join("");
   const w=S.meta.w[cur];
@@ -366,7 +412,18 @@ function drawChart(){
   g+='<text x="'+L+'" y="'+(H-8)+'" font-size="12" fill="currentColor" opacity=".5">'+dates[0].slice(5).replace("-","/")+'</text><text x="'+(W-R)+'" y="'+(H-8)+'" text-anchor="end" font-size="12" fill="currentColor" opacity=".5">'+dates[dates.length-1].slice(5).replace("-","/")+'</text>';
   svg.style.color="var(--ink)";svg.innerHTML=g;
 }
+function renderWeek(){
+  const st=S.meta.set,ws=weekStart(cur),days=[...Array(7)].map((_,i)=>addD(ws,i)).filter(d=>d<=today());
+  $("wkr").textContent=md(ws)+" ~ "+md(addD(ws,6));
+  const logged=days.filter(d=>S.days[d]&&S.days[d].f&&S.days[d].f.length);
+  $("w-d").textContent=logged.length+"/7";
+  if(!logged.length){$("w-k").textContent="–";$("w-p").textContent="–";$("w-note").textContent="음식을 기록하면 이번 주 평균이 나와요.";return}
+  let k=0,p=0;logged.forEach(d=>{const t=totals(d);k+=t.k;p+=t.p});k/=logged.length;p/=logged.length;
+  $("w-k").textContent=fmt(k);$("w-p").textContent=Math.round(p)+"g";
+  const pr=p/st.prot;$("w-note").textContent=(k>st.kcal*1.05?"평균 칼로리가 목표보다 높아요. ":"칼로리는 목표 안쪽이에요. ")+(pr<0.8?"단백질이 부족해요 — 간식을 쉐이크·계란으로 바꿔 보세요.":pr<1?"단백질 조금만 더 채우면 돼요.":"단백질 목표 달성 중이에요.");
+}
 function renderLog(){
+  renderWeek();
   const st=S.meta.set,w=S.meta.w,dates=Object.keys(w).sort();
   $("win").value=w[cur]!=null?w[cur]:"";
   ["kcal","prot","start","goal"].forEach(k=>{const el=$("set-"+k);if(document.activeElement!==el)el.value=st[k]});
@@ -408,6 +465,8 @@ document.addEventListener("click",e=>{
   else if(d.f!=null){if(!$("sheet").classList.contains("open")&&tab==="food"&&slot==null)slot=autoSlot();openSheet(+d.f)}
   else if(d.q){qty=+d.q;renderSheet()}
   else if(d.s!=null){slot=+d.s;renderSheet()}
+  else if(d.as!=null){aiSlot=+d.as;renderAI()}
+  else if(d.aidel!=null){aiItems.splice(+d.aidel,1);renderAI()}
   else if(d.set){const[r,ii,si]=d.set.split("|");const rec=dd.e[r]||(dd.e[r]=[]);const v=rec[+ii]||0;rec[+ii]=v>+si?+si:+si+1;persist(cur);renderEx();renderToday()}
 });
 $("sh-c").onclick=closeSheet;$("sheet").onclick=e=>{if(e.target===$("sheet"))closeSheet()};
@@ -426,10 +485,15 @@ $("wsave").onclick=()=>{const v=parseFloat($("win").value);if(!(v>30&&v<200)){$(
 ["kcal","prot","start","goal"].forEach(k=>{$("set-"+k).onchange=e=>{const v=parseFloat(e.target.value);if(v>0){S.meta.set[k]=v;persist("meta");renderAll()}}});
 $("bcopy").onclick=async()=>{const t=JSON.stringify(S);$("btext").value=t;try{await navigator.clipboard.writeText(t);stat("백업을 복사했어요")}catch(e){$("btext").select();stat("아래 글상자 내용을 길게 눌러 복사하세요")}};
 $("bload").onclick=()=>{try{const v=JSON.parse($("btext").value);if(!v.meta||!v.days)throw 0;S={meta:{set:{...DEF,...v.meta.set},w:v.meta.w||{}},days:v.days};persist("meta");Object.keys(S.days).forEach(persist);renderAll();stat("백업을 불러왔어요")}catch(e){stat("백업 형식이 맞지 않아요")}};
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSheet();$("ais").classList.remove("open")}});
 const ro=new ResizeObserver(drawChart);ro.observe($("fig"));
 ["front","side"].forEach(v=>{$("pf-"+v).onchange=e=>{const f=e.target.files&&e.target.files[0];if(f)savePhoto(v,f);e.target.value=""}});
-$("cmpA").onchange=renderPhotos;$("cmpB").onchange=renderPhotos;
+$("cmpA").onchange=renderPhotos;
+$("aiFile").onchange=e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(f&&sampler)analyze(f)};
+$("ai-list").addEventListener("input",e=>{const a=e.target.dataset.ai;if(!a)return;const[i,f]=a.split("|");aiItems[+i][f]=f==="n"?e.target.value:clampN(e.target.value,f==="k"?4000:300);aiTotal()});
+$("ai-c").onclick=()=>{if(aiAbort)aiAbort.abort();$("ais").classList.remove("open")};
+$("ais").onclick=e=>{if(e.target===$("ais"))$("ai-c").onclick()};
+$("ai-a").onclick=()=>{const dd=day(cur);aiItems.filter(x=>x.n.trim()).forEach(x=>dd.f.push({n:x.n.trim(),u:x.u+" · 사진",k:+x.k||0,p:+x.p||0,q:1,m:aiSlot}));persist(cur);$("ais").classList.remove("open");renderAll()};$("cmpB").onchange=renderPhotos;
 slot=autoSlot();
 renderAll();
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
@@ -437,6 +501,7 @@ openIDB().then(async d=>{idb=d;(await idbReq(store("readonly").getAllKeys())).fo
 
 (async()=>{
   if(!window.claude||typeof window.claude.use!=="function")return;
+  window.claude.use("sample").then(async s=>{if(!s)return;try{const l=await s.limits();if(!l||!l.images)return}catch(e){return}sampler=s;$("aiRow").classList.remove("hide")}).catch(()=>{});
   try{
     const d=await window.claude.use("db"),u=await window.claude.use("user");if(!d||!u)return;
     const id=await u.id();if(!id)return;db=d;uid=id;stat("클라우드 연결 중…");
