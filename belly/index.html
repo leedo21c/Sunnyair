@@ -171,6 +171,7 @@ select{height:44px;border:1px solid var(--line);border-radius:10px;background:va
 
 <section id="t-ex" class="hide">
 <h2>이번 주 <small id="wrange"></small></h2>
+<p class="hint" id="lvl" style="margin:-4px 0 0"></p>
 <div class="week" id="week"></div>
 <div id="routines"></div>
 <p class="hint">뱃살은 운동보다 식단이 7할이에요. 운동은 칼로리 소모와 몸 조이는 용도로, 무겁게 할 필요 없습니다.</p>
@@ -258,10 +259,12 @@ const SLOTS=["아침","점심","저녁","간식"];
 const QTY=[0.5,1,1.5,2];
 const CL=[["07:00","공복 체중 재기","기록 탭에 입력하면 자동 체크"],["07:05","정면·측면 사진","기록 탭에 올리면 자동 체크"],["07:10","물 500ml",""],["08:00","아침에 단백질 25g 이상","계란 2개 + 요거트 정도"],["12:30","점심 밥은 2/3공기",""],["15:30","간식은 단백질로","쉐이크·계란·요거트"],["19:00","저녁은 채소 먼저, 8시 전 마무리",""],["상시","물 2L 채우기",""],["21:00","야식·술 없이 마무리",""],["23:00","7시간 수면",""]];
 const EX=[
-{id:"walk",name:"걷기 8,000보",goal:6,note:"뱃살 감량의 기본. 공항·출퇴근 이동 다 포함, 나눠 걸어도 됩니다.",items:[["하루 8,000보 이상",1]]},
-{id:"circuit",name:"전신 서킷",goal:3,note:"세트 사이 30~60초 휴식, 약 25분. 근육 키우기보다 칼로리 소모용.",items:[["스쿼트 15회",3],["푸시업 10회 (힘들면 무릎 대고)",3],["런지 좌우 10회씩",3],["물병·덤벨 로우 12회",3]]},
-{id:"cardio",name:"유산소 30분",goal:3,note:"빠르게 걷기·인클라인 걷기·자전거. 숨은 차지만 대화는 되는 강도.",items:[["유산소 30분",1]]},
-{id:"core",name:"코어 10분",goal:3,note:"복근은 체지방이 빠져야 보여요. 코어는 배를 조이고 자세를 잡는 용도.",items:[["플랭크 30초",3],["데드버그 좌우 10회",3],["레그레이즈 12회",3]]}
+{id:"walk",name:"걷기 8,000보",goal:6,note:"뱃살 감량의 기본. 공항·출퇴근 이동 다 포함, 나눠 걸어도 됩니다.",items:[["하루 8,000보 이상",1,0,"",0]]},
+{id:"circuit",name:"전신 서킷",goal:3,note:"동작 사이 30초, 한 바퀴 끝나면 1분 휴식 → 3바퀴, 약 25분. A·B를 번갈아 하세요(월 A · 수 B · 금 A).",variants:{
+ A:{name:"A · 하체 + 밀기",items:[["고블릿 스쿼트 (물병·덤벨 가슴 앞)",3,15,"회",2],["푸시업 (힘들면 무릎 대고)",3,8,"회",2],["리버스 런지 좌우",3,10,"회씩",2],["마운틴 클라이머 좌우 합",3,20,"회",4]]},
+ B:{name:"B · 엉덩이 + 당기기",items:[["루마니안 데드리프트 (물병·덤벨)",3,12,"회",2],["벤트오버 로우 (물병·덤벨)",3,12,"회",2],["사이드 런지 좌우",3,8,"회씩",2],["버피 (점프 없이 OK)",3,6,"회",2]]}}},
+{id:"cardio",name:"유산소",goal:5,note:"빠르게 걷기·인클라인 걷기·자전거. 숨은 차지만 대화는 되는 강도. 인터벌은 주 1~2회까지만.",items:[["유산소",1,30,"분",5,40]]},
+{id:"core",name:"코어 10분",goal:3,note:"복근은 체지방이 빠져야 보여요. 코어는 배를 조이고 자세를 잡는 용도. 서킷 없는 날에.",items:[["플랭크",3,30,"초",10,60],["데드버그 좌우",3,10,"회씩",2],["레그레이즈",3,12,"회",2]]}
 ];
 const DEF={kcal:1650,prot:130,start:69,goal:63};
 const LS="bellyapp_v1";
@@ -351,7 +354,11 @@ function persist(key){
 const stat=t=>{$("status").textContent=t};
 
 function totals(d){let k=0,p=0;(day(d).f).forEach(x=>{k+=x.k*x.q;p+=x.p*x.q});return{k,p}}
-function routineDone(r,rec){if(!rec)return false;return r.items.every((it,i)=>(rec[i]||0)>=it[1])}
+function routineDone(r,rec){if(!rec)return false;return (r.items||r.variants.A.items).every((it,i)=>(rec[i]||0)>=it[1])}
+function startDay(){const ks=Object.keys(S.days).filter(d=>S.days[d].f&&S.days[d].f.length||Object.keys(S.days[d].e||{}).length).sort();return ks[0]||today()}
+function level(){return Math.max(0,Math.min(4,Math.floor((parse(cur)-parse(startDay()))/864e5/14)))}
+function itTxt(it,lv){if(!it[2])return it[0];const v=Math.min(it[2]+lv*it[4],it[5]||9999);return it[0]+' <b class="num" style="font-size:18px">'+v+'</b>'+it[3]}
+function variantOf(dd){if(dd.e.cv)return dd.e.cv;const ws=weekStart(cur);let n=0;for(let d=ws;d<cur;d=addD(d,1)){const x=S.days[d];if(x&&routineDone(EX[1],x.e&&x.e.circuit))n++}return n%2?"B":"A"}
 
 function renderToday(){
   const st=S.meta.set,{k,p}=totals(cur),rem=st.kcal-k,max=Math.max(st.kcal*1.3,k);
@@ -387,11 +394,15 @@ function renderEx(){
   $("wrange").textContent=ws.slice(5).replace("-","/")+" ~ "+days[6].slice(5).replace("-","/");
   $("week").innerHTML=["월","화","수","목","금","토","일"].map((n,i)=>{const d=S.days[days[i]];const c=d?EX.filter(r=>routineDone(r,d.e&&d.e[r.id])).length:0;return '<div class="'+(days[i]===cur?"td":"")+'">'+n+'<br><span class="num" style="font-size:17px">'+(c?"●".repeat(c):"·")+'</span></div>'}).join("");
   const dd=day(cur);
+  const lv=level(),cv=variantOf(dd);
+  $("lvl").textContent="레벨 "+(lv+1)+" · 2주마다 횟수가 올라가요";
   $("routines").innerHTML=EX.map(r=>{
     const cnt=days.filter(d=>S.days[d]&&routineDone(r,S.days[d].e&&S.days[d].e[r.id])).length;
     const rec=dd.e[r.id]||[];const done=routineDone(r,rec);
-    return '<div class="rt"><h3><span>'+r.name+(done?' <span class="done">✓</span>':'')+'</span><span class="num">이번 주 '+cnt+'/'+r.goal+'회</span></h3><p>'+r.note+'</p>'+
-    r.items.map((it,ii)=>'<div class="ex"><span class="n">'+it[0]+(it[1]>1?' <span class="hint">× '+it[1]+'세트</span>':'')+'</span><span class="sets">'+[...Array(it[1])].map((_,si)=>'<button class="'+((rec[ii]||0)>si?"on":"")+'" data-set="'+r.id+'|'+ii+'|'+si+'" aria-label="'+(si+1)+'세트">'+(it[1]>1?si+1:"✓")+'</button>').join("")+'</span></div>').join("")+
+    const items=r.items||r.variants[cv].items;
+    const vsel=r.variants?'<div class="seg2">'+["A","B"].map(v=>'<button data-cv="'+v+'" class="'+(v===cv?"on":"")+'">'+r.variants[v].name+'</button>').join("")+'</div>':'';
+    return '<div class="rt"><h3><span>'+r.name+(done?' <span class="done">✓</span>':'')+'</span><span class="num">이번 주 '+cnt+'/'+r.goal+'회</span></h3><p>'+r.note+'</p>'+vsel+
+    items.map((it,ii)=>'<div class="ex"><span class="n">'+itTxt(it,lv)+(it[1]>1?' <span class="hint">× '+it[1]+'</span>':'')+'</span><span class="sets">'+[...Array(it[1])].map((_,si)=>'<button class="'+((rec[ii]||0)>si?"on":"")+'" data-set="'+r.id+'|'+ii+'|'+si+'" aria-label="'+(si+1)+'세트">'+(it[1]>1?si+1:"✓")+'</button>').join("")+'</span></div>').join("")+
     '<div class="wk"><i style="width:'+Math.min(100,cnt/r.goal*100)+'%"></i></div></div>'}).join("");
 }
 function avg7(dates,w,i){const end=parse(dates[i]);let s=0,n=0;for(let j=i;j>=0;j--){if((end-parse(dates[j]))/864e5>6)break;s+=w[dates[j]];n++}return s/n}
@@ -465,6 +476,7 @@ document.addEventListener("click",e=>{
   else if(d.f!=null){if(!$("sheet").classList.contains("open")&&tab==="food"&&slot==null)slot=autoSlot();openSheet(+d.f)}
   else if(d.q){qty=+d.q;renderSheet()}
   else if(d.s!=null){slot=+d.s;renderSheet()}
+  else if(d.cv){dd.e.cv=d.cv;if(dd.e.circuit)dd.e.circuit=[];persist(cur);renderEx()}
   else if(d.as!=null){aiSlot=+d.as;renderAI()}
   else if(d.aidel!=null){aiItems.splice(+d.aidel,1);renderAI()}
   else if(d.set){const[r,ii,si]=d.set.split("|");const rec=dd.e[r]||(dd.e[r]=[]);const v=rec[+ii]||0;rec[+ii]=v>+si?+si:+si+1;persist(cur);renderEx();renderToday()}
