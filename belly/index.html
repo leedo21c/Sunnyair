@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>뱃살 체크리스트</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="뱃살체크">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a pilot's normal checklist — calm, exact, nothing decorative.
+   IDEA: the day as a flight: checklist items with dotted leaders, an instrument tape for calories.
+   PICTURE: big calorie tape with a magenta target bug, remaining kcal huge.
+   COLOUR and TYPE: white / ink / magenta target colour (avionics), Barlow Condensed numerals + Noto Sans KR.
+   LAYOUT: single column app, bottom tab bar, sheets slide up from the bottom. */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0f1012);--ink:light-dark(#121212,#ececec);--mut:light-dark(#6b6b6b,#9a9a9a);--pan:light-dark(#f2f2ef,#1b1c1f);--line:light-dark(#dcdcd6,#2c2d31);--mag:light-dark(#d1006e,#ff4fa3);--ok:light-dark(#121212,#ececec)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Noto Sans KR",system-ui,sans-serif;overflow-x:clip;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--mag);outline-offset:2px}
+.num{font-family:"Barlow Condensed",sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+.wrap{max-width:640px;margin:0 auto;padding:max(14px,env(safe-area-inset-top)) 16px 24px}
+header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+header h1{font:700 22px/1.1 "Noto Sans KR";margin:0;flex:1}
+.dnav{display:flex;align-items:center;gap:4px}
+.dnav button{width:44px;height:44px;border:1px solid var(--line);background:none;border-radius:10px;font-size:18px}
+.dnav .d{min-width:92px;text-align:center;font-size:20px;font-weight:600}
+.status{font-size:13px;color:var(--mut);margin:-4px 0 10px}
+h2{font:700 17px/1.3 "Noto Sans KR";margin:26px 0 8px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+h2 small{font:400 13px "Noto Sans KR";color:var(--mut)}
+.tape{background:var(--pan);border-radius:16px;padding:18px 16px 16px}
+.big{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big b{font:700 clamp(56px,17vw,84px)/.9 "Barlow Condensed";letter-spacing:-.5px}
+.big span{color:var(--mut);font-size:15px}
+.big.over b{color:var(--mag)}
+.bar{position:relative;height:22px;background:var(--bg);border-radius:6px;margin:16px 0 4px;overflow:visible}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--ink);border-radius:6px;transition:width .3s}
+.bar .bug{position:absolute;top:-7px;bottom:-7px;width:3px;background:var(--mag);border-radius:2px}
+.ticks{display:flex;justify-content:space-between;font-size:13px;color:var(--mut)}
+.mini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
+.mini div{background:var(--bg);border-radius:10px;padding:8px 10px}
+.mini b{display:block;font:600 24px/1.1 "Barlow Condensed"}
+.mini span{font-size:13px;color:var(--mut)}
+.pbar{height:6px;background:var(--line);border-radius:3px;margin-top:6px;overflow:hidden}.pbar i{display:block;height:100%;background:var(--mag)}
+.meal{border-top:1px solid var(--line);padding:10px 0}
+.meal h3{margin:0 0 4px;font:600 15px "Noto Sans KR";display:flex;justify-content:space-between}
+.meal h3 .num{font-size:18px}
+.fi{display:flex;align-items:center;gap:8px;font-size:15px;padding:3px 0}
+.fi .n{flex:1}
+.fi .k{font-size:17px}
+.x{width:36px;height:36px;border:0;background:none;color:var(--mut);font-size:18px;border-radius:8px}
+.addb{border:1px dashed var(--line);background:none;border-radius:10px;height:40px;padding:0 12px;font-size:14px;color:var(--mut);margin-top:4px}
+.cl{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.cl li{border-bottom:1px solid var(--line)}
+.cl button{display:flex;width:100%;align-items:center;gap:10px;min-height:52px;border:0;background:none;text-align:left;padding:6px 0}
+.cl .t{width:46px;flex:none;font-size:17px;color:var(--mut)}
+.cl .lbl{flex:none;max-width:62%}
+.cl .lbl small{display:block;font-size:13px;color:var(--mut)}
+.cl .dots{flex:1;border-bottom:2px dotted var(--line);margin:0 4px;align-self:center;height:0}
+.cl .st{flex:none;font:700 16px "Barlow Condensed";letter-spacing:.5px;color:var(--mut)}
+.cl .on .st{color:var(--mag)}
+.cl .on .lbl{text-decoration:line-through;text-decoration-color:var(--mut);color:var(--mut)}
+.search{width:100%;height:48px;border:1px solid var(--line);border-radius:12px;background:var(--pan);padding:0 14px;font-size:16px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+.chips button{flex:none;height:38px;padding:0 14px;border-radius:19px;border:1px solid var(--line);background:none;font-size:14px}
+.chips .on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fl{list-style:none;margin:0;padding:0}
+.fl li button{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;width:100%;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;padding:10px 2px;min-height:56px}
+.fl .u{font-size:13px;color:var(--mut)}
+.fl .k{grid-row:span 2;align-self:center;text-align:right;font-size:22px;font-weight:600}
+.fl .k small{display:block;font:400 12px "Noto Sans KR";color:var(--mut)}
+.hint{font-size:13px;color:var(--mut)}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin:8px 0 4px;text-align:center;font-size:13px;color:var(--mut)}
+.week .td{color:var(--mag);font-weight:700}
+.rt{background:var(--pan);border-radius:14px;padding:14px;margin-bottom:10px}
+.rt h3{margin:0;font:700 16px "Noto Sans KR";display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.rt h3 .num{font-size:20px}
+.rt .done{color:var(--mag)}
+.rt p{margin:2px 0 8px;font-size:13px;color:var(--mut)}
+.ex{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--line)}
+.ex .n{flex:1;font-size:15px}
+.sets{display:flex;gap:6px}
+.sets button{width:40px;height:40px;border-radius:50%;border:2px solid var(--ink);background:none;font:600 16px "Barlow Condensed"}
+.sets .on{background:var(--ink);color:var(--bg)}
+.wk{height:6px;background:var(--line);border-radius:3px;margin-top:8px;overflow:hidden}.wk i{display:block;height:100%;background:var(--mag)}
+.fig{position:relative;min-height:240px;background:var(--pan);border-radius:14px}.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.inp{height:48px;border:1px solid var(--line);border-radius:10px;background:var(--pan);padding:0 12px;font-size:16px;width:110px}
+.btn{height:48px;padding:0 18px;border-radius:10px;border:0;background:var(--ink);color:var(--bg);font-weight:700}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
+.stats div{border-top:2px solid var(--ink);padding-top:6px}
+.stats b{display:block;font:600 28px/1 "Barlow Condensed"}
+.stats span{font-size:13px;color:var(--mut)}
+label.f{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}
+textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:10px;background:var(--pan);padding:10px;font:13px/1.4 monospace;color:inherit}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);background:var(--bg);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav.tabs button{height:62px;border:0;background:none;font-size:14px;color:var(--mut);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+nav.tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}
+nav.tabs .on{color:var(--ink);font-weight:700}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:9}
+.sheet.open{display:flex}
+.sheet>div{background:var(--bg);width:100%;max-width:640px;margin:0 auto;border-radius:18px 18px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+.sheet h3{margin:0 0 2px;font:700 18px "Noto Sans KR"}
+.seg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:10px 0}
+.seg button{height:44px;border:1px solid var(--line);border-radius:10px;background:none}
+.seg .on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tot{font:700 40px/1 "Barlow Condensed";margin:8px 0 12px}
+.hide{display:none}
+.file{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;flex:1;cursor:pointer}
+.file input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.ph2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+.ph2 figure{margin:0;position:relative;aspect-ratio:3/4;background:var(--pan);border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:13px;text-align:center;padding:0}
+.ph2 img{width:100%;height:100%;object-fit:cover;display:block}
+.ph2 figcaption{position:absolute;left:0;right:0;bottom:0;padding:18px 10px 8px;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff;font-size:13px;text-align:left}
+.ph2 figcaption b{font:600 20px "Barlow Condensed";margin-right:6px}
+.ph2 .x{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.5);color:#fff}
+select{height:44px;border:1px solid var(--line);border-radius:10px;background:var(--pan);padding:0 8px;font-size:15px;flex:1}
+.strip{display:flex;gap:6px;overflow-x:auto;padding:10px 0 4px}
+.strip button{flex:none;width:58px;border:2px solid transparent;border-radius:8px;padding:0;background:none;overflow:hidden}
+.strip button.on{border-color:var(--mag)}
+.strip img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.strip span{display:block;font:600 13px "Barlow Condensed";padding:2px 0}
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}
+.seg2 button{height:40px;border:1px solid var(--line);border-radius:10px;background:none}
+.seg2 .on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><h1>뱃살 체크리스트</h1>
+<div class="dnav"><button id="prev" aria-label="이전 날">‹</button><div class="d num" id="dlabel"></div><button id="next" aria-label="다음 날">›</button></div></header>
+<div class="status" id="status">이 기기에 저장 중</div>
+
+<section id="t-today">
+<div class="tape">
+<div class="big" id="big"><b class="num" id="remain">0</b><span id="remainl">kcal 남음</span></div>
+<div class="bar"><i id="fill"></i><div class="bug" id="bug"></div></div>
+<div class="ticks num"><span>0</span><span id="tgt">목표</span><span id="tmax"></span></div>
+<div class="mini">
+<div><b class="num" id="eaten">0</b><span>먹은 kcal</span></div>
+<div><b class="num" id="prot">0g</b><span>단백질</span><div class="pbar"><i id="pfill"></i></div></div>
+<div><b class="num" id="exd">0/4</b><span>운동 완료</span></div>
+</div></div>
+<h2>오늘 먹은 것 <small>탭해서 삭제</small></h2>
+<div id="meals"></div>
+<h2>하루 체크리스트 <small>시간은 기준, 순서대로</small></h2>
+<ul class="cl" id="cl"></ul>
+</section>
+
+<section id="t-food" class="hide">
+<input class="search" id="q" placeholder="음식 검색 (예: 국밥, 치킨, 라떼)" autocomplete="off">
+<div class="chips" id="cats"></div>
+<ul class="fl" id="fl"></ul>
+<p class="hint">칼로리는 일반적인 1인분 기준 대략치예요. 식당·브랜드마다 ±20% 차이 납니다.</p>
+<button class="btn ghost" id="custom" style="width:100%;margin-top:6px">목록에 없는 음식 직접 입력</button>
+</section>
+
+<section id="t-ex" class="hide">
+<h2>이번 주 <small id="wrange"></small></h2>
+<div class="week" id="week"></div>
+<div id="routines"></div>
+<p class="hint">뱃살은 운동보다 식단이 7할이에요. 운동은 칼로리 소모와 몸 조이는 용도로, 무겁게 할 필요 없습니다.</p>
+</section>
+
+<section id="t-log" class="hide">
+<h2>체중 <small>매일 아침 공복</small></h2>
+<div class="row"><input class="inp num" id="win" type="number" step="0.1" inputmode="decimal" placeholder="69.0"><span>kg</span><button class="btn" id="wsave">기록</button></div>
+<div class="stats">
+<div><b class="num" id="s-avg">–</b><span>7일 평균</span></div>
+<div><b class="num" id="s-lost">–</b><span>시작 대비</span></div>
+<div><b class="num" id="s-left">–</b><span>목표까지</span></div>
+</div>
+<div class="fig" id="fig"><svg id="chart" role="img" aria-label="체중 변화 그래프"></svg></div>
+<p class="hint" id="eta"></p>
+<h2>몸 사진 <small>같은 장소·조명·시간에</small></h2>
+<div class="row"><label class="btn ghost file">정면 사진 올리기<input type="file" accept="image/*" id="pf-front"></label><label class="btn ghost file">측면 사진 올리기<input type="file" accept="image/*" id="pf-side"></label></div>
+<div class="ph2" id="todayPh"></div>
+<h2>비교 <small>날짜 두 개를 골라 나란히</small></h2>
+<div class="seg2" id="pview"><button data-pv="front" class="on">정면</button><button data-pv="side">측면</button></div>
+<div class="row"><select id="cmpA" aria-label="기준 날짜"></select><span class="hint">vs</span><select id="cmpB" aria-label="비교 날짜"></select></div>
+<div class="ph2" id="cmp"></div>
+<div class="strip" id="strip"></div>
+<p class="hint" id="phnote">사진은 이 기기 안에만 저장되고 어디에도 올라가지 않아요.</p>
+<h2>목표 설정</h2>
+<label class="f">하루 칼로리 목표<input class="inp num" id="set-kcal" type="number" inputmode="numeric"></label>
+<label class="f">하루 단백질 목표 (g)<input class="inp num" id="set-prot" type="number" inputmode="numeric"></label>
+<label class="f">시작 체중 (kg)<input class="inp num" id="set-start" type="number" step="0.1" inputmode="decimal"></label>
+<label class="f">목표 체중 (kg)<input class="inp num" id="set-goal" type="number" step="0.1" inputmode="decimal"></label>
+<h2>백업 <small>다른 기기·깃허브 버전으로 옮길 때</small></h2>
+<div class="row"><button class="btn ghost" id="bcopy">백업 복사</button><button class="btn ghost" id="bload">붙여넣은 백업 불러오기</button></div>
+<textarea id="btext" placeholder="여기에 백업을 붙여넣고 '불러오기'"></textarea>
+</section>
+</div>
+
+<nav class="tabs" id="tabs">
+<button data-t="today" class="on"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>오늘</button>
+<button data-t="food"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>음식 사전</button>
+<button data-t="ex"><svg viewBox="0 0 24 24"><path d="M3 12h3M18 12h3M6 8v8M18 8v8M9 10v4M15 10v4M9 12h6"/></svg>운동</button>
+<button data-t="log"><svg viewBox="0 0 24 24"><path d="M4 18l5-6 4 3 7-8"/></svg>기록</button>
+</nav>
+
+<div class="sheet" id="sheet"><div>
+<h3 id="sh-n"></h3><div class="hint" id="sh-u"></div>
+<div id="sh-custom" class="hide">
+<label class="f">이름<input class="inp" id="c-n" style="width:60%"></label>
+<label class="f">칼로리 (kcal)<input class="inp num" id="c-k" type="number" inputmode="numeric"></label>
+<label class="f">단백질 (g, 모르면 비움)<input class="inp num" id="c-p" type="number" inputmode="numeric"></label>
+</div>
+<div id="sh-q"><div class="hint" style="margin-top:10px">양</div><div class="seg" id="qty"></div></div>
+<div class="hint">끼니</div><div class="seg" id="slot"></div>
+<div class="tot num" id="sh-t"></div>
+<div class="row"><button class="btn ghost" id="sh-c" style="flex:1">취소</button><button class="btn" id="sh-a" style="flex:2">추가</button></div>
+</div></div>
+
+<script>
+{
+const F=[
+["잡곡밥","1공기 210g",310,7,"밥·면"],["흰쌀밥","1공기 210g",315,6,"밥·면"],["밥 반 공기","105g",155,3,"밥·면"],["현미밥","1공기 210g",300,7,"밥·면"],["고구마","중 1개 150g",195,2,"밥·면"],["감자","중 1개 150g",110,3,"밥·면"],["통밀식빵","1장",100,4,"밥·면"],["식빵","1장",110,3,"밥·면"],["오트밀","40g",150,5,"밥·면"],["라면","1봉",500,10,"밥·면"],["컵라면","소컵 1개",300,6,"밥·면"],["김밥","1줄",450,14,"밥·면"],["참치김밥","1줄",520,18,"밥·면"],["삼각김밥","1개",190,5,"밥·면"],["떡볶이","1인분 200g",380,8,"밥·면"],["칼국수","1그릇",600,20,"밥·면"],["물냉면","1그릇",550,18,"밥·면"],["비빔국수","1그릇",520,12,"밥·면"],["우동","1그릇",450,13,"밥·면"],["쌀국수","1그릇",480,22,"밥·면"],
+["닭가슴살","100g",110,23,"고기·생선·계란"],["훈제 닭가슴살","1팩 100g",120,22,"고기·생선·계란"],["계란","1개",75,6,"고기·생선·계란"],["계란 흰자","1개",17,4,"고기·생선·계란"],["돼지 안심","100g",140,22,"고기·생선·계란"],["돼지 앞다리살","100g",180,20,"고기·생선·계란"],["삼겹살","1인분 200g",680,34,"고기·생선·계란"],["목살","1인분 200g",520,36,"고기·생선·계란"],["소고기 우둔","100g",140,22,"고기·생선·계란"],["차돌박이","100g",370,16,"고기·생선·계란"],["소불고기","1인분 150g",300,22,"고기·생선·계란"],["연어","100g",200,20,"고기·생선·계란"],["고등어구이","1토막 100g",250,20,"고기·생선·계란"],["참치캔(기름 뺀)","1캔 100g",120,20,"고기·생선·계란"],["두부","반 모 150g",130,13,"고기·생선·계란"],["순두부","1봉 350g",160,18,"고기·생선·계란"],["새우","100g",95,20,"고기·생선·계란"],["오징어","100g",90,18,"고기·생선·계란"],
+["김치찌개","1인분, 밥 제외",250,15,"한식 메뉴"],["된장찌개","1인분, 밥 제외",180,12,"한식 메뉴"],["순두부찌개","1인분, 밥 제외",250,15,"한식 메뉴"],["부대찌개","1인분, 밥 제외",500,22,"한식 메뉴"],["제육볶음","1인분 200g",450,30,"한식 메뉴"],["닭갈비","1인분",450,35,"한식 메뉴"],["닭볶음탕","1인분",450,35,"한식 메뉴"],["비빔밥","1그릇",600,20,"한식 메뉴"],["김치볶음밥","1그릇",650,15,"한식 메뉴"],["돈까스","1인분",800,30,"한식 메뉴"],["순대국밥","1그릇, 밥 포함",750,35,"한식 메뉴"],["돼지국밥","1그릇, 밥 포함",700,35,"한식 메뉴"],["설렁탕","1그릇, 밥 포함",650,35,"한식 메뉴"],["갈비탕","1그릇, 밥 포함",700,35,"한식 메뉴"],["삼계탕","1그릇",900,70,"한식 메뉴"],["보쌈","1인분 200g",600,40,"한식 메뉴"],["족발","1인분 200g",520,45,"한식 메뉴"],
+["배추김치","50g",15,1,"반찬·국"],["나물 반찬","1접시 70g",50,2,"반찬·국"],["멸치볶음","30g",100,8,"반찬·국"],["계란말이","2조각",120,8,"반찬·국"],["잡채","1접시 100g",180,4,"반찬·국"],["미역국","1그릇",80,6,"반찬·국"],["콩나물국","1그릇",40,3,"반찬·국"],["채소 샐러드","1접시, 드레싱 제외",30,2,"반찬·국"],["오리엔탈 드레싱","1스푼",40,0,"반찬·국"],["쌈채소","1접시",20,1,"반찬·국"],
+["프로틴 쉐이크","1스쿱, 물",120,24,"편의점·간식"],["프로틴바","1개",200,15,"편의점·간식"],["그릭요거트","100g",100,9,"편의점·간식"],["아몬드","10알",70,3,"편의점·간식"],["하루견과","1봉 25g",150,5,"편의점·간식"],["구운계란","2개",150,12,"편의점·간식"],["편의점 샌드위치","1개",350,14,"편의점·간식"],["편의점 도시락","1개",750,25,"편의점·간식"],["컵 샐러드","1개",120,6,"편의점·간식"],["바나나우유","1개 240ml",210,7,"편의점·간식"],["초코바","1개",250,3,"편의점·간식"],["과자","1봉 60g",320,4,"편의점·간식"],["아이스크림 콘","1개",280,4,"편의점·간식"],["도넛","1개",300,4,"편의점·간식"],["붕어빵","1개",160,4,"편의점·간식"],
+["바나나","1개",90,1,"과일·유제품"],["사과","중 1개",130,0,"과일·유제품"],["귤","1개",40,1,"과일·유제품"],["딸기","10알",50,1,"과일·유제품"],["방울토마토","10개",30,1,"과일·유제품"],["우유","200ml",130,6,"과일·유제품"],["저지방우유","200ml",90,6,"과일·유제품"],["두유","1팩 190ml",100,6,"과일·유제품"],["슬라이스 치즈","1장",60,4,"과일·유제품"],
+["아메리카노","1잔",10,0,"음료·술"],["카페라떼","톨 355ml",180,10,"음료·술"],["바닐라라떼","톨 355ml",250,9,"음료·술"],["콜라","1캔 355ml",150,0,"음료·술"],["제로 콜라","1캔",0,0,"음료·술"],["오렌지주스","200ml",90,1,"음료·술"],["소주","1병",400,0,"음료·술"],["소주","1잔",55,0,"음료·술"],["맥주","500cc",200,2,"음료·술"],["맥주","1캔 355ml",150,1,"음료·술"],["막걸리","1병 750ml",370,4,"음료·술"],["와인","1잔",125,0,"음료·술"],["하이볼","1잔",180,0,"음료·술"],
+["후라이드 치킨","반 마리",1000,60,"외식·배달"],["양념치킨","반 마리",1150,55,"외식·배달"],["피자","라지 1조각",300,12,"외식·배달"],["햄버거","단품 1개",500,22,"외식·배달"],["햄버거 세트","버거+감튀+콜라",1000,25,"외식·배달"],["감자튀김","M 1개",330,4,"외식·배달"],["서브웨이 로스트치킨","15cm",330,25,"외식·배달"],["짜장면","1그릇",800,18,"외식·배달"],["짬뽕","1그릇",690,30,"외식·배달"],["탕수육","1인분 300g",600,20,"외식·배달"],["마라탕","1인분",700,30,"외식·배달"],["초밥","10피스",450,25,"외식·배달"],["회","1인분 200g",250,45,"외식·배달"],["곱창","1인분",600,25,"외식·배달"],["순대","1인분 200g",380,15,"외식·배달"]
+];
+const CATS=["전체","자주 먹는","밥·면","고기·생선·계란","한식 메뉴","반찬·국","편의점·간식","과일·유제품","음료·술","외식·배달"];
+const SLOTS=["아침","점심","저녁","간식"];
+const QTY=[0.5,1,1.5,2];
+const CL=[["07:00","공복 체중 재기","기록 탭에 입력하면 자동 체크"],["07:05","정면·측면 사진","기록 탭에 올리면 자동 체크"],["07:10","물 500ml",""],["08:00","아침에 단백질 25g 이상","계란 2개 + 요거트 정도"],["12:30","점심 밥은 2/3공기",""],["15:30","간식은 단백질로","쉐이크·계란·요거트"],["19:00","저녁은 채소 먼저, 8시 전 마무리",""],["상시","물 2L 채우기",""],["21:00","야식·술 없이 마무리",""],["23:00","7시간 수면",""]];
+const EX=[
+{id:"walk",name:"걷기 8,000보",goal:6,note:"뱃살 감량의 기본. 공항·출퇴근 이동 다 포함, 나눠 걸어도 됩니다.",items:[["하루 8,000보 이상",1]]},
+{id:"circuit",name:"전신 서킷",goal:3,note:"세트 사이 30~60초 휴식, 약 25분. 근육 키우기보다 칼로리 소모용.",items:[["스쿼트 15회",3],["푸시업 10회 (힘들면 무릎 대고)",3],["런지 좌우 10회씩",3],["물병·덤벨 로우 12회",3]]},
+{id:"cardio",name:"유산소 30분",goal:3,note:"빠르게 걷기·인클라인 걷기·자전거. 숨은 차지만 대화는 되는 강도.",items:[["유산소 30분",1]]},
+{id:"core",name:"코어 10분",goal:3,note:"복근은 체지방이 빠져야 보여요. 코어는 배를 조이고 자세를 잡는 용도.",items:[["플랭크 30초",3],["데드버그 좌우 10회",3],["레그레이즈 12회",3]]}
+];
+const DEF={kcal:1650,prot:130,start:69,goal:63};
+const LS="bellyapp_v1";
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad=n=>String(n).padStart(2,"0");
+const ymd=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const parse=s=>{const[a,b,c]=s.split("-").map(Number);return new Date(a,b-1,c)};
+const addD=(s,n)=>{const d=parse(s);d.setDate(d.getDate()+n);return ymd(d)};
+const today=()=>ymd(new Date());
+const fmt=n=>Math.round(n).toLocaleString("ko-KR");
+
+let S={meta:{set:{...DEF},w:{}},days:{}};
+try{const v=JSON.parse(localStorage.getItem(LS)||"null");if(v&&v.meta){S=v;S.meta.set={...DEF,...S.meta.set};S.meta.w=S.meta.w||{};S.days=S.days||{}}}catch(e){}
+let cur=today(),tab="today",cat="전체",pick=null,qty=1,slot=0,isCustom=false;
+const day=d=>S.days[d]||(S.days[d]={f:[],c:{},e:{}});
+
+/* 사진: IndexedDB (이 기기에만) */
+let idb=null,pv="front";const photoKeys=new Set(),urls={};
+const idbReq=r=>new Promise((res,rej)=>{r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+const store=m=>idb.transaction("p",m).objectStore("p");
+function openIDB(){return new Promise((res,rej)=>{try{const r=indexedDB.open("belly-photos",1);r.onupgradeneeded=()=>r.result.createObjectStore("p");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
+async function photoURL(k){if(urls[k])return urls[k];const b=await idbReq(store("readonly").get(k));if(!b)return null;return urls[k]=URL.createObjectURL(b)}
+function loadImg(file){return new Promise((res,rej)=>{const u=URL.createObjectURL(file);const i=new Image();i.onload=()=>{res(i);URL.revokeObjectURL(u)};i.onerror=()=>rej(new Error("img"));i.src=u})}
+async function compress(file){const i=await loadImg(file);const s=Math.min(1,1100/Math.max(i.naturalWidth,i.naturalHeight));const c=document.createElement("canvas");c.width=Math.round(i.naturalWidth*s);c.height=Math.round(i.naturalHeight*s);c.getContext("2d").drawImage(i,0,0,c.width,c.height);return new Promise(r=>c.toBlob(r,"image/jpeg",0.82))}
+async function savePhoto(view,file){
+  if(!idb){$("phnote").textContent="이 화면에서는 사진 저장이 안 돼요. 깃허브 앱(홈 화면에 추가)에서 써 주세요.";return}
+  try{const b=await compress(file);const k=cur+"|"+view;await idbReq(store("readwrite").put(b,k));if(urls[k]){URL.revokeObjectURL(urls[k]);delete urls[k]}photoKeys.add(k);renderPhotos();renderToday()}
+  catch(e){$("phnote").textContent="사진을 저장하지 못했어요. 다른 사진으로 다시 시도해 주세요."}
+}
+const md=s=>s.slice(5).replace("-","/");
+const wtxt=d=>S.meta.w[d]!=null?S.meta.w[d].toFixed(1)+"kg":"";
+async function fig(k,d,del){const u=idb&&photoKeys.has(k)?await photoURL(k):null;
+  if(!u)return '<figure>'+(del?(k.endsWith("front")?"정면":"측면")+" 사진 없음":"사진 없음")+'</figure>';
+  return '<figure><img src="'+u+'" alt="'+md(d)+' 사진"><figcaption><b>'+md(d)+'</b>'+wtxt(d)+'</figcaption>'+(del?'<button class="x" data-phdel="'+k+'" aria-label="사진 삭제">×</button>':'')+'</figure>'}
+let phBusy=0;
+async function renderPhotos(){
+  const my=++phBusy;
+  const tp=(await fig(cur+"|front",cur,1))+(await fig(cur+"|side",cur,1));
+  const dates=[...photoKeys].filter(k=>k.endsWith("|"+pv)).map(k=>k.split("|")[0]).sort();
+  const A=$("cmpA"),B=$("cmpB"),oa=A.value,ob=B.value;
+  const opts=dates.map(d=>'<option value="'+d+'">'+md(d)+(wtxt(d)?" · "+wtxt(d):"")+'</option>').join("")||'<option value="">사진 없음</option>';
+  let a=dates.includes(oa)?oa:dates[0]||"",b=dates.includes(ob)?ob:dates[dates.length-1]||"";
+  const cmp=dates.length?(await fig(a+"|"+pv,a,0))+(await fig(b+"|"+pv,b,0)):'<figure>첫 사진을 올리면</figure><figure>여기서 비교돼요</figure>';
+  let strip="";for(const d of dates.slice().reverse()){const u=await photoURL(d+"|"+pv);strip+='<button data-pick="'+d+'" class="'+(d===b?"on":"")+'"><img src="'+u+'" alt=""><span>'+md(d)+'</span></button>'}
+  if(my!==phBusy)return;
+  $("todayPh").innerHTML=tp;A.innerHTML=opts;B.innerHTML=opts;A.value=a;B.value=b;$("cmp").innerHTML=cmp;$("strip").innerHTML=strip;
+}
+
+let db=null,uid=null;const timers={},chains={},pending={};
+function persist(key){
+  try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}
+  if(!db||!uid)return;
+  pending[key]=true;clearTimeout(timers[key]);
+  timers[key]=setTimeout(()=>{
+    const ref=db.collection("data/users/"+uid).doc(key==="meta"?"meta":"d-"+key);
+    const body=JSON.parse(JSON.stringify(key==="meta"?S.meta:(S.days[key]||{})));
+    chains[key]=(chains[key]||Promise.resolve()).then(()=>ref.set(body)).then(()=>{pending[key]=false},e=>{pending[key]=false;stat(e&&e.code==="quota_exceeded"?"저장 공간이 가득 찼어요 — 이 기기에만 저장됨":"클라우드 저장 실패 — 이 기기에는 저장됨")});
+  },700);
+}
+const stat=t=>{$("status").textContent=t};
+
+function totals(d){let k=0,p=0;(day(d).f).forEach(x=>{k+=x.k*x.q;p+=x.p*x.q});return{k,p}}
+function routineDone(r,rec){if(!rec)return false;return r.items.every((it,i)=>(rec[i]||0)>=it[1])}
+
+function renderToday(){
+  const st=S.meta.set,{k,p}=totals(cur),rem=st.kcal-k,max=Math.max(st.kcal*1.3,k);
+  $("remain").textContent=fmt(Math.abs(rem));$("remainl").textContent=rem>=0?"kcal 남음":"kcal 초과";
+  $("big").classList.toggle("over",rem<0);
+  $("fill").style.width=Math.min(100,k/max*100)+"%";$("bug").style.left="calc("+(st.kcal/max*100)+"% - 1.5px)";
+  $("tgt").textContent="목표 "+fmt(st.kcal);$("tmax").textContent=fmt(max);
+  $("eaten").textContent=fmt(k);$("prot").textContent=Math.round(p)+"/"+st.prot+"g";
+  $("pfill").style.width=Math.min(100,p/st.prot*100)+"%";
+  const dd=day(cur);$("exd").textContent=EX.filter(r=>routineDone(r,dd.e[r.id])).length+"/4";
+  $("meals").innerHTML=SLOTS.map((s,si)=>{
+    const items=dd.f.map((x,i)=>({...x,i})).filter(x=>x.m===si);
+    const sum=items.reduce((a,x)=>a+x.k*x.q,0);
+    return '<div class="meal"><h3><span>'+s+'</span><span class="num">'+fmt(sum)+' kcal</span></h3>'+
+    items.map(x=>'<div class="fi"><span class="n">'+esc(x.n)+(x.q!==1?' ×'+x.q:'')+' <span class="hint">'+esc(x.u)+'</span></span><span class="k num">'+fmt(x.k*x.q)+'</span><button class="x" data-del="'+x.i+'" aria-label="삭제">×</button></div>').join("")+
+    '<button class="addb" data-add="'+si+'">+ '+s+' 추가</button></div>'}).join("");
+  const w=S.meta.w[cur];
+  const hasPh=photoKeys.has(cur+"|front")||photoKeys.has(cur+"|side");
+  $("cl").innerHTML=CL.map((c,i)=>{const on=!!dd.c[i]||(i===0&&w)||(i===1&&hasPh);return '<li><button data-cl="'+i+'" class="'+(on?"on":"")+'" aria-pressed="'+!!on+'"><span class="t num">'+c[0]+'</span><span class="lbl">'+c[1]+(c[2]?'<small>'+c[2]+'</small>':'')+'</span><span class="dots"></span><span class="st">'+(on?"CHECK":"—")+'</span></button></li>'}).join("");
+}
+function freq(){const m={};Object.values(S.days).forEach(d=>(d.f||[]).forEach(x=>{const key=x.n+"|"+x.u;m[key]=(m[key]||0)+1}));return m}
+function renderFood(){
+  $("cats").innerHTML=CATS.map(c=>'<button class="'+(c===cat?"on":"")+'" data-cat="'+c+'">'+c+'</button>').join("");
+  const q=$("q").value.trim();let list=F.map((f,i)=>({f,i}));
+  if(q)list=list.filter(o=>o.f[0].includes(q)||o.f[4].includes(q));
+  else if(cat==="자주 먹는"){const m=freq();list=list.filter(o=>m[o.f[0]+"|"+o.f[1]]).sort((a,b)=>m[b.f[0]+"|"+b.f[1]]-m[a.f[0]+"|"+a.f[1]])}
+  else if(cat!=="전체")list=list.filter(o=>o.f[4]===cat);
+  $("fl").innerHTML=list.length?list.map(o=>'<li><button data-f="'+o.i+'"><span>'+o.f[0]+'</span><span class="k num">'+fmt(o.f[2])+'<small>kcal</small></span><span class="u">'+o.f[1]+' · 단백질 '+o.f[3]+'g</span></button></li>').join(""):'<li class="hint" style="padding:16px 0">'+(cat==="자주 먹는"&&!q?"기록이 쌓이면 자주 먹는 음식이 여기 모여요.":"검색 결과가 없어요. 아래에서 직접 입력해 주세요.")+'</li>';
+}
+function weekStart(s){const d=parse(s);const w=(d.getDay()+6)%7;d.setDate(d.getDate()-w);return ymd(d)}
+function renderEx(){
+  const ws=weekStart(cur),days=[...Array(7)].map((_,i)=>addD(ws,i));
+  $("wrange").textContent=ws.slice(5).replace("-","/")+" ~ "+days[6].slice(5).replace("-","/");
+  $("week").innerHTML=["월","화","수","목","금","토","일"].map((n,i)=>{const d=S.days[days[i]];const c=d?EX.filter(r=>routineDone(r,d.e&&d.e[r.id])).length:0;return '<div class="'+(days[i]===cur?"td":"")+'">'+n+'<br><span class="num" style="font-size:17px">'+(c?"●".repeat(c):"·")+'</span></div>'}).join("");
+  const dd=day(cur);
+  $("routines").innerHTML=EX.map(r=>{
+    const cnt=days.filter(d=>S.days[d]&&routineDone(r,S.days[d].e&&S.days[d].e[r.id])).length;
+    const rec=dd.e[r.id]||[];const done=routineDone(r,rec);
+    return '<div class="rt"><h3><span>'+r.name+(done?' <span class="done">✓</span>':'')+'</span><span class="num">이번 주 '+cnt+'/'+r.goal+'회</span></h3><p>'+r.note+'</p>'+
+    r.items.map((it,ii)=>'<div class="ex"><span class="n">'+it[0]+(it[1]>1?' <span class="hint">× '+it[1]+'세트</span>':'')+'</span><span class="sets">'+[...Array(it[1])].map((_,si)=>'<button class="'+((rec[ii]||0)>si?"on":"")+'" data-set="'+r.id+'|'+ii+'|'+si+'" aria-label="'+(si+1)+'세트">'+(it[1]>1?si+1:"✓")+'</button>').join("")+'</span></div>').join("")+
+    '<div class="wk"><i style="width:'+Math.min(100,cnt/r.goal*100)+'%"></i></div></div>'}).join("");
+}
+function avg7(dates,w,i){const end=parse(dates[i]);let s=0,n=0;for(let j=i;j>=0;j--){if((end-parse(dates[j]))/864e5>6)break;s+=w[dates[j]];n++}return s/n}
+function drawChart(){
+  const svg=$("chart"),W=svg.clientWidth,H=svg.clientHeight,st=S.meta.set,w=S.meta.w;
+  const dates=Object.keys(w).sort().slice(-90);
+  if(!W)return;
+  if(dates.length<1){svg.innerHTML='<text x="'+W/2+'" y="'+H/2+'" text-anchor="middle" fill="currentColor" opacity=".5" font-size="14">아침 체중을 기록하면 그래프가 그려져요</text>';return}
+  const vals=dates.map(d=>w[d]),lo=Math.min(st.goal,...vals)-0.5,hi=Math.max(st.start,...vals)+0.5;
+  const t0=parse(dates[0]),span=Math.max(7,(parse(dates[dates.length-1])-t0)/864e5);
+  const L=36,R=12,T=14,B=26,x=d=>L+(parse(d)-t0)/864e5/span*(W-L-R),y=v=>T+(hi-v)/(hi-lo)*(H-T-B);
+  let g='';const step=(hi-lo)>8?2:1;
+  for(let v=Math.ceil(lo);v<=hi;v+=step)g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="currentColor" opacity=".08"/><text x="'+(L-6)+'" y="'+(y(v)+4)+'" text-anchor="end" font-size="12" fill="currentColor" opacity=".5">'+v+'</text>';
+  g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(st.goal)+'" y2="'+y(st.goal)+'" stroke="var(--mag)" stroke-width="2" stroke-dasharray="6 4"/><text x="'+(W-R)+'" y="'+(y(st.goal)-6)+'" text-anchor="end" font-size="12" fill="var(--mag)">목표 '+st.goal+'</text>';
+  g+=dates.map(d=>'<circle cx="'+x(d)+'" cy="'+y(w[d])+'" r="3" fill="currentColor" opacity=".35"/>').join("");
+  const pts=dates.map((d,i)=>x(d)+","+y(avg7(dates,w,i))).join(" ");
+  g+='<polyline points="'+pts+'" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>';
+  g+='<text x="'+L+'" y="'+(H-8)+'" font-size="12" fill="currentColor" opacity=".5">'+dates[0].slice(5).replace("-","/")+'</text><text x="'+(W-R)+'" y="'+(H-8)+'" text-anchor="end" font-size="12" fill="currentColor" opacity=".5">'+dates[dates.length-1].slice(5).replace("-","/")+'</text>';
+  svg.style.color="var(--ink)";svg.innerHTML=g;
+}
+function renderLog(){
+  const st=S.meta.set,w=S.meta.w,dates=Object.keys(w).sort();
+  $("win").value=w[cur]!=null?w[cur]:"";
+  ["kcal","prot","start","goal"].forEach(k=>{const el=$("set-"+k);if(document.activeElement!==el)el.value=st[k]});
+  if(dates.length){const a=avg7(dates,w,dates.length-1);$("s-avg").textContent=a.toFixed(1);const lost=st.start-a;$("s-lost").textContent=(lost>=0?"−":"+")+Math.abs(lost).toFixed(1);const left=Math.max(0,a-st.goal);$("s-left").textContent=left.toFixed(1);$("eta").textContent=left>0?"주 0.5kg씩이면 약 "+Math.ceil(left/0.5)+"주 남았어요. 하루 숫자보다 7일 평균(굵은 선)을 보세요.":"목표 도달! 이제 유지 칼로리(약 2,000kcal)로 천천히 올려도 됩니다."}
+  else{$("s-avg").textContent="–";$("s-lost").textContent="–";$("s-left").textContent=(st.start-st.goal).toFixed(1);$("eta").textContent=""}
+  drawChart();
+}
+function renderAll(){
+  const t=today();$("dlabel").textContent=cur===t?"오늘":cur.slice(5).replace("-","/")+" ("+"일월화수목금토"[parse(cur).getDay()]+")";
+  $("next").disabled=cur>=t;
+  renderToday();renderFood();renderEx();renderLog();renderPhotos();
+}
+function show(t){tab=t;["today","food","ex","log"].forEach(x=>$("t-"+x).classList.toggle("hide",x!==t));document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));if(t==="log")drawChart();window.scrollTo(0,0)}
+function autoSlot(){const h=new Date().getHours();return h<10?0:h<15?1:h<17?3:h<21?2:3}
+function openSheet(i,custom){
+  pick=custom?null:F[i];isCustom=!!custom;qty=1;
+  $("sh-custom").classList.toggle("hide",!custom);$("sh-q").classList.toggle("hide",!!custom);
+  $("sh-n").textContent=custom?"직접 입력":pick[0];$("sh-u").textContent=custom?"":pick[1]+" 기준 "+pick[2]+"kcal · 단백질 "+pick[3]+"g";
+  if(custom){$("c-n").value="";$("c-k").value="";$("c-p").value=""}
+  renderSheet();$("sheet").classList.add("open");
+}
+function renderSheet(){
+  $("qty").innerHTML=QTY.map(q=>'<button class="'+(q===qty?"on":"")+'" data-q="'+q+'">'+(q===0.5?"반":q)+(q===0.5?"":"인분")+'</button>').join("");
+  $("slot").innerHTML=SLOTS.map((s,i)=>'<button class="'+(i===slot?"on":"")+'" data-s="'+i+'">'+s+'</button>').join("");
+  const k=isCustom?(+$("c-k").value||0):pick[2]*qty;$("sh-t").textContent="+ "+fmt(k)+" kcal";
+}
+const closeSheet=()=>$("sheet").classList.remove("open");
+
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;const d=b.dataset;const dd=day(cur);
+  if(d.t)show(d.t);
+  else if(d.del!=null){dd.f.splice(+d.del,1);persist(cur);renderAll()}
+  else if(d.add!=null){slot=+d.add;cat="전체";$("q").value="";show("food");renderFood()}
+  else if(d.pv){pv=d.pv;document.querySelectorAll("#pview button").forEach(x=>x.classList.toggle("on",x.dataset.pv===pv));renderPhotos()}
+  else if(d.phdel){if(idb)idbReq(store("readwrite").delete(d.phdel)).then(()=>{photoKeys.delete(d.phdel);delete urls[d.phdel];renderPhotos();renderToday()})}
+  else if(d.pick){$("cmpB").value=d.pick;renderPhotos()}
+  else if(d.cl!=null){const i=+d.cl;if((i===0&&S.meta.w[cur]&&!dd.c[0])||(i===1&&(photoKeys.has(cur+"|front")||photoKeys.has(cur+"|side"))&&!dd.c[1])){show("log");return}dd.c[i]=dd.c[i]?0:1;persist(cur);renderToday()}
+  else if(d.cat){cat=d.cat;$("q").value="";renderFood()}
+  else if(d.f!=null){if(!$("sheet").classList.contains("open")&&tab==="food"&&slot==null)slot=autoSlot();openSheet(+d.f)}
+  else if(d.q){qty=+d.q;renderSheet()}
+  else if(d.s!=null){slot=+d.s;renderSheet()}
+  else if(d.set){const[r,ii,si]=d.set.split("|");const rec=dd.e[r]||(dd.e[r]=[]);const v=rec[+ii]||0;rec[+ii]=v>+si?+si:+si+1;persist(cur);renderEx();renderToday()}
+});
+$("sh-c").onclick=closeSheet;$("sheet").onclick=e=>{if(e.target===$("sheet"))closeSheet()};
+$("sh-a").onclick=()=>{
+  const dd=day(cur);
+  if(isCustom){const n=$("c-n").value.trim(),k=+$("c-k").value;if(!n||!k){$("c-n").focus();return}dd.f.push({n,u:"직접 입력",k,p:+$("c-p").value||0,q:1,m:slot})}
+  else dd.f.push({n:pick[0],u:pick[1],k:pick[2],p:pick[3],q:qty,m:slot});
+  persist(cur);closeSheet();renderAll();show("today");
+};
+$("c-k").oninput=renderSheet;
+$("custom").onclick=()=>openSheet(0,true);
+$("q").oninput=renderFood;
+$("prev").onclick=()=>{cur=addD(cur,-1);renderAll()};
+$("next").onclick=()=>{if(cur<today()){cur=addD(cur,1);renderAll()}};
+$("wsave").onclick=()=>{const v=parseFloat($("win").value);if(!(v>30&&v<200)){$("win").focus();return}S.meta.w[cur]=Math.round(v*10)/10;persist("meta");renderAll()};
+["kcal","prot","start","goal"].forEach(k=>{$("set-"+k).onchange=e=>{const v=parseFloat(e.target.value);if(v>0){S.meta.set[k]=v;persist("meta");renderAll()}}});
+$("bcopy").onclick=async()=>{const t=JSON.stringify(S);$("btext").value=t;try{await navigator.clipboard.writeText(t);stat("백업을 복사했어요")}catch(e){$("btext").select();stat("아래 글상자 내용을 길게 눌러 복사하세요")}};
+$("bload").onclick=()=>{try{const v=JSON.parse($("btext").value);if(!v.meta||!v.days)throw 0;S={meta:{set:{...DEF,...v.meta.set},w:v.meta.w||{}},days:v.days};persist("meta");Object.keys(S.days).forEach(persist);renderAll();stat("백업을 불러왔어요")}catch(e){stat("백업 형식이 맞지 않아요")}};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
+const ro=new ResizeObserver(drawChart);ro.observe($("fig"));
+["front","side"].forEach(v=>{$("pf-"+v).onchange=e=>{const f=e.target.files&&e.target.files[0];if(f)savePhoto(v,f);e.target.value=""}});
+$("cmpA").onchange=renderPhotos;$("cmpB").onchange=renderPhotos;
+slot=autoSlot();
+renderAll();
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+openIDB().then(async d=>{idb=d;(await idbReq(store("readonly").getAllKeys())).forEach(k=>photoKeys.add(String(k)));renderPhotos();renderToday()}).catch(()=>{$("phnote").textContent="이 화면에서는 사진 저장이 안 돼요. 깃허브 앱(홈 화면에 추가)에서 써 주세요."});
+
+(async()=>{
+  if(!window.claude||typeof window.claude.use!=="function")return;
+  try{
+    const d=await window.claude.use("db"),u=await window.claude.use("user");if(!d||!u)return;
+    const id=await u.id();if(!id)return;db=d;uid=id;stat("클라우드 연결 중…");
+    const tm=setTimeout(()=>stat("클라우드 연결이 늦어요 — 이 기기 데이터로 표시 중"),10000);
+    let first=true;
+    d.collection("data/users/"+id).onSnapshot(snap=>{
+      if(!snap.metadata.fromCache){clearTimeout(tm);stat("저장됨 · 모든 기기에서 동기화")}
+      if(first&&!snap.metadata.fromCache&&snap.empty){first=false;persist("meta");Object.keys(S.days).forEach(persist);return}
+      if(!snap.metadata.fromCache)first=false;
+      snap.docs.forEach(doc=>{const v=doc.data();if(!v)return;const key=doc.id==="meta"?"meta":doc.id.slice(2);if(pending[key])return;const c=JSON.parse(JSON.stringify(v));
+        if(key==="meta")S.meta={set:{...DEF,...(c.set||{})},w:c.w||{}};else if(doc.id.startsWith("d-"))S.days[key]={f:c.f||[],c:c.c||{},e:c.e||{}}});
+      try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}
+      renderAll();
+    },()=>{clearTimeout(tm);db=null;stat("클라우드 사용 불가 — 이 기기에 저장 중")});
+  }catch(e){}
+})();
+}
+</script>
+</body>
+</html>
