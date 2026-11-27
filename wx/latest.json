@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-27T18:00:47+00:00",
+ "updated": "2026-11-27T18:30:32+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
    "name": "Seoul/Gimpo Intl, 41, KR",
-   "metar": "METAR RKSS 271700Z 27006KT 3500 BR SCT035 08/07 Q1013 NOSIG",
+   "metar": "METAR RKSS 271800Z 27006KT 5000 BR NSC 08/05 Q1013 NOSIG",
    "taf": "TAF RKSS 271700Z 2718/2824 30006KT 4000 BR SCT035 TN04/2721Z TX10/2805Z TNM03/2821Z BECMG 2719/2721 6000 NSW NSC BECMG 2802/2804 30015G25KT 9999 SCT030 BECMG 2808/2810 30007KT CAVOK",
    "notams": [
     {
@@ -87,13 +87,12 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 271730Z 28010KT CAVOK 09/03 Q1014 NOSIG",
+   "metar": "METAR RKSI 271800Z 28010KT CAVOK 09/03 Q1013 NOSIG",
    "taf": "TAF RKSI 271700Z 2718/2824 30010KT 6000 SCT040 TN05/2721Z TX09/2805Z TN00/2820Z BECMG 2802/2804 31017G30KT 9999 BKN035 BECMG 2807/2809 SCT040 BECMG 2815/2817 32012KT CAVOK",
    "notams": [
     {
@@ -121,7 +120,7 @@
      "q": "QFATT"
     }
    ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   "notam_error": "RKSI HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKNN": {
    "fir": false,
@@ -137,8 +136,7 @@
      "fir": "RKRR",
      "q": "QCTAS"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKNW": {
    "fir": false,
@@ -203,12 +201,12 @@
      "q": "QFATT"
     }
    ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   "notam_error": "RKNW HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKPC": {
    "fir": false,
    "name": "Jeju Intl, 49, KR",
-   "metar": "METAR RKPC 271700Z 31014G25KT 280V350 7000 BKN030 15/09 Q1016 NOSIG",
+   "metar": "METAR RKPC 271800Z 32014KT 7000 BKN030 14/07 Q1017 WS R13 R31 NOSIG",
    "taf": "TAF RKPC 271700Z 2718/2824 31015G25KT 6000 FEW015 BKN035 TX15/2718Z TN08/2821Z BECMG 2720/2722 31020G35KT BECMG 2804/2806 31025G45KT -RA BECMG 2812/2814 32018G35KT BECMG 2816/2818 33015G25KT 9999 NSW BECMG 2820/2822 33008KT SCT030",
    "notams": [
     {
@@ -259,13 +257,12 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKPK": {
    "fir": false,
    "name": "Busan/Gimhae Intl, 48, KR",
-   "metar": "METAR RKPK 271700Z 04002KT CAVOK 08/07 Q1012",
+   "metar": "METAR RKPK 271800Z 17001KT CAVOK 07/06 Q1012",
    "taf": "TAF RKPK 271700Z 2718/2824 30006KT 9999 SCT050 SCT200 TX11/2806Z TN02/2821Z BECMG 2803/2804 30008G18KT SCT050 BECMG 2812/2813 30008KT SCT030",
    "notams": [
     {
@@ -412,13 +409,12 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKTU": {
    "fir": false,
    "name": "Cheonju Intl, 43, KR",
-   "metar": "METAR RKTU 271700Z 25005KT 4800 BR SCT030 BKN160 07/04 Q1013",
+   "metar": "METAR RKTU 271800Z 25007KT 4800 BR SCT030 BKN160 08/05 Q1014",
    "taf": "TAF RKTU 271700Z 2718/2824 27006KT 4800 BR SCT030 TX07/2806Z TNM04/2821Z BECMG 2723/2724 9999 NSW BECMG 2803/2804 27010KT 4800 -RA BR BKN030 BECMG 2810/2811 27006KT 9999 NSW",
    "notams": [
     {
@@ -509,13 +505,12 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKTN": {
    "fir": false,
    "name": "Daegu, 27, KR",
-   "metar": "METAR RKTN 271700Z 28003KT 9999 FEW050 BKN230 09/06 Q1012",
+   "metar": "METAR RKTN 271800Z 31003KT 9999 SCT050 BKN230 09/06 Q1012",
    "taf": "TAF RKTN 271700Z 2718/2824 31006KT 9999 SCT030 BKN200 TX11/2806Z TN00/2821Z BECMG 2802/2803 31006G16KT BKN030 BECMG 2809/2810 31010KT SCT030 SCT200",
    "notams": [
     {
@@ -558,8 +553,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKJJ": {
    "fir": false,
@@ -632,12 +626,12 @@
      "q": "QFATT"
     }
    ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   "notam_error": "RKJJ HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKNY": {
    "fir": false,
    "name": "Yangyang Intl, 42, KR",
-   "metar": "METAR RKNY 271700Z AUTO 29007KT 250V350 5000 BR ///038/// 11/01 Q1009",
+   "metar": "METAR RKNY 271800Z AUTO 28003KT 4800 BR ///036/// 10/01 Q1009",
    "taf": "TAF RKNY 271700Z 2718/2824 28015G35KT 9999 SCT040 TN08/2721Z TX11/2805Z TN01/2820Z BECMG 2814/2816 28010G25KT CAVOK",
    "notams": [
     {
@@ -656,8 +650,7 @@
      "fir": "RKRR",
      "q": "QMRLC"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKPU": {
    "fir": false,
@@ -697,13 +690,12 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKJB": {
    "fir": false,
    "name": "Muan Intl, 46, KR",
-   "metar": "METAR RKJB 271700Z AUTO 32011KT 290V350 9999 NCD 12/06 Q1016",
+   "metar": "METAR RKJB 271800Z AUTO 32013KT 9999 NCD 11/04 Q1016",
    "taf": "TAF RKJB 271700Z 2718/2824 32010KT 9999 FEW035 BKN150 TN10/2720Z TX11/2803Z TN04/2820Z BECMG 2721/2723 30015G25KT BKN035 BECMG 2800/2802 CAVOK BECMG 2803/2805 33018G35KT 6000 -RA FEW010 BKN035 OVC080 BECMG 2814/2816 35013G25KT 9999 NSW SCT035 BECMG 2821/2823 08006KT",
    "notams": [
     {
@@ -818,8 +810,7 @@
      "fir": "RKRR",
      "q": "QCATT"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   },
   "RKRR": {
    "fir": true,
@@ -3987,11 +3978,10 @@
      "fir": "RKRR",
      "q": "QARCS"
     }
-   ],
-   "notam_error": "토큰 실패 HTTP 403 <!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden"
+   ]
   }
  },
- "notam_checked": "2026-11-27T18:00:47+00:00",
- "notam_updated": "2026-11-27T17:30:29+00:00",
+ "notam_checked": "2026-11-27T18:30:32+00:00",
+ "notam_updated": "2026-11-27T18:30:32+00:00",
  "notam_source": "FAA NMS (시험)"
 }
