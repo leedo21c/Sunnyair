@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-28T04:00:40+00:00",
+ "updated": "2026-11-28T04:12:50+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
    "name": "Seoul/Gimpo Intl, 41, KR",
-   "metar": "METAR RKSS 280300Z 30016KT 270V330 CAVOK 10/M04 Q1015 NOSIG",
+   "metar": "METAR RKSS 280400Z 29016KT 250V310 CAVOK 09/M05 Q1014 NOSIG",
    "taf": "TAF AMD RKSS 280315Z 2803/2906 30015G35KT 9999 SCT030 TX10/2805Z TNM03/2821Z TX08/2906Z BECMG 2811/2812 30015G25KT CAVOK BECMG 2813/2815 30007KT BECMG 2904/2906 22006KT",
    "notams": [
     {
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 280330Z 31017KT 9999 FEW035 SCT070 08/M01 Q1015 WS R16L R34R R16R R34L NOSIG",
+   "metar": "METAR RKSI 280400Z 30017G29KT 9999 FEW040 SCT070 09/M02 Q1015 WS R16L R34R R34L NOSIG",
    "taf": "TAF AMD RKSI 280138Z 2802/2906 32018G35KT CAVOK TX09/2805Z TN00/2820Z TX09/2905Z TEMPO 2804/2807 9999 BKN040 BECMG 2814/2816 33010KT BECMG 2900/2902 27007KT BECMG 2903/2905 18006KT",
    "notams": [
     {
@@ -111,8 +111,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKSI HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKNN": {
    "fir": false,
@@ -128,7 +127,8 @@
      "fir": "RKRR",
      "q": "QCTAS"
     }
-   ]
+   ],
+   "notam_error": "RKNN HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKNW": {
    "fir": false,
@@ -197,7 +197,7 @@
   "RKPC": {
    "fir": false,
    "name": "Jeju Intl, 49, KR",
-   "metar": "METAR RKPC 280300Z 30019G39KT 270V330 9999 BKN035 BKN100 13/02 Q1018 WS R07 R25 NOSIG",
+   "metar": "METAR RKPC 280400Z 31022G36KT 280V340 9999 -SHRA SCT025 BKN035 13/05 Q1018 WS ALL RWY NOSIG",
    "taf": "TAF AMD RKPC 280028Z 2800/2906 31018G35KT 9999 FEW015 BKN035 TN08/2821Z TX12/2905Z TEMPO 2800/2801 6000 -RA BECMG 2804/2806 31025G45KT 6000 -RA BECMG 2812/2814 32018G35KT BECMG 2816/2818 33015G25KT 9999 NSW BECMG 2820/2822 32007KT SCT030",
    "notams": [
     {
@@ -253,7 +253,7 @@
   "RKPK": {
    "fir": false,
    "name": "Busan/Gimhae Intl, 48, KR",
-   "metar": "METAR RKPK 280300Z 31014KT CAVOK 14/00 Q1012",
+   "metar": "METAR RKPK 280400Z 33013G23KT CAVOK 12/02 Q1012",
    "taf": "TAF RKPK 272300Z 2800/2906 30006KT 9999 SCT050 TX13/2806Z TN01/2821Z BECMG 2802/2803 30008G18KT BECMG 2808/2809 30012KT BECMG 2811/2812 30006KT BECMG 2823/2824 33012KT",
    "notams": [
     {
@@ -405,7 +405,7 @@
   "RKTU": {
    "fir": false,
    "name": "Cheonju Intl, 43, KR",
-   "metar": "METAR RKTU 280300Z 30013KT CAVOK 10/M05 Q1014",
+   "metar": "METAR RKTU 280400Z 29018KT CAVOK 10/M05 Q1014",
    "taf": "TAF RKTU 272300Z 2800/2906 27010KT 9999 BKN030 TNM04/2821Z TX11/2906Z",
    "notams": [
     {
@@ -493,7 +493,7 @@
   "RKTN": {
    "fir": false,
    "name": "Daegu, 27, KR",
-   "metar": "METAR RKTN 280300Z 26009KT 9999 BKN050 10/03 Q1013",
+   "metar": "METAR RKTN 280400Z 30011KT 9999 BKN050 13/03 Q1012",
    "taf": "TAF AMD RKTN 280240Z 2802/2906 31010KT 9999 BKN050 TX12/2806Z TN00/2821Z BECMG 2805/2806 9000 -RA BKN030 BECMG 2809/2810 9999 NSW BECMG 2815/2816 31006KT SCT030",
    "notams": [
     {
@@ -536,8 +536,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKTN HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKJJ": {
    "fir": false,
@@ -614,7 +613,7 @@
   "RKNY": {
    "fir": false,
    "name": "Yangyang Intl, 42, KR",
-   "metar": "METAR RKNY 280300Z 29015G26KT 250V320 9999 FEW070 11/M08 Q1009 NOSIG",
+   "metar": "METAR RKNY 280400Z 29013KT 240V330 CAVOK 11/M09 Q1009 NOSIG",
    "taf": "TAF RKNY 272300Z 2800/2906 28010KT 9999 SCT040 TX11/2805Z TN01/2820Z TX10/2905Z TEMPO 2800/2807 27015G35KT BECMG 2808/2810 27018G35KT CAVOK BECMG 2814/2816 28010G25KT",
    "notams": [
     {
@@ -678,7 +677,7 @@
   "RKJB": {
    "fir": false,
    "name": "Muan Intl, 46, KR",
-   "metar": "SPECI RKJB 280340Z 31021G35KT 4000 TSRA FEW010CB BKN035 OVC080 08/05 Q1017 NOSIG RMK TS B40 NW MOV E",
+   "metar": "METAR RKJB 280400Z 30013G27KT 250V340 6000 -RA FEW010 BKN025 OVC080 08/05 Q1017 NOSIG",
    "taf": "TAF AMD RKJB 280219Z 2802/2906 30015G25KT CAVOK TX11/2803Z TN04/2820Z TX12/2905Z BECMG 2803/2805 33018G35KT 6000 -RA FEW010 BKN035 OVC080 TEMPO 2805/2810 4000 -TSRA FEW010CB BKN035 OVC080 BECMG 2814/2816 34015G25KT 9999 NSW SCT035 BECMG 2821/2823 35006KT BECMG 2902/2904 27006KT",
    "notams": [
     {
@@ -1742,14 +1741,6 @@
      "raw": "D3699/26 NOTAMN\nQ)RKRR/QRPCA/IV/NBO/W/000/999/3727N12707E016\nA)RKRR B)2611280105 C)2611280755\nD)0105-0145 0715-0755\nE)TEMPO PROHIBITED AREA ACT AS FLW:\n1. AREA : A CIRCLE RADIUS 5NM CENTERED ON 372645N1270652E(RKSM)\n2. BUFFER ZONE : TEMPO BUFFER ZONE FM OUTSIDE OF PROHIBITED AREA TO\n                 10NM\n3. RMK :\n  - EXC SKED CIV ACFT USING AWY, EMERG MISSION ACFT\n  - EXC INFO/SURVEILLANCE RECONNAISSANCE ACFT(TKOF AND LDG NOT AVBL)\n  - FOR PRE-COORDINATION AND APV FOR PASSING THROUGH OR\n    ENTERING BUFFER ZONE CTC ROKAF SODO AT 031-669-7020/1\n    OR 031-661-4471 THEN CTC MCRC/ACC ON FREQ DURING THE FLT\nF)SFC G)UNL",
      "start": "2026-11-28T01:05:00.000Z",
      "end": "2026-11-28T07:55:00.000Z",
-     "fir": "RKRR",
-     "q": "QRPCA"
-    },
-    {
-     "num": "D3700/26",
-     "raw": "D3700/26 NOTAMN\nQ)RKRR/QRPCA/IV/NBO/W/000/999/3728N12910E016\nA)RKRR B)2611280205 C)2611280330\nE)TEMPO PROHIBITED AREA ACT AS FLW:\n1. AREA : A CIRCLE RADIUS 5NM CENTERED ON 372753N1290933E\n2. BUFFER ZONE : TEMPO BUFFER ZONE FM OUTSIDE OF PROHIBITED AREA TO\n                 10NM\n3. RMK :\n  - EXC SKED CIV ACFT USING AWY, EMERG MISSION ACFT\n  - EXC INFO/SURVEILLANCE RECONNAISSANCE ACFT(TKOF AND LDG NOT AVBL)\n  - FOR PRE-COORDINATION AND APV FOR PASSING THROUGH OR\n    ENTERING BUFFER ZONE CTC ROKAF SODO AT 031-669-7020/1\n    OR 031-661-4471 THEN CTC MCRC/ACC ON FREQ DURING THE FLT\nF)SFC G)UNL",
-     "start": "2026-11-28T02:05:00Z",
-     "end": "2026-11-28T03:30:00Z",
      "fir": "RKRR",
      "q": "QRPCA"
     },
@@ -3921,11 +3912,10 @@
      "fir": "RKRR",
      "q": "QARCS"
     }
-   ],
-   "notam_error": "RKRR HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   }
  },
- "notam_checked": "2026-11-28T04:00:40+00:00",
- "notam_updated": "2026-11-28T04:00:40+00:00",
+ "notam_checked": "2026-11-28T04:12:50+00:00",
+ "notam_updated": "2026-11-28T04:12:50+00:00",
  "notam_source": "FAA NMS (시험)"
 }
