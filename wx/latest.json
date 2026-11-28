@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-28T06:30:29+00:00",
+ "updated": "2026-11-28T07:00:37+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 280600Z 31017KT CAVOK 08/M03 Q1015 NOSIG",
+   "metar": "METAR RKSI 280630Z 30016G32KT 9999 FEW045 07/M03 Q1015 WS R16L R34R R16R R34L NOSIG",
    "taf": "TAF RKSI 280500Z 2806/2912 32018G35KT 9999 SCT040 TN00/2821Z TX08/2905Z BECMG 2814/2816 33010KT CAVOK BECMG 2900/2902 27007KT BECMG 2903/2905 18007KT",
    "notams": [
     {
@@ -127,7 +127,8 @@
      "fir": "RKRR",
      "q": "QCTAS"
     }
-   ]
+   ],
+   "notam_error": "RKNN HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKNW": {
    "fir": false,
@@ -247,8 +248,7 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ],
-   "notam_error": "RKPC HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKPK": {
    "fir": false,
@@ -405,7 +405,7 @@
   "RKTU": {
    "fir": false,
    "name": "Cheonju Intl, 43, KR",
-   "metar": "SPECI RKTU 280608Z 31016G26KT 9999 -RA BKN040 BKN090 08/M03 Q1015 RMK CIG040",
+   "metar": "SPECI RKTU 280628Z 29008G18KT 9999 BKN040 BKN090 07/M02 Q1015 RMK CIG040",
    "taf": "TAF RKTU 280500Z 2806/2912 30006G16KT CAVOK TNM04/2821Z TX11/2906Z BECMG 2811/2812 30006KT SCT030",
    "notams": [
     {
@@ -488,8 +488,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKTU HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKTN": {
    "fir": false,
@@ -609,7 +608,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKJJ HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKNY": {
    "fir": false,
@@ -785,8 +785,7 @@
      "fir": "RKRR",
      "q": "QCATT"
     }
-   ],
-   "notam_error": "RKJB HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKRR": {
    "fir": true,
@@ -1323,14 +1322,6 @@
      "q": "QRDCA"
     },
     {
-     "num": "D3582/26",
-     "raw": "D3582/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/050/3428N12848E024\nA)RKRR B)2611222300 C)2611280700\nD)22 2300-2359, 23 0000-0900 2300-2359, 24 0000-0500 2300-2359, 25\n0000-0600, 26 0200-1100 2300-2359, 27 0000-0900, 28 0500-0700\nE)DANGER AREA RK D99 ACT\nF)SFC G)5000FT AMSL",
-     "start": "2026-11-22T23:00:00Z",
-     "end": "2026-11-28T07:00:00Z",
-     "fir": "RKRR",
-     "q": "QRDCA"
-    },
-    {
      "num": "D3584/26",
      "raw": "D3584/26 NOTAMN\nQ)RKRR/QRRCA/IV/BO/W/000/005/3453N12857E004\nA)RKRR B)2611230400 C)2611290400\nD)23 0400-0900 2300-2359, 24 25 0000-0900 2300-2359, 26 0000-0900,\n29 0200-0400\nE)RESTRICTED AREA RK R100 ACT\nF)SFC G)500FT AMSL",
      "start": "2026-11-23T04:00:00Z",
@@ -1743,14 +1734,6 @@
      "raw": "D3699/26 NOTAMN\nQ)RKRR/QRPCA/IV/NBO/W/000/999/3727N12707E016\nA)RKRR B)2611280105 C)2611280755\nD)0105-0145 0715-0755\nE)TEMPO PROHIBITED AREA ACT AS FLW:\n1. AREA : A CIRCLE RADIUS 5NM CENTERED ON 372645N1270652E(RKSM)\n2. BUFFER ZONE : TEMPO BUFFER ZONE FM OUTSIDE OF PROHIBITED AREA TO\n                 10NM\n3. RMK :\n  - EXC SKED CIV ACFT USING AWY, EMERG MISSION ACFT\n  - EXC INFO/SURVEILLANCE RECONNAISSANCE ACFT(TKOF AND LDG NOT AVBL)\n  - FOR PRE-COORDINATION AND APV FOR PASSING THROUGH OR\n    ENTERING BUFFER ZONE CTC ROKAF SODO AT 031-669-7020/1\n    OR 031-661-4471 THEN CTC MCRC/ACC ON FREQ DURING THE FLT\nF)SFC G)UNL",
      "start": "2026-11-28T01:05:00.000Z",
      "end": "2026-11-28T07:55:00.000Z",
-     "fir": "RKRR",
-     "q": "QRPCA"
-    },
-    {
-     "num": "D3702/26",
-     "raw": "D3702/26 NOTAMN\nQ)RKRR/QRPCA/IV/NBO/W/000/999/3747N12853E016\nA)RKRR B)2611280510 C)2611280700\nE)TEMPO PROHIBITED AREA ACT AS FLW:\n1. AREA : A CIRCLE RADIUS 5NM CENTERED ON 374713N1285233E\n2. BUFFER ZONE : TEMPO BUFFER ZONE FM OUTSIDE OF PROHIBITED AREA TO\n                 10NM\n3. RMK :\n  - EXC SKED CIV ACFT USING AWY, EMERG MISSION ACFT\n  - EXC INFO/SURVEILLANCE RECONNAISSANCE ACFT(TKOF AND LDG NOT AVBL)\n  - FOR PRE-COORDINATION AND APV FOR PASSING THROUGH OR\n    ENTERING BUFFER ZONE CTC ROKAF SODO AT 031-669-7020/1\n    OR 031-661-4471 THEN CTC MCRC/ACC ON FREQ DURING THE FLT\nF)SFC G)UNL",
-     "start": "2026-11-28T05:10:00.000Z",
-     "end": "2026-11-28T07:00:00.000Z",
      "fir": "RKRR",
      "q": "QRPCA"
     },
@@ -3901,7 +3884,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-28T06:30:29+00:00",
- "notam_updated": "2026-11-28T06:30:29+00:00",
+ "notam_checked": "2026-11-28T07:00:37+00:00",
+ "notam_updated": "2026-11-28T07:00:37+00:00",
  "notam_source": "FAA NMS (시험)"
 }
