@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-28T00:30:28+00:00",
+ "updated": "2026-11-28T01:00:37+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 280000Z 32009KT CAVOK 09/01 Q1015 NOSIG",
+   "metar": "METAR RKSI 280030Z 30013KT CAVOK 09/02 Q1015 NOSIG",
    "taf": "TAF RKSI 272300Z 2800/2906 32010KT CAVOK TX09/2805Z TN00/2820Z TX09/2905Z BECMG 2802/2804 31017G30KT 9999 BKN040 BECMG 2807/2809 CAVOK BECMG 2815/2817 33010KT BECMG 2900/2902 27007KT BECMG 2903/2905 18006KT",
    "notams": [
     {
@@ -127,8 +127,7 @@
      "fir": "RKRR",
      "q": "QCTAS"
     }
-   ],
-   "notam_error": "RKNN HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKNW": {
    "fir": false,
@@ -197,7 +196,7 @@
   "RKPC": {
    "fir": false,
    "name": "Jeju Intl, 49, KR",
-   "metar": "METAR RKPC 280000Z 32012KT 280V360 9999 SCT045 13/02 Q1018 WS R13 R31 NOSIG",
+   "metar": "SPECI RKPC 280049Z 29022G42KT 260V330 2000 SHRA SCT025 BKN040 10/07 Q1019 WS ALL RWY NOSIG",
    "taf": "TAF AMD RKPC 280028Z 2800/2906 31018G35KT 9999 FEW015 BKN035 TN08/2821Z TX12/2905Z TEMPO 2800/2801 6000 -RA BECMG 2804/2806 31025G45KT 6000 -RA BECMG 2812/2814 32018G35KT BECMG 2816/2818 33015G25KT 9999 NSW BECMG 2820/2822 32007KT SCT030",
    "notams": [
     {
@@ -488,7 +487,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKTU HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKTN": {
    "fir": false,
@@ -608,8 +608,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKJJ HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKNY": {
    "fir": false,
@@ -3933,7 +3932,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-28T00:30:28+00:00",
- "notam_updated": "2026-11-28T00:30:28+00:00",
+ "notam_checked": "2026-11-28T01:00:37+00:00",
+ "notam_updated": "2026-11-28T01:00:37+00:00",
  "notam_source": "FAA NMS (시험)"
 }
