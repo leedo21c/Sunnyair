@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-28T12:30:30+00:00",
+ "updated": "2026-11-28T13:00:36+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 281200Z 32019KT 9999 BKN040 04/M03 Q1021 NOSIG",
+   "metar": "METAR RKSI 281230Z 32022KT 9999 BKN040 05/M05 Q1021 NOSIG",
    "taf": "TAF RKSI 281100Z 2812/2918 32017G35KT 9999 SCT040 TN00/2821Z TX08/2905Z BECMG 2815/2817 33010KT CAVOK BECMG 2901/2903 27007KT BECMG 2904/2906 16007KT BECMG 2914/2916 22010KT 9999 SCT030",
    "notams": [
     {
@@ -400,13 +400,12 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKPK HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKTU": {
    "fir": false,
    "name": "Cheonju Intl, 43, KR",
-   "metar": "SPECI RKTU 281209Z 26008KT 9999 -RA BKN040 03/01 Q1020 RMK CIG040",
+   "metar": "SPECI RKTU 281232Z 26008KT 9999 BKN040 03/00 Q1020 RMK CIG040",
    "taf": "TAF RKTU 281100Z 2812/2918 30010KT 9999 -RA NSC TNM02/2821Z TX10/2906Z BECMG 2812/2813 NSW BKN040",
    "notams": [
     {
@@ -537,8 +536,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKTN HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKJJ": {
    "fir": false,
@@ -610,7 +608,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKJJ HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKNY": {
    "fir": false,
@@ -3813,7 +3812,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-28T12:30:30+00:00",
- "notam_updated": "2026-11-28T12:30:30+00:00",
+ "notam_checked": "2026-11-28T13:00:36+00:00",
+ "notam_updated": "2026-11-28T13:00:36+00:00",
  "notam_source": "FAA NMS (시험)"
 }
