@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-28T08:30:30+00:00",
+ "updated": "2026-11-28T09:00:36+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 280800Z 31018KT 9999 FEW040 06/M02 Q1017 NOSIG",
+   "metar": "METAR RKSI 280830Z 31018KT 9999 FEW040 05/M03 Q1017 NOSIG",
    "taf": "TAF RKSI 280500Z 2806/2912 32018G35KT 9999 SCT040 TN00/2821Z TX08/2905Z BECMG 2814/2816 33010KT CAVOK BECMG 2900/2902 27007KT BECMG 2903/2905 18007KT",
    "notams": [
     {
@@ -111,7 +111,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKSI HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKNN": {
    "fir": false,
@@ -191,13 +192,12 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKNW HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKPC": {
    "fir": false,
    "name": "Jeju Intl, 49, KR",
-   "metar": "SPECI RKPC 280827Z 31027G51KT 280V340 3000 SHRA SCT025 BKN040 09/03 Q1021 WS ALL RWY NOSIG",
+   "metar": "SPECI RKPC 280840Z 32021G47KT 9999 -SHRA SCT025 BKN040 10/03 Q1021 WS ALL RWY NOSIG",
    "taf": "TAF RKPC 280500Z 2806/2912 31025G45KT 6000 -RA FEW015 BKN035 TN08/2821Z TX12/2906Z BECMG 2812/2814 32018G35KT BECMG 2816/2818 32015G25KT 9999 NSW BECMG 2820/2822 30008KT SCT035 BECMG 2908/2910 19005KT",
    "notams": [
     {
@@ -406,7 +406,7 @@
    "fir": false,
    "name": "Cheonju Intl, 43, KR",
    "metar": "METAR RKTU 280800Z 31010G20KT 9999 -RA BKN040 BKN080 05/M01 Q1016",
-   "taf": "TAF RKTU 280500Z 2806/2912 30006G16KT CAVOK TNM04/2821Z TX11/2906Z BECMG 2811/2812 30006KT SCT030",
+   "taf": "TAF AMD RKTU 280800Z 2808/2912 30010KT 9999 -RA BKN040 TNM02/2821Z TX10/2906Z BECMG 2812/2813 NSW SCT040",
    "notams": [
     {
      "num": "A1218/26",
@@ -632,7 +632,8 @@
      "fir": "RKRR",
      "q": "QMRLC"
     }
-   ]
+   ],
+   "notam_error": "RKNY HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKPU": {
    "fir": false,
@@ -677,7 +678,7 @@
   "RKJB": {
    "fir": false,
    "name": "Muan Intl, 46, KR",
-   "metar": "METAR RKJB 280800Z 31022G38KT 280V340 6000 -TSRA FEW010CB BKN025 OVC080 06/03 Q1020 NOSIG",
+   "metar": "SPECI RKJB 280843Z 32018G34KT 270V350 4000 TSPL FEW010CB BKN025 OVC080 06/03 Q1021 NOSIG RMK TS NW MOV E OCNL LTGIC",
    "taf": "TAF AMD RKJB 280749Z 2808/2912 34015G30KT 6000 -RA FEW010 BKN035 OVC080 TN04/2820Z TX12/2905Z TEMPO 2807/2810 34025G35KT 4000 TSRA FEW010CB BKN030 OVC080 BECMG 2814/2816 9999 NSW SCT035 BECMG 2821/2823 35006KT BECMG 2902/2904 27006KT",
    "notams": [
     {
@@ -1129,14 +1130,6 @@
      "q": "QRDCA"
     },
     {
-     "num": "D3298/26",
-     "raw": "D3298/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/005/3716N12810E002\nA)RKRR B)2610230300 C)2611280900\nD)OCT 23-24 30-31 0300-0900, NOV 06-07 13-14 20-21 27-28 0300-0900\nE)TEMPO DANGER AREA ACT AS FLW\nA CIRCLE RADIUS 1.7NM CENTERED ON 371545N1281014E\nF)SFC G)500FT AGL",
-     "start": "2026-10-23T03:00:00.000Z",
-     "end": "2026-11-28T09:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QRDCA"
-    },
-    {
      "num": "D3299/26",
      "raw": "D3299/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/003/3324N12614E001\nA)RKRR B)2610210500 C)2611281100\nD)OCT 21-24 28-31 0500-1100, NOV 04-07 11-14 18-21 25-28 0500-1100\nE)TEMPO DANGER AREA ACT AS FLW\nA CIRCLE RADIUS 0.7NM CENTERED ON 332341N1261351E\nF)SFC G)300FT AMSL",
      "start": "2026-10-21T05:00:00.000Z",
@@ -1393,26 +1386,10 @@
      "q": "QRDCA"
     },
     {
-     "num": "D3645/26",
-     "raw": "D3645/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/003/3809N12851E004\nA)RKRR B)2611230000 C)2611280900\nD)23 24 0000-0900, 28 0400-0900\nE)DANGER AREA RK D140 ACT\nF)SFC G)300FT AMSL",
-     "start": "2026-11-23T00:00:00.000Z",
-     "end": "2026-11-28T09:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QRDCA"
-    },
-    {
      "num": "D3646/26",
      "raw": "D3646/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/003/3735N13119E010\nA)RKRR B)2611230000 C)2611290900\nD)23 0000-1400 2100-2359, 24-27 0000-1400, 28 29 0000-0900\nE)DANGER AREA RK D141 ACT\nF)SFC G)300FT AMSL",
      "start": "2026-11-23T00:00:00Z",
      "end": "2026-11-29T09:00:00Z",
-     "fir": "RKRR",
-     "q": "QRDCA"
-    },
-    {
-     "num": "D3647/26",
-     "raw": "D3647/26 NOTAMN\nQ)RKRR/QRDCA/IV/BO/W/000/003/3620N12950E005\nA)RKRR B)2611230000 C)2611280900\nD)0000-0900\nE)DANGER AREA RK D142B ACT\nF)SFC G)300FT AMSL",
-     "start": "2026-11-23T00:00:00.000Z",
-     "end": "2026-11-28T09:00:00.000Z",
      "fir": "RKRR",
      "q": "QRDCA"
     },
@@ -1423,14 +1400,6 @@
      "end": "2026-11-29T09:00:00.000Z",
      "fir": "RKRR",
      "q": "QRDCA"
-    },
-    {
-     "num": "D3651/26",
-     "raw": "D3651/26 NOTAMN\nQ)RKRR/QRRCA/IV/BO/W/000/003/3708N12934E002\nA)RKRR B)2611250000 C)2611280900\nD)25 28 0000-0900\nE)RESTRICTED AREA RK R142A ACT\nF)SFC G)300FT AMSL",
-     "start": "2026-11-25T00:00:00.000Z",
-     "end": "2026-11-28T09:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QRRCA"
     },
     {
      "num": "D3652/26",
@@ -1719,14 +1688,6 @@
      "end": "2026-12-04T09:00:00Z",
      "fir": "RKRR",
      "q": "QRDCA"
-    },
-    {
-     "num": "D3698/26",
-     "raw": "D3698/26 NOTAMN\nQ)RKRR/QRACA/IV/BO/W/025/050/3640N12938E016\nA)RKRR B)2611252300 C)2611280900\nD)25 2300-27 1100, 28 0000-0900\nE)CATA 7H ACT\nF)2500FT AGL G)5000FT AMSL",
-     "start": "2026-11-25T23:00:00Z",
-     "end": "2026-11-28T09:00:00Z",
-     "fir": "RKRR",
-     "q": "QRACA"
     },
     {
      "num": "D3703/26",
@@ -3145,14 +3106,6 @@
      "q": "QRTCA"
     },
     {
-     "num": "E5412/26",
-     "raw": "E5412/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/003/3707N12613E004\nA)RKRR B)2611240100 C)2611280900\nD)24-25 28 0100-0900\nE)TEMPO RESTRICTED AREA ACT AS FLW:\nAREA BOUNDED BY THE FOLLOWING\n370800N1261000E-370800N1261500E-370550N1261400E-370500N1261000E-\n370800N1261000E\nF)SFC G)300FT AMSL",
-     "start": "2026-11-24T01:00:00.000Z",
-     "end": "2026-11-28T09:00:00.000Z",
-     "fir": "RKRR",
-     "q": "QRTCA"
-    },
-    {
      "num": "E5414/26",
      "raw": "E5414/26 NOTAMN\nQ)RKRR/QRTCA/IV/BO/W/000/100/3725N13002E014\nA)RKRR B)2612010000 C)2612070900\nD)0000-0900\nE)TEMPO RESTRICTED AREA ACT AS FLW\nAREA BOUNDED BY THE FOLLOWING\n373200N1294900E-373200N1301500E-371900N1301500E-371900N1294900E-37320\n0N1294900E\nF)SFC G)10000FT AMSL",
      "start": "2026-12-01T00:00:00.000Z",
@@ -3871,11 +3824,19 @@
      "end": "2026-11-28T21:00:00.000Z",
      "fir": "RKRR",
      "q": "QARCS"
+    },
+    {
+     "num": "Z0902/26",
+     "raw": "Z0902/26 NOTAMN\nQ)RKRR/QARCS/I/NBO/E/000/999/3535N12700E999\nA)RKRR B)2611282100 C)2611292100\nE)CONDITIONAL ROUTE(CDR2) AVBL AS FLW, NEW\nNR ROUTE        TIME FM    TIME TO     LOWER LVL      UPPER LVL\n1 MASTA-UPGOS   11282100   11290000    6,000FT AMSL   FL600\n                11290230   11292100\n\n2 RUGMA-ANROD   11282100   11292100    11,000FT AMSL  FL600\n\n3 BOPTA-PONIK   11282100   11292100    FL150          FL600\n\n4 KARBU-LANAT   11282230   11290200    FL150          FL600\n                11290600   11291930",
+     "start": "2026-11-28T21:00:00.000Z",
+     "end": "2026-11-29T21:00:00.000Z",
+     "fir": "RKRR",
+     "q": "QARCS"
     }
    ]
   }
  },
- "notam_checked": "2026-11-28T08:30:30+00:00",
- "notam_updated": "2026-11-28T08:30:30+00:00",
+ "notam_checked": "2026-11-28T09:00:36+00:00",
+ "notam_updated": "2026-11-28T09:00:36+00:00",
  "notam_source": "FAA NMS (시험)"
 }
