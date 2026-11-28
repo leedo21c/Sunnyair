@@ -1,11 +1,11 @@
 {
- "updated": "2026-11-28T05:30:27+00:00",
+ "updated": "2026-11-28T06:00:41+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
    "name": "Seoul/Gimpo Intl, 41, KR",
    "metar": "METAR RKSS 280500Z 29012KT CAVOK 10/M04 Q1014 NOSIG",
-   "taf": "TAF RKSS 280500Z 2806/2912 30015G25KT 9999 SCT040 TNM03/2821Z TX09/2906Z TEMPO 2806/2811 30015G35KT BECMG 2811/2813 30007KT CAVOK TEMPO 2903/2906 22006KT BECMG 2907/2909 16006KT",
+   "taf": "TAF AMD RKSS 280557Z 2806/2912 30015G25KT 9999 SCT040 TNM03/2821Z TX09/2906Z BECMG 2811/2813 30007KT CAVOK TEMPO 2903/2906 22006KT BECMG 2907/2909 16006KT",
    "notams": [
     {
      "num": "A1353/26",
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 280500Z 31019KT 9999 SCT045 08/M01 Q1015 NOSIG",
+   "metar": "METAR RKSI 280530Z 31018KT 9999 FEW040 08/M04 Q1015 WS R16L R34R R16R R34L NOSIG",
    "taf": "TAF RKSI 280500Z 2806/2912 32018G35KT 9999 SCT040 TN00/2821Z TX08/2905Z BECMG 2814/2816 33010KT CAVOK BECMG 2900/2902 27007KT BECMG 2903/2905 18007KT",
    "notams": [
     {
@@ -111,7 +111,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKSI HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKNN": {
    "fir": false,
@@ -399,8 +400,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKPK HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKTU": {
    "fir": false,
@@ -493,7 +493,7 @@
   "RKTN": {
    "fir": false,
    "name": "Daegu, 27, KR",
-   "metar": "METAR RKTN 280500Z 32010KT 9999 BKN050 10/03 Q1012",
+   "metar": "SPECI RKTN 280530Z 30015KT 9999 -RA BKN050 10/00 Q1012 RMK CIG050",
    "taf": "TAF RKTN 280500Z 2806/2912 31012KT 9000 -RA BKN030 TN00/2821Z TX11/2906Z BECMG 2808/2809 31010KT 9999 NSW BECMG 2815/2816 31006KT SCT030",
    "notams": [
     {
@@ -632,7 +632,8 @@
      "fir": "RKRR",
      "q": "QMRLC"
     }
-   ]
+   ],
+   "notam_error": "RKNY HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKPU": {
    "fir": false,
@@ -784,7 +785,8 @@
      "fir": "RKRR",
      "q": "QCATT"
     }
-   ]
+   ],
+   "notam_error": "RKJB HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKRR": {
    "fir": true,
@@ -1741,14 +1743,6 @@
      "raw": "D3699/26 NOTAMN\nQ)RKRR/QRPCA/IV/NBO/W/000/999/3727N12707E016\nA)RKRR B)2611280105 C)2611280755\nD)0105-0145 0715-0755\nE)TEMPO PROHIBITED AREA ACT AS FLW:\n1. AREA : A CIRCLE RADIUS 5NM CENTERED ON 372645N1270652E(RKSM)\n2. BUFFER ZONE : TEMPO BUFFER ZONE FM OUTSIDE OF PROHIBITED AREA TO\n                 10NM\n3. RMK :\n  - EXC SKED CIV ACFT USING AWY, EMERG MISSION ACFT\n  - EXC INFO/SURVEILLANCE RECONNAISSANCE ACFT(TKOF AND LDG NOT AVBL)\n  - FOR PRE-COORDINATION AND APV FOR PASSING THROUGH OR\n    ENTERING BUFFER ZONE CTC ROKAF SODO AT 031-669-7020/1\n    OR 031-661-4471 THEN CTC MCRC/ACC ON FREQ DURING THE FLT\nF)SFC G)UNL",
      "start": "2026-11-28T01:05:00.000Z",
      "end": "2026-11-28T07:55:00.000Z",
-     "fir": "RKRR",
-     "q": "QRPCA"
-    },
-    {
-     "num": "D3701/26",
-     "raw": "D3701/26 NOTAMN\nQ)RKRR/QRPCA/IV/NBO/W/000/999/3752N12850E016\nA)RKRR B)2611280345 C)2611280535\nE)TEMPO PROHIBITED AREA ACT AS FLW:\n1. AREA : A CIRCLE RADIUS 5NM CENTERED ON 375226N1284933E\n2. BUFFER ZONE : TEMPO BUFFER ZONE FM OUTSIDE OF PROHIBITED AREA TO\n                 10NM\n3. RMK :\n  - EXC SKED CIV ACFT USING AWY, EMERG MISSION ACFT\n  - EXC INFO/SURVEILLANCE RECONNAISSANCE ACFT(TKOF AND LDG NOT AVBL)\n  - FOR PRE-COORDINATION AND APV FOR PASSING THROUGH OR\n    ENTERING BUFFER ZONE CTC ROKAF SODO AT 031-669-7020/1\n    OR 031-661-4471 THEN CTC MCRC/ACC ON FREQ DURING THE FLT\nF)SFC G)UNL",
-     "start": "2026-11-28T03:45:00.000Z",
-     "end": "2026-11-28T05:35:00.000Z",
      "fir": "RKRR",
      "q": "QRPCA"
     },
@@ -3907,7 +3901,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-28T05:30:27+00:00",
- "notam_updated": "2026-11-28T05:30:27+00:00",
+ "notam_checked": "2026-11-28T06:00:41+00:00",
+ "notam_updated": "2026-11-28T06:00:41+00:00",
  "notam_source": "FAA NMS (시험)"
 }
