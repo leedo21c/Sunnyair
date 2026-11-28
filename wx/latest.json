@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-28T08:00:35+00:00",
+ "updated": "2026-11-28T08:30:30+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
    "name": "Seoul/Gimpo Intl, 41, KR",
-   "metar": "METAR RKSS 280700Z 28013KT 250V310 CAVOK 08/M05 Q1015 NOSIG",
+   "metar": "METAR RKSS 280800Z 30013KT CAVOK 06/M05 Q1016 NOSIG",
    "taf": "TAF AMD RKSS 280557Z 2806/2912 30015G25KT 9999 SCT040 TNM03/2821Z TX09/2906Z BECMG 2811/2813 30007KT CAVOK TEMPO 2903/2906 22006KT BECMG 2907/2909 16006KT",
    "notams": [
     {
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 280730Z 31016KT 9999 FEW045 06/M03 Q1016 NOSIG",
+   "metar": "METAR RKSI 280800Z 31018KT 9999 FEW040 06/M02 Q1017 NOSIG",
    "taf": "TAF RKSI 280500Z 2806/2912 32018G35KT 9999 SCT040 TN00/2821Z TX08/2905Z BECMG 2814/2816 33010KT CAVOK BECMG 2900/2902 27007KT BECMG 2903/2905 18007KT",
    "notams": [
     {
@@ -127,8 +127,7 @@
      "fir": "RKRR",
      "q": "QCTAS"
     }
-   ],
-   "notam_error": "RKNN HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKNW": {
    "fir": false,
@@ -192,12 +191,13 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKNW HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKPC": {
    "fir": false,
    "name": "Jeju Intl, 49, KR",
-   "metar": "METAR RKPC 280700Z 31026G41KT 9999 -SHRA SCT025 BKN040 12/01 Q1019 WS ALL RWY NOSIG",
+   "metar": "SPECI RKPC 280827Z 31027G51KT 280V340 3000 SHRA SCT025 BKN040 09/03 Q1021 WS ALL RWY NOSIG",
    "taf": "TAF RKPC 280500Z 2806/2912 31025G45KT 6000 -RA FEW015 BKN035 TN08/2821Z TX12/2906Z BECMG 2812/2814 32018G35KT BECMG 2816/2818 32015G25KT 9999 NSW BECMG 2820/2822 30008KT SCT035 BECMG 2908/2910 19005KT",
    "notams": [
     {
@@ -253,7 +253,7 @@
   "RKPK": {
    "fir": false,
    "name": "Busan/Gimhae Intl, 48, KR",
-   "metar": "METAR RKPK 280700Z 31014KT CAVOK 11/01 Q1013",
+   "metar": "METAR RKPK 280800Z 32014G24KT 9999 BKN040 10/01 Q1014",
    "taf": "TAF RKPK 280500Z 2806/2912 30008G18KT CAVOK TN01/2821Z TX09/2906Z BECMG 2808/2809 30012KT BECMG 2811/2812 30006KT BECMG 2823/2824 33012KT BECMG 2905/2906 33006KT",
    "notams": [
     {
@@ -405,7 +405,7 @@
   "RKTU": {
    "fir": false,
    "name": "Cheonju Intl, 43, KR",
-   "metar": "SPECI RKTU 280733Z 31005G15KT 9999 -RA BKN040 BKN090 06/M01 Q1016 RMK CIG040",
+   "metar": "METAR RKTU 280800Z 31010G20KT 9999 -RA BKN040 BKN080 05/M01 Q1016",
    "taf": "TAF RKTU 280500Z 2806/2912 30006G16KT CAVOK TNM04/2821Z TX11/2906Z BECMG 2811/2812 30006KT SCT030",
    "notams": [
     {
@@ -493,7 +493,7 @@
   "RKTN": {
    "fir": false,
    "name": "Daegu, 27, KR",
-   "metar": "METAR RKTN 280700Z 29013KT 9999 -RA BKN050 09/00 Q1014",
+   "metar": "METAR RKTN 280800Z 30014KT 9999 BKN050 08/00 Q1014",
    "taf": "TAF RKTN 280500Z 2806/2912 31012KT 9000 -RA BKN030 TN00/2821Z TX11/2906Z BECMG 2808/2809 31010KT 9999 NSW BECMG 2815/2816 31006KT SCT030",
    "notams": [
     {
@@ -608,13 +608,12 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKJJ HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKNY": {
    "fir": false,
    "name": "Yangyang Intl, 42, KR",
-   "metar": "METAR RKNY 280700Z 29013KT 240V330 CAVOK 10/M08 Q1010 NOSIG",
+   "metar": "METAR RKNY 280800Z 28009KT 250V310 9999 FEW040 SCT210 08/M08 Q1010 NOSIG",
    "taf": "TAF RKNY 280500Z 2806/2912 28015G35KT CAVOK TN01/2821Z TX10/2905Z BECMG 2814/2816 28010G25KT",
    "notams": [
     {
@@ -678,7 +677,7 @@
   "RKJB": {
    "fir": false,
    "name": "Muan Intl, 46, KR",
-   "metar": "SPECI RKJB 280743Z 30018G46KT 260V330 3000 TSRA FEW010CB BKN025 OVC080 07/02 Q1019 NOSIG RMK TS NW MOV E OCNL LTGIC",
+   "metar": "METAR RKJB 280800Z 31022G38KT 280V340 6000 -TSRA FEW010CB BKN025 OVC080 06/03 Q1020 NOSIG",
    "taf": "TAF AMD RKJB 280749Z 2808/2912 34015G30KT 6000 -RA FEW010 BKN035 OVC080 TN04/2820Z TX12/2905Z TEMPO 2807/2810 34025G35KT 4000 TSRA FEW010CB BKN030 OVC080 BECMG 2814/2816 9999 NSW SCT035 BECMG 2821/2823 35006KT BECMG 2902/2904 27006KT",
    "notams": [
     {
@@ -1728,14 +1727,6 @@
      "end": "2026-11-28T09:00:00Z",
      "fir": "RKRR",
      "q": "QRACA"
-    },
-    {
-     "num": "D3699/26",
-     "raw": "D3699/26 NOTAMN\nQ)RKRR/QRPCA/IV/NBO/W/000/999/3727N12707E016\nA)RKRR B)2611280105 C)2611280755\nD)0105-0145 0715-0755\nE)TEMPO PROHIBITED AREA ACT AS FLW:\n1. AREA : A CIRCLE RADIUS 5NM CENTERED ON 372645N1270652E(RKSM)\n2. BUFFER ZONE : TEMPO BUFFER ZONE FM OUTSIDE OF PROHIBITED AREA TO\n                 10NM\n3. RMK :\n  - EXC SKED CIV ACFT USING AWY, EMERG MISSION ACFT\n  - EXC INFO/SURVEILLANCE RECONNAISSANCE ACFT(TKOF AND LDG NOT AVBL)\n  - FOR PRE-COORDINATION AND APV FOR PASSING THROUGH OR\n    ENTERING BUFFER ZONE CTC ROKAF SODO AT 031-669-7020/1\n    OR 031-661-4471 THEN CTC MCRC/ACC ON FREQ DURING THE FLT\nF)SFC G)UNL",
-     "start": "2026-11-28T01:05:00.000Z",
-     "end": "2026-11-28T07:55:00.000Z",
-     "fir": "RKRR",
-     "q": "QRPCA"
     },
     {
      "num": "D3703/26",
@@ -3881,11 +3872,10 @@
      "fir": "RKRR",
      "q": "QARCS"
     }
-   ],
-   "notam_error": "RKRR HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   }
  },
- "notam_checked": "2026-11-28T08:00:35+00:00",
- "notam_updated": "2026-11-28T08:00:35+00:00",
+ "notam_checked": "2026-11-28T08:30:30+00:00",
+ "notam_updated": "2026-11-28T08:30:30+00:00",
  "notam_source": "FAA NMS (시험)"
 }
