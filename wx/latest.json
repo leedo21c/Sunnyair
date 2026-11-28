@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-28T06:00:41+00:00",
+ "updated": "2026-11-28T06:30:29+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
    "name": "Seoul/Gimpo Intl, 41, KR",
-   "metar": "METAR RKSS 280500Z 29012KT CAVOK 10/M04 Q1014 NOSIG",
+   "metar": "METAR RKSS 280600Z 27014KT CAVOK 09/M04 Q1014 NOSIG",
    "taf": "TAF AMD RKSS 280557Z 2806/2912 30015G25KT 9999 SCT040 TNM03/2821Z TX09/2906Z BECMG 2811/2813 30007KT CAVOK TEMPO 2903/2906 22006KT BECMG 2907/2909 16006KT",
    "notams": [
     {
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 280530Z 31018KT 9999 FEW040 08/M04 Q1015 WS R16L R34R R16R R34L NOSIG",
+   "metar": "METAR RKSI 280600Z 31017KT CAVOK 08/M03 Q1015 NOSIG",
    "taf": "TAF RKSI 280500Z 2806/2912 32018G35KT 9999 SCT040 TN00/2821Z TX08/2905Z BECMG 2814/2816 33010KT CAVOK BECMG 2900/2902 27007KT BECMG 2903/2905 18007KT",
    "notams": [
     {
@@ -111,8 +111,7 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ],
-   "notam_error": "RKSI HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKNN": {
    "fir": false,
@@ -197,7 +196,7 @@
   "RKPC": {
    "fir": false,
    "name": "Jeju Intl, 49, KR",
-   "metar": "METAR RKPC 280500Z 31025G43KT 260V330 9999 SCT025 BKN040 13/02 Q1018 WS ALL RWY NOSIG",
+   "metar": "METAR RKPC 280600Z 31024G44KT 280V340 9999 SCT025 BKN040 12/01 Q1018 WS ALL RWY NOSIG",
    "taf": "TAF RKPC 280500Z 2806/2912 31025G45KT 6000 -RA FEW015 BKN035 TN08/2821Z TX12/2906Z BECMG 2812/2814 32018G35KT BECMG 2816/2818 32015G25KT 9999 NSW BECMG 2820/2822 30008KT SCT035 BECMG 2908/2910 19005KT",
    "notams": [
     {
@@ -248,12 +247,13 @@
      "fir": "RKRR",
      "q": "QPIAU"
     }
-   ]
+   ],
+   "notam_error": "RKPC HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKPK": {
    "fir": false,
    "name": "Busan/Gimhae Intl, 48, KR",
-   "metar": "METAR RKPK 280500Z 33012KT CAVOK 12/02 Q1012",
+   "metar": "METAR RKPK 280600Z 33015KT CAVOK 12/01 Q1012",
    "taf": "TAF RKPK 280500Z 2806/2912 30008G18KT CAVOK TN01/2821Z TX09/2906Z BECMG 2808/2809 30012KT BECMG 2811/2812 30006KT BECMG 2823/2824 33012KT BECMG 2905/2906 33006KT",
    "notams": [
     {
@@ -405,7 +405,7 @@
   "RKTU": {
    "fir": false,
    "name": "Cheonju Intl, 43, KR",
-   "metar": "METAR RKTU 280500Z 30009G19KT CAVOK 09/M03 Q1014",
+   "metar": "SPECI RKTU 280608Z 31016G26KT 9999 -RA BKN040 BKN090 08/M03 Q1015 RMK CIG040",
    "taf": "TAF RKTU 280500Z 2806/2912 30006G16KT CAVOK TNM04/2821Z TX11/2906Z BECMG 2811/2812 30006KT SCT030",
    "notams": [
     {
@@ -488,12 +488,13 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKTU HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKTN": {
    "fir": false,
    "name": "Daegu, 27, KR",
-   "metar": "SPECI RKTN 280530Z 30015KT 9999 -RA BKN050 10/00 Q1012 RMK CIG050",
+   "metar": "METAR RKTN 280600Z 28014KT 9999 -RA BKN050 08/01 Q1013",
    "taf": "TAF RKTN 280500Z 2806/2912 31012KT 9000 -RA BKN030 TN00/2821Z TX11/2906Z BECMG 2808/2809 31010KT 9999 NSW BECMG 2815/2816 31006KT SCT030",
    "notams": [
     {
@@ -613,7 +614,7 @@
   "RKNY": {
    "fir": false,
    "name": "Yangyang Intl, 42, KR",
-   "metar": "METAR RKNY 280500Z 31014KT CAVOK 11/M09 Q1009 NOSIG",
+   "metar": "METAR RKNY 280600Z 30015KT 270V330 CAVOK 11/M09 Q1009 NOSIG",
    "taf": "TAF RKNY 280500Z 2806/2912 28015G35KT CAVOK TN01/2821Z TX10/2905Z BECMG 2814/2816 28010G25KT",
    "notams": [
     {
@@ -632,8 +633,7 @@
      "fir": "RKRR",
      "q": "QMRLC"
     }
-   ],
-   "notam_error": "RKNY HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   },
   "RKPU": {
    "fir": false,
@@ -678,7 +678,7 @@
   "RKJB": {
    "fir": false,
    "name": "Muan Intl, 46, KR",
-   "metar": "METAR RKJB 280500Z 32018G29KT 6000 -RA FEW010CB BKN025 OVC080 07/04 Q1018 NOSIG",
+   "metar": "METAR RKJB 280600Z 32020KT 6000 -RA FEW010 BKN025 OVC080 08/03 Q1018 NOSIG",
    "taf": "TAF RKJB 280500Z 2806/2912 34015G30KT 6000 -RA FEW010 BKN035 OVC080 TN04/2820Z TX12/2905Z BECMG 2814/2816 9999 NSW SCT035 BECMG 2821/2823 35006KT BECMG 2902/2904 27006KT",
    "notams": [
     {
@@ -3901,7 +3901,7 @@
    ]
   }
  },
- "notam_checked": "2026-11-28T06:00:41+00:00",
- "notam_updated": "2026-11-28T06:00:41+00:00",
+ "notam_checked": "2026-11-28T06:30:29+00:00",
+ "notam_updated": "2026-11-28T06:30:29+00:00",
  "notam_source": "FAA NMS (시험)"
 }
