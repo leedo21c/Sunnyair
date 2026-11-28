@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-28T04:12:50+00:00",
+ "updated": "2026-11-28T04:30:29+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -493,7 +493,7 @@
   "RKTN": {
    "fir": false,
    "name": "Daegu, 27, KR",
-   "metar": "METAR RKTN 280400Z 30011KT 9999 BKN050 13/03 Q1012",
+   "metar": "SPECI RKTN 280415Z 30010KT 9999 -RA BKN050 11/02 Q1012 RMK CIG050",
    "taf": "TAF AMD RKTN 280240Z 2802/2906 31010KT 9999 BKN050 TX12/2806Z TN00/2821Z BECMG 2805/2806 9000 -RA BKN030 BECMG 2809/2810 9999 NSW BECMG 2815/2816 31006KT SCT030",
    "notams": [
     {
@@ -536,7 +536,8 @@
      "fir": "RKRR",
      "q": "QFATT"
     }
-   ]
+   ],
+   "notam_error": "RKTN HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   },
   "RKJJ": {
    "fir": false,
@@ -3912,10 +3913,11 @@
      "fir": "RKRR",
      "q": "QARCS"
     }
-   ]
+   ],
+   "notam_error": "RKRR HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
   }
  },
- "notam_checked": "2026-11-28T04:12:50+00:00",
- "notam_updated": "2026-11-28T04:12:50+00:00",
+ "notam_checked": "2026-11-28T04:30:29+00:00",
+ "notam_updated": "2026-11-28T04:30:29+00:00",
  "notam_source": "FAA NMS (시험)"
 }
