@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-28T04:30:29+00:00",
+ "updated": "2026-11-28T05:00:36+00:00",
  "airports": {
   "RKSS": {
    "fir": false,
@@ -84,7 +84,7 @@
   "RKSI": {
    "fir": false,
    "name": "Seoul/Incheon Intl, 28, KR",
-   "metar": "METAR RKSI 280400Z 30017G29KT 9999 FEW040 SCT070 09/M02 Q1015 WS R16L R34R R34L NOSIG",
+   "metar": "METAR RKSI 280430Z 31016G28KT 9999 FEW045 09/M03 Q1015 NOSIG",
    "taf": "TAF AMD RKSI 280138Z 2802/2906 32018G35KT CAVOK TX09/2805Z TN00/2820Z TX09/2905Z TEMPO 2804/2807 9999 BKN040 BECMG 2814/2816 33010KT BECMG 2900/2902 27007KT BECMG 2903/2905 18006KT",
    "notams": [
     {
@@ -197,7 +197,7 @@
   "RKPC": {
    "fir": false,
    "name": "Jeju Intl, 49, KR",
-   "metar": "METAR RKPC 280400Z 31022G36KT 280V340 9999 -SHRA SCT025 BKN035 13/05 Q1018 WS ALL RWY NOSIG",
+   "metar": "SPECI RKPC 280451Z 30023G53KT 250V340 9999 SCT025 BKN040 13/02 Q1018 WS ALL RWY NOSIG",
    "taf": "TAF AMD RKPC 280028Z 2800/2906 31018G35KT 9999 FEW015 BKN035 TN08/2821Z TX12/2905Z TEMPO 2800/2801 6000 -RA BECMG 2804/2806 31025G45KT 6000 -RA BECMG 2812/2814 32018G35KT BECMG 2816/2818 33015G25KT 9999 NSW BECMG 2820/2822 32007KT SCT030",
    "notams": [
     {
@@ -493,7 +493,7 @@
   "RKTN": {
    "fir": false,
    "name": "Daegu, 27, KR",
-   "metar": "SPECI RKTN 280415Z 30010KT 9999 -RA BKN050 11/02 Q1012 RMK CIG050",
+   "metar": "SPECI RKTN 280438Z 30010KT 9999 BKN050 10/03 Q1012 RMK CIG050",
    "taf": "TAF AMD RKTN 280240Z 2802/2906 31010KT 9999 BKN050 TX12/2806Z TN00/2821Z BECMG 2805/2806 9000 -RA BKN030 BECMG 2809/2810 9999 NSW BECMG 2815/2816 31006KT SCT030",
    "notams": [
     {
@@ -3913,11 +3913,10 @@
      "fir": "RKRR",
      "q": "QARCS"
     }
-   ],
-   "notam_error": "RKRR HTTP 429 {\"fault\":{\"faultstring\":\"Spike arrest violation. Allowed rate : MessageRate{messagesPerPeriod=1, periodInMicroseconds=1000000, maxBurstMessageCount=1.0}\",\"detail\":{\"errorcode\":\"policies.ratelimit.SpikeArrestViolation\"}}}"
+   ]
   }
  },
- "notam_checked": "2026-11-28T04:30:29+00:00",
- "notam_updated": "2026-11-28T04:30:29+00:00",
+ "notam_checked": "2026-11-28T05:00:36+00:00",
+ "notam_updated": "2026-11-28T05:00:36+00:00",
  "notam_source": "FAA NMS (시험)"
 }
